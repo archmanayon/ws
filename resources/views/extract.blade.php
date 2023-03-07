@@ -61,10 +61,13 @@
 
                             $year_ = '23';
 
-                            $num_days = in_array($month_, $thirty_days) ? '30':
-                                            (in_array($month_, $thirty_one)? '31':
-                                                ($month_ =='0'? '0':'28')
-                                            );
+                            // $num_days = in_array($month_, $thirty_days) ? '30':
+                            // (in_array($month_, $thirty_one)? '31':
+                            //     ($month_ =='0'? '0':'28')
+                            // );
+
+                            $create_num_days = Carbon::createFromDate($year_, $month_, 1);
+                            $num_days = $create_num_days->daysInMonth;
 
                         @endphp
                                
