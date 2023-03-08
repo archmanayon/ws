@@ -55,7 +55,7 @@
 
                             // $month_ = request('shift')<=9?'0'.request('shift'):request('shift');
 
-                            $month_ = '01';
+                            $month_ = '02';
 
                             $year_ = '23';
 
@@ -134,8 +134,8 @@
                                                     </td> 
 
                                                     <td>{{ $full->format('m/d/y')}}</td> 
-                                                    {{-- <td>{{  $punches->day}}</td>  --}}
-{{--                                                     
+                                                    <td>{{  $punches->day}}</td> 
+                                                    
                                                     <td>{{  $punches->in}}</td> 
                                                     <td>{{  $punches->out}}</td> 
                                                     <td>{{  $punches->half}}</td>
@@ -143,12 +143,12 @@
                                                     <td>{{  $user->schedule->$in}}</td> 
                                                     <td>{{  $user->schedule->$out}}</td> --}}
                                                     
-                                                    {{-- @php $manual_shift = 5; @endphp
+                                                    @php $manual_shift = 5; @endphp
                                                     @if ($manual_shift?? false)
                                                         <td>{{  Schedule::find($manual_shift)->$out}}</td>  
                                                         @else 
                                                         <td>{{  $user->schedule->$half}}</td>
-                                                    @endif                                                      --}}
+                                                    @endif                                                     
                                                     
                                                     </td>
                                                     @if ( $punches->in && $punches->out
@@ -156,9 +156,9 @@
 
                                                         <td> {{ $late_s > 0?'LTE':
                                                             ($under_t > 0?"UND":'')
-                                                            }}
+                                                            }} 
                                                         </td>
-                                                            {{-- round off 2 --}}
+                                                            round off 2
                                                         <td>{{ 
                                                                 round((strtotime($punches->out) - 
                                                                 strtotime($punches->in))/3600,2)

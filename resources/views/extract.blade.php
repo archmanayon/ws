@@ -57,7 +57,7 @@
 
                             // $month_ = request('shift')<=9?'0'.request('shift'):request('shift');
 
-                            $month_ = '1';
+                            $month_ = '02';
 
                             $year_ = '23';
 
@@ -84,43 +84,42 @@
                         
                                         $full = Carbon::createFromFormat('m-d-Y', $full);      
                                         
-                                        $daily_punch = $user->punches->where('date',$full->format('mdy'));   
+                                        $daily_punch = $user->punches->where('date',$full->format('mdy'));
+
+                                        $in = $full->format('l')."_in";
+                                        $out = $full->format('l')."_out";
+                                        $half = $full->format('l')."_half";                                        
+
+                                        $from_user_sched_in = $user->schedule->$in;
+                                        $from_user_sched_out= $user->schedule->$out; 
+
+                                        $official_hours = round((strtotime($from_user_sched_out) - 
+                                                            strtotime($from_user_sched_in))/3600,2);                                          
                                         
                                     @endphp  
 
-                                    @foreach ($manual_shift as $manual )
+                                    @foreach ($user->manual_shift as $manual )                                    
 
                                         @php
                                             $shift_daily = Carbon::createFromFormat('Y-m-d', $manual->date);
                                             $shift_daily = $shift_daily->format('m-d-y');
                                         @endphp                                       
 
-                                        @if ($user->id == $manual->user_id && $shift_daily ==  $full->format('m-d-y'))
+                                        @if ($shift_daily ==  $full->format('m-d-y'))                                       
 {{--                                         
                                             {{ $manual->user->name.'|'.$shift_daily.'|'.$manual->schedule->Manual_in }}<br> --}}
                                             @php
-                                                $in = "Manual_in";
-                                                $out = "Manual_out";
-                                                $half = "Manual_half";
+                                             
+                                                $from_user_sched_in = $manual->schedule->Manual_in;
+                                                $from_user_sched_out= $manual->schedule->Manual_out;
+
+                                                $official_hours = round((strtotime($from_user_sched_out) - 
+                                                                strtotime($from_user_sched_in))/3600,2); 
                                                 
-                                            @endphp
-                                            
-                                        @else
-
-                                            @php
-
-                                                $in = $full->format('l')."_in";
-                                                $out = $full->format('l')."_out";
-                                                $half = $full->format('l')."_half";
-
-                                                $official_hours = round((strtotime($user->schedule->$out) - 
-                                                                strtotime($user->schedule->$in))/3600,2);                        
-
-                                            @endphp
+                                            @endphp                                            
                                                                                         
                                         @endif                                          
-                                        
-                                        
+                                                                                
                                     @endforeach                                       
 
                                     <tr>
@@ -132,16 +131,17 @@
 
                                         @else
                                                                                       
-                                            @if( $daily_punch->contains('date',$full->format('mdy')))
+                                            @if( $daily_punch->contains('date',$full->format('mdy')))                                           
 
-                                                @foreach ($daily_punch as $punches)
+                                                @foreach ($daily_punch->where('date',$full->format('mdy'))
+                                                    as $punches)
 
                                                     @php                
 
                                                         $late_s = round((strtotime($punches->in) - 
-                                                                        strtotime($user->schedule->$in))/3600,2);
+                                                                        strtotime($from_user_sched_in))/3600,2);
 
-                                                        $under_t = round((strtotime($user->schedule->$out) - 
+                                                        $under_t = round((strtotime($from_user_sched_out) - 
                                                                         strtotime($punches->out))/3600,2);
                                                         
                                                     @endphp   
