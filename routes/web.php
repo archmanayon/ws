@@ -5,7 +5,10 @@ namespace App\Models;
 use App\Models\User;
 use App\Models\ManualShift;
 use App\Models\Punch;
+use App\Models\Schedule;
+
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ScheduleController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -23,6 +26,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('print', [ScheduleController::class, 'print_absences'])
+->middleware(['auth', 'verified', 'admin'])->name('extract');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

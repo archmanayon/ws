@@ -2,6 +2,7 @@
     use Illuminate\Support\Str;
     use \Carbon\Carbon;
     
+
 @endphp
 
 <x-app-layout>
@@ -17,72 +18,65 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     
                     <a href="report/{{ auth()->user()->username }}">
-                        {{ "show individual" }}
+                        {{ "show individual" }}<br>
                     </a>
                 </div>
 
                 <div class="p-6 text-gray-900 dark:text-gray-100 border">
                     <table class="table-bardered">
-                        <tr>
+                        <thead>
                             <th> Student ID</th>
                             <th> Name</th>
                             <th> Date</th>
                             <th> Type</th>
                             <th> Hours</th>
-                            {{-- <th> Day</th> 
-                            
-                            <th> P_in</th>
-                            <th> P_out</th>
-                            <th> P_half</th>
-                            <th> Sked_in</th>
-                            <th> Sked_out</th>
-                            <th> Sked_half</th> 
-                            
-                            <th> LTE</th>
-                            <th> UND</th>  --}}
-                        </tr>
+                        </thead>
 
                         @php
+                            
+                            $month = '02';
 
-                            $holiday = array("01-01-23", "01-02-23","01-03-23",
-                                                "01-04-23","01-05-23","01-06-23",
-                                                "01-07-23","01-16-23",
-                                                "02-24-23", "02-25-23");
-
-                            $thirty_days = array('04', '06', '09','11');
-
-                            $thirty_one = array('01', '03','05', '07', '08','10', '12');
-
-                            $manual_shift; 
-
-                            // $month_ = request('shift')<=9?'0'.request('shift'):request('shift');
-
-                            $month_ = '02';
-
-                            $year_ = '23';
-
-                            // $num_days = in_array($month_, $thirty_days) ? '30':
-                            // (in_array($month_, $thirty_one)? '31':
-                            //     ($month_ =='0'? '0':'28')
-                            // );
-
-                            $create_num_days = Carbon::createFromDate($year_, $month_, 1);
-                            $num_days = $create_num_days->daysInMonth;
+                            $year = '23';
 
                         @endphp
-                               
+
+                        @foreach ($collection_of_dates as $dates)  
+
+                            <tr>
+                                
+                                @php $formatted_date = Carbon::parse($dates)->format('m-d-y');
+                                     $formatted_day = Carbon::parse($dates)->format('l') ;
+                                @endphp
+
+                                @if (in_array($formatted_date, $holiday) || $formatted_day =='Sunday')
+                                                                         
+                                    
+                                @else
+                                
+                                    <td>{{ (($searched_user->student_id))}}</td>
+                                    <td>{{ (($searched_user->name))}}</td>
+
+                                    <td>{{ $formatted_date }}</td>
+                                    <td>{{ $formatted_day}}</td> 
+
+                                @endif
+                                                                   
+                            </tr>
+
+                        @endforeach
+                              
                         @foreach ($user as $user )                                                
 
-                            @if($month_ != '0')  
+                            @if($month != '0')  
 
                                 @for( $date = 1; $date <= $num_days ; $date++ )                                           
 
                                     {{-- carbon format date --}}
                                     @php 
 
-                                        $full = $month_."-".$date."-".$year_;
+                                        $full = $month."-".$date."-".$year;
                         
-                                        $full = Carbon::createFromFormat('m-d-Y', $full);      
+                                        $full = Carbon::createFromFormat('m-d-Y', $full); 
                                         
                                         $daily_punch = $user->punches->where('date',$full->format('mdy'));
 
