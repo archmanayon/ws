@@ -50,7 +50,7 @@ class ScheduleController extends Controller{
         'searched_user' => User::find(9),
         'user' => User::all(),
         'punches' => Punch::all(),
-        'schedule' => Schedule::find(5),
+        'schedule' => Schedule::find(4),
         'manual_shift' => ManualShift::all()
 
        ]);

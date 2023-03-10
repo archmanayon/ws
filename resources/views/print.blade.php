@@ -19,6 +19,7 @@
                     
                     <a href="report/{{ auth()->user()->username }}">
                         {{ "show individual" }}<br>
+                        
                     </a>
                 </div>
 
@@ -44,21 +45,96 @@
 
                             <tr>
                                 
-                                @php $formatted_date = Carbon::parse($dates)->format('m-d-y');
-                                     $formatted_day = Carbon::parse($dates)->format('l') ;
+                                @php 
+                                    $formatted_date = Carbon::parse($dates);
+
+                                    $dashed_date = $formatted_date->format('m-d-y');
+
+                                    $day = $formatted_date->format('l');
+
+                                    $sched_in = $day.'_in';
+                                    $sched_out = $day.'_out';
+
+                                    $official_in = $searched_user->schedule->$sched_in;
+                                    $official_out = $searched_user->schedule->$sched_out;
+
+                                    $official_num_hr = round((strtotime($official_out) - 
+                                                            strtotime($official_in))/3600,2); 
+                                                        
+                                    $user_punch_in = $searched_user->punches->where('date', $formatted_date->format('mdy'))
+                                                        ->pluck('in')->first();
+                                    $user_punch_out = $searched_user->punches->where('date', $formatted_date->format('mdy'))
+                                                        ->pluck('out')->first();
+                                                        
+                                    $Schedule_id =  $searched_user->manual_shift->where('date',$formatted_date->format('Y-m-d'))
+                                                        ->pluck('schedule_id')->implode(', ');   
+                                    
+                                    $late = round((strtotime($user_punch_in) - 
+                                                    strtotime($official_in))/3600,2);
+
+                                    $under = round((strtotime($official_out) - 
+                                                    strtotime($user_punch_out))/3600,2);
+                                    
+                                    $abs_type='trial abs';
+                
+
+                                    // $user_late = round((strtotime($user->punches->in) - 
+                                    //             strtotime($user->schedule->$sched_in))/3600,2);
                                 @endphp
 
-                                @if (in_array($formatted_date, $holiday) || $formatted_day =='Sunday')
-                                                                         
+                                @if (in_array($dashed_date, $holiday) || 
+                                        $day =='Sunday' || 
+                                        !isset($searched_user->schedule->$sched_in))  
+
+                                    {{-- no absent--}}
                                     
                                 @else
-                                
-                                    <td>{{ (($searched_user->student_id))}}</td>
-                                    <td>{{ (($searched_user->name))}}</td>
 
-                                    <td>{{ $formatted_date }}</td>
-                                    <td>{{ $formatted_day}}</td> 
+                                    @if( $searched_user->manual_shift->pluck('date')->contains( $formatted_date->format('Y-m-d')))
+                                        @php
+                                                                                      
+                                            $official_in = $searched_user->schedule->find($Schedule_id)->Manual_in;
+                                            $official_out = $searched_user->schedule->find($Schedule_id)->Manual_out;
+                                        @endphp                                      
+                                         
+                                    @endif                                              
 
+                                    @if ( $user_punch_in && $user_punch_out|| $late <  $official_num_hr && $under < $official_num_hr)  
+
+                                    @else
+
+                                        @php
+                                            $abs_type = 'ABS';
+                                        @endphp
+                                        
+                                    @endif  
+                                    
+                                    @if ($late > 0 && $under > 0)
+                                        
+                                        @php
+                                            $abs_type = 'LTE and UND';
+                                        @endphp
+
+                                    @elseif ($late > 0 || $under > 0)
+
+                                        @php
+                                            
+                                        @endphp
+
+                                    @endif
+                                   
+                                    <td>{{ $searched_user->student_id}}</td>
+                                    <td>{{ $searched_user->name}}</td>
+
+                                    <td>{{ $formatted_date->format('m/d/y')}}</td>
+                                    <td>{{ $abs_type}}</td> 
+                                    <td>{{ $official_in }}-----</td>
+                                    <td>{{ $official_out }}-----</td>
+
+                                    <td>{{ $user_punch_in }}</td>
+                                    <td>{{ $user_punch_out }}</td>
+                                    <td>{{ $Schedule_id  }} </td>                                    
+                                    
                                 @endif
                                                                    
                             </tr>
@@ -99,9 +175,8 @@
                                             $shift_daily = $shift_daily->format('m-d-y');
                                         @endphp                                       
 
-                                        @if ($shift_daily ==  $full->format('m-d-y'))                                       
-{{--                                         
-                                            {{ $manual->user->name.'|'.$shift_daily.'|'.$manual->schedule->Manual_in }}<br> --}}
+                                        @if ($shift_daily ==  $full->format('m-d-y'))     
+                                        
                                             @php
                                              
                                                 $from_user_sched_in = $manual->schedule->Manual_in;
@@ -127,8 +202,7 @@
                                                                                       
                                             @if( $daily_punch->contains('date',$full->format('mdy')))                                           
 
-                                                @foreach ($daily_punch->where('date',$full->format('mdy'))
-                                                    as $punches)
+                                                @foreach ($daily_punch as $punches)
 
                                                     @php                
 
