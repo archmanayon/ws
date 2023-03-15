@@ -6,7 +6,6 @@ use App\Models\User;
 use App\Models\ManualShift;
 use App\Models\Punch;
 use App\Models\Schedule;
-
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ScheduleController;
 use Illuminate\Support\Facades\Route;
@@ -30,61 +29,58 @@ Route::get('/', function () {
 Route::get('print', [ScheduleController::class, 'print_absences'])
 ->middleware(['auth', 'verified', 'admin'])->name('extract');
 
+Route::get('/report/{ws:username}', [ScheduleController::class, 'owner_abs'])
+->middleware(['auth', 'verified' ])->name('report');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/extract', function () {   
-   
-    return view('extract', [
-
-        'user' => User::all(),
-        'punches' => Punch::all(),
-        'schedule' => Schedule::find(5),
-        'manual_shift' => ManualShift::all()
-    ]); 
-
-})->middleware(['auth', 'verified', 'admin'])->name('extract');
-
-Route::get('/blank', function () {   
-   
-    return view('blank', [
-
-        'user' => User::all(),
-        'punches' => Punch::all(),
-        'schedule' => Schedule::find(5)
-    ]); 
-
-})->middleware(['auth', 'verified', 'admin'])->name('blank');
+Route::get('all_absences', [ScheduleController::class, 'print_all_abs'])
+->middleware(['auth', 'verified', 'admin'])->name('all_absences');
 
 
-Route::get('/report/{ws:username}', function (User $ws) {
-
+// Route::get('/report/{ws:username}', function (User $ws) {
     
-    // $sample = request()->url();
-    // dd(basename($sample));
+//     // $sample = request()->url();
+//     // dd(basename($sample));
 
-    if(auth()->user()->username == $ws->username ||
-        auth()->user()->username == 'bitin112'){
+//     if(auth()->user()->username == $ws->username ||
+//         auth()->user()->username == 'bitin112'){
 
-        return view('report', [
+//         return view('report', [
 
-            'user' => $ws,
-            'punches' => Punch::all()
-        ]);  
+//             'user' => $ws,
+//             'punches' => Punch::all()
+//         ]);  
         
-    }
+//     }
 
-    else {
-        return redirect('dashboard');
-       }
+//     else {
+//         return redirect('dashboard');
+//        }
 
-})->middleware(['auth', 'verified'])->name('report');
+// })->middleware(['auth', 'verified'])->name('report');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+
+
+// Route::get('/extract', function () {   
+   
+    //     return view('extract', [
+
+    //         'user' => User::all(),
+    //         'punches' => Punch::all(),
+    //         'schedule' => Schedule::find(5),
+    //         'manual_shift' => ManualShift::all()
+    //     ]); 
+
+// })->middleware(['auth', 'verified', 'admin'])->name('extract');
+
 
 require __DIR__.'/auth.php';

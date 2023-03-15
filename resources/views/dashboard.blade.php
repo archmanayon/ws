@@ -9,24 +9,35 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("You're logged in!") }}
+                    {{ __("You're logged in!") }}<br>
+                    {{ auth()->user()->username }}  
+
+                    
+                    
                 </div>
 
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-
-                    <a href="blank" class="font-semibold text-gray-600
+                    @admin
+                    <a href="all_absences" class="font-semibold text-gray-600
                             hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
                             focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
                             All WS Absences Report</a> <br>
+                    @endadmin
                     <a href="report/{{ auth()->user()->username }}" class="font-semibold text-gray-600
                             hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
                             focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
                             My Absences</a><br>
-                    <a href="extract" class="font-semibold text-gray-600
+
+               
+                          
+                   
+                    @admin
+                    <a href="print" class="font-semibold text-gray-600
                             hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
                             focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
-                            Extract Abs</a>
-                   
+                            Extract Abs</a>                    
+                    @endadmin
+                                
                 </div>
 
             </div>
