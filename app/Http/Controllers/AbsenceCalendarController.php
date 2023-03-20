@@ -63,34 +63,34 @@ class AbsenceCalendarController extends Controller
                     strtotime($user_punch_out))/3600,2);
             } 
 
-            $rendered = round((strtotime($user_punch_out) - strtotime($user_punch_in))/3600,2);
+            $render = round((strtotime($user_punch_out) - strtotime($user_punch_in))/3600,2);
             $tardi = '';
 
             if ( !$user_punch_in && !$user_punch_out && $late >  $official_num_hr ||$under > $official_num_hr)  
             {
                 $type = 'ABS';
-                $rendered = $official_num_hr ;
+                $render = $official_num_hr ;
             }
             elseif($late > 0 && $under > 0)
             {
                 $tardi = 'lte_und';
                 $type = 'LTE';
-                $rendered = $late;
+                $render = $late;
                 
             }
             elseif ($late > 0)
             {
                 $type = 'LTE';
-                $rendered = $late;
+                $render = $late;
             }    
             elseif ($under > 0)
             {
                 $type = 'UND';
-                $rendered = $under;
+                $render = $under;
             }
             else {
                 $type = 'no_tardi';
-                $rendered = $official_num_hr ;
+                $render = $official_num_hr ;
             }
 
             if(in_array($d_date, $holiday) || $day =='Sunday' || !isset($searched_user->schedule->$sched_in))
@@ -106,7 +106,7 @@ class AbsenceCalendarController extends Controller
                     'name'=> $searched_user->name,
                     'date'=> $d_date,
                     'type'=> $type,
-                    'rendered'=> $rendered,
+                    'rendered'=> $render,
                     'ws_double'=> $tardi == 'lte_und' ? $under : ''
                 ];
             }

@@ -114,15 +114,15 @@ class ScheduleController extends Controller{
 
         $year = 2023;
 
-        $start_date = '2023-02-01';
-        $end_date = '2023-02-28';
+        $start_date = request('start_date')?? 0;
+        $end_date = request('end_date')?? 0;
 
         $period = CarbonPeriod::create($start_date, $end_date);
         $dates = $period->toArray();
         $collection = collect($dates);
         $count_dates = $period->count();
-        $users = User::all()->pluck('id');        
-
+        $users = User::all()->pluck('id');           
+        
         $mappedArray = collect($users)
             ->map(function ($user) use ($collection, $holiday){
 
@@ -143,8 +143,9 @@ class ScheduleController extends Controller{
 
             'users' => $users,
 
-            'mappedArray' =>  $mappedArray
+            'mappedArray' =>  $mappedArray ?? false
 
         ]);
     }
+
 }

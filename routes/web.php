@@ -39,6 +39,9 @@ Route::get('/dashboard', function () {
 Route::get('all_absences', [ScheduleController::class, 'print_all_abs'])
 ->middleware(['auth', 'verified', 'admin'])->name('all_absences');
 
+Route::post('all_absences', [ScheduleController::class, 'print_all_abs'])
+->middleware(['auth', 'verified', 'admin'])->name('disp_by_cal');
+
 
 // Route::get('/report/{ws:username}', function (User $ws) {
     
