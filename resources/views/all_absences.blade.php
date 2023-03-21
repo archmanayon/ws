@@ -21,6 +21,21 @@
                         {{ "All students" }}<br>
                         
                     </a>
+                    @foreach ($users as $user)
+                        {{-- {{ $user}} <br> --}}
+                        {{ $user->stripped_username.'-'.$user->stripped_username02}} <br>
+                    @endforeach<br>
+
+                    @php
+                        
+                    $str = '0008020301230557I';
+                    $timecard = substr($str, 0, 6);
+                    $usc_date = substr($str, 6, 6);
+                    $usc_time = substr($str, 12, 4);
+                    $usc_punch = substr($str, 16, 1);
+                    echo $timecard."-".$usc_date."-".$usc_time."-".$usc_punch;
+
+                    @endphp
                 </div>
                                
                 <table>
@@ -53,7 +68,6 @@
                             </div>
                         </td>
 
-
                     </form>
                 </table>
 
@@ -69,9 +83,7 @@
                             <th class="px-4 py-3">Type</th> 
                             <th class="px-4 py-3">Hours</th> 
                         </tr>   
-                           
-                        @if (request('start_date'))
-                            
+                                                       
                             @foreach ( $mappedArray as $calendar)                             
 
                                 @foreach ( $calendar as $daily)
@@ -117,13 +129,9 @@
                                     @endif                                    
                                 @endforeach                                                              
                                 
-                            @endforeach
-                        @else
-                           {{ 'wala'}}
-                        @endif  
+                            @endforeach                        
                         
-                    </table>
-                
+                    </table>                
                    
                 </div>
 

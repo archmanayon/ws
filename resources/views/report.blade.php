@@ -18,19 +18,50 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     
                     <a href="{{ auth()->user()->username }}">
-                        {{ $searched_user->name }}<br>                        
+                        {{ $mappedArray[0]->name }}                       
                     </a>
+
+                     
+                        {{ request('start_date') }}    <br>                  
+                        {{ request('end_date') }}    
+
+                    <table>
+                        <form method="POST" action="{{auth()->user()->username}}">
+                            @csrf
+    
+                            
+                            <td>
+                                <div class="mt-4" >
+                                    <x-input-label for="start_date" :value="__('Start Date')" />
+                                    <x-text-input  id="start_date" class="block mt-1" type="date" name="start_date" :value="request('start_date')" required autofocus autocomplete="start_date" />
+                                    <x-input-error :messages="$errors->get('start_date')" class="mt-2" />
+                                </div>
+                            </td>
+                            <td>
+                                <div class="mt-4">
+                                    <x-input-label for="end_date" :value="__('End Date')" />
+                                    <x-text-input id="end_date" class="block mt-1" type="date" name="end_date" :value="request('end_date')" required autofocus autocomplete="end_date" />
+                                    <x-input-error :messages="$errors->get('end_date')" class="mt-2" />
+                                </div>
+                            </td>
+    
+                            <td>
+    
+                                <div class="mt-4 order-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600
+                                focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
+                                    <button type="submit" name="submit_indi" value="">
+                                        Submit
+                                    </button>
+                                </div>
+                            </td>
+    
+    
+                        </form>
+                    </table>
                     
                 </div>
 
                 <div class="p-6 text-gray-900 dark:text-gray-100 border">
-                    @php
-                            
-                        $month = '02';
-
-                        $year = '23';
-
-                    @endphp   
 
                     <p class="text-lg text-center font-bold m-5">Dark Table Design</p>
                         <table class="rounded-t-lg m-5 w-5/6 mx-auto bg-gray-800 text-gray-200">

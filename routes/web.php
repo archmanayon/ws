@@ -32,6 +32,10 @@ Route::get('print', [ScheduleController::class, 'print_absences'])
 Route::get('/report/{ws:username}', [ScheduleController::class, 'owner_abs'])
 ->middleware(['auth', 'verified' ])->name('report');
 
+Route::post('/report/{ws:username}', [ScheduleController::class, 'owner_abs'])
+->middleware(['auth', 'verified' ])->name('own_by_cal');
+
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
