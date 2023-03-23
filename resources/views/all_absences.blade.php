@@ -21,9 +21,9 @@
                         {{ "All students" }}<br>
                         
                     </a>
-                    @foreach ($users as $user)
-                        {{-- {{ $user}} <br> --}}
-                        {{ $user->stripped_username.'-'.$user->stripped_username02}} <br>
+                    @foreach ($bio as $bio)
+                        {{-- {{ $bio}} <br> --}}
+                        {{ $bio->timecard.'|'.$bio->date.'|'.$bio->hour.'|'.$bio->in_out}} <br>
                     @endforeach<br>
 
                     @php

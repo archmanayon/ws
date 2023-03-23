@@ -18,12 +18,12 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     
                     <a href="{{ auth()->user()->username }}">
-                        {{ $mappedArray[0]->name }}                       
+                        {{ auth()->user()->name }}    <br>                   
                     </a>
-
-                     
-                        {{ request('start_date') }}    <br>                  
-                        {{ request('end_date') }}    
+                    
+                    @foreach ($bio as $bio)                       
+                        {{$bio->hour}} <br>
+                    @endforeach<br>
 
                     <table>
                         <form method="POST" action="{{auth()->user()->username}}">
@@ -71,11 +71,20 @@
                             <th class="px-4 py-3">Date</th>
                             <th class="px-4 py-3">Type</th> 
                             <th class="px-4 py-3">Hours</th> 
-                        </tr>                         
+                        </tr>          
+                                       
+                        {{-- {{ $mappedArray[0]->subString_array['1']->hour ?? false}}<br> --}}
+                        {{ $mappedArray[0]->subString_array ?? false}}<br>
 
                         @foreach ( $mappedArray as $daily)
+                            
 
                             @if ( $daily ?? false)
+                                                              
+                                {{-- @foreach ($daily->subString_array as $array)
+                                    {{ $array->hour}}<br>
+                                @endforeach --}}
+                               
                                 <tr class="bg-gray-700 border-b border-gray-600">
                                     <td class="px-4 py-3">
                                         {{ $daily->student_id}}
@@ -112,7 +121,7 @@
                                             </td>
                                         </tr>
                                     @endif                                        
-                                </tr>
+                                </tr><br>
                             @endif                            
                             
                         @endforeach

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('biometrics', function (Blueprint $table) {
             $table->id();
-            $table->string('Biotext')->nullable();
+            $table->string('biotext')->nullable();
             $table->timestamps();
         });
     }

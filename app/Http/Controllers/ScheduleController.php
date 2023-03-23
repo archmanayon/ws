@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 
 use App\Models\User;
+use App\Models\Biometric;
 use App\Models\ManualShift;
 use App\Models\Punch;
 use App\Models\Schedule;
@@ -57,44 +58,60 @@ class ScheduleController extends Controller{
             'mappedArray' =>  $AbsenceCalendarController
 
         ]);
-   }
+    }
 
-   public function owner_abs(User $ws) {
+    public function owner_abs(User $ws) {
 
-    $holiday = array("01-01-23", "01-02-23","01-03-23",
-                        "01-04-23","01-05-23","01-06-23",
-                        "01-07-23","01-16-23",
-                        "02-24-23", "02-25-23");
+        $holiday = array("01-01-23", "01-02-23","01-03-23",
+                            "01-04-23","01-05-23","01-06-23",
+                            "01-07-23","01-16-23",
+                            "02-24-23", "02-25-23");
 
-    // $num_days = in_array($month_, $thirty_days) ? '30':
-        // (in_array($month_, $thirty_one)? '31':
-        //     ($month_ =='0'? '0':'28')
-    // );
-    
-    $start_date = request('start_date')?? 0;
-    $end_date = request('end_date')?? 0;
+        // $num_days = in_array($month_, $thirty_days) ? '30':
+            // (in_array($month_, $thirty_one)? '31':
+            //     ($month_ =='0'? '0':'28')
+        // );
+        
+        $start_date = request('start_date')?? 0;
+        $end_date = request('end_date')?? 0;
 
-    $period = CarbonPeriod::create($start_date, $end_date);
-    $dates = $period->toArray();
-    $collection = collect($dates);
-    $count_dates = $period->count();
+        $period = CarbonPeriod::create($start_date, $end_date);
+        $dates = $period->toArray();
+        $collection = collect($dates);
+        $count_dates = $period->count();
 
-    $AbsenceCalendarController = app()->call(AbsenceCalendarController::class.'@calendar_absences',
-        [
-            'collection_of_dates' => $collection,
-            'searched_user'=> $ws->find(auth()->id()), 
-            'holiday' =>$holiday
+        $AbsenceCalendarController = app()->call(AbsenceCalendarController::class.'@biometrics',
+            [
+                'collection_of_dates' => $collection,
+                'searched_user'=> $ws, 
+                'holiday' =>$holiday
+            ]);
+                
+        // to get whole date from column
+        $test_string = Biometric::where(DB::raw('SUBSTRING(biotext, 1, 6)'), '=',  $ws->timecard)
+        ->where(DB::raw('SUBSTRING(biotext, 7, 6)'), '=',  '021023');
+        
+        // to get specifit 'string' from date from column
+        $subString = $test_string->selectRaw
+            ('
+                SUBSTRING(biotext, 1, 6) AS timecard,
+                SUBSTRING(biotext, 7, 6) AS date,
+                SUBSTRING(biotext, 13, 4) AS hour,
+                SUBSTRING(biotext, 17, 1) AS in_out
+            ')->get();
+
+        return view ('report',[
+
+            'mappedArray' =>  $AbsenceCalendarController,
+             // 'users' => $test_string,
+            'bio' => $subString
+
         ]);
-
-    return view ('report',[
-
-        'mappedArray' =>  $AbsenceCalendarController
-
-    ]);
-}
+    }
 
    public function print_all_abs() 
     {
+        $user_all = User::all();
 
         $holiday = ["01-01-23", "01-02-23","01-03-23",
                             "01-04-23","01-05-23","01-06-23",
@@ -109,7 +126,7 @@ class ScheduleController extends Controller{
         $dates = $period->toArray();
         $collection = collect($dates);
         $count_dates = $period->count();
-        $users = User::all()->pluck('id');           
+        $users = $user_all->pluck('id');           
         
         $mappedArray = collect($users)
             ->map(function ($user) use ($collection, $holiday){
@@ -125,19 +142,23 @@ class ScheduleController extends Controller{
                 
             }
         ); 
+
         // to get whole date from column
-        $test_string = User::where(DB::raw('SUBSTRING(username, 2, 3)'), '=', '210');
+        $test_string = Biometric::where(DB::raw('SUBSTRING(biotext, 1, 6)'), '=',  $user_all[7]->timecard);
+        
         // to get specifit 'string' from date from column
         $subString = $test_string->selectRaw
             ('
-                SUBSTRING(username, 1, 5) AS stripped_username,
-                SUBSTRING(name, 1, 10) AS stripped_username02
+                SUBSTRING(biotext, 1, 6) AS timecard,
+                SUBSTRING(biotext, 7, 6) AS date,
+                SUBSTRING(biotext, 13, 4) AS hour,
+                SUBSTRING(biotext, 17, 1) AS in_out
             ')->get();
 
         return view ('all_absences',
         [
             // 'users' => $test_string,
-            'users' => $subString,
+            'bio' => $subString,
                         
             'mappedArray' =>  $mappedArray ?? false
 
@@ -145,7 +166,7 @@ class ScheduleController extends Controller{
     }
 
     public function bio_abs() 
-    {
+    {   
 
         $holiday = ["01-01-23", "01-02-23","01-03-23",
                             "01-04-23","01-05-23","01-06-23",
