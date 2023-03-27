@@ -15,7 +15,7 @@ class AdminsOnly
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(auth()->user()->username != 'bitin112'){
+        if(auth()->user()->username != 'abmanayon'){
 
             return redirect('dashboard');
 

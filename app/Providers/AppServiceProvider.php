@@ -25,7 +25,7 @@ class AppServiceProvider extends ServiceProvider
         Model::unguard();
 
         Blade::if('admin', function () {
-            return auth()->user()->username == 'bitin112'?
+            return auth()->user()->username == 'abmanayon'?
                     request()->user()->cannot('admin'):
                     request()->user()->can('admin');
                     // pwede pud

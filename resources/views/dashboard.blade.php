@@ -23,13 +23,11 @@
                             focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
                             All WS Absences Report</a> <br>
                     @endadmin
+                    
                     <a href="report/{{ auth()->user()->username }}" class="font-semibold text-gray-600
                             hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
                             focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
-                            My Absences</a><br>
-
-               
-                          
+                            My Absences</a><br>                         
                    
                     @admin
                     <a href="print" class="font-semibold text-gray-600

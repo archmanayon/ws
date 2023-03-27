@@ -18,17 +18,17 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     
                     <a href="{{ auth()->user()->username }}">
-                        {{ auth()->user()->name }}    <br>                   
+                        {{ auth()->user()->name }}                    
                     </a>
+                    {{-- <br>   
                     
                     @foreach ($bio as $bio)                       
                         {{$bio->hour}} <br>
-                    @endforeach<br>
+                    @endforeach<br> --}}
 
                     <table>
                         <form method="POST" action="{{auth()->user()->username}}">
-                            @csrf
-    
+                            @csrf    
                             
                             <td>
                                 <div class="mt-4" >
@@ -54,79 +54,74 @@
                                     </button>
                                 </div>
                             </td>
-    
-    
+        
                         </form>
                     </table>
                     
                 </div>
 
-                <div class="p-6 text-gray-900 dark:text-gray-100 border">
+                <div class="p-6 text-gray-900 dark:text-gray-100 border">  
 
                     <p class="text-lg text-center font-bold m-5">Dark Table Design</p>
+                    
                         <table class="rounded-t-lg m-5 w-5/6 mx-auto bg-gray-800 text-gray-200">
-                        <tr class="text-left border-b border-gray-300">
-                            <th class="px-4 py-3">Student ID</th>
-                            <th class="px-4 py-3">Name</th>
-                            <th class="px-4 py-3">Date</th>
-                            <th class="px-4 py-3">Type</th> 
-                            <th class="px-4 py-3">Hours</th> 
-                        </tr>          
-                                       
-                        {{-- {{ $mappedArray[0]->subString_array['1']->hour ?? false}}<br> --}}
-                        {{ $mappedArray[0]->subString_array ?? false}}<br>
+                            <tr class="text-left border-b border-gray-300">
+                                <th class="px-4 py-3">Student ID</th>
+                                <th class="px-4 py-3">Name</th>
+                                <th class="px-4 py-3">Date</th>
+                                <th class="px-4 py-3">Type</th> 
+                                <th class="px-4 py-3">Hours</th> 
+                            </tr>          
+                                        
+                            {{-- {{ $mappedArray[0]->subString_array['1']->hour ?? false}}<br> --}}
+                            {{ $mappedArray[0]->subString_array ?? false}}
 
-                        @foreach ( $mappedArray as $daily)
-                            
+                            @foreach ( $mappedArray as $daily)                            
 
-                            @if ( $daily ?? false)
-                                                              
-                                {{-- @foreach ($daily->subString_array as $array)
-                                    {{ $array->hour}}<br>
-                                @endforeach --}}
-                               
-                                <tr class="bg-gray-700 border-b border-gray-600">
-                                    <td class="px-4 py-3">
-                                        {{ $daily->student_id}}
-                                    </td>
-                                    <td class="px-4 py-3">
-                                        {{ $daily->name}}
-                                    </td>
-                                    <td class="px-4 py-3">
-                                        {{ $daily->date}}
-                                    </td><td class="px-4 py-3">
-                                        {{ $daily->type}}
-                                    </td>
-                                    </td><td class="px-4 py-3">
-                                        {{ $daily->rendered}}
-                                    </td>
-                                    </td>
-                                    @if ($daily->ws_double)
-                                        </tr>
-                                        <tr class="bg-gray-700 border-b border-gray-600">
-                                            <td class="px-4 py-3">
-                                                {{ $daily->student_id}}
-                                            </td>
-                                            <td class="px-4 py-3">
-                                                {{ $daily->name }}
-                                            </td>
-                                            <td class="px-4 py-3">
-                                                {{ $daily->date }}
-                                            </td><td class="px-4 py-3">
-                                                {{ 'UND' }}
-                                            </td>
-                                            </td><td class="px-4 py-3">
-                                                {{ $daily->ws_double }}
-                                            </td>
-                                            </td>
-                                        </tr>
-                                    @endif                                        
-                                </tr><br>
-                            @endif                            
-                            
-                        @endforeach
+                                @if ( $daily ?? false)                                                              
+                                
+                                    <tr class="bg-gray-700 border-b border-gray-600">
+                                        <td class="px-4 py-3">
+                                            {{ $daily->student_id}}
+                                        </td>
+                                        <td class="px-4 py-3">
+                                            {{ $daily->name}}
+                                        </td>
+                                        <td class="px-4 py-3">
+                                            {{ $daily->date}}
+                                        </td><td class="px-4 py-3">
+                                            {{ $daily->type}}
+                                        </td>
+                                        </td><td class="px-4 py-3">
+                                            {{ $daily->rendered}}
+                                        </td>
+                                        </td>
+                                        @if ($daily->ws_double)
+                                            </tr>
+                                            <tr class="bg-gray-700 border-b border-gray-600">
+                                                <td class="px-4 py-3">
+                                                    {{ $daily->student_id}}
+                                                </td>
+                                                <td class="px-4 py-3">
+                                                    {{ $daily->name }}
+                                                </td>
+                                                <td class="px-4 py-3">
+                                                    {{ $daily->date }}
+                                                </td><td class="px-4 py-3">
+                                                    {{ 'UND' }}
+                                                </td>
+                                                </td><td class="px-4 py-3">
+                                                    {{ $daily->ws_double }}
+                                                </td>
+                                                </td>
+                                            </tr>
+                                        @endif                                        
+                                    </tr><br>
+                                @endif                            
+                                
+                            @endforeach
 
-                    </table>     
+                        </table>     
                    
                 </div>
 

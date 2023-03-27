@@ -115,6 +115,7 @@ class AbsenceCalendarController extends Controller
         })->toArray();
 
         return $mappedArray;
+
     }
 
     public function biometrics($collection_of_dates,$searched_user, $holiday) 
@@ -140,9 +141,8 @@ class AbsenceCalendarController extends Controller
             $official_num_hr = round((strtotime($official_out) - 
                 strtotime($official_in))/3600,2);   
             
-            $test_string = Biometric::where(DB::raw('SUBSTRING(biotext, 1, 6)'), '=',  $searched_user->timecard);
-                
-            $bio_daily_array = $test_string->where(DB::raw('SUBSTRING(biotext, 7, 6)'), '=', $date->format('mdy'));
+            $bio_daily_array = Biometric::where(DB::raw('SUBSTRING(biotext, 1, 6)'), '=',  $searched_user->timecard)
+                            ->where(DB::raw('SUBSTRING(biotext, 7, 6)'), '=', $date->format('mdy'));                
 
             $subString_array = $bio_daily_array->selectRaw
             ('                
@@ -233,9 +233,8 @@ class AbsenceCalendarController extends Controller
                     'bio_daily_array' => $date->format('mdy'),
                     'subString_array' => $subString_array[0]->hour??0
                 ];
-            }          
-                     
-
+            }
+            
         })->toArray();        
         
         return $mappedArray;

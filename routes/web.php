@@ -29,6 +29,9 @@ Route::get('/', function () {
 Route::get('print', [ScheduleController::class, 'print_absences'])
 ->middleware(['auth', 'verified', 'admin'])->name('extract');
 
+Route::post('print', [ScheduleController::class, 'print_absences'])
+->middleware(['auth', 'verified', 'admin'])->name('print_post');
+
 Route::get('/report/{ws:username}', [ScheduleController::class, 'owner_abs'])
 ->middleware(['auth', 'verified' ])->name('report');
 
