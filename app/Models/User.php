@@ -57,6 +57,12 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Schedule::class);
     }
+
+    public function shift()
+    {
+        return $this->belongsTo(Shift::class);
+    }
+
     public function manual_shift()
     {
         return $this->hasMany(ManualShift::class);

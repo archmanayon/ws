@@ -17,8 +17,7 @@ use Carbon\CarbonPeriod;
 
 class ScheduleController extends Controller{
 
-    public function print_absences()
-    {
+    public function absences_all(){
         $user_all = User::all();
 
         $holiday = ["01-01-23", "01-02-23","01-03-23",
@@ -58,7 +57,7 @@ class ScheduleController extends Controller{
         ]);
     }
 
-    public function owner_abs(User $ws) {
+    public function owner_abs(User $ws){
 
         $holiday = array("01-01-23", "01-02-23","01-03-23",
                             "01-04-23","01-05-23","01-06-23",
@@ -107,7 +106,35 @@ class ScheduleController extends Controller{
         ]);
     }
 
-    public function print_all_abs() 
+    public function adea_bio_abs() 
+    {   $user_all = User::all();
+        $holiday = array("01-01-23", "01-02-23","01-03-23",
+                            "01-04-23","01-05-23","01-06-23",
+                            "01-07-23","01-16-23",
+                            "02-24-23", "02-25-23");        
+        
+        $start_date = request('start_date')?? 0;
+        $end_date = request('end_date')?? 0;
+
+        $period = CarbonPeriod::create($start_date, $end_date);
+        $dates = $period->toArray();
+        $collection = collect($dates);
+        $count_dates = $period->count();
+
+        $AbsenceCalendarController = app()->call(AbsenceCalendarController::class.'@adea_bio',
+            [
+                'collection_of_dates' => $collection,
+                'searched_user'=> $user_all->find(5), 
+                'holiday' =>$holiday
+            ]);                      
+
+        return view ('adea',[
+
+            'mappedArray' =>  $AbsenceCalendarController
+        ]);
+    }
+
+    public function print_all_abs_old() 
     {
         $user_all = User::all();
 
@@ -115,7 +142,6 @@ class ScheduleController extends Controller{
                             "01-04-23","01-05-23","01-06-23",
                             "01-07-23","01-16-23",
                             "02-24-23", "02-25-23"];
-        $manual_shift;                
 
         $start_date = request('start_date')?? 0;
         $end_date = request('end_date')?? 0;
@@ -162,57 +188,4 @@ class ScheduleController extends Controller{
 
         ]);
     }
-
-    public function bio_abs() 
-    {   
-
-        $holiday = ["01-01-23", "01-02-23","01-03-23",
-                            "01-04-23","01-05-23","01-06-23",
-                            "01-07-23","01-16-23",
-                            "02-24-23", "02-25-23"];
-        $manual_shift;                
-
-        $start_date = request('start_date')?? 0;
-        $end_date = request('end_date')?? 0;
-
-        $period = CarbonPeriod::create($start_date, $end_date);
-        $dates = $period->toArray();
-        $collection = collect($dates);
-        $count_dates = $period->count();
-        $users = User::all()->pluck('id');           
-        
-        $mappedArray = collect($users)
-
-            
-
-            ->map(function ($user) use ($collection, $holiday){
-
-
-
-                $user = app()->call(AbsenceCalendarController::class.'@calendar_absences',
-                [
-                    'collection_of_dates' => $collection,
-                    'searched_user'=> User::find($user), 
-                    'holiday' =>$holiday
-                ]);
-
-                return $user;
-                
-            }
-        ); 
-        // to get whole date from column
-        $test_string = User::where(DB::raw('SUBSTRING(username, 2, 3)'), '=', '210')->get()->pluck('username');
-        // to get specifit 'string' from date from column
-        $subString = User::selectRaw('SUBSTRING(username, 2, 4) AS stripped_username')->get();
-
-        return view ('all_absences',
-        [
-            // 'users' => $test_string,
-            'users' => $subString,
-                       
-            'mappedArray' =>  $mappedArray ?? false
-
-        ]);
-    }
-
 }

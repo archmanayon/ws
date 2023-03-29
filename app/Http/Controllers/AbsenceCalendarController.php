@@ -239,5 +239,143 @@ class AbsenceCalendarController extends Controller
         
         return $mappedArray;
     }
+
+    public function adea_bio($collection_of_dates,$searched_user, $holiday) 
+    {          
+                       
+        $mappedArray = collect($collection_of_dates)
+        ->map(function ($date) use ($searched_user, $holiday){            
+        
+            $date = Carbon::parse($date);
+
+            $d_date = $date->format('m-d-y');
+
+            $day = $date->format('l');
+
+            $am_in = $day."_am_in";
+
+            $am_out = $day."_am_out";
+
+            $pm_in = $day."_pm_in";
+
+            $pm_out = $day."_pm_out";           
+
+            $official_am_in = $searched_user->shift->$am_in;
+
+            $official_am_out = $searched_user->shift->$am_out;  
+            
+            $official_pm_in = $searched_user->shift->$am_in;
+
+            $official_pm_out = $searched_user->shift->$am_out;    
+
+            $official_am_num_hr = round((strtotime($official_am_out) - 
+                strtotime($official_am_in))/3600,2);
+
+             $official_pm_num_hr = round((strtotime($official_pm_out) - 
+                strtotime($official_pm_in))/3600,2); 
+            
+            $bio_daily_array = Biometric::where(DB::raw('SUBSTRING(biotext, 1, 6)'), '=',  $searched_user->timecard)
+                            ->where(DB::raw('SUBSTRING(biotext, 7, 6)'), '=', $date->format('mdy'));                
+
+            $subString_array = $bio_daily_array->selectRaw
+            ('                
+                SUBSTRING(biotext, 7, 6) AS date_bio,
+                SUBSTRING(biotext, 13, 4) AS hour,
+                SUBSTRING(biotext, 17, 1) AS in_out
+            ')->get();        
+ 
+            $bio_am_in = $subString_array[0]->hour??false;
+            $bio_am_out = $subString_array[1]->hour??false;
+
+            $bio_pm_in = $subString_array[2]->hour ?? $subString_array[0]->hour??false;
+            
+            // $bio_pm_in = $subString_array[2]->hour??false ? $subString_array[2]->hour:
+            //             ($subString_array[0]->hour??false ? $subString_array[0]->hour:0);
+
+            // $bio_pm_out = $subString_array[3]->hour? $subString_array[3]->hour :
+            //             ($subString_array[1]->hour?$subString_array[1]->hour:0)??0;
+           
+            $am_punch_in = $bio_am_in;
+
+            $am_punch_out =  $bio_am_out;
+                                 
+            $late = round((strtotime($am_punch_in) - 
+                strtotime($official_am_in))/3600,2);
+
+            $under = round((strtotime($official_am_out) - 
+                 strtotime($am_punch_out))/3600,2);
+
+                 
+
+            if( $searched_user->manual_shift->pluck('date')->contains( $date->format('Y-m-d')))
+            {                             
+                $Schedule_id =  $searched_user->manual_shift->where('date',$date->format('Y-m-d'))
+                                ->pluck('schedule_id')->implode(', ');                                                          
+                $official_am_in = $searched_user->schedule->find($Schedule_id)->Manual_in;
+                $official_am_out = $searched_user->schedule->find($Schedule_id)->Manual_out;
+                $official_am_num_hr = round((strtotime($official_am_out) - 
+                    strtotime($official_am_in))/3600,2); 
+
+                $late = round((strtotime($am_punch_in) - 
+                    strtotime($official_am_in))/3600,2);
+
+                $under = round((strtotime($official_am_out) - 
+                    strtotime($am_punch_out))/3600,2);
+            } 
+
+            $render = round((strtotime($am_punch_out) - strtotime($am_punch_in))/3600,2);
+            $tardi = '';
+            
+            if ( !$am_punch_in && !$am_punch_out && $late >  $official_am_num_hr ||$under > $official_am_num_hr)  
+            {
+                $type = 'ABS';
+                $render = $official_am_num_hr ;
+            }
+            elseif($late > 0 && $under > 0)
+            {
+                $tardi = 'lte_und';
+                $type = 'LTE';
+                $render = $late;
+                
+            }
+            elseif ($late > 0)
+            {
+                $type = 'LTE';
+                $render = $late;
+            }    
+            elseif ($under > 0)
+            {
+                $type = 'UND';
+                $render = $under;
+            }
+            else {
+                $type = 'no_tardi';
+                $render = $official_am_num_hr ;
+            }
+
+            if(in_array($d_date, $holiday) || $day =='Sunday' || !isset($searched_user->shift->$am_in))
+                {}  
+            
+            elseif ($type == 'no_tardi')
+                {}
+
+            else {
+               
+                return (object) [
+                    'student_id'=> $searched_user->student_id,
+                    'name'=> $searched_user->name,
+                    'date'=> $d_date,
+                    'type'=> $type,
+                    'rendered'=> $render,
+                    'ws_double'=> $tardi == 'lte_und' ? $under : '',
+                    'bio_daily_array' => $date->format('mdy'),
+                    'subString_array' => $bio_pm_in
+                ];
+            }
+            
+        })->toArray();        
+        
+        return $mappedArray;
+    }
    
 }

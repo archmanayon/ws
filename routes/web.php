@@ -26,10 +26,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('print', [ScheduleController::class, 'print_absences'])
+Route::get('print', [ScheduleController::class, 'absences_all'])
 ->middleware(['auth', 'verified', 'admin'])->name('extract');
 
-Route::post('print', [ScheduleController::class, 'print_absences'])
+Route::post('print', [ScheduleController::class, 'absences_all'])
 ->middleware(['auth', 'verified', 'admin'])->name('print_post');
 
 Route::get('/report/{ws:username}', [ScheduleController::class, 'owner_abs'])
@@ -38,16 +38,23 @@ Route::get('/report/{ws:username}', [ScheduleController::class, 'owner_abs'])
 Route::post('/report/{ws:username}', [ScheduleController::class, 'owner_abs'])
 ->middleware(['auth', 'verified' ])->name('own_by_cal');
 
+Route::get('adea', [ScheduleController::class, 'adea_bio_abs'])
+->middleware(['auth', 'verified', 'admin'])->name('adea_get');
+
+Route::post('adea', [ScheduleController::class, 'adea_bio_abs'])
+->middleware(['auth', 'verified', 'admin'])->name('adea_post');
+
+Route::get('all_absences', [ScheduleController::class, 'print_all_abs_old'])
+->middleware(['auth', 'verified', 'admin'])->name('all_absences');
+
+Route::post('all_absences', [ScheduleController::class, 'print_all_abs_old'])
+->middleware(['auth', 'verified', 'admin'])->name('disp_by_cal');
+
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::get('all_absences', [ScheduleController::class, 'print_all_abs'])
-->middleware(['auth', 'verified', 'admin'])->name('all_absences');
-
-Route::post('all_absences', [ScheduleController::class, 'print_all_abs'])
-->middleware(['auth', 'verified', 'admin'])->name('disp_by_cal');
 
 
 // Route::get('/report/{ws:username}', function (User $ws) {
