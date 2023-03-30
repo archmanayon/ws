@@ -82,7 +82,7 @@
                                             {{ $daily->student_id}}
                                         </td>
                                         <td class="px-4 py-3">
-                                            {{ $daily->name}}=={{ $daily->subString_array }}
+                                            {{ $daily->name}}|{{ $daily->subString_array }}
                                         </td>
                                         <td class="px-4 py-3">
                                             {{ $daily->date}}
