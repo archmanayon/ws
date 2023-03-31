@@ -307,14 +307,22 @@ class AbsenceCalendarController extends Controller
             $ten_min_allowance = 0.17;   
             // $ten_min_allowance = round((strtotime('10'))/3600,2);                           
 
-            $am_late = round((strtotime($am_punch_in)-strtotime($official_am_in))/3600,2);
-            $pm_late = $official_pm_in ? 
+            $am_late = $official_am_in && $am_punch_in < $official_am_out? 
+                round((strtotime($am_punch_in)-strtotime($official_am_in))/3600,2) :
+                false;
+            $pm_late = $official_pm_in && $pm_punch_in < $official_pm_out? 
                 round((strtotime($pm_punch_in)-strtotime($official_pm_in))/3600,2) :
                 false;
-            $late = ($am_late > 0 ? $am_late : 0) + ($pm_late > 0 ? $pm_late : 0) - $ten_min_allowance;
+            $late = ($am_late > 0 ? $am_late : 0) + ($pm_late > 0 ? $pm_late : 0) 
+            - $ten_min_allowance
+            ;
 
-            $am_und = round((strtotime($official_am_out)-strtotime($am_punch_out))/3600,2);
-            $pm_und = round((strtotime($official_pm_out)-strtotime($pm_punch_out))/3600,2);
+            $am_und = $official_am_out &&  $am_punch_out? 
+                round((strtotime($official_am_out)-strtotime($am_punch_out))/3600,2) :
+                false;
+            $pm_und = $official_pm_out &&  $pm_punch_out? 
+                round((strtotime($official_pm_out)-strtotime($pm_punch_out))/3600,2) :
+                false;
             $under = ( $am_und > 0 ?  $am_und : 0) + ($pm_und > 0 ? $pm_und : 0);
 
 
@@ -335,47 +343,71 @@ class AbsenceCalendarController extends Controller
                     strtotime($am_punch_out))/3600,2);
             } 
 
-            $am_render = round((strtotime($am_punch_out) - strtotime($am_punch_in))/3600,2);
-            $pm_render = round((strtotime($pm_punch_out) - strtotime($pm_punch_in))/3600,2);            
+            $am_render = round((strtotime($am_punch_out) - strtotime($am_punch_in))/3600,2) < 0 ? false : 
+                        round((strtotime($am_punch_out) - strtotime($am_punch_in))/3600,2);
+
+            $pm_render = round((strtotime($pm_punch_out) - strtotime($pm_punch_in))/3600,2) < 0 ? false:
+                        round((strtotime($pm_punch_out) - strtotime($pm_punch_in))/3600,2);            
             
-            $tardi = '';
+            $tardi = false;
             $whole_day = '';
             
             if ( !$am_punch_in || !$am_punch_out || !$pm_punch_in || !$pm_punch_out||
                 $am_late >  $official_am_num_hr ||$am_und > $official_am_num_hr ||
                 $pm_late >  $official_pm_num_hr ||$pm_und > $official_pm_num_hr 
-                
-            )  
+               )  
             {
                 $type = 'ABS';
-                $am_render = $official_am_num_hr ;
-                $whole_day = !$am_punch_in && !$pm_punch_in ? $official_am_num_hr + $official_pm_num_hr : 
-                               ( !$am_punch_in || !$am_punch_out ? $official_am_num_hr : 
-                                (!$pm_punch_in || !$pm_punch_out? $official_pm_num_hr:''));
+                // $am_render = $official_am_num_hr ;
+
+                if(!$am_punch_in && !$pm_punch_in || ($am_render + $pm_render) < 1){
+
+                    $rendered = $official_am_num_hr + $official_pm_num_hr ;
+
+                } elseif(!$am_punch_in || !$am_punch_out){
+
+                    $rendered = $official_am_num_hr;
+
+                } elseif(!$pm_punch_in || !$pm_punch_out){
+
+                    $rendered = $official_pm_num_hr;
+
+                }
+                
+                if($late > 0 && $under > 0 || $late > 0 && $pm_punch_in < $official_pm_out || 
+                    $under > 0 && $am_punch_in > $official_am_in  && $pm_punch_in > $official_pm_in)  {
+                        $tardi = 'abs_lte_und';
+                        $type_late = 'LTE';
+                        $type_under = 'UND';
+                        $rendered_late = $late ;
+                        $rendered_und = $under;
+                    }
             }
             elseif($late > 0 && $under > 0)
             {
                 $tardi = 'lte_und';
                 $type = 'LTE';
-                $am_render = $late;
+                $rendered = $late;
                 
             }
             elseif ($late > 0)
             {
                 $type = 'LTE';
-                $am_render = $late;
+                $rendered = $late;
             }    
             elseif ($under > 0)
             {
                 $type = 'UND';
-                $am_render = $under;
+                $rendered = $under;
             }
             else {
                 $type = 'no_tardi';
-                $am_render = $official_am_num_hr ;
+                $rendered = $official_am_num_hr ;
             }
 
-            if(in_array($d_date, $holiday) || $day =='Sunday' || !isset($searched_user->shift->$am_in))
+            if(in_array($d_date, $holiday) || $day =='Sunday' || 
+                !isset($searched_user->shift->$am_in) ||
+                !isset($searched_user->shift->$pm_in))
                 {}  
             
             elseif ($type == 'no_tardi')
@@ -388,10 +420,16 @@ class AbsenceCalendarController extends Controller
                     'name'=> $searched_user->name,
                     'date'=> $d_date,
                     'type'=> $type,
-                    'rendered'=> $am_render,
-                    'ws_double'=> $tardi == 'lte_und' ? $under : '',
+                    'rendered'=> $rendered,
+
+                    'type_late' => $tardi == 'abs_lte_und' ? $type_late : false,
+                    'rendered_late' => $tardi == 'abs_lte_und' ? $rendered_late : false,
+                    'type_under' => $tardi == 'abs_lte_und' ? $type_under : false,                    
+                    'rendered_und' => $tardi == 'abs_lte_und' ? $rendered_und : false,
+
+                    'ws_double'=> $tardi == 'lte_und' ? $under : false,
                     'bio_daily_array' => $date->format('mdy'),
-                    'subString_array' =>    $whole_day
+                    'subString_array' =>  $under
                 ];
             }
             

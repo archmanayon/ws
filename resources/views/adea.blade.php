@@ -112,7 +112,53 @@
                                                 </td>
                                                 </td>
                                             </tr>
-                                        @endif                                        
+                                        @endif
+
+                                        @if ($daily->rendered_late > 0)
+                                            </tr>
+                                            <tr class="bg-gray-700 border-b border-gray-600">
+                                                <td class="px-4 py-3">
+                                                    {{ $daily->student_id}}
+                                                </td>
+                                                <td class="px-4 py-3">
+                                                    {{ $daily->name }}|{{ "sa late" }}
+                                                </td>
+                                                <td class="px-4 py-3">
+                                                    {{ $daily->date }}
+                                                </td><td class="px-4 py-3">
+                                                    {{ $daily->type_late }}
+                                                </td>
+                                                </td><td class="px-4 py-3">
+                                                    {{ $daily->rendered_late }}
+                                                </td>
+                                                </td>
+                                            </tr>
+                                            
+                                        @endif
+
+                                        @if ($daily->rendered_und > 0)
+                                            </tr>
+                                            <tr class="bg-gray-700 border-b border-gray-600">
+                                                <td class="px-4 py-3">
+                                                    {{ $daily->student_id}}
+                                                </td>
+                                                <td class="px-4 py-3">
+                                                    {{ $daily->name }}|{{ "sa und" }}
+                                                </td>
+                                                <td class="px-4 py-3">
+                                                    {{ $daily->date }}
+                                                </td><td class="px-4 py-3">
+                                                    {{ $daily->type_under }}
+                                                </td>
+                                                </td><td class="px-4 py-3">
+                                                    {{ $daily->rendered_und }}
+                                                </td>
+                                                </td>
+                                            </tr>
+                                            
+                                        @endif
+                                        
+                                       
                                     </tr>
                                 @endif                            
                                 
