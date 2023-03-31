@@ -82,39 +82,43 @@
                                             {{ $daily->student_id}}
                                         </td>
                                         <td class="px-4 py-3">
-                                            {{ $daily->name}}|{{ $daily->subString_array }}
+                                            {{ $daily->name}}|{{ "sa abs" }}
+                                        </td>
+                                        <td>
+                                            <x-dropdown>
+                                                <x-slot name="trigger">
+                                                    <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-100 focus:outline-none transition ease-in-out duration-150">
+                                                        <div>{{ $daily->date }}</div>
+                            
+                                                        <div class="ml-1">
+                                                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                                            </svg>
+                                                        </div>
+                                                    </button>
+                                                </x-slot>
+
+                                                <x-slot name="content">
+                                                    
+                                                    @foreach ($daily->subString_array as $bio)
+                                                        
+                                                        {{ $bio->hour.'~'.$bio->in_out }}<br>
+                                                    @endforeach      
+                                                    
+                                                    {{ $daily->subString_array[0] ?? false ? '': 'no punch'}}                                                    
+
+                                                </x-slot>
+                                            </x-dropdown>
                                         </td>
                                         <td class="px-4 py-3">
-                                            {{ $daily->date}}
-                                        </td><td class="px-4 py-3">
                                             {{ $daily->type}}
                                         </td>
-                                        </td><td class="px-4 py-3">
+                                        <td class="px-4 py-3">
                                             {{ $daily->rendered}}
-                                        </td>
-                                        </td>
-                                        @if ($daily->ws_double)
-                                            </tr>
-                                            <tr class="bg-gray-700 border-b border-gray-600">
-                                                <td class="px-4 py-3">
-                                                    {{ $daily->student_id}}
-                                                </td>
-                                                <td class="px-4 py-3">
-                                                    {{ $daily->name }}
-                                                </td>
-                                                <td class="px-4 py-3">
-                                                    {{ $daily->date }}
-                                                </td><td class="px-4 py-3">
-                                                    {{ 'UND' }}
-                                                </td>
-                                                </td><td class="px-4 py-3">
-                                                    {{ $daily->ws_double }}
-                                                </td>
-                                                </td>
-                                            </tr>
-                                        @endif
+                                        </td>   
 
-                                        @if ($daily->rendered_late > 0)
+
+                                        @if ($daily->ws_double)
                                             </tr>
                                             <tr class="bg-gray-700 border-b border-gray-600">
                                                 <td class="px-4 py-3">
@@ -123,18 +127,86 @@
                                                 <td class="px-4 py-3">
                                                     {{ $daily->name }}|{{ "sa late" }}
                                                 </td>
+                                                <td>
+                                                    <x-dropdown>
+                                                        <x-slot name="trigger">
+                                                            <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-100 focus:outline-none transition ease-in-out duration-150">
+                                                                <div>{{ $daily->date }}</div>
+                                    
+                                                                <div class="ml-1">
+                                                                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                                                    </svg>
+                                                                </div>
+                                                            </button>
+                                                        </x-slot>
+        
+                                                        <x-slot name="content">
+                                                            
+                                                            @foreach ($daily->subString_array as $bio)
+                                                                
+                                                                {{ $bio->hour.'~'.$bio->in_out }}<br>
+                                                            @endforeach      
+                                                            
+                                                            {{ $daily->subString_array[0] ?? false ? '': 'no punch'}}                                                    
+        
+                                                        </x-slot>
+                                                    </x-dropdown>
+                                                </td>
                                                 <td class="px-4 py-3">
-                                                    {{ $daily->date }}
-                                                </td><td class="px-4 py-3">
+                                                    {{ 'UND' }}
+                                                </td>                                               
+                                                <td class="px-4 py-3">
+                                                    {{ $daily->ws_double }}
+                                                </td>
+                                                
+                                        @endif
+
+
+                                        @if ($daily->rendered_late > 0)
+                                            </tr>
+                                            <tr class="bg-gray-700 border-b border-gray-600">
+                                                <td class="px-4 py-3">
+                                                    {{ $daily->student_id}}
+                                                </td>
+                                                <td class="px-4 py-3">
+                                                    {{ $daily->name }}|{{ "sa late sagol absent" }}
+                                                </td>
+                                                <td>
+                                                    <x-dropdown>
+                                                        <x-slot name="trigger">
+                                                            <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-100 focus:outline-none transition ease-in-out duration-150">
+                                                                <div>{{ $daily->date }}</div>
+                                    
+                                                                <div class="ml-1">
+                                                                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                                                    </svg>
+                                                                </div>
+                                                            </button>
+                                                        </x-slot>
+        
+                                                        <x-slot name="content">
+                                                            
+                                                            @foreach ($daily->subString_array as $bio)
+                                                                
+                                                                {{ $bio->hour.'~'.$bio->in_out }}<br>
+                                                            @endforeach      
+                                                            
+                                                            {{ $daily->subString_array[0] ?? false ? '': 'no punch'}}                                                    
+        
+                                                        </x-slot>
+                                                    </x-dropdown>
+                                                </td>
+                                                <td class="px-4 py-3">
                                                     {{ $daily->type_late }}
                                                 </td>
-                                                </td><td class="px-4 py-3">
+                                                <td class="px-4 py-3">
                                                     {{ $daily->rendered_late }}
                                                 </td>
-                                                </td>
-                                            </tr>
-                                            
+                                               
                                         @endif
+
 
                                         @if ($daily->rendered_und > 0)
                                             </tr>
@@ -145,19 +217,40 @@
                                                 <td class="px-4 py-3">
                                                     {{ $daily->name }}|{{ "sa und" }}
                                                 </td>
+                                                <td>
+                                                    <x-dropdown>
+                                                        <x-slot name="trigger">
+                                                            <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-100 focus:outline-none transition ease-in-out duration-150">
+                                                                <div>{{ $daily->date }}</div>
+                                    
+                                                                <div class="ml-1">
+                                                                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                                                    </svg>
+                                                                </div>
+                                                            </button>
+                                                        </x-slot>
+        
+                                                        <x-slot name="content">
+                                                            
+                                                            @foreach ($daily->subString_array as $bio)
+                                                                
+                                                                {{ $bio->hour.'~'.$bio->in_out }}<br>
+                                                            @endforeach      
+                                                            
+                                                            {{ $daily->subString_array[0] ?? false ? '': 'no punch'}}                                                    
+        
+                                                        </x-slot>
+                                                    </x-dropdown>
+                                                </td>
                                                 <td class="px-4 py-3">
-                                                    {{ $daily->date }}
-                                                </td><td class="px-4 py-3">
                                                     {{ $daily->type_under }}
                                                 </td>
-                                                </td><td class="px-4 py-3">
+                                                <td class="px-4 py-3">
                                                     {{ $daily->rendered_und }}
                                                 </td>
-                                                </td>
-                                            </tr>
-                                            
-                                        @endif
-                                        
+                                               
+                                        @endif                                       
                                        
                                     </tr>
                                 @endif                            

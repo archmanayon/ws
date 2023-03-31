@@ -360,7 +360,7 @@ class AbsenceCalendarController extends Controller
                 $type = 'ABS';
                 // $am_render = $official_am_num_hr ;
 
-                if(!$am_punch_in && !$pm_punch_in || ($am_render + $pm_render) < 1){
+                if(!$am_punch_in && !$pm_punch_in || ($am_render + $pm_render) < 1 || $am_render >=8) {
 
                     $rendered = $official_am_num_hr + $official_pm_num_hr ;
 
@@ -429,7 +429,7 @@ class AbsenceCalendarController extends Controller
 
                     'ws_double'=> $tardi == 'lte_und' ? $under : false,
                     'bio_daily_array' => $date->format('mdy'),
-                    'subString_array' =>  $under
+                    'subString_array' =>  $subString_array
                 ];
             }
             
