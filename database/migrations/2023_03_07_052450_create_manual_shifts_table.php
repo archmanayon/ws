@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id');
             $table->date('date');
             $table->foreignId('schedule_id')->nullable();
+            $table->foreignId('shift_id')->nullable();
             $table->timestamps(); 
         });
     }

@@ -117,7 +117,7 @@
                                             {{ $daily->rendered}}
                                         </td>   
 
-
+                                        {{-- und outside abs --}}
                                         @if ($daily->ws_double)
                                             </tr>
                                             <tr class="bg-gray-700 border-b border-gray-600">
@@ -162,7 +162,7 @@
                                                 
                                         @endif
 
-
+                                       {{-- late with abs --}}
                                         @if ($daily->rendered_late > 0)
                                             </tr>
                                             <tr class="bg-gray-700 border-b border-gray-600">
@@ -207,7 +207,7 @@
                                                
                                         @endif
 
-
+                                        {{-- und with abs --}}
                                         @if ($daily->rendered_und > 0)
                                             </tr>
                                             <tr class="bg-gray-700 border-b border-gray-600">
