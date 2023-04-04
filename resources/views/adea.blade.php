@@ -73,13 +73,13 @@
                                 <th class="px-4 py-3">Hours</th> 
                             </tr>          
                                                                    
-                            @foreach ( $mappedArray as $daily)                                 
+                            @foreach ( $bio_punches as $daily)                                 
 
                                 @if ( $daily)
 
                                     <tr class="bg-gray-700 border-b border-gray-600">
                                         <td class="px-4 py-3">
-                                            {{ $daily->student_id}}
+                                            {{ $daily->student_id}}|{{ $daily->punch->pm_in }}
                                         </td>
                                         <td class="px-4 py-3">
                                             {{ $daily->name}}|{{ "sa abs" }}
@@ -100,12 +100,12 @@
 
                                                 <x-slot name="content">
                                                     
-                                                    @foreach ($daily->subString_array as $bio)
+                                                    @foreach ($daily->all_bio_punches as $bio)
                                                         
                                                         {{ $bio->hour.'~'.$bio->in_out }}<br>
                                                     @endforeach      
                                                     
-                                                    {{ $daily->subString_array[0] ?? false ? '': 'no punch'}}                                                    
+                                                    {{ $daily->all_bio_punches[0] ?? false ? '': 'no punch'}}                                                    
 
                                                 </x-slot>
                                             </x-dropdown>
@@ -143,12 +143,12 @@
         
                                                         <x-slot name="content">
                                                             
-                                                            @foreach ($daily->subString_array as $bio)
+                                                            @foreach ($daily->all_bio_punches as $bio)
                                                                 
                                                                 {{ $bio->hour.'~'.$bio->in_out }}<br>
                                                             @endforeach      
                                                             
-                                                            {{ $daily->subString_array[0] ?? false ? '': 'no punch'}}                                                    
+                                                            {{ $daily->all_bio_punches[0] ?? false ? '': 'no punch'}}                                                    
         
                                                         </x-slot>
                                                     </x-dropdown>
@@ -188,12 +188,12 @@
         
                                                         <x-slot name="content">
                                                             
-                                                            @foreach ($daily->subString_array as $bio)
+                                                            @foreach ($daily->all_bio_punches as $bio)
                                                                 
                                                                 {{ $bio->hour.'~'.$bio->in_out }}<br>
                                                             @endforeach      
                                                             
-                                                            {{ $daily->subString_array[0] ?? false ? '': 'no punch'}}                                                    
+                                                            {{ $daily->all_bio_punches[0] ?? false ? '': 'no punch'}}                                                    
         
                                                         </x-slot>
                                                     </x-dropdown>
@@ -233,12 +233,12 @@
         
                                                         <x-slot name="content">
                                                             
-                                                            @foreach ($daily->subString_array as $bio)
+                                                            @foreach ($daily->all_bio_punches as $bio)
                                                                 
                                                                 {{ $bio->hour.'~'.$bio->in_out }}<br>
                                                             @endforeach      
                                                             
-                                                            {{ $daily->subString_array[0] ?? false ? '': 'no punch'}}                                                    
+                                                            {{ $daily->all_bio_punches[0] ?? false ? '': 'no punch'}}                                                    
         
                                                         </x-slot>
                                                     </x-dropdown>

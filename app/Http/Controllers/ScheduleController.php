@@ -121,7 +121,7 @@ class ScheduleController extends Controller{
         $collection = collect($dates);
         $count_dates = $period->count();
 
-        $AbsenceCalendarController = app()->call(AbsenceCalendarController::class.'@adea_bio',
+        $bio_punches = app()->call(AbsenceCalendarController::class.'@adea_bio',
             [
                 'collection_of_dates' => $collection,
                 'searched_user'=> $user_all->find(9), 
@@ -130,7 +130,7 @@ class ScheduleController extends Controller{
 
         return view ('adea',[
 
-            'mappedArray' =>  $AbsenceCalendarController
+            'bio_punches' =>  $bio_punches
         ]);
     }
 

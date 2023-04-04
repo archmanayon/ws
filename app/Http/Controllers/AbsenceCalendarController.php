@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\ManualShift;
+use App\Models\Shift;
 use App\Models\Punch;
 use App\Models\Schedule;
 use App\Models\Biometric;
@@ -258,157 +259,77 @@ class AbsenceCalendarController extends Controller
 
             $pm_in = $day."_pm_in";
 
-            $pm_out = $day."_pm_out";           
+            $pm_out = $day."_pm_out";   
+                                      
+            $ten_min_allowance = 0.17;
 
-            $official_am_in = $searched_user->shift->$am_in??false;
+                //---to choose between 'official shift' and 'manual shift'
+            $official = app()->call(ManualShiftController::class.'@official_',
+            [
+                'searched_user'     =>  $searched_user,
+                'date'              =>  $date,
+                'day'               =>  $day,
+                'ten_min_allowance' =>  $ten_min_allowance
+            ]);
 
-            $official_am_out = $searched_user->shift->$am_out??false;  
+                //---to extract punch 'object' from bio text files
+            $punch = app()->call(ExtractBioController::class.'@extract_bio',
+            [
+                'searched_user'     => $searched_user,
+                'date'              => $date,
+                'official_am_in'    => $official->am_in,
+                'official_pm_in'    => $official->pm_in
+            ]);            
+
+                //---to prepare 'object' number hours tardiness
+            $tardi = app()->call(ExtractBioController::class.'@extract_tardi',
+            [
+                'searched_user' => $searched_user,
+                'day'=> $day,
+                'bio_punch' => $punch,
+                'ten_min_allowance' =>$ten_min_allowance
+            ]); 
+
+            $am_late    = $tardi->am_late;
+            $pm_late    = $tardi->pm_late;
+            $late       = $tardi->late;
+
+            $am_und     = $tardi->am_und;
+            $pm_und     = $tardi->pm_und;
+            $under      = $tardi->under;      
             
-            $official_pm_in = $searched_user->shift->$pm_in??false;
-
-            $official_pm_out = $searched_user->shift->$pm_out??false;
-
-            $official_am_num_hr = round((strtotime($official_am_out) - 
-                strtotime($official_am_in))/3600,2);
-
-             $official_pm_num_hr = round((strtotime($official_pm_out) - 
-                strtotime($official_pm_in))/3600,2);             
-            
-            $bio_daily_array = Biometric::where(DB::raw('SUBSTRING(biotext, 1, 6)'), '=',  $searched_user->timecard)
-                            ->where(DB::raw('SUBSTRING(biotext, 7, 6)'), '=', $date->format('mdy'));                
-
-            $subString_array = $bio_daily_array->selectRaw
-            ('                
-                SUBSTRING(biotext, 7, 6) AS date_bio,
-                SUBSTRING(biotext, 13, 4) AS hour,
-                SUBSTRING(biotext, 17, 1) AS in_out
-            ')->get();        
- 
-            $bio_am_in = $subString_array[0]->hour??false;
-            $bio_am_out = $subString_array[1]->hour??false;
-
-            $bio_pm_in = $subString_array[2]->hour ??  $bio_am_in;            
-            $bio_pm_out = $subString_array[3]->hour ?? ($subString_array[2]->hour??false?false:
-                                                            ($subString_array[1]->hour??false));  
-            
-            $allowed_for_am = round((strtotime($bio_am_in) - strtotime($official_am_in))/3600,2);
-            $allowed_for_pm = round((strtotime($official_pm_in) - strtotime($bio_pm_in))/3600,2);
-                      
-            $am_punch_in = $allowed_for_am <= 3 ? $bio_am_in : false;
-
-            $am_punch_out =  $allowed_for_am <= 3 ? $bio_am_out : false;
-            
-            $pm_punch_in = $allowed_for_pm <= 2 ? $bio_pm_in : false;
-
-            $pm_punch_out = $allowed_for_pm <= 2 ? $bio_pm_out : false;
-                           
-            $ten_min_allowance = 0.17;                          
-
-            $am_late = $official_am_in && $am_punch_in < $official_am_out? 
-                round((strtotime($am_punch_in)-strtotime($official_am_in))/3600,2) :
-                false;
-            $pm_late = $official_pm_in && $pm_punch_in < $official_pm_out? 
-                round((strtotime($pm_punch_in)-strtotime($official_pm_in))/3600,2) :
-                false;
-            $late = ($am_late > 0 ? $am_late : 0) + ($pm_late > 0 ? $pm_late : 0) 
-            - $ten_min_allowance;
-
-            $am_und = $official_am_out &&  $am_punch_out > $official_am_in ? 
-                round((strtotime($official_am_out)-strtotime($am_punch_out))/3600,2) :
-                false;
-            $pm_und = $official_pm_out &&  $pm_punch_out > $official_am_in? 
-                round((strtotime($official_pm_out)-strtotime($pm_punch_out))/3600,2) :
-                false;
-            $under = ( $am_und > 0 ?  $am_und : 0) + ($pm_und > 0 ? $pm_und : 0);
-
-            // if( $searched_user->manual_shift->pluck('date')->contains( $date->format('Y-m-d')))
-                // {                             
-                //     $Schedule_id =  $searched_user->manual_shift->where('date',$date->format('Y-m-d'))
-                //                     ->pluck('schedule_id')->implode(', ');                                                          
-                //     $official_am_in = $searched_user->schedule->find($Schedule_id)->Manual_in;
-                //     $official_am_out = $searched_user->schedule->find($Schedule_id)->Manual_out;
-                //     $official_am_num_hr = round((strtotime($official_am_out) - 
-                //         strtotime($official_am_in))/3600,2); 
-
-                //     $am_late = round((strtotime($am_punch_in)-strtotime($official_am_in))/3600,2);
-                //     $pm_late = round((strtotime($pm_punch_in)-strtotime($official_pm_in))/3600,2);
-                //     $late = ($am_late > 0 ? $am_late : 0) + ($pm_late > 0 ? $pm_late : 0) - $ten_min_allowance;
-
-                //     $under = round((strtotime($official_am_out) - 
-                //         strtotime($am_punch_out))/3600,2);
-            // } 
-            if( $searched_user->manual_shift->pluck('date')->contains( $date->format('Y-m-d')))
-            {                             
-                $shift_id =  $searched_user->manual_shift->where('date',$date->format('Y-m-d'))
-                                ->pluck('shift_id')->implode(', ');                                                          
-                $official_am_in     = $searched_user->shift->find($shift_id)->Manual_am_in;
-                $official_am_out    = $searched_user->shift->find($shift_id)->Manual_am_out;
-                $official_pm_in     = $searched_user->shift->find($shift_id)->Manual_pm_in;
-                $official_pm_out    = $searched_user->shift->find($shift_id)->Manual_pm_out;
-
-                $official_am_num_hr = round((strtotime($official_am_out) - 
-                    strtotime($official_am_in))/3600,2); 
-                
-                $official_pm_num_hr = round((strtotime($official_pm_out) - 
-                    strtotime($official_pm_in))/3600,2);    
-                
-                $am_late = $official_am_in && $am_punch_in < $official_am_out? 
-                    round((strtotime($am_punch_in)-strtotime($official_am_in))/3600,2) :
-                    false;
-                $pm_late = $official_pm_in && $pm_punch_in < $official_pm_out? 
-                    round((strtotime($pm_punch_in)-strtotime($official_pm_in))/3600,2) :
-                    false;
-                $late = ($am_late > 0 ? $am_late : 0) + ($pm_late > 0 ? $pm_late : 0) 
-                - $ten_min_allowance;
-    
-                $am_und = $official_am_out &&  $am_punch_out > $official_am_in ? 
-                    round((strtotime($official_am_out)-strtotime($am_punch_out))/3600,2) :
-                    false;
-                $pm_und = $official_pm_out &&  $pm_punch_out > $official_am_in? 
-                    round((strtotime($official_pm_out)-strtotime($pm_punch_out))/3600,2) :
-                    false;
-                $under = ( $am_und > 0 ?  $am_und : 0) + ($pm_und > 0 ? $pm_und : 0);
-            } 
-
-
-            $am_render = round((strtotime($am_punch_out) - strtotime($am_punch_in))/3600,2) < 0 ? false : 
-                        round((strtotime($am_punch_out) - strtotime($am_punch_in))/3600,2);
-
-            $pm_render = round((strtotime($pm_punch_out) - strtotime($pm_punch_in))/3600,2) < 0 ? false:
-                        round((strtotime($pm_punch_out) - strtotime($pm_punch_in))/3600,2);            
-            
-            $tardi = false;
+            $tardiness = false;
             $whole_day = '';
             
-            if (!$am_punch_in || !$am_punch_out || !$pm_punch_in || !$pm_punch_out||
-                $am_late >  $official_am_num_hr ||$am_und > $official_am_num_hr ||
-                $pm_late >  $official_pm_num_hr ||$pm_und > $official_pm_num_hr 
+            if (!$punch->am_in || !$punch->am_out || !$punch->pm_in || !$punch->pm_out||
+                $am_late >  $official->am_num_hr ||$am_und > $official->am_num_hr ||
+                $pm_late >  $official->pm_num_hr ||$pm_und > $official->pm_num_hr 
                )  
             {
                 $type = 'ABS';
 
                 //Abs n_hour if wholeday
-                if(!$am_punch_in && !$pm_punch_in || ($am_render + $pm_render) < 1) {
+                if(!$punch->am_in && !$punch->pm_in || ($punch->am_render + $punch->pm_render) < 1) {
 
-                    $rendered = $official_am_num_hr + $official_pm_num_hr ;
+                    $rendered = $official->am_num_hr + $official->pm_num_hr ;
 
                 //Abs n_hour in AM only
-                } elseif(!$am_punch_in || !$am_punch_out){
+                } elseif(!$punch->am_in || !$punch->am_out){
 
-                    $rendered = $official_am_num_hr;
+                    $rendered = $official->am_num_hr;
 
                 //ABs n_hour in PM only
-                } elseif(!$pm_punch_in || !$pm_punch_out){
+                } elseif(!$punch->pm_in || !$punch->pm_out){
 
-                    $rendered = $official_pm_num_hr;
+                    $rendered = $official->pm_num_hr;
 
                 }
                 //this is if there are absences and tardiness in one day
                 if($late > 0 && $under > 0 || 
-                    //if in 2 enries only that late am in with am out falls in pm
-                    $late > 0 && $pm_punch_in < $official_pm_out || 
-                    $under > 0 && $am_punch_in > $official_am_in  && $pm_punch_in > $official_pm_in)  {
-                        $tardi = 'abs_lte_und';
+                    //if in 2 enries only ; late am in with am out falls in pm
+                    $late > 0 && $punch->pm_in < $official->pm_out || 
+                    $under > 0 && $punch->am_in > $official->am_in  && $punch->pm_in > $official->pm_in)  {
+                        $tardiness = 'abs_lte_und';
                         $type_late = 'LTE';
                         $type_under = 'UND';
                         $rendered_late = $late ;
@@ -419,7 +340,7 @@ class AbsenceCalendarController extends Controller
             //lates and undertime OUTSIDE absences
             elseif($late > 0 && $under > 0)
             {
-                $tardi = 'lte_und';
+                $tardiness = 'lte_und';
                 $type = 'LTE';
                 $rendered = $late;
                 
@@ -436,7 +357,7 @@ class AbsenceCalendarController extends Controller
             }
             else {
                 $type = 'no_tardi';
-                $rendered = $official_am_num_hr ;
+                $rendered = $official->am_num_hr ;
             }
 
             if(in_array($d_date, $holiday) || $day =='Sunday' || 
@@ -456,15 +377,15 @@ class AbsenceCalendarController extends Controller
                     'type'=> $type,
                     'rendered'=> $rendered,
 
-                    'type_late' => $tardi == 'abs_lte_und' ? $type_late : false,
-                    'rendered_late' => $tardi == 'abs_lte_und' ? $rendered_late : false,
-                    'type_under' => $tardi == 'abs_lte_und' ? $type_under : false,                    
-                    'rendered_und' => $tardi == 'abs_lte_und' ? $rendered_und : false,
+                    'type_late' => $tardiness == 'abs_lte_und' ? $type_late : false,
+                    'rendered_late' => $tardiness == 'abs_lte_und' ? $rendered_late : false,
+                    'type_under' => $tardiness == 'abs_lte_und' ? $type_under : false,                    
+                    'rendered_und' => $tardiness == 'abs_lte_und' ? $rendered_und : false,
 
-                    'ws_double'=> $tardi == 'lte_und' ? $under : false,
+                    'ws_double'=> $tardiness == 'lte_und' ? $under : false,
                     'bio_daily_array' => $date->format('mdy'),
-                    'subString_array' =>  $subString_array,
-                    'test' => round((strtotime('10'))/3600,2)
+                    'all_bio_punches' =>  $punch->all_bio_punches,
+                    'punch' => $punch
                 ];
             }
             
