@@ -254,12 +254,8 @@ class AbsenceCalendarController extends Controller
             $day = $date->format('l');
 
             $am_in = $day."_am_in";
-
-            $am_out = $day."_am_out";
-
+            
             $pm_in = $day."_pm_in";
-
-            $pm_out = $day."_pm_out";   
                                       
             $ten_min_allowance = 0.17;
 
@@ -268,8 +264,7 @@ class AbsenceCalendarController extends Controller
             [
                 'searched_user'     =>  $searched_user,
                 'date'              =>  $date,
-                'day'               =>  $day,
-                'ten_min_allowance' =>  $ten_min_allowance
+                'day'               =>  $day
             ]);
 
                 //---to extract punch 'object' from bio text files
@@ -277,17 +272,17 @@ class AbsenceCalendarController extends Controller
             [
                 'searched_user'     => $searched_user,
                 'date'              => $date,
-                'official_am_in'    => $official->am_in,
-                'official_pm_in'    => $official->pm_in
+                'official'          => $official
             ]);            
 
                 //---to prepare 'object' number hours tardiness
             $tardi = app()->call(ExtractBioController::class.'@extract_tardi',
             [
-                'searched_user' => $searched_user,
-                'day'=> $day,
-                'bio_punch' => $punch,
-                'ten_min_allowance' =>$ten_min_allowance
+                'searched_user'     =>  $searched_user,
+                'day'               =>  $day,
+                'bio_punch'         =>  $punch,
+                'official'          =>  $official,
+                'ten_min_allowance' =>  $ten_min_allowance
             ]); 
 
             $am_late    = $tardi->am_late;
@@ -328,7 +323,8 @@ class AbsenceCalendarController extends Controller
                 if($late > 0 && $under > 0 || 
                     //if in 2 enries only ; late am in with am out falls in pm
                     $late > 0 && $punch->pm_in < $official->pm_out || 
-                    $under > 0 && $punch->am_in > $official->am_in  && $punch->pm_in > $official->pm_in)  {
+                    $under > 0 && $punch->am_in > $official->am_in  &&
+                    $punch->pm_in > $official->pm_in)  {
                         $tardiness = 'abs_lte_und';
                         $type_late = 'LTE';
                         $type_under = 'UND';

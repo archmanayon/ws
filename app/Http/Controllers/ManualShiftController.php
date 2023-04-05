@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 
 class ManualShiftController extends Controller
 {
-    public function official_($searched_user, $day, $date, $ten_min_allowance)
+    public function official_($searched_user, $day, $date)
     {
          // if( $searched_user->manual_shift->pluck('date')->contains( $date->format('Y-m-d')))
                 // {                             
@@ -53,12 +53,6 @@ class ManualShiftController extends Controller
             $official_pm_out    = $searched_user->shift->find($shift_id)->Manual_pm_out;
         } 
 
-        $official_am_num_hr = round((strtotime($official_am_out) - 
-            strtotime($official_am_in))/3600,2);
-
-        $official_pm_num_hr = round((strtotime($official_pm_out) - 
-            strtotime($official_pm_in))/3600,2); 
-
         return (object) [
             'am_in'     => $official_am_in ?? false,
 
@@ -68,9 +62,11 @@ class ManualShiftController extends Controller
 
             'pm_out'    => $official_pm_out ?? false,
 
-            'am_num_hr' => $official_am_num_hr,
+            'am_num_hr' => round((strtotime($official_am_out) - 
+                            strtotime($official_am_in))/3600,2),
 
-            'pm_num_hr' => $official_pm_num_hr
+            'pm_num_hr' => round((strtotime($official_pm_out) - 
+                            strtotime($official_pm_in))/3600,2)
             
         ];
  
