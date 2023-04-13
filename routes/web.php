@@ -26,6 +26,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('js', function () {
+    return view ('js',[
+    ]);
+});
+
+Route::get('shcp', function () {
+    return view ('shcp',[
+    ]);
+});
+
 Route::get('print', [ScheduleController::class, 'absences_all'])
 ->middleware(['auth', 'verified', 'admin'])->name('extract');
 
