@@ -13,7 +13,10 @@ myElement.insertBefore(myNewElement, second_element).setAttribute("style", "colo
 myNewElement.appendChild(myText);
 
 myNewElement.onmouseover = function(){
-    myNewElement.setAttribute("style", "color: green;");
+
+    myNewElement.style.color = 'yellow';
+    // myNewElement.setAttribute("style", "color: green;");
+    console.log('sample console');
 };
 
 myNewElement.onmouseout = function(){
