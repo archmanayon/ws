@@ -297,33 +297,37 @@ class AbsenceCalendarController extends Controller
             $whole_day = '';
             
             if (!$punch->am_in || !$punch->am_out || !$punch->pm_in || !$punch->pm_out||
-                $am_late >  $official->am_num_hr ||$am_und > $official->am_num_hr ||
-                $pm_late >  $official->pm_num_hr ||$pm_und > $official->pm_num_hr 
+
+                // $punch->all_bio_punches[0]->date_bio == '040323' ||
+                $am_late >= $official->am_num_hr && $official->am_num_hr != 0||
+                $am_und  >= $official->am_num_hr && $official->am_num_hr != 0||
+                $pm_late >= $official->pm_num_hr && $official->pm_num_hr != 0||
+                $pm_und  >= $official->pm_num_hr && $official->pm_num_hr != 0 
                )  
             {
                 $type = 'ABS';
-
+                               
                 //Abs n_hour if wholeday
                 if(!$punch->am_in && !$punch->pm_in || ($punch->am_render + $punch->pm_render) < 1) {
 
                     $rendered = $official->am_num_hr + $official->pm_num_hr ;
 
                 //Abs n_hour in AM only
-                } elseif(!$punch->am_in || !$punch->am_out){
+                } elseif(!$punch->am_in || !$punch->am_out || $am_late >=  $official->am_num_hr){
 
                     $rendered = $official->am_num_hr;
 
                 //ABs n_hour in PM only
-                } elseif(!$punch->pm_in || !$punch->pm_out){
+                } elseif(!$punch->pm_in || !$punch->pm_out ||  $pm_late >=  $official->pm_num_hr){
 
                     $rendered = $official->pm_num_hr;
+                } 
 
-                }
                 //this is if there are absences and tardiness in one day
                 if($late > 0 && $under > 0 || 
                     //if in 2 enries only ; late am in with am out falls in pm
-                    $late > 0 && $punch->pm_in < $official->pm_out || 
-                    $under > 0 && $punch->am_in > $official->am_in  &&
+                    $late && $punch->pm_in < $official->pm_out || 
+                    $under && $punch->am_in > $official->am_in  &&
                     $punch->pm_in > $official->pm_in)  {
                         $tardiness = 'abs_lte_und';
                         $type_late = 'LTE';
