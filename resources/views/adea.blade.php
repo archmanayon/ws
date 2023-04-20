@@ -102,7 +102,9 @@
                                                     
                                                     @foreach ($daily->all_bio_punches as $bio)
                                                         
-                                                        {{ $bio->hour.'~'.$bio->in_out }}<br>
+                                                        {{ $bio->hour.'~'.$bio->in_out }}
+                                                        <div class="inline-block pl-8 flex-shrink-0"> <a href="update_bio/{{ $daily->timecard.$daily->bio_daily_array}}"> {{ 'update' }} </a></div>
+                                                        <br>
                                                     @endforeach      
                                                     
                                                     {{ $daily->all_bio_punches[0] ?? false ? '': 'no punch'}}                                                    
@@ -145,7 +147,7 @@
                                                             
                                                             @foreach ($daily->all_bio_punches as $bio)
                                                                 
-                                                                {{ $bio->hour.'~'.$bio->in_out }}<br>
+                                                                {{ $bio->hour.'~'.$bio->in_out }} <br>
                                                             @endforeach      
                                                             
                                                             {{ $daily->all_bio_punches[0] ?? false ? '': 'no punch'}}                                                    

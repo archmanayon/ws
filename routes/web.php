@@ -8,6 +8,7 @@ use App\Models\Punch;
 use App\Models\Schedule;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\UpdateBioController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -20,6 +21,17 @@ use Illuminate\Support\Facades\Route;
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
+*/
+
+/* Sample controller by arch
+    public function new_bio($bio){          
+
+        return view ('update_bio',[
+
+            'new_trial' =>  $bio
+
+        ]);
+    }
 */
 
 Route::get('/', function () {
@@ -35,6 +47,9 @@ Route::get('shcp', function () {
     return view ('shcp',[
     ]);
 });
+
+Route::get('update_bio/{bio}', [UpdateBioController::class, 'new_bio'])
+->middleware(['auth', 'verified', 'admin'])->name('new_bio');
 
 Route::get('print', [ScheduleController::class, 'absences_all'])
 ->middleware(['auth', 'verified', 'admin'])->name('extract');

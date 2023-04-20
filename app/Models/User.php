@@ -67,4 +67,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(ManualShift::class);
     } 
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
 }

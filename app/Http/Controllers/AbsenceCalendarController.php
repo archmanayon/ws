@@ -9,7 +9,7 @@ use App\Models\Shift;
 use App\Models\Punch;
 use App\Models\Schedule;
 use App\Models\Biometric;
-use \Carbon\Carbon;
+use Carbon\Carbon;
 
 use Illuminate\Http\Request;
 
@@ -244,7 +244,7 @@ class AbsenceCalendarController extends Controller
     public function adea_bio($collection_of_dates,$searched_user, $holiday) 
     {          
                        
-        $mappedArray = collect($collection_of_dates)
+        $mappedArray = $collection_of_dates
         ->map(function ($date) use ($searched_user, $holiday){            
         
             $date = Carbon::parse($date);
@@ -373,7 +373,8 @@ class AbsenceCalendarController extends Controller
                 return (object) [
                     'student_id'=> $searched_user->student_id,
                     'name'=> $searched_user->name,
-                    'date'=> $d_date,
+                    'timecard'=> $searched_user->timecard,
+                    'date'=> $d_date,                    
                     'type'=> $type,
                     'rendered'=> $rendered,
 

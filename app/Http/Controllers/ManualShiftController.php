@@ -47,10 +47,10 @@ class ManualShiftController extends Controller
         {                             
             $shift_id =  $searched_user->manual_shift->where('date',$date->format('Y-m-d'))
                             ->pluck('shift_id')->implode(', ');                                                          
-            $official_am_in     = $searched_user->shift->find($shift_id)->Manual_am_in;
-            $official_am_out    = $searched_user->shift->find($shift_id)->Manual_am_out;
-            $official_pm_in     = $searched_user->shift->find($shift_id)->Manual_pm_in;
-            $official_pm_out    = $searched_user->shift->find($shift_id)->Manual_pm_out;
+            $official_am_in     = $searched_user->shift->find($shift_id)->Manual_am_in??false;
+            $official_am_out    = $searched_user->shift->find($shift_id)->Manual_am_out??false;
+            $official_pm_in     = $searched_user->shift->find($shift_id)->Manual_pm_in??false;
+            $official_pm_out    = $searched_user->shift->find($shift_id)->Manual_pm_out??false;
         } 
 
         return (object) [
