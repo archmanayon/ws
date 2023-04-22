@@ -13,7 +13,12 @@ return new class extends Migration
     {
         Schema::create('update_bios', function (Blueprint $table) {
             $table->id();
+            $table->string('biotext');
+            $table->foreignId('biometrics_id')->nullable();
+            $table->string('reason');
+            $table->boolean('active')->default(true);
             $table->timestamps();
+        
         });
     }
 

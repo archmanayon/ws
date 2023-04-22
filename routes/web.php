@@ -51,6 +51,9 @@ Route::get('shcp', function () {
 Route::get('update_bio/{bio}', [UpdateBioController::class, 'new_bio'])
 ->middleware(['auth', 'verified', 'admin'])->name('new_bio');
 
+Route::post('update_bio/{bio}', [UpdateBioController::class, 'post_new_bio'])
+->middleware(['auth', 'verified', 'admin'])->name('post_new_bio');
+
 Route::get('print', [ScheduleController::class, 'absences_all'])
 ->middleware(['auth', 'verified', 'admin'])->name('extract');
 
