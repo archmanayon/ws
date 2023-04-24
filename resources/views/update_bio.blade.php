@@ -57,55 +57,109 @@
 
                     <table class="rounded-t-lg m-5 w-5/6 mx-auto bg-gray-800 text-gray-200">
                         <tr class="text-left border-b border-gray-300">
+                            <th></th>
                             <th class="px-4 py-3">
                                 {{  $bio_date }}
                             </th>
                         </tr>     
 
-                        <form method="POST" action="" >
+                        <form method="POST" action="{{ $old_bio[0]->timecard.$old_bio[0]->date_bio }}" >
+                            @php
+                                $bio_timecard = $old_bio[0]->timecard;
+                                $bio_date = $old_bio[0]->date_bio;
+                            @endphp
+                            
                             
                             @csrf
 
-                            @foreach ($old_bio as $bio_punch)
+                            {{-- am in --}}
+                            <tr>
+                                <td class="text-lg"> <x-input-label for="new_am_in" :value="__('AM In')" /> </td>
+                                <td>
+                                                                             
+                                    <x-text-input  id="new_am_in" class="block mt-1" type="text" 
+                                        placeholder="{{ $old_bio[0]->hour }}"
+                                        name="new_bio[]" required autofocus autocomplete="{{ $old_bio[0]->hour??false }}" />
+                                    <x-input-error :messages="$errors->get('new_bio[]')" class="mt-2" />           
+                                    
+                                    <x-text-input  id="am_tc" class="block mt-1" type="hidden" 
+                                        name="am_tc" value="{{ $old_bio[0]->timecard }}" />    
+                                    
+                                </td>
+                                
+                                <td>
+                                    {{ $new_bio[0]??false}}
+                                </td>
+
+                            </tr>
                             
-                                @if ($loop->index <= 3)
-                                    <tr>
-                                        <td class="mt-4"> <x-input-label for="am_in" :value="__('AM_In')" /> </td>
-                                        
-                                        <div class="mt-4" > 
-                                            <td>                                            
-                                                <x-text-input  id="new_bio_{{ $loop->index }}" class="block mt-1" type="text" 
-                                                    placeholder="{{ $bio_punch->hour??false }}"
-                                                    name="new_punch[{{ $loop->index }}]" required autofocus autocomplete="new_am_in" />
-                                                <x-input-error :messages="$errors->get('new_punch[{{ $loop->index }}]')" class="mt-2" />
+                            {{-- am out --}}
+                            <tr>
+                                <td class="text-lg"> <x-input-label for="new_am_out" :value="__('AM Out')" /> </td>
+                                <td>
+                                                                             
+                                    <x-text-input  id="new_am_out" class="block mt-1" type="text" 
+                                        placeholder="{{ $old_bio[0]->hour }}"
+                                        name="new_bio[]" required autofocus autocomplete="{{ $old_bio[0]->hour??false }}" />
+                                    <x-input-error :messages="$errors->get('new_bio[]')" class="mt-2" />                                                                                                             
+                                    
+                                </td>
+                                <td>
+                                    {{ $new_bio[1]??false}}
+                                </td>
 
-                                                <x-text-input  id="biometrics_id{{ $loop->index }}" class="block mt-1" type="hidden"                                                    
-                                                   name="biometrics_id[{{ $loop->index }}]" value=""/>
-                                                   
-                                                <x-text-input  id="active_{{ $loop->index }}" class="block mt-1" type="hidden"                                                    
-                                                   name="active_[{{ $loop->index }}]" value=""/>   
-                                            </td>
-                                        </div>
-                                        
-                                    </tr>
-                                @else
+                            </tr>
+                            
+                            {{-- pm in --}}
+                            <tr>
+                                <td class="text-lg"> <x-input-label for="new_pm_in" :value="__('PM In')" /> </td>
+                                <td>
+                                                                             
+                                    <x-text-input  id="new_pm_in" class="block mt-1" type="text" 
+                                        placeholder="{{ $old_bio[2]->hour??false }}"
+                                        name="new_bio[]" required autofocus autocomplete="{{ $old_bio[2]->hour??false }}" />
+                                    <x-input-error :messages="$errors->get('new_bio[]')" class="mt-2" />                                                                                                             
+                                    
+                                </td>
+                                <td>
+                                    {{ $new_bio[2]??false}}
+                                    
+                                </td>
 
-                                    <tr>
-                                        <td > </td>
-                                        
-                                        <div class="mt-4" > 
-                                            <td>                                            
-                                       
-                                                <x-text-input  id="active_{{ $loop->index }}" class="block mt-1" type="text"                                                    
-                                                    placeholder="{{ $old_bio[$loop->index]->hour??false}}.testing.{{ $bio_punch->id??false }}"  name="active_[{{ $loop->index }}]" value=""/>
-                                                
-                                            </td>
-                                        </div>
-                                        
-                                    </tr>
-                                @endif
 
-                            @endforeach
+                            </tr>
+                            
+                            {{-- pm out --}}
+                            <tr>
+                                <td class="text-lg"> <x-input-label for="new_pm_out" :value="__('PM Out')" /> </td>
+                                <td>
+                                                                             
+                                    <x-text-input  id="new_pm_out" class="block mt-1" type="text" 
+                                        placeholder="{{ $old_bio[3]->hour??false }}"
+                                        name="new_bio[]" required autofocus autocomplete="{{ $old_bio[3]->hour??false }}" />
+                                    <x-input-error :messages="$errors->get('new_bio[]')" class="mt-2" />                                                                                                             
+                                    
+                                </td>
+                                <td>
+                                    {{ $new_bio[3]??false}}
+                                    
+                                </td>
+
+                            </tr>
+                            
+                            <tr>                                
+                                <td></td>
+                                <td>                                                              
+                                    <x-text-input  id="reason" class="block mt-1" type="text"
+                                        placeholder="Reason"
+                                        name="reason_bio" required autofocus  />
+                                    <x-input-error :messages="$errors->get('reason')" class="mt-2" />
+                                </td>  
+
+                                <td>
+                                    <button type="submit" name="save_new" value="save_new">Update Bio</button>
+                                </td>                              
+                            </tr>
 
                         </form>
                     </table>
