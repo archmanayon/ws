@@ -324,9 +324,9 @@ class AbsenceCalendarController extends Controller
                 } 
 
                 //this is if there are absences and tardiness in one day
-                if($late > 0 && $under > 0 || 
+                if($late$late > 0 && $under > 0 || 
                     //if in 2 enries only ; late am in with am out falls in pm
-                    $late && $punch->pm_in < $official->pm_out || 
+                    $late && $punch->pm_in < $official->pm_out || $late && $punch->am_in > $official->am_in ||
                     $under && $punch->am_in > $official->am_in  &&
                     $punch->pm_in > $official->pm_in)  {
                         $tardiness = 'abs_lte_und';
@@ -334,7 +334,7 @@ class AbsenceCalendarController extends Controller
                         $type_under = 'UND';
                         $rendered_late = $late ;
                         $rendered_und = $under;
-                    }
+                }
             }
 
             //lates and undertime OUTSIDE absences
@@ -361,7 +361,7 @@ class AbsenceCalendarController extends Controller
             }
 
             if(in_array($d_date, $holiday) || $day =='Sunday' || 
-                !isset($searched_user->shift->$am_in) ||
+                !isset($searched_user->shift->$am_in) ||$rendered == 0 ||
                 !isset($searched_user->shift->$pm_in))
                 {}  
             
