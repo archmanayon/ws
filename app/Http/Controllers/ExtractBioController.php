@@ -64,34 +64,30 @@ class ExtractBioController extends Controller
         ];
     }
 
-    public function extract_tardi($official, $day, $bio_punch, $ten_min_allowance)
+    public function extract_tardi($official, $day, $bio_punch)
     {
 
-        $am_late = $official->am_in && $bio_punch->am_in <= $official->am_out? 
+        $am_late = $official->am_in && $bio_punch->am_in && $bio_punch->am_in < $official->am_out? 
             round((strtotime($bio_punch->am_in)-strtotime($official->am_in))/3600,2) :
-            false;
-        $pm_late = $official->pm_in && $bio_punch->pm_in <= $official->pm_out? 
+            0;
+        $pm_late = $official->pm_in && $bio_punch->pm_in && $bio_punch->pm_in < $official->pm_out? 
             round((strtotime($bio_punch->pm_in)-strtotime($official->pm_in))/3600,2) :
-            false;
-        $late = ($am_late??false) + ($pm_late??false) 
-            - $ten_min_allowance;
-
-        $am_und = $official->am_out &&  $bio_punch->am_out >= $official->am_in ? 
+            0;
+          
+        $am_und = $official->am_out &&  $bio_punch->am_out &&  $bio_punch->am_out >= $official->am_in ? 
             round((strtotime($official->am_out)-strtotime($bio_punch->am_out))/3600,2) :
             false;
-        $pm_und = $official->pm_out &&  $bio_punch->pm_out >= $official->am_in? 
+        $pm_und = $official->pm_out &&  $bio_punch->pm_out &&  $bio_punch->pm_out >= $official->am_in? 
             round((strtotime($official->pm_out)-strtotime($bio_punch->pm_out))/3600,2) :
             false;
-        $under = ( $am_und??false) + ($pm_und ?? false);
+       
 
         return (object) [
-            "am_late"   => $am_late,
-            "pm_late"   => $pm_late,
-            "late"      => $late,
-            "am_und"    => $am_und,
-            "pm_und"    => $pm_und,
-            "under"     => $under
-            
+            "am_late"   => $am_late > 0 ? $am_late : false,
+            "pm_late"   => $pm_late> 0 ? $pm_late : false,
+            // "late"      => $late> 0 ? $late : false,
+            "am_und"    => $am_und> 0 ? $am_und : false,
+            "pm_und"    => $pm_und> 0 ? $pm_und : false
         ];
  
     }

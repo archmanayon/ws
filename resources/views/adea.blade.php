@@ -116,8 +116,11 @@
                                             {{ $daily->type}}
                                         </td>
                                         <td class="px-4 py-3">
-                                            {{ $daily->rendered}}
-                                        </td>   
+                                            {{ $daily->required_h}}
+                                        </td>  
+                                        {{-- <td class="px-4 py-3">
+                                            {{ $daily->pm_late }}
+                                        </td>     --}}
 
                                         {{-- und outside abs --}}
                                         @if ($daily->ws_double)
@@ -165,7 +168,7 @@
                                         @endif
 
                                        {{-- late with abs --}}
-                                        @if ($daily->rendered_late > 0)
+                                        @if ($daily->required_h_late > 0)
                                             </tr>
                                             <tr class="bg-gray-700 border-b border-gray-600">
                                                 <td class="px-4 py-3">
@@ -204,13 +207,13 @@
                                                     {{ $daily->type_late }}
                                                 </td>
                                                 <td class="px-4 py-3">
-                                                    {{ $daily->rendered_late }}
+                                                    {{ $daily->required_h_late }}
                                                 </td>
                                                
                                         @endif
 
                                         {{-- und with abs --}}
-                                        @if ($daily->rendered_und > 0)
+                                        @if ($daily->required_h_und > 0)
                                             </tr>
                                             <tr class="bg-gray-700 border-b border-gray-600">
                                                 <td class="px-4 py-3">
@@ -249,9 +252,9 @@
                                                     {{ $daily->type_under }}
                                                 </td>
                                                 <td class="px-4 py-3">
-                                                    {{ $daily->rendered_und }}
+                                                    {{ $daily->required_h_und }}
                                                 </td>
-                                               
+                                                                                            
                                         @endif                                       
                                        
                                     </tr>

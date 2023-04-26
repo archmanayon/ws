@@ -286,12 +286,12 @@ class AbsenceCalendarController extends Controller
             ]); 
 
             $am_late    = $tardi->am_late;
-            $pm_late    = $tardi->pm_late;
-            $late       = $tardi->late;
+            $pm_late    = $tardi->pm_late;            
+            $late       = ($am_late??false) + ($pm_late??false) - $ten_min_allowance;
 
             $am_und     = $tardi->am_und;
             $pm_und     = $tardi->pm_und;
-            $under      = $tardi->under;      
+            $under      = ($am_und??false) + ($pm_und ?? false);
             
             $tardiness = false;
             $whole_day = '';
@@ -310,21 +310,21 @@ class AbsenceCalendarController extends Controller
                 //Abs n_hour if wholeday
                 if(!$punch->am_in && !$punch->pm_in || ($punch->am_render + $punch->pm_render) < 1) {
 
-                    $rendered = $official->am_num_hr + $official->pm_num_hr ;
+                    $required_h = $official->am_num_hr + $official->pm_num_hr ;
 
                 //Abs n_hour in AM only
                 } elseif(!$punch->am_in || !$punch->am_out || $am_late >=  $official->am_num_hr){
 
-                    $rendered = $official->am_num_hr;
+                    $required_h = $official->am_num_hr;
 
                 //ABs n_hour in PM only
                 } elseif(!$punch->pm_in || !$punch->pm_out ||  $pm_late >=  $official->pm_num_hr){
 
-                    $rendered = $official->pm_num_hr;
+                    $required_h = $official->pm_num_hr;
                 } 
 
                 //this is if there are absences and tardiness in one day
-                if($late$late > 0 && $under > 0 || 
+                if($late || $late > 0 && $under > 0 || 
                     //if in 2 enries only ; late am in with am out falls in pm
                     $late && $punch->pm_in < $official->pm_out || $late && $punch->am_in > $official->am_in ||
                     $under && $punch->am_in > $official->am_in  &&
@@ -332,36 +332,38 @@ class AbsenceCalendarController extends Controller
                         $tardiness = 'abs_lte_und';
                         $type_late = 'LTE';
                         $type_under = 'UND';
-                        $rendered_late = $late ;
-                        $rendered_und = $under;
+                        $required_h_late = $late ;
+                        $required_h_und = $under;
                 }
             }
+            // __________________________________________________________
 
             //lates and undertime OUTSIDE absences
             elseif($late > 0 && $under > 0)
             {
                 $tardiness = 'lte_und';
                 $type = 'LTE';
-                $rendered = $late;
+                $required_h = $late;
                 
             }
             elseif ($late > 0)
             {
                 $type = 'LTE';
-                $rendered = $late;
+                $required_h = $late;
             }    
             elseif ($under > 0)
             {
                 $type = 'UND';
-                $rendered = $under;
+                $required_h = $under;
             }
             else {
                 $type = 'no_tardi';
-                $rendered = $official->am_num_hr ;
+                $required_h = $official->am_num_hr ;
             }
+            // ________________________________________________________
 
             if(in_array($d_date, $holiday) || $day =='Sunday' || 
-                !isset($searched_user->shift->$am_in) ||$rendered == 0 ||
+                !isset($searched_user->shift->$am_in) ||$required_h == 0 ||
                 !isset($searched_user->shift->$pm_in))
                 {}  
             
@@ -376,12 +378,12 @@ class AbsenceCalendarController extends Controller
                     'timecard'=> $searched_user->timecard,
                     'date'=> $d_date,                    
                     'type'=> $type,
-                    'rendered'=> $rendered,
+                    'required_h'=> $required_h,
 
                     'type_late' => $tardiness == 'abs_lte_und' ? $type_late : false,
-                    'rendered_late' => $tardiness == 'abs_lte_und' ? $rendered_late : false,
+                    'required_h_late' => $tardiness == 'abs_lte_und' ? $required_h_late : false,
                     'type_under' => $tardiness == 'abs_lte_und' ? $type_under : false,                    
-                    'rendered_und' => $tardiness == 'abs_lte_und' ? $rendered_und : false,
+                    'required_h_und' => $tardiness == 'abs_lte_und' ? $required_h_und : false,
 
                     'ws_double'=> $tardiness == 'lte_und' ? $under : false,
                     'bio_daily_array' => $date->format('mdy'),
@@ -389,6 +391,30 @@ class AbsenceCalendarController extends Controller
                     'punch' => $punch
                 ];
             }
+            // ________________________________________________________
+
+            // return (object) [
+            //     'student_id'=> $searched_user->student_id,
+            //     'name'=> $searched_user->name,
+            //     'timecard'=> $searched_user->timecard,
+            //     'date'=> $d_date,                    
+            //     'type'=> $type,
+            //     'required_h'=> $required_h,
+
+            //     'type_late' => $tardiness == 'abs_lte_und' ? $type_late : false,
+            //     'required_h_late' => $tardiness == 'abs_lte_und' ? $required_h_late : false,
+            //     'type_under' => $tardiness == 'abs_lte_und' ? $type_under : false,                    
+            //     'required_h_und' => $tardiness == 'abs_lte_und' ? $required_h_und : false,
+
+            //     'ws_double'=> $tardiness == 'lte_und' ? $under : false,
+            //     'bio_daily_array' => $date->format('mdy'),
+            //     'all_bio_punches' =>  $punch->all_bio_punches,
+            //     'punch' => $punch,
+            //     'am_late'    => $tardi->am_late,
+            //     'pm_late'    => $tardi->pm_late,
+            //     'late'       => $late
+            // ];
+
             
         })->toArray();        
         
