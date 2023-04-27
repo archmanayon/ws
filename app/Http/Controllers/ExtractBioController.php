@@ -13,9 +13,13 @@ use Illuminate\Http\Request;
 class ExtractBioController extends Controller
 {
     public function extract_bio ($searched_user, $date, $official)
-    {        
+    {               
+        
+        // $updated_bio = Biometric::where(DB::raw('SUBSTRING(biotext, 1, 6)'), '=',  $searched_user->timecard)
+        //                 ->where(DB::raw('SUBSTRING(biotext, 7, 6)'), '=', $date->format('mdy')); 
+
         $bio_daily_array = Biometric::where(DB::raw('SUBSTRING(biotext, 1, 6)'), '=',  $searched_user->timecard)
-                        ->where(DB::raw('SUBSTRING(biotext, 7, 6)'), '=', $date->format('mdy'));                
+                        ->where(DB::raw('SUBSTRING(biotext, 7, 6)'), '=', $date->format('mdy'));
 
         $all_bio_punches = $bio_daily_array->selectRaw
             ('                

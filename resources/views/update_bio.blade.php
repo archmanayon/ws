@@ -71,21 +71,31 @@
                             
                             
                             @csrf
+                            <tr>                                
+                                <td></td>
+                                <td>                                                              
+                                    <x-text-input  id="reason_bio" class="block mt-1" type="text"
+                                        placeholder="Reason"
+                                        name="reason_bio" required autofocus  />
+                                    <x-input-error :messages="$errors->get('reason_bio')" class="mt-2" />
+                                </td>  
+                    
+                            </tr>
 
                             {{-- am in --}}
                             <tr>
                                 <td class="text-lg"> <x-input-label for="new_am_in" :value="__('AM In')" /> </td>
-                                <td>
-                                                                             
-                                    <x-text-input  id="new_am_in" class="block mt-1" type="text" 
-                                        placeholder="{{ $old_bio[0]->hour }}"
-                                        name="new_bio[]" required autofocus autocomplete="{{ $old_bio[0]->hour??false }}" />
-                                    <x-input-error :messages="$errors->get('new_bio[]')" class="mt-2" />           
-                                    
-                                    <x-text-input  id="am_tc" class="block mt-1" type="hidden" 
-                                        name="am_tc" value="{{ $old_bio[0]->timecard }}" />    
-                                    
-                                </td>
+                                    <td>
+                                                                                
+                                        <x-text-input  id="new_am_in" class="block mt-1" type="text" 
+                                            placeholder="{{ $old_bio[0]->hour }}"
+                                            name="new_bio[]" required autofocus autocomplete="{{ $old_bio[0]->hour??false }}" />
+                                        <x-input-error :messages="$errors->get('new_bio[]')" class="mt-2" />           
+                                        
+                                        <x-text-input  id="am_tc" class="block mt-1" type="hidden" 
+                                            name="am_tc" value="{{ $old_bio[0]->timecard }}" />    
+                                        
+                                    </td>
                                 
                                 <td>
                                     {{ $new_bio[0]??false}}
@@ -149,13 +159,6 @@
                             
                             <tr>                                
                                 <td></td>
-                                <td>                                                              
-                                    <x-text-input  id="reason" class="block mt-1" type="text"
-                                        placeholder="Reason"
-                                        name="reason_bio" required autofocus  />
-                                    <x-input-error :messages="$errors->get('reason')" class="mt-2" />
-                                </td>  
-
                                 <td>
                                     <button type="submit" name="save_new" value="save_new">Update Bio</button>
                                 </td>                              
