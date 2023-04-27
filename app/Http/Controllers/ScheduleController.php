@@ -145,40 +145,24 @@ class ScheduleController extends Controller{
         
         $users = $user_all->pluck('id');           
         
-        $mappedUser = collect($users)
+        $mappedArray = collect($users)
             ->map(function ($user) use ($collection, $holiday){
 
-                $bio_punches = app()->call(AbsenceCalendarController::class.'@adea_bio',
+                $user = app()->call(AbsenceCalendarController::class.'@adea_bio',
                 [
                     'collection_of_dates' => $collection,
-                    'searched_user'=> $user, 
+                    'searched_user'=> User::find($user), 
                     'holiday' =>$holiday
-                ]);       
+                ]);
 
-                return (object) [
-                    'bio_punches' => $bio_punches
-                ]                                       ;   
+                return $user;
+                
             }
-        ); 
+        );       
 
-        // to get whole date from column
-            // $test_string = Biometric::where(DB::raw('SUBSTRING(biotext, 1, 6)'), '=',  $user_all[7]->timecard);
-            
-            // to get specifit 'string' from date from column
-            // $subString = $test_string->selectRaw
-            //     ('
-            //         SUBSTRING(biotext, 1, 6) AS timecard,
-            //         SUBSTRING(biotext, 7, 6) AS date,
-            //         SUBSTRING(biotext, 13, 4) AS hour,
-            //         SUBSTRING(biotext, 17, 1) AS in_out
-        //     ')->get();
+        return view ('all_absences',[
 
-        return view ('all_absences',
-        [
-            // 'users' => $test_string,
-            // 'bio' => $subString,
-                        
-            'mappedUser' =>  $mappedUser ?? false
+            'mappedUser' =>  $mappedArray
 
         ]);
     }

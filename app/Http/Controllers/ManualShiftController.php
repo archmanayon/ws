@@ -41,9 +41,10 @@ class ManualShiftController extends Controller
         $official_am_in = $searched_user->shift->$am_in??false;
         $official_am_out = $searched_user->shift->$am_out??false;          
         $official_pm_in = $searched_user->shift->$pm_in??false;
-        $official_pm_out = $searched_user->shift->$pm_out??false;
+        $official_pm_out = $searched_user->shift->$pm_out??false;        
 
         if( $searched_user->manual_shift->pluck('date')->contains( $date->format('Y-m-d')))
+        
         {                             
             $shift_id =  $searched_user->manual_shift->where('date',$date->format('Y-m-d'))
                             ->pluck('shift_id')->implode(', ');                                                          

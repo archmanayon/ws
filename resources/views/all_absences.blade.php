@@ -27,7 +27,7 @@
                     @endforeach<br> --}}
 
                     <table>
-                        <form method="POST" action="{{ route('disp_by_cal') }}">
+                        <form method="POST" action="{{ route('all_absences') }}">
                             @csrf    
                             
                             <td>
@@ -71,10 +71,11 @@
                                 <th class="px-4 py-3">Date</th>
                                 <th class="px-4 py-3">Type</th> 
                                 <th class="px-4 py-3">Hours</th> 
-                            </tr>          
-                            @foreach ($mappedUser as $user )                                
-                                                                 
-                                @foreach ( $user->bio_punches as $daily)                                 
+                            </tr>
+                            
+                            @foreach ( $mappedUser as $bio_punches)                               
+                                                                   
+                                @foreach ( $bio_punches as $daily)                                 
 
                                     @if ( $daily)
 
@@ -103,7 +104,9 @@
                                                         
                                                         @foreach ($daily->all_bio_punches as $bio)
                                                             
-                                                            {{ $bio->hour.'~'.$bio->in_out }}<br>
+                                                            {{ $bio->hour.'~'.$bio->in_out }}
+                                                            <div class="inline-block pl-8 flex-shrink-0"> <a href="update_bio/{{ $daily->timecard.$daily->bio_daily_array}}"> {{ 'update' }} </a></div>
+                                                            <br>
                                                         @endforeach      
                                                         
                                                         {{ $daily->all_bio_punches[0] ?? false ? '': 'no punch'}}                                                    
@@ -115,8 +118,11 @@
                                                 {{ $daily->type}}
                                             </td>
                                             <td class="px-4 py-3">
-                                                {{ $daily->rendered}}
-                                            </td>   
+                                                {{ $daily->required_h}}
+                                            </td>  
+                                            {{-- <td class="px-4 py-3">
+                                                {{ $daily->pm_late }}
+                                            </td>     --}}
 
                                             {{-- und outside abs --}}
                                             @if ($daily->ws_double)
@@ -146,7 +152,7 @@
                                                                 
                                                                 @foreach ($daily->all_bio_punches as $bio)
                                                                     
-                                                                    {{ $bio->hour.'~'.$bio->in_out }}<br>
+                                                                    {{ $bio->hour.'~'.$bio->in_out }} <br>
                                                                 @endforeach      
                                                                 
                                                                 {{ $daily->all_bio_punches[0] ?? false ? '': 'no punch'}}                                                    
@@ -164,7 +170,7 @@
                                             @endif
 
                                         {{-- late with abs --}}
-                                            @if ($daily->rendered_late > 0)
+                                            @if ($daily->required_h_late > 0)
                                                 </tr>
                                                 <tr class="bg-gray-700 border-b border-gray-600">
                                                     <td class="px-4 py-3">
@@ -203,13 +209,13 @@
                                                         {{ $daily->type_late }}
                                                     </td>
                                                     <td class="px-4 py-3">
-                                                        {{ $daily->rendered_late }}
+                                                        {{ $daily->required_h_late }}
                                                     </td>
                                                 
                                             @endif
 
                                             {{-- und with abs --}}
-                                            @if ($daily->rendered_und > 0)
+                                            @if ($daily->required_h_und > 0)
                                                 </tr>
                                                 <tr class="bg-gray-700 border-b border-gray-600">
                                                     <td class="px-4 py-3">
@@ -248,17 +254,17 @@
                                                         {{ $daily->type_under }}
                                                     </td>
                                                     <td class="px-4 py-3">
-                                                        {{ $daily->rendered_und }}
+                                                        {{ $daily->required_h_und }}
                                                     </td>
-                                                
+                                                                                                
                                             @endif                                       
                                         
                                         </tr>
                                     @endif                            
                                     
                                 @endforeach
-
-                            @endforeach  
+                                
+                            @endforeach
 
                         </table>     
                    
