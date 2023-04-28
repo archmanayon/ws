@@ -15,9 +15,17 @@ class ExtractBioController extends Controller
     public function extract_bio ($searched_user, $date, $official)
     {               
         
-        // $updated_bio = Biometric::where(DB::raw('SUBSTRING(biotext, 1, 6)'), '=',  $searched_user->timecard)
-        //                 ->where(DB::raw('SUBSTRING(biotext, 7, 6)'), '=', $date->format('mdy')); 
+        // $newly_bio = Update_bio::where(DB::raw('SUBSTRING(biotext, 1, 6)'), '=',  $searched_user->timecard)
+        //                 ->where(DB::raw('SUBSTRING(biotext, 7, 6)'), '=', $date->format('mdy'));
 
+        // $all_bio_punches = $bio_daily_array->selectRaw
+        //     ('                
+        //         SUBSTRING(biotext, 7, 6) AS date_bio,
+        //         SUBSTRING(biotext, 13, 4) AS hour,
+        //         SUBSTRING(biotext, 17, 1) AS in_out
+        //         ')
+        // ->get();
+        
         $bio_daily_array = Biometric::where(DB::raw('SUBSTRING(biotext, 1, 6)'), '=',  $searched_user->timecard)
                         ->where(DB::raw('SUBSTRING(biotext, 7, 6)'), '=', $date->format('mdy'));
 

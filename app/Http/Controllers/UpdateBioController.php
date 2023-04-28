@@ -34,11 +34,42 @@ class UpdateBioController extends Controller
         ]);
     }
 
-    public function post_new_bio(Request $request, $bio)
+    public function store(Request $request, $bio)
     {
-        $requested = $request->input('new_bio')?? false;
+        // $new_bio = $request->input('new_bio')?? false;
 
-        $new_bio = [];
+        $new_bio = $request->validate([
+            'new_bio.0' => 'required|string|min:4|max:4',
+            'new_bio.1' => 'required|string|min:4|max:4',
+            'new_bio.2' => 'nullable|string|min:4|max:4',
+            'new_bio.3' => 'nullable|string|min:4|max:4'
+            ]
+            ,        [            
+            'new_bio.0.required' => 'The first name field is required.',
+            'new_bio.0.string' => 'The name field must be a string.',
+            'new_bio.0.min' => 'The name field may be lesser than :min characters.',
+            'new_bio.0.max' => 'The name field may be greater than :max characters.',
+
+            'new_bio.1.required' => 'The first name field is required.',
+            'new_bio.1.string' => 'The name field must be a string.',
+            'new_bio.1.min' => 'The name field may be lesser than :min characters.',
+            'new_bio.1.max' => 'The name field may be greater than :max characters.',
+
+            'new_bio.2.string' => 'The name field must be a string.',
+            'new_bio.2.min' => 'The name field may be lesser than :min characters.',
+            'new_bio.2.max' => 'The name field may be greater than :max characters.',
+
+            'new_bio.3.string' => 'The name field must be a string.',
+            'new_bio.3.min' => 'The name field may be lesser than :min characters.',
+            'new_bio.3.max' => 'The name field may be greater than :max characters.'
+        ]
+    );
+
+        // dd($new_bio);
+
+        $new_input_date = [];
+
+        $updated_bio = Update_bio::all();
 
         $bio_daily_array = Biometric::where(DB::raw('SUBSTRING(biotext, 1, 12)'), '=',  $bio);                
 
@@ -51,24 +82,28 @@ class UpdateBioController extends Controller
                 id AS id
                 ')
         ->get();  
+
         $iteration = 0 ;
-        foreach ($requested as $new_punch){ 
 
-            $new_input_date = $iteration == 0 || $iteration == 2?
-                                $old_bio[0]->timecard.$old_bio[0]->date_bio.$new_punch."I":
-                                $old_bio[0]->timecard.$old_bio[0]->date_bio.$new_punch."O";
+        foreach ($new_bio['new_bio'] as $key => $value){ 
 
-            // $new_input_date->validate(['required', 'string', 'unique']);
+            if($value){
+                $in_out = $iteration == 0 || $iteration == 2?"I":"O";
+
+                // if display in arrays only
+                $new_input_date[] = $iteration == 0 || $iteration == 2?
+                                $old_bio[0]->timecard.$old_bio[0]->date_bio.$value."I":
+                                $old_bio[0]->timecard.$old_bio[0]->date_bio.$value."O";
+            }
 
             Update_bio::create([
-
-                'biotext' => $new_input_date,
-                'reason' => request('reason_bio')
+                'time_card' => $old_bio[0]->timecard,
+                'date'      => $old_bio[0]->date_bio,
+                'hour'      => $value,
+                'in_out'    => $in_out,
+                'biotext'   => $old_bio[0]->timecard.$old_bio[0]->date_bio.$value.$in_out,
+                'reason'    => request('reason_bio')
             ]);
-
-            // $iteration == 0 || $iteration == 2?
-            // $new_bio[] =  $old_bio[0]->timecard.$old_bio[0]->date_bio.$new_punch."I":
-            // $new_bio[] =  $old_bio[0]->timecard.$old_bio[0]->date_bio.$new_punch."O";
 
             $iteration ++;
 
@@ -77,8 +112,12 @@ class UpdateBioController extends Controller
         return view ('update_bio',[
 
             'old_bio' => $old_bio,
-            // 'new_bio' => $request,
-            'new_bio' =>$new_bio
+
+            'new_bio' =>$new_bio,
+            
+            'am' => $new_input_date,
+
+            'updated_bio' => $updated_bio
         ]);
     }
 }
