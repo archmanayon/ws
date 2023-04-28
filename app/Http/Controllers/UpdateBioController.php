@@ -5,15 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\Biometric;
-use App\Models\Update_bio;
 use \Carbon\Carbon;
 use Carbon\CarbonPeriod;
+use App\Models\Update_bio;
+
 
 use Illuminate\Http\Request;
 
 class UpdateBioController extends Controller
 {
-    public function new_bio($bio){        
+    public function new_bio($bio){   
+        
+        // $updated_biometric = Update_bio::all()??false;
 
         $bio_daily_array = Biometric::where(DB::raw('SUBSTRING(biotext, 1, 12)'), '=',  $bio);                
 
@@ -30,6 +33,9 @@ class UpdateBioController extends Controller
         return view ('update_bio',[
 
             'old_bio' => $all_bio_punches
+
+            // 'updated_biometric' => $updated_biometric?? false
+            
 
         ]);
     }
@@ -65,11 +71,9 @@ class UpdateBioController extends Controller
         ]
     );
 
-        // dd($new_bio);
+        // dd($new_bio);        
 
-        $new_input_date = [];
-
-        $updated_bio = Update_bio::all();
+        $new_input_date = [];        
 
         $bio_daily_array = Biometric::where(DB::raw('SUBSTRING(biotext, 1, 12)'), '=',  $bio);                
 
@@ -82,6 +86,8 @@ class UpdateBioController extends Controller
                 id AS id
                 ')
         ->get();  
+
+        $updated_biometric = Update_bio::all()??false;
 
         $iteration = 0 ;
 
@@ -104,20 +110,23 @@ class UpdateBioController extends Controller
                 'biotext'   => $old_bio[0]->timecard.$old_bio[0]->date_bio.$value.$in_out,
                 'reason'    => request('reason_bio')
             ]);
-
-            $iteration ++;
+            if( $iteration <= 4 ){
+                $iteration ++;
+            }
+            
 
         }
                
         return view ('update_bio',[
-
+            
             'old_bio' => $old_bio,
 
             'new_bio' =>$new_bio,
             
             'am' => $new_input_date,
+            
+            'updated_biometric' => $updated_biometric?? false
 
-            'updated_bio' => $updated_bio
         ]);
     }
 }

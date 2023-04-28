@@ -91,9 +91,14 @@
                                     
                                 @endif
 
-                                @foreach (Update_bio::all() as $value )
-                                    {{ $value->time_card }}<br>
-                                @endforeach
+                                @if ($updated_biometric??false)
+                                    @foreach ($updated_biometric as $updated)
+
+                                        {{ $updated->hour }} <br>
+                                        
+                                    @endforeach  
+                                @endif
+                               
                     
                             </tr>
 
