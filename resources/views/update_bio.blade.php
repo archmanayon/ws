@@ -27,19 +27,19 @@
                     
 
                     <table class="rounded-t-lg m-5 w-5/6 mx-auto bg-gray-800 text-gray-200">
-                        <tr class="text-left border-b border-gray-300">
-                            <th>original</th>
+                        <tr class="text-left border-b border-gray-300 ">
+                            original
+                            <th></th>
                             <th class="px-4 py-3">
                                 {{  $bio_date }}
-                            </th>
-                            
+                            </th>                            
                             
                         </tr>     
 
                         @foreach ($old_bio as $bio_punch)
-                            <tr>                                                                
-                                <td>
-                                    <div class="mt-4 block " >                                        
+                            <tr>    <td></td>
+                                <td class="px-4 py-3">
+                                    <div class="mt-2 block " >                                        
                                         {{ $bio_punch->hour.$bio_punch->in_out }}
                                     </div>
                                 </td>
@@ -66,16 +66,16 @@
                         </tr>     
 
                         <form method="POST" action="{{ $old_bio[0]->timecard.$old_bio[0]->date_bio }}" >
-                            @php
+                            {{-- @php
                                 $bio_timecard = $old_bio[0]->timecard;
                                 $bio_date = $old_bio[0]->date_bio;
-                            @endphp
+                            @endphp --}}
                             
                             
                             @csrf
                             <tr>                                
                                 
-                                @if ($am ?? false)
+                                {{-- @if ($am ?? false)
                                 
                                     @foreach ( $am as $key => $value)
                                         
@@ -83,7 +83,7 @@
                                     
                                     @endforeach
                                     
-                                @endif
+                                @endif --}}
                                
                                 {{ $pref_bio[0]->hour?? false }}
                     
