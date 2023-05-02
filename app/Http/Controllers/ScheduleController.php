@@ -132,10 +132,12 @@ class ScheduleController extends Controller{
     public function print_all_abs_old() 
     {
         $user_all = User::all();
-        $holiday = array("04-06-23", "04-07-23","04-08-23",
-                            "04-10-23","01-05-23","01-06-23",
-                            "01-07-23","01-16-23",
-                            "02-24-23", "02-25-23");
+        $holiday = array("01-05-23","01-06-23",
+                            "02-24-23", "02-25-23",
+                            "04-06-23", "04-07-23",
+                            "04-08-23", "04-10-23",
+                            "04-21-23") ;
+
         $start_date = request('start_date')?? 0;
         $end_date = request('end_date')?? 0;
         $period = CarbonPeriod::create($start_date, $end_date);

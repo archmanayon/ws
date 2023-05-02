@@ -81,11 +81,10 @@
 
                                         <tr class="bg-gray-700 border-b border-gray-600">
                                             <td class="px-4 py-3">
-                                                {{ $daily->student_id}}|{{ $daily->punch->pm_in }}
+                                                {{ $daily->student_id}}
                                             </td>
                                             <td class="px-4 py-3">
-                                                {{ $daily->name}}|{{ "sa abs" }}
-                                            </td>
+                                                {{ $daily->name}}
                                             <td>
                                                 <x-dropdown >
                                                     <x-slot name="trigger">
@@ -108,8 +107,11 @@
                                                             <div class="inline-block pl-8 flex-shrink-0"> <a href="update_bio/{{ $daily->timecard.$daily->bio_daily_array}}"> {{ 'update' }} </a></div>
                                                             <br>
                                                         @endforeach      
-                                                        
-                                                        {{ $daily->all_bio_punches[0] ?? false ? '': 'no punch'}}                                                    
+                                                        <div class="inline-block pl-8 flex-shrink-0">
+                                                            <a href="update_bio/{{ $daily->timecard.$daily->bio_daily_array}}">                                                                
+                                                                {{ $daily->all_bio_punches[0] ?? false ? '': 'no punch'}}    
+                                                            </a>
+                                                        </div>                                             
 
                                                     </x-slot>
                                                 </x-dropdown>
@@ -132,8 +134,7 @@
                                                         {{ $daily->student_id}}
                                                     </td>
                                                     <td class="px-4 py-3">
-                                                        {{ $daily->name }}|{{ "sa late" }}
-                                                    </td>
+                                                        {{ $daily->name }}
                                                     <td>
                                                         <x-dropdown>
                                                             <x-slot name="trigger">
@@ -148,14 +149,19 @@
                                                                 </button>
                                                             </x-slot>
             
-                                                            <x-slot name="content">
+                                                            <x-slot name="content"> 
                                                                 
                                                                 @foreach ($daily->all_bio_punches as $bio)
-                                                                    
-                                                                    {{ $bio->hour.'~'.$bio->in_out }} <br>
+                                                            
+                                                                    {{ $bio->hour.'~'.$bio->in_out }}
+                                                                    <div class="inline-block pl-8 flex-shrink-0"> <a href="update_bio/{{ $daily->timecard.$daily->bio_daily_array}}"> {{ 'update' }} </a></div>
+                                                                    <br>
                                                                 @endforeach      
-                                                                
-                                                                {{ $daily->all_bio_punches[0] ?? false ? '': 'no punch'}}                                                    
+                                                                <div class="inline-block pl-8 flex-shrink-0">
+                                                                    <a href="update_bio/{{ $daily->timecard.$daily->bio_daily_array}}">                                                                
+                                                                        {{ $daily->all_bio_punches[0] ?? false ? '': 'no punch'}}    
+                                                                    </a>
+                                                                </div>      
             
                                                             </x-slot>
                                                         </x-dropdown>
@@ -177,7 +183,7 @@
                                                         {{ $daily->student_id}}
                                                     </td>
                                                     <td class="px-4 py-3">
-                                                        {{ $daily->name }}|{{ "sa late sagol absent" }}
+                                                        {{ $daily->name }}
                                                     </td>
                                                     <td>
                                                         <x-dropdown>
@@ -193,14 +199,19 @@
                                                                 </button>
                                                             </x-slot>
             
-                                                            <x-slot name="content">
+                                                            <x-slot name="content"> 
                                                                 
                                                                 @foreach ($daily->all_bio_punches as $bio)
-                                                                    
-                                                                    {{ $bio->hour.'~'.$bio->in_out }}<br>
+                                                            
+                                                                    {{ $bio->hour.'~'.$bio->in_out }}
+                                                                    <div class="inline-block pl-8 flex-shrink-0"> <a href="update_bio/{{ $daily->timecard.$daily->bio_daily_array}}"> {{ 'update' }} </a></div>
+                                                                    <br>
                                                                 @endforeach      
-                                                                
-                                                                {{ $daily->all_bio_punches[0] ?? false ? '': 'no punch'}}                                                    
+                                                                <div class="inline-block pl-8 flex-shrink-0">
+                                                                    <a href="update_bio/{{ $daily->timecard.$daily->bio_daily_array}}">                                                                
+                                                                        {{ $daily->all_bio_punches[0] ?? false ? '': 'no punch'}}    
+                                                                    </a>
+                                                                </div>      
             
                                                             </x-slot>
                                                         </x-dropdown>
@@ -222,7 +233,7 @@
                                                         {{ $daily->student_id}}
                                                     </td>
                                                     <td class="px-4 py-3">
-                                                        {{ $daily->name }}|{{ "sa und" }}
+                                                        {{ $daily->name }}
                                                     </td>
                                                     <td>
                                                         <x-dropdown>
@@ -238,14 +249,19 @@
                                                                 </button>
                                                             </x-slot>
             
-                                                            <x-slot name="content">
+                                                            <x-slot name="content"> 
                                                                 
                                                                 @foreach ($daily->all_bio_punches as $bio)
-                                                                    
-                                                                    {{ $bio->hour.'~'.$bio->in_out }}<br>
+                                                            
+                                                                    {{ $bio->hour.'~'.$bio->in_out }}
+                                                                    <div class="inline-block pl-8 flex-shrink-0"> <a href="update_bio/{{ $daily->timecard.$daily->bio_daily_array}}"> {{ 'update' }} </a></div>
+                                                                    <br>
                                                                 @endforeach      
-                                                                
-                                                                {{ $daily->all_bio_punches[0] ?? false ? '': 'no punch'}}                                                    
+                                                                <div class="inline-block pl-8 flex-shrink-0">
+                                                                    <a href="update_bio/{{ $daily->timecard.$daily->bio_daily_array}}">                                                                
+                                                                        {{ $daily->all_bio_punches[0] ?? false ? '': 'no punch'}}    
+                                                                    </a>
+                                                                </div>      
             
                                                             </x-slot>
                                                         </x-dropdown>

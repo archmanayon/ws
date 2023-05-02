@@ -287,7 +287,9 @@ class AbsenceCalendarController extends Controller
 
             $am_late    = $tardi->am_late;
             $pm_late    = $tardi->pm_late;            
-            $late       = ($am_late??false) + ($pm_late??false) - $ten_min_allowance;
+            $late       = ($am_late??false) + ($pm_late??false)
+            //  - $ten_min_allowance
+             ;
 
             $am_und     = $tardi->am_und;
             $pm_und     = $tardi->pm_und;

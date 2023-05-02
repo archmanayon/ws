@@ -8,6 +8,7 @@ use App\Models\Biometric;
 use \Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use App\Models\Update_bio;
+use Illuminate\Support\Str;
 
 
 use Illuminate\Http\Request;
@@ -18,8 +19,7 @@ class UpdateBioController extends Controller
                 
         // $updated_biometric = Update_bio::all()->where('time_card','505180')->where('date','030323')[3]->hour;
         
-        $bio_daily_array = Biometric::where(DB::raw('SUBSTRING(biotext, 1, 12)'), '=',  $bio);                
-
+        $bio_daily_array = Biometric::where(DB::raw('SUBSTRING(biotext, 1, 12)'),'=',$bio);
         $all_bio_punches = $bio_daily_array->selectRaw
             ('                
                 SUBSTRING(biotext, 1, 6) AS timecard,
@@ -31,24 +31,19 @@ class UpdateBioController extends Controller
                 ')
         ->get();         
 
-        $updated_bio = Update_bio::where('time_card',$all_bio_punches[0]->timecard)
-            ->where('date',$all_bio_punches[0]->date_bio)->get()??false;
+        $str_tc = Str::limit($bio,6,'');
+        $str_date = substr($bio, 6, 6);
 
-        $find =  $updated_bio[0]->time_card. $updated_bio[0]->date;
-
-        $pref_bio = $all_bio_punches->pluck('tc_date')[0] == $find?
-            $updated_bio?? false : $all_bio_punches;
-        // $pref_bio = in_array('505180021023',$pref_bio);
-        // $pref_bio = in_array($find,$all_bio_punches->pluck('tc_date'));
-        
+        $updated_bio = Update_bio::where('time_card',$str_tc)
+            ->where('date',$str_date)->get();
+       
         return view ('update_bio',[
 
-            'old_bio' => $all_bio_punches,
+            'old_bio'       =>  $all_bio_punches??false,
 
-            'updated_bio' => $updated_bio?? false,
+            'updated_bio'   =>  $updated_bio?? false,
             
-            'pref_bio' => $pref_bio
-            
+            'pref_bio'      =>  $updated_bio[0]??false ? $updated_bio : $all_bio_punches
 
         ]);
     }

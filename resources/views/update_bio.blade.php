@@ -13,7 +13,7 @@
     </x-slot>
 
     @php
-        $bio_date = Carbon::createFromFormat('mdy', $old_bio[0]->date_bio)
+        $bio_date = Carbon::createFromFormat('mdy', $old_bio[0]->date_bio??false)
                     ->format('F j, Y')
     @endphp
 
@@ -21,7 +21,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:grid lg:grid-cols-2 lg:px-8 ">
 
             {{-- 1st column --}}
-            <div class="bg-white m-5 dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg w-3/4">
+            {{-- <div class="bg-white m-5 dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg w-3/4">
 
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     
@@ -49,7 +49,7 @@
 
                 </div>               
 
-            </div>
+            </div> --}}
 
             {{-- 2nd column --}}
             <div class="bg-white m-5 dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg w-3/4">
@@ -61,17 +61,11 @@
                         <tr class="text-left border-b border-gray-300">
                             <th></th>
                             <th class="px-4 py-3">
-                                {{  $bio_date }}
+                                {{  "DATE:".$bio_date }}
                             </th>
                         </tr>     
 
                         <form method="POST" action="{{ $old_bio[0]->timecard.$old_bio[0]->date_bio }}" >
-                            {{-- @php
-                                $bio_timecard = $old_bio[0]->timecard;
-                                $bio_date = $old_bio[0]->date_bio;
-                            @endphp --}}
-                            
-                            
                             @csrf
                             <tr>                                
                                 
@@ -85,7 +79,7 @@
                                     
                                 @endif --}}
                                
-                                {{ $pref_bio[0]->hour?? false }}
+                                {{-- {{ $pref_bio[0]->hour?? false }} --}}
                     
                             </tr>
 
@@ -95,17 +89,15 @@
                                     <td>
                                                                                 
                                         <x-text-input  id="new_am_in" class="block mt-1" type="text" 
-                                            value="{{ old('new_bio.0')?:$pref_bio[0]->hour??false }}"
-                                            name="new_bio[]" required autofocus autocomplete="{{ $pref_bio[0]->hour??false }}" />
-                                        <x-input-error :messages="$errors->get('new_bio.0')" class="mt-2" />           
+                                            value="{{ old('new_bio.0')?:($pref_bio[0]->hour??false) }}"
+                                            name="new_bio[]" required autofocus autocomplete="{{ ($pref_bio[0]->hour??false )}}" />
+                                        <x-input-error :messages="$errors->get('new_bio.0')" class="mt-2" />
                                         
-                                        <x-text-input  id="am_tc" class="block mt-1" type="hidden" 
-                                            name="am_tc" value="{{ $pref_bio[0]->timecard.$old_bio[0]->date_bio }}" />    
                                         
                                     </td>
                                 
                                 <td>
-                                    {{ $updated_bio[0]->hour??false }}<br>
+                                    {{-- {{ $updated_bio[0]->hour??false }}<br> --}}
                                    
                                 </td>
                                 
@@ -113,7 +105,7 @@
                             </tr>
                             
                             {{-- am out --}}
-                            <tr>
+                            {{-- <tr>
                                 <td class="text-lg"> <x-input-label for="new_am_out" :value="__('AM Out')" /> </td>
                                 <td>
                                                                              
@@ -127,10 +119,10 @@
                                     {{ $updated_bio[1]->hour??false }}
                                 </td>
 
-                            </tr>
+                            </tr> --}}
                             
                             {{-- pm in --}}
-                            <tr>
+                            {{-- <tr>
                                 <td class="text-lg"> <x-input-label for="new_pm_in" :value="__('PM In')" /> </td>
                                 <td>
                                                                              
@@ -146,10 +138,10 @@
                                 </td>
 
 
-                            </tr>
+                            </tr> --}}
                             
                             {{-- pm out --}}
-                            <tr>
+                            {{-- <tr>
                                 <td class="text-lg"> <x-input-label for="new_pm_out" :value="__('PM Out')" /> </td>
                                 <td>
                                                                              
@@ -167,7 +159,7 @@
                                     
                                 </td>
 
-                            </tr>
+                            </tr> --}}
 
                             <tr>
                                 <td></td>
