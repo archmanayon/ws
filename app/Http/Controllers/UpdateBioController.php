@@ -15,13 +15,13 @@ use Illuminate\Http\Request;
 
 class UpdateBioController extends Controller
 {
-    public function new_bio($bio){   
-                
+    public function new_bio($bio){
+
         // $updated_biometric = Update_bio::all()->where('time_card','505180')->where('date','030323')[3]->hour;
-        
+
         $bio_daily_array = Biometric::where(DB::raw('SUBSTRING(biotext, 1, 12)'),'=',$bio);
         $all_bio_punches = $bio_daily_array->selectRaw
-            ('                
+            ('
                 SUBSTRING(biotext, 1, 6) AS timecard,
                 SUBSTRING(biotext, 1, 12) AS tc_date,
                 SUBSTRING(biotext, 7, 6) AS date_bio,
@@ -29,21 +29,23 @@ class UpdateBioController extends Controller
                 SUBSTRING(biotext, 17, 1) AS in_out,
                 id AS id
                 ')
-        ->get();         
+        ->get();
 
         $str_tc = Str::limit($bio,6,'');
         $str_date = substr($bio, 6, 6);
 
         $updated_bio = Update_bio::where('time_card',$str_tc)
             ->where('date',$str_date)->get();
-       
+
         return view ('update_bio',[
 
-            'old_bio'       =>  $all_bio_punches??false,
+            'old_bio'       =>  $all_bio_punches,
 
             'updated_bio'   =>  $updated_bio?? false,
-            
-            'pref_bio'      =>  $updated_bio[0]??false ? $updated_bio : $all_bio_punches
+
+            'pref_bio'      =>  $updated_bio[0]??false ? $updated_bio : $all_bio_punches,
+            'str_tc'        =>  $str_tc,
+            'str_date'      =>  $str_date
 
         ]);
     }
@@ -58,7 +60,7 @@ class UpdateBioController extends Controller
             'new_bio.2' => 'nullable|string|min:4|max:4',
             'new_bio.3' => 'nullable|string|min:4|max:4'
             ]
-            ,        [            
+            ,        [
             'new_bio.0.required' => 'The first name field is required.',
             'new_bio.0.string' => 'The name field must be a string.',
             'new_bio.0.min' => 'The name field may be lesser than :min characters.',
@@ -79,20 +81,20 @@ class UpdateBioController extends Controller
         ]
         );
 
-        // dd($new_bio);        
+        // dd($new_bio);
 
-        $new_input_date = [];        
+        $new_input_date = [];
 
         $bio_daily_array = Biometric::where(DB::raw('SUBSTRING(biotext, 1, 12)'), '=',  $bio);
         $old_bio = $bio_daily_array->selectRaw
-            ('                
+            ('
                 SUBSTRING(biotext, 1, 6) AS timecard,
                 SUBSTRING(biotext, 7, 6) AS date_bio,
                 SUBSTRING(biotext, 13, 4) AS hour,
                 SUBSTRING(biotext, 17, 1) AS in_out,
                 id AS id
                 ')
-        ->get();  
+        ->get();
 
         // $updated_biometric = Update_bio::all()->where('time_card', '505180')->where('hour', '030323')()??false;
 
@@ -100,7 +102,7 @@ class UpdateBioController extends Controller
 
         $iteration = 0 ;
 
-        foreach ($validated_new_bio['new_bio'] as $key => $value){ 
+        foreach ($validated_new_bio['new_bio'] as $key => $value){
 
             if($value){
                 $in_out = $iteration == 0 || $iteration == 2?"I":"O";
@@ -122,18 +124,18 @@ class UpdateBioController extends Controller
             if( $iteration <= 4 ){
                 $iteration ++;
             }
-            
+
 
         }
-               
+
         return view ('update_bio',[
-            
+
             'old_bio' => $old_bio,
 
             'new_bio' =>$new_bio,
-            
+
             'am' => $new_input_date
-            
+
             // 'updated_biometric' =>  $updated_biometric?? false
         ]);
     }
