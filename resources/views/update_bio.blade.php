@@ -21,7 +21,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:grid lg:grid-cols-2 lg:px-8 ">
 
             {{-- 1st column --}}
-            {{-- <div class="bg-white m-5 dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg w-3/4">
+            <div class="bg-white m-5 dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg w-3/4">
 
                 <div class="p-6 text-gray-900 dark:text-gray-100">
 
@@ -49,7 +49,7 @@
 
                 </div>
 
-            </div> --}}
+            </div>
 
             {{-- 2nd column --}}
             <div class="bg-white m-5 dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg w-3/4">
@@ -69,7 +69,7 @@
                             @csrf
                             <tr>                               
                                 {{ $searched_user->name }}<br>
-                                {{ $official->am_in }}<br>                             
+                                                         
                                 
                             </tr>
 
@@ -79,7 +79,7 @@
                                     <td>
 
                                         <x-text-input  id="new_am_in" class="block mt-1" type="text"
-                                            value="{{ old('new_bio.0')?:($pref_bio[0]->hour??false) }}"
+                                            {{-- value="{{ old('new_bio.0')?:($pref_bio[0]->hour??false) }}" --}}
                                             placeholder="{{ $official->am_in??false }}"
                                             name="new_bio[]" required autofocus autocomplete="{{ ($pref_bio[0]->hour??false )}}" />
                                         <x-input-error :messages="$errors->get('new_bio.0')" class="mt-2" />
@@ -101,7 +101,7 @@
                                 <td>
 
                                     <x-text-input  id="new_am_out" class="block mt-1" type="text"
-                                        value="{{ old('new_bio.1')?:$pref_bio[1]->hour??false }}"
+                                        {{-- value="{{ old('new_bio.1')?:$pref_bio[1]->hour??false }}" --}}
                                         placeholder="{{ $official->am_out??false }}"
                                         name="new_bio[]" required autofocus autocomplete="{{ $pref_bio[0]->hour??false }}" />
                                     <x-input-error :messages="$errors->get('new_bio.1')" class="mt-2" />
@@ -119,7 +119,7 @@
                                 <td>
 
                                     <x-text-input  id="new_pm_in" class="block mt-1" type="text"
-                                        value="{{ old('new_bio.2')?:$pref_bio[2]->hour??$pref_bio[0]->hour??false }}"
+                                        {{-- value="{{ old('new_bio.2')?:$pref_bio[2]->hour??$pref_bio[0]->hour??false }}" --}}
                                         placeholder="{{ $official->pm_in??false }}"
                                         name="new_bio[]" autofocus autocomplete="{{ $pref_bio[2]->hour??false }}" />
                                     <x-input-error :messages="$errors->get('new_bio.2')" class="mt-2" />
@@ -139,7 +139,7 @@
                                 <td>
 
                                     <x-text-input  id="new_pm_out" class="block mt-1" type="text"
-                                        value="{{ old('new_bio.3')?:$pref_bio[3]->hour??($pref_bio[2]->hour??false?'':'') }}"
+                                        {{-- value="{{ old('new_bio.3')?:$pref_bio[3]->hour??($pref_bio[2]->hour??false?'':'') }}" --}}
                                         placeholder="{{ $pref_bio[3]->hour??$official->pm_out??
                                                         $pref_bio[2]->hour??$pref_bio[1]->hour??false }}"
                                         name="new_bio[]" autofocus autocomplete="{{ $pref_bio[3]->hour??false }}" />
