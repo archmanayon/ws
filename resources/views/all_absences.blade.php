@@ -73,15 +73,15 @@
                                 <th class="px-4 py-3">Hours</th> 
                             </tr>
                             
-                            @foreach ( $mappedUser as $bio_punches)                               
+                            @foreach ( $mappedUser as $each_user)                               
                                                                    
-                                @foreach ( $bio_punches as $daily)                                 
+                                @foreach ( $each_user as $daily)                                 
 
                                     @if ( $daily)
 
                                         <tr class="bg-gray-700 border-b border-gray-600">
                                             <td class="px-4 py-3">
-                                                {{ $daily->student_id}}
+                                                {{ $daily->student_id.'-sa absent'}}
                                             </td>
                                             <td class="px-4 py-3">
                                                 {{ $daily->name}}
@@ -122,9 +122,9 @@
                                             <td class="px-4 py-3">
                                                 {{ $daily->required_h}}
                                             </td>  
-                                            {{-- <td class="px-4 py-3">
-                                                {{ $daily->pm_late }}
-                                            </td>     --}}
+                                            <td class="px-4 py-3">
+                                                {{ $daily->official->am_in }}
+                                            </td>    
 
                                             {{-- und outside abs --}}
                                             @if ($daily->ws_double)

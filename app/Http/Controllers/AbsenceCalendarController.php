@@ -390,7 +390,8 @@ class AbsenceCalendarController extends Controller
                     'ws_double'=> $tardiness == 'lte_und' ? $under : false,
                     'bio_daily_array' => $date->format('mdy'),
                     'all_bio_punches' =>  $punch->all_bio_punches,
-                    'punch' => $punch
+                    'punch' => $punch,
+                    'official' => $official
                 ];
             }
             // ________________________________________________________

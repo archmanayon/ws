@@ -67,20 +67,10 @@
 
                         <form method="POST" action="{{ $str_tc.$str_date }}" >
                             @csrf
-                            <tr>
-
-                                {{-- @if ($am ?? false)
-
-                                    @foreach ( $am as $key => $value)
-
-                                        {{ $key.'|'.$value }} <br>
-
-                                    @endforeach
-
-                                @endif --}}
-
-                                {{-- {{ $pref_bio[0]->hour?? false }} --}}
-
+                            <tr>                               
+                               
+                                {{ $official->am_in }}<br>                               
+                                
                             </tr>
 
                             {{-- am in --}}
@@ -105,7 +95,7 @@
                             </tr>
 
                             {{-- am out --}}
-                            {{-- <tr>
+                            <tr>
                                 <td class="text-lg"> <x-input-label for="new_am_out" :value="__('AM Out')" /> </td>
                                 <td>
 
@@ -119,15 +109,15 @@
                                     {{ $updated_bio[1]->hour??false }}
                                 </td>
 
-                            </tr> --}}
+                            </tr>
 
                             {{-- pm in --}}
-                            {{-- <tr>
+                            <tr>
                                 <td class="text-lg"> <x-input-label for="new_pm_in" :value="__('PM In')" /> </td>
                                 <td>
 
                                     <x-text-input  id="new_pm_in" class="block mt-1" type="text"
-                                        value="{{ old('new_bio.2')?:$pref_bio[2]->hour??$pref_bio[0]->hour }}"
+                                        value="{{ old('new_bio.2')?:$pref_bio[2]->hour??$pref_bio[0]->hour??false }}"
                                         name="new_bio[]" autofocus autocomplete="{{ $pref_bio[2]->hour??false }}" />
                                     <x-input-error :messages="$errors->get('new_bio.2')" class="mt-2" />
 
@@ -138,10 +128,10 @@
                                 </td>
 
 
-                            </tr> --}}
+                            </tr>
 
                             {{-- pm out --}}
-                            {{-- <tr>
+                            <tr>
                                 <td class="text-lg"> <x-input-label for="new_pm_out" :value="__('PM Out')" /> </td>
                                 <td>
 
@@ -159,7 +149,7 @@
 
                                 </td>
 
-                            </tr> --}}
+                            </tr>
 
                             <tr>
                                 <td></td>

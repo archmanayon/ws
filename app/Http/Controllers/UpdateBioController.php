@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
+use App\Models\ManualShift;
+use App\Models\Shift;
 use App\Models\Biometric;
+
 use \Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use App\Models\Update_bio;
@@ -15,9 +18,7 @@ use Illuminate\Http\Request;
 
 class UpdateBioController extends Controller
 {
-    public function new_bio($bio){
-
-        // $updated_biometric = Update_bio::all()->where('time_card','505180')->where('date','030323')[3]->hour;
+    public function new_bio($bio){        
 
         $bio_daily_array = Biometric::where(DB::raw('SUBSTRING(biotext, 1, 12)'),'=',$bio);
         $all_bio_punches = $bio_daily_array->selectRaw
@@ -31,8 +32,18 @@ class UpdateBioController extends Controller
                 ')
         ->get();
 
-        $str_tc = Str::limit($bio,6,'');
-        $str_date = substr($bio, 6, 6);
+        $str_tc     = Str::limit($bio,6,'');
+        $str_date   = substr($bio, 6, 6);
+        $date_s     = Carbon::createFromFormat('mdy', $str_date);
+        $date       = Carbon::parse($date_s);
+
+        $official = app()->call(ManualShiftController::class.'@official_',
+            [
+                // 'searched_user'     =>  User::where('timecard', $str_tc)->get(),
+                'searched_user'     =>  User::where('timecard',  $str_tc)->get()[0],
+                'date'              =>  $date,
+                'day'               =>  $date->format('l')
+            ]);
 
         $updated_bio = Update_bio::where('time_card',$str_tc)
             ->where('date',$str_date)->get();
@@ -45,7 +56,12 @@ class UpdateBioController extends Controller
 
             'pref_bio'      =>  $updated_bio[0]??false ? $updated_bio : $all_bio_punches,
             'str_tc'        =>  $str_tc,
-            'str_date'      =>  $str_date
+            'str_date'      =>  $str_date,
+            // -------------------------------------------
+            // 'searched_user' => User::where('timecard', $str_tc)->get(),
+            // 'date'          => $date->format('Y-m-d'),
+            // 'day'      => User::where('timecard',  $str_tc)->get()[0],
+            'official' => $official
 
         ]);
     }
