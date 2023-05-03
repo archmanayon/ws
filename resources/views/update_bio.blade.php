@@ -140,9 +140,8 @@
 
                                     <x-text-input  id="new_pm_out" class="block mt-1" type="text"
                                         value="{{ old('new_bio.3')?:$pref_bio[3]->hour??($pref_bio[2]->hour??false?'':'') }}"
-                                        placeholder="{{ $pref_bio[3]->hour??
-                                                        $pref_bio[2]->hour??$pref_bio[1]->hour??
-                                                        $official->pm_out??false }}"
+                                        placeholder="{{ $pref_bio[3]->hour??$official->pm_out??
+                                                        $pref_bio[2]->hour??$pref_bio[1]->hour??false }}"
                                         name="new_bio[]" autofocus autocomplete="{{ $pref_bio[3]->hour??false }}" />
                                     <x-input-error :messages="$errors->get('new_bio.3')" class="mt-2" />
 
