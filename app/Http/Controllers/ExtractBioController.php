@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\Shift;
 use App\Models\Biometric;
+use App\Models\Update_bio;
 use \Carbon\Carbon;
 
 use Illuminate\Http\Request;
@@ -13,29 +14,48 @@ use Illuminate\Http\Request;
 class ExtractBioController extends Controller
 {
     public function extract_bio ($searched_user, $date, $official)
-    {               
-        
-        // $newly_bio = Update_bio::where(DB::raw('SUBSTRING(biotext, 1, 6)'), '=',  $searched_user->timecard)
-        //                 ->where(DB::raw('SUBSTRING(biotext, 7, 6)'), '=', $date->format('mdy'));
+    {          
+        $str_tc     = $searched_user->timecard;
+        $str_date   = $date->format('mdy');
 
-        // $all_bio_punches = $bio_daily_array->selectRaw
-        //     ('                
-        //         SUBSTRING(biotext, 7, 6) AS date_bio,
-        //         SUBSTRING(biotext, 13, 4) AS hour,
-        //         SUBSTRING(biotext, 17, 1) AS in_out
-        //         ')
-        // ->get();
-        
-        $bio_daily_array = Biometric::where(DB::raw('SUBSTRING(biotext, 1, 6)'), '=',  $searched_user->timecard)
-                        ->where(DB::raw('SUBSTRING(biotext, 7, 6)'), '=', $date->format('mdy'));
+         // ----------------updated bio----------------------------------       
+         
+        $updated_bio = Update_bio::where(DB::raw('SUBSTRING(biotext, 1, 6)'), '=',  $searched_user->timecard)
+                        ->where(DB::raw('SUBSTRING(biotext, 7, 6)'), '=', $date->format('mdy'))??false;
 
-        $all_bio_punches = $bio_daily_array->selectRaw
+        $sub_updated_bio = $updated_bio->selectRaw
+            ('
+                 SUBSTRING(biotext, 1, 6) AS timecard,
+                 SUBSTRING(biotext, 1, 12) AS tc_date,
+                 SUBSTRING(biotext, 7, 6) AS date_bio,
+                 SUBSTRING(biotext, 13, 4) AS hour,
+                 SUBSTRING(biotext, 17, 1) AS in_out,
+                 id AS id
+                 ')
+         ->get();
+
+        // ----------------orig bio----------------------------------
+
+        $orig_bio = Biometric::where(DB::raw('SUBSTRING(biotext, 1, 6)'), '=',  $searched_user->timecard)
+                        ->where(DB::raw('SUBSTRING(biotext, 7, 6)'), '=', $date->format('mdy'))??false;
+
+        $sub_orig_bio = $orig_bio->selectRaw
             ('                
                 SUBSTRING(biotext, 7, 6) AS date_bio,
                 SUBSTRING(biotext, 13, 4) AS hour,
                 SUBSTRING(biotext, 17, 1) AS in_out
                 ')
-        ->get();        
+        ->get();
+
+        // -------------------------------------------------------------
+
+        if( $sub_updated_bio->pluck('tc_date')->contains( $str_tc.$str_date))
+        
+        {                             
+            $all_bio_punches = $sub_updated_bio;
+        } else {
+            $all_bio_punches = $sub_orig_bio;
+        }
 
         $bio_am_in = $all_bio_punches[0]->hour??false;
         $bio_am_out = $all_bio_punches[1]->hour??false;

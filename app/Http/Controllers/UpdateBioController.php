@@ -68,7 +68,8 @@ class UpdateBioController extends Controller
 
     public function store(Request $request, $bio)
     {
-        // $new_bio = $request->input('new_bio')?? false;
+        $str_tc     = Str::limit($bio,6,'');
+        $str_date   = substr($bio, 6, 6);
 
         $validated_new_bio = $request->validate([
             'new_bio.0' => 'required|string|min:4|max:4',
@@ -97,24 +98,7 @@ class UpdateBioController extends Controller
         ]
         );
 
-        // dd($new_bio);
-
         $new_input_date = [];
-
-        $bio_daily_array = Biometric::where(DB::raw('SUBSTRING(biotext, 1, 12)'), '=',  $bio);
-        $old_bio = $bio_daily_array->selectRaw
-            ('
-                SUBSTRING(biotext, 1, 6) AS timecard,
-                SUBSTRING(biotext, 7, 6) AS date_bio,
-                SUBSTRING(biotext, 13, 4) AS hour,
-                SUBSTRING(biotext, 17, 1) AS in_out,
-                id AS id
-                ')
-        ->get();
-
-        // $updated_biometric = Update_bio::all()->where('time_card', '505180')->where('hour', '030323')()??false;
-
-        // $updated_biometric = Update_bio::all()->where('time_card','505180')->where('date','030323')()??false;
 
         $iteration = 0 ;
 
@@ -125,34 +109,30 @@ class UpdateBioController extends Controller
 
                 // if display in arrays only
                 $new_input_date[] = $iteration == 0 || $iteration == 2?
-                                $old_bio[0]->timecard.$old_bio[0]->date_bio.$value."I":
-                                $old_bio[0]->timecard.$old_bio[0]->date_bio.$value."O";
+                                $str_tc.$str_date.$value."I":
+                                $str_tc.$str_date.$value."O";
             }
 
             Update_bio::create([
-                'time_card' => $old_bio[0]->timecard,
-                'date'      => $old_bio[0]->date_bio,
+                'time_card' => $str_tc,
+                'date'      => $str_date,
                 'hour'      => $value,
                 'in_out'    => $in_out,
-                'biotext'   => $old_bio[0]->timecard.$old_bio[0]->date_bio.$value.$in_out,
+                'biotext'   => $str_tc.$str_date.$value.$in_out,
                 'reason'    => request('reason_bio')
             ]);
             if( $iteration <= 4 ){
                 $iteration ++;
             }
 
-
         }
 
-        return view ('update_bio',[
-
-            'old_bio' => $old_bio,
+        return view ('update_bio',[          
 
             'new_bio' =>$new_bio,
 
             'am' => $new_input_date
 
-            // 'updated_biometric' =>  $updated_biometric?? false
         ]);
     }
 }
