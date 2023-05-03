@@ -68,8 +68,8 @@
                         <form method="POST" action="{{ $str_tc.$str_date }}" >
                             @csrf
                             <tr>                               
-                               
-                                {{ $official->am_in }}<br>                               
+                                {{ $searched_user->name }}<br>
+                                {{ $official->am_in }}<br>                             
                                 
                             </tr>
 

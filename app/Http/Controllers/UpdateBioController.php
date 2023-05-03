@@ -32,15 +32,18 @@ class UpdateBioController extends Controller
                 ')
         ->get();
 
-        $str_tc     = Str::limit($bio,6,'');
-        $str_date   = substr($bio, 6, 6);
-        $date_s     = Carbon::createFromFormat('mdy', $str_date);
-        $date       = Carbon::parse($date_s);
+        
+        $str_tc         = Str::limit($bio,6,'');
+        $str_date       = substr($bio, 6, 6);
+        $date_s         = Carbon::createFromFormat('mdy', $str_date);
+        $date           = Carbon::parse($date_s);
+        $searched_user  = User::where('timecard',  $str_tc)->get()[0];
+        
 
         $official = app()->call(ManualShiftController::class.'@official_',
             [
                 // 'searched_user'     =>  User::where('timecard', $str_tc)->get(),
-                'searched_user'     =>  User::where('timecard',  $str_tc)->get()[0],
+                'searched_user'     =>   $searched_user,
                 'date'              =>  $date,
                 'day'               =>  $date->format('l')
             ]);
@@ -58,7 +61,7 @@ class UpdateBioController extends Controller
             'str_tc'        =>  $str_tc,
             'str_date'      =>  $str_date,
             // -------------------------------------------
-            // 'searched_user' => User::where('timecard', $str_tc)->get(),
+            'searched_user' => $searched_user,
             // 'date'          => $date->format('Y-m-d'),
             // 'day'      => User::where('timecard',  $str_tc)->get()[0],
             'official' => $official
@@ -68,8 +71,9 @@ class UpdateBioController extends Controller
 
     public function store(Request $request, $bio)
     {
-        $str_tc     = Str::limit($bio,6,'');
-        $str_date   = substr($bio, 6, 6);
+        $str_tc         = Str::limit($bio,6,'');
+        $str_date       = substr($bio, 6, 6);
+        $searched_user  = User::where('timecard',  $str_tc)->get()[0];
 
         $validated_new_bio = $request->validate([
             'new_bio.0' => 'required|string|min:4|max:4',
@@ -114,6 +118,7 @@ class UpdateBioController extends Controller
             }
 
             Update_bio::create([
+                'name'      => $searched_user->name,
                 'time_card' => $str_tc,
                 'date'      => $str_date,
                 'hour'      => $value,
@@ -121,18 +126,14 @@ class UpdateBioController extends Controller
                 'biotext'   => $str_tc.$str_date.$value.$in_out,
                 'reason'    => request('reason_bio')
             ]);
-            if( $iteration <= 4 ){
+            // if( $iteration <= 4 ){
                 $iteration ++;
-            }
+            // }
 
         }
 
-        return view ('update_bio',[          
-
-            'new_bio' =>$new_bio,
-
-            'am' => $new_input_date
-
-        ]);
+        return redirect('update_bio')
+            ->with('success_message', 'Updated Biometrics');
+        
     }
 }
