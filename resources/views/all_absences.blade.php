@@ -81,7 +81,7 @@
 
                                         <tr class="bg-gray-700 border-b border-gray-600">
                                             <td class="px-4 py-3">
-                                                {{ $daily->student_id.'-sa absent'}}
+                                                {{ $daily->student_id}}
                                             </td>
                                             <td class="px-4 py-3">
                                                 {{ $daily->name}}
@@ -122,9 +122,6 @@
                                             <td class="px-4 py-3">
                                                 {{ $daily->required_h}}
                                             </td>  
-                                            <td class="px-4 py-3">
-                                                {{ $daily->official->am_in }}
-                                            </td>    
 
                                             {{-- und outside abs --}}
                                             @if ($daily->ws_double)

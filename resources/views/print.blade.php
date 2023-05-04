@@ -51,6 +51,7 @@
                                 <div class="mt-4">
                                     <x-input-label for="find_user" :value="__('FIND')" />
                                     <select name="find_user" class="block mt-1 border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" placeholder ="find user">
+                                            <option >{{ 'Search Employee' }}</option>
                                         @foreach($users as $user)
                                             <option value="{{ $user->id }}">{{ $user->name }}</option>
                                         @endforeach
@@ -84,9 +85,7 @@
                                 <th class="px-4 py-3">Date</th>
                                 <th class="px-4 py-3">Type</th> 
                                 <th class="px-4 py-3">Hours</th> 
-                            </tr>
-                            
-                                                    
+                            </tr>                       
                                                                 
                             @foreach ( $mappedUser as $daily)                                 
 
@@ -94,7 +93,7 @@
 
                                     <tr class="bg-gray-700 border-b border-gray-600">
                                         <td class="px-4 py-3">
-                                            {{ $daily->student_id.'-sa absent'}}
+                                            {{ $daily->student_id}}
                                         </td>
                                         <td class="px-4 py-3">
                                             {{ $daily->name}}
@@ -134,10 +133,7 @@
                                         </td>
                                         <td class="px-4 py-3">
                                             {{ $daily->required_h}}
-                                        </td>  
-                                        <td class="px-4 py-3">
-                                            {{ $daily->official->am_in }}
-                                        </td>    
+                                        </td>
 
                                         {{-- und outside abs --}}
                                         @if ($daily->ws_double)

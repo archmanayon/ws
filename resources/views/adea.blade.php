@@ -69,7 +69,17 @@
                                 <th class="px-4 py-3">Student ID</th>
                                 <th class="px-4 py-3">Name</th>
                                 <th class="px-4 py-3">Date</th>
-                                <th class="px-4 py-3">Type</th> 
+                                <th class="px-4 py-3">                                   
+                                    <select name="find_user" class="block mt-1 border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" >
+                                        <option value="_all">{{ 'Type' }}</option>
+                                   
+                                        <option value="abs">{{ 'Absences' }}</option>
+                                        <option value="lte">{{ 'Late' }}</option>
+                                        <option value="und">{{ 'Undertime' }}</option>
+                                       
+                                   
+                                </select>
+                                </th> 
                                 <th class="px-4 py-3">Hours</th> 
                             </tr>          
                                                                    
