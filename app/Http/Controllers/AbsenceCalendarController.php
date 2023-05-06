@@ -294,8 +294,11 @@ class AbsenceCalendarController extends Controller
             $pm_und     = $tardi->pm_und;
             $under      = ($am_und??false) + ($pm_und ?? false);
             
-            $tardiness = false;
-            $whole_day = '';
+            $tardiness = null;
+            $whole_day = null;
+            $required_h = null ;
+            $required_h_late = null;
+            $required_h_und = null;
             
             if (!$punch->am_in || !$punch->am_out || !$punch->pm_in || !$punch->pm_out||
 
