@@ -46,8 +46,8 @@ class ScheduleController extends Controller{
 
         return view ('print',[
 
-            'users'     => User::all(),
-            'mappedUser' =>  $user,
+            'users'     => User::all()->sortBy('name'),
+            'mappedUser' =>  $user
 
         ]);
     }

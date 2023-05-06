@@ -179,6 +179,31 @@
 
             {{-- 3rd column https://www.youtube.com/watch?v=S1yXIAjCbQw--}}
 
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" name="name[]"></td>
+                        <td><input type="email" name="email[]"></td>
+                        <td><input type="tel" name="phone[]"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" name="name[]"></td>
+                        <td><input type="email" name="email[]"></td>
+                        <td><input type="tel" name="phone[]"></td>
+                    </tr>
+                    <!-- Add more rows as needed -->
+                </tbody>
+            </table>
+            <button type="submit">Submit</button>
+        </form>
+
             {{-- <div class="bg-white m-5 dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg w-3/4">
 
                 <div class="p-6 text-gray-900 dark:text-gray-100">

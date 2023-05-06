@@ -258,6 +258,7 @@ class AbsenceCalendarController extends Controller
             $pm_in = $day."_pm_in";
                                       
             $ten_min_allowance = 0.17;
+            // $ten_min_allowance = 0;
 
                 //---to choose between 'official shift' and 'manual shift'
             $official = app()->call(ManualShiftController::class.'@official_',
@@ -287,9 +288,7 @@ class AbsenceCalendarController extends Controller
 
             $am_late    = $tardi->am_late;
             $pm_late    = $tardi->pm_late;            
-            $late       = ($am_late??false) + ($pm_late??false)
-            //  - $ten_min_allowance
-             ;
+            $late       = ($am_late??false) + ($pm_late??false)- $ten_min_allowance;
 
             $am_und     = $tardi->am_und;
             $pm_und     = $tardi->pm_und;
@@ -365,7 +364,8 @@ class AbsenceCalendarController extends Controller
             // ________________________________________________________
 
             if(in_array($d_date, $holiday) || $day =='Sunday' || 
-                !isset($searched_user->shift->$am_in) ||$required_h == 0 ||
+                !isset($searched_user->shift->$am_in) ||
+                $required_h == 0 || 
                 !isset($searched_user->shift->$pm_in))
                 {}  
             

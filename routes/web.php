@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\ManualShift;
 use App\Models\Punch;
@@ -45,6 +46,34 @@ Route::get('js', function () {
 
 Route::get('shcp', function () {
     return view ('shcp',[
+    ]);
+});
+
+Route::get('hash_pw', function () {
+    
+    $users = User::all();
+
+    $hashed_w_id = [];
+    $corrected_name = [];
+
+    foreach($users as $user){
+        
+        // $hashed = Hash::make($user->student_id.'usc');
+        // $hashed_w_id[] = $user->name."'s PW is".$hashed;
+        // $corrected = str_replace('+', ',', $user->name);
+        // $corrected_name[] = $corrected;
+
+        // User::where('id', $user->id)->update(['password' => $hashed]);
+        // User::where('id', $user->id)->update(['name' => $corrected]);
+        
+    }
+
+    return view ('hash_pw',[
+
+        'hashedPassword' => $hashed_w_id,
+        'corrected_name' =>$corrected_name
+
+
     ]);
 });
 
