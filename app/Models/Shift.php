@@ -13,4 +13,8 @@ class Shift extends Model
     {
         return $this->hasMany(User::class);
     }   
+    public function manual_shifts()
+    {
+        return $this->hasMany(ManualShift::class);
+    }   
 }

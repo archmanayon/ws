@@ -14,9 +14,9 @@ class ManualShiftController extends Controller
 {
     public function official_($searched_user, $day, $date)
     {
-         // if( $searched_user->manual_shift->pluck('date')->contains( $date->format('Y-m-d')))
+         // if( $searched_user->manual_shifts->pluck('date')->contains( $date->format('Y-m-d')))
                 // {                             
-                //     $Schedule_id =  $searched_user->manual_shift->where('date',$date->format('Y-m-d'))
+                //     $Schedule_id =  $searched_user->manual_shifts->where('date',$date->format('Y-m-d'))
                 //                     ->pluck('schedule_id')->implode(', ');                                                          
                 //     $official_am_in = $searched_user->schedule->find($Schedule_id)->Manual_in;
                 //     $official_am_out = $searched_user->schedule->find($Schedule_id)->Manual_out;
@@ -36,17 +36,17 @@ class ManualShiftController extends Controller
 
         $pm_in = $day."_pm_in";
 
-        $pm_out = $day."_pm_out";           
-
+        $pm_out = $day."_pm_out";        
+       
         $official_am_in = $searched_user->shift->$am_in??false;
         $official_am_out = $searched_user->shift->$am_out??false;          
         $official_pm_in = $searched_user->shift->$pm_in??false;
         $official_pm_out = $searched_user->shift->$pm_out??false;        
 
-        if( $searched_user->manual_shift->pluck('date')->contains( $date->format('Y-m-d')))
+        if( $searched_user->manual_shifts->pluck('date')->contains( $date->format('Y-m-d')))
         
         {                             
-            $shift_id =  $searched_user->manual_shift->where('date',$date->format('Y-m-d'))
+            $shift_id =  $searched_user->manual_shifts->where('date',$date->format('Y-m-d'))
                             ->pluck('shift_id')->implode(', ');                                                          
             $official_am_in     = $searched_user->shift->find($shift_id)->Manual_am_in??false;
             $official_am_out    = $searched_user->shift->find($shift_id)->Manual_am_out??false;

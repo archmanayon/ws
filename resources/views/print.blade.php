@@ -86,8 +86,10 @@
                                 <th class="px-4 py-3">Date</th>
                                 <th class="px-4 py-3">Type</th> 
                                 <th class="px-4 py-3">Hours</th> 
-                            </tr>                       
-                                                                
+                            </tr>   
+                            
+                            {{ $update_bio}}
+                                                                                            
                             @foreach ( $mappedUser as $daily)                                 
 
                                 @if ( $daily)
@@ -135,6 +137,7 @@
                                         <td class="px-4 py-3">
                                             {{ $daily->required_h}}
                                         </td>
+                                        
 
                                         {{-- und outside abs --}}
                                         @if ($daily->ws_double)
@@ -182,6 +185,7 @@
                                                 <td class="px-4 py-3">
                                                     {{ $daily->ws_double }}
                                                 </td>
+                                                
                                                 
                                         @endif
 

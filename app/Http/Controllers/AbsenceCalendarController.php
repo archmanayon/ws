@@ -49,9 +49,9 @@ class AbsenceCalendarController extends Controller
             $under = round((strtotime($official_out) - 
                  strtotime($user_punch_out))/3600,2);
 
-            if( $searched_user->manual_shift->pluck('date')->contains( $date->format('Y-m-d')))
+            if( $searched_user->manual_shifts->pluck('date')->contains( $date->format('Y-m-d')))
             {                             
-                $Schedule_id =  $searched_user->manual_shift->where('date',$date->format('Y-m-d'))
+                $Schedule_id =  $searched_user->manual_shifts->where('date',$date->format('Y-m-d'))
                                 ->pluck('schedule_id')->implode(', ');                                                          
                 $official_in = $searched_user->schedule->find($Schedule_id)->Manual_in;
                 $official_out = $searched_user->schedule->find($Schedule_id)->Manual_out;
@@ -170,9 +170,9 @@ class AbsenceCalendarController extends Controller
 
                  
 
-            if( $searched_user->manual_shift->pluck('date')->contains( $date->format('Y-m-d')))
+            if( $searched_user->manual_shifts->pluck('date')->contains( $date->format('Y-m-d')))
             {                             
-                $Schedule_id =  $searched_user->manual_shift->where('date',$date->format('Y-m-d'))
+                $Schedule_id =  $searched_user->manual_shifts->where('date',$date->format('Y-m-d'))
                                 ->pluck('schedule_id')->implode(', ');                                                          
                 $official_in = $searched_user->schedule->find($Schedule_id)->Manual_in;
                 $official_out = $searched_user->schedule->find($Schedule_id)->Manual_out;

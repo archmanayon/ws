@@ -11,6 +11,9 @@ use App\Models\Punch;
 use App\Models\Schedule;
 use App\Http\Controllers\AbsenceCalendarController;
 
+use App\Models\Shift;
+use App\Models\Update_bio;
+
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
@@ -19,8 +22,7 @@ class ScheduleController extends Controller{
 
     public function absences_all()
     {
-       
-        $find_user = request('find_user')?? 0;
+        $searched_user = User::find(request('find_user')?? 0);
 
         $holiday = array("01-05-23","01-06-23",
                             "02-24-23", "02-25-23",
@@ -39,7 +41,7 @@ class ScheduleController extends Controller{
         $user = app()->call(AbsenceCalendarController::class.'@adea_bio',
         [
             'collection_of_dates' => $collection,
-            'searched_user'=> User::find($find_user), 
+            'searched_user'=> $searched_user, 
             'holiday' =>$holiday
         ]);
                  
@@ -47,7 +49,8 @@ class ScheduleController extends Controller{
         return view ('print',[
 
             'users'     => User::all()->sortBy('name'),
-            'mappedUser' =>  $user
+            'mappedUser' =>  $user,
+            'update_bio' => Update_bio::find(2)
 
         ]);
     }
@@ -129,7 +132,8 @@ class ScheduleController extends Controller{
 
     public function print_all_abs_old() 
     {
-        $user_all = User::all();
+        // $user_all = User::with(['shift', 'manual_shifts', 'update_bios'])->get();
+
         $holiday = array("01-05-23","01-06-23",
                             "02-24-23", "02-25-23",
                             "04-06-23", "04-07-23",
@@ -140,18 +144,16 @@ class ScheduleController extends Controller{
         $end_date = request('end_date')?? 0;
         $period = CarbonPeriod::create($start_date, $end_date);
         $dates = $period->toArray();
-        $collection = collect($dates);
+        $collection_of_dates = collect($dates);
         $count_dates = $period->count();
         
-        $users = $user_all->pluck('id');           
-        
-        $mappedArray = collect($users)
-            ->map(function ($user) use ($collection, $holiday){
+        $mappedArray = collect(User::all())
+            ->map(function ($user) use ($collection_of_dates, $holiday){
 
                 $user = app()->call(AbsenceCalendarController::class.'@adea_bio',
                 [
-                    'collection_of_dates' => $collection,
-                    'searched_user'=> User::find($user), 
+                    'collection_of_dates' => $collection_of_dates,
+                    'searched_user'=> User::find($user->id), 
                     'holiday' =>$holiday
                 ]);
 
@@ -163,6 +165,8 @@ class ScheduleController extends Controller{
         return view ('all_absences',[
 
             'mappedUser' =>  $mappedArray
+
+
 
         ]);
     }
