@@ -88,11 +88,11 @@
                                 <th class="px-4 py-3">Hours</th> 
                             </tr>   
                             
-                            {{ $update_bio->user->student_id}}<br>
+                            {{-- {{ $update_bio->user->student_id}}<br> --}}
 
-                            {{ $updated_bi0_2 }}<br>
+                            {{ $updated_bio_2 }}<br>
 
-                            @foreach ($updated_bi0_3 as $key => $value)
+                            @foreach ($updated_bio_3 as $key => $value)
 
                                {{ $key.'|'.$value }} <br>
                             @endforeach

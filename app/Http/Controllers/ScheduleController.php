@@ -22,7 +22,7 @@ class ScheduleController extends Controller{
 
     public function absences_all()
     {
-        $searched_user = User::find(request('find_user')?? 0);        
+        $searched_user = User::find(request('find_user'));        
 
         $holiday = array("01-05-23","01-06-23",
                             "02-24-23", "02-25-23",
@@ -51,10 +51,53 @@ class ScheduleController extends Controller{
             'users'         => User::all()->sortBy('name'),
             'mappedUser'    => $user,
             'update_bio'    => Update_bio::find(2),
-            'updated_bi0_2' => Update_bio::where('time_card', $searched_user->timecard)->where('date', '040523')->exists(),
-            // 'updated_bi0_2' => $searched_user->update_bios->where('date', '040523')->exists(),
-            'updated_bi0_3' => Update_bio::where('time_card', $searched_user->timecard)->where('date', '040523')->get()
+            // 'updated_bio_2' => Update_bio::where('time_card', $searched_user->timecard)->where('date', '040523')->exists(),
+            'updated_bio_2' => $searched_user->update_bios->where('date', '042423')->pluck('date')->contains('042423'),
+            'updated_bio_3' => $searched_user->update_bios->where('date', '042823')
             
+            // 'updated_bio_3' => Update_bio::where('time_card', $searched_user->timecard)->where('date', '040523')->get()
+            
+        ]);
+    }
+
+    public function print_all_abs_old() 
+    {
+        // $user_all = User::with(['shift', 'manual_shifts', 'update_bios'])->get();
+
+        $holiday = array("01-05-23","01-06-23",
+                            "02-24-23", "02-25-23",
+                            "04-06-23", "04-07-23",
+                            "04-08-23", "04-10-23",
+                            "04-21-23") ;
+
+        $start_date = request('start_date')?? 0;
+        $end_date = request('end_date')?? 0;
+        $period = CarbonPeriod::create($start_date, $end_date);
+        $dates = $period->toArray();
+        $collection_of_dates = collect($dates);
+        $count_dates = $period->count();
+        
+        $mappedArray = collect(User::all())
+            ->map(function ($user) use ($collection_of_dates, $holiday){
+
+                $user = app()->call(AbsenceCalendarController::class.'@adea_bio',
+                [
+                    'collection_of_dates' => $collection_of_dates,
+                    'searched_user'=> User::find($user->id), 
+                    'holiday' =>$holiday
+                ]);
+
+                return $user;
+                
+            }
+        );       
+
+        return view ('all_absences',[
+
+            'mappedUser' =>  $mappedArray
+
+
+
         ]);
     }
 
@@ -133,44 +176,5 @@ class ScheduleController extends Controller{
         ]);
     }
 
-    public function print_all_abs_old() 
-    {
-        // $user_all = User::with(['shift', 'manual_shifts', 'update_bios'])->get();
-
-        $holiday = array("01-05-23","01-06-23",
-                            "02-24-23", "02-25-23",
-                            "04-06-23", "04-07-23",
-                            "04-08-23", "04-10-23",
-                            "04-21-23") ;
-
-        $start_date = request('start_date')?? 0;
-        $end_date = request('end_date')?? 0;
-        $period = CarbonPeriod::create($start_date, $end_date);
-        $dates = $period->toArray();
-        $collection_of_dates = collect($dates);
-        $count_dates = $period->count();
-        
-        $mappedArray = collect(User::all())
-            ->map(function ($user) use ($collection_of_dates, $holiday){
-
-                $user = app()->call(AbsenceCalendarController::class.'@adea_bio',
-                [
-                    'collection_of_dates' => $collection_of_dates,
-                    'searched_user'=> User::find($user->id), 
-                    'holiday' =>$holiday
-                ]);
-
-                return $user;
-                
-            }
-        );       
-
-        return view ('all_absences',[
-
-            'mappedUser' =>  $mappedArray
-
-
-
-        ]);
-    }
+    
 }
