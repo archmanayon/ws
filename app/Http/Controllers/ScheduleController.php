@@ -22,7 +22,7 @@ class ScheduleController extends Controller{
 
     public function absences_all()
     {
-        $searched_user = User::find(request('find_user')?? 0);
+        $searched_user = User::find(request('find_user')?? 0);        
 
         $holiday = array("01-05-23","01-06-23",
                             "02-24-23", "02-25-23",
@@ -48,10 +48,13 @@ class ScheduleController extends Controller{
 
         return view ('print',[
 
-            'users'     => User::all()->sortBy('name'),
-            'mappedUser' =>  $user,
-            'update_bio' => Update_bio::find(2)
-
+            'users'         => User::all()->sortBy('name'),
+            'mappedUser'    => $user,
+            'update_bio'    => Update_bio::find(2),
+            'updated_bi0_2' => Update_bio::where('time_card', $searched_user->timecard)->where('date', '040523')->exists(),
+            // 'updated_bi0_2' => $searched_user->update_bios->where('date', '040523')->exists(),
+            'updated_bi0_3' => Update_bio::where('time_card', $searched_user->timecard)->where('date', '040523')->get()
+            
         ]);
     }
 

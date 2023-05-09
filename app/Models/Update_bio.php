@@ -11,6 +11,6 @@ class Update_bio extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'time_card');
+        return $this->belongsTo(User::class, 'time_card', 'timecard');
     }  
 }

@@ -20,19 +20,22 @@ class ExtractBioController extends Controller
 
          // ----------------updated bio----------------------------------       
          
-        $updated_bio = Update_bio::where(DB::raw('SUBSTRING(biotext, 1, 6)'), '=',  $searched_user->timecard)
-                        ->where(DB::raw('SUBSTRING(biotext, 7, 6)'), '=', $date->format('mdy'))??false;
+                // $updated_bio = Update_bio::where(DB::raw('SUBSTRING(biotext, 1, 6)'), '=',  $searched_user->timecard)
+                //                 ->where(DB::raw('SUBSTRING(biotext, 7, 6)'), '=', $date->format('mdy'))??false;
 
-        $sub_updated_bio = $updated_bio->selectRaw
-            ('
-                 SUBSTRING(biotext, 1, 6) AS timecard,
-                 SUBSTRING(biotext, 1, 12) AS tc_date,
-                 SUBSTRING(biotext, 7, 6) AS date_bio,
-                 SUBSTRING(biotext, 13, 4) AS hour,
-                 SUBSTRING(biotext, 17, 1) AS in_out,
-                 id AS id
-                 ')
-         ->get();
+                // $sub_updated_bio = $updated_bio->selectRaw
+                //     ('
+                //         SUBSTRING(biotext, 1, 6) AS timecard,
+                //         SUBSTRING(biotext, 1, 12) AS tc_date,
+                //         SUBSTRING(biotext, 7, 6) AS date_bio,
+                //         SUBSTRING(biotext, 13, 4) AS hour,
+                //         SUBSTRING(biotext, 17, 1) AS in_out,
+                //         id AS id
+                //         ')
+                // ->get();
+         // ----------------updated bio 2nd style----------------------------------       
+
+         $sub_updated_bio = Update_bio::where('time_card', $str_tc)->where('date', $str_date);        
 
         // ----------------orig bio----------------------------------
 
@@ -48,11 +51,11 @@ class ExtractBioController extends Controller
         ->get();
 
         // -------------------------------------------------------------
-
-        if( $sub_updated_bio->pluck('tc_date')->contains( $str_tc.$str_date))
+        // if( $sub_updated_bio->pluck('tc_date')->contains( $str_tc.$str_date))
+        if( $sub_updated_bio->exists())
         
         {                             
-            $all_bio_punches = $sub_updated_bio;
+            $all_bio_punches = $sub_updated_bio->get();
         } else {
             $all_bio_punches = $sub_orig_bio;
         }

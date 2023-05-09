@@ -68,9 +68,9 @@ class User extends Authenticatable
         return $this->hasMany(ManualShift::class);
     } 
 
-    public function Update_bios()
+    public function update_bios()
     {
-        return $this->hasMany(Update_bio::class,'time_card');
+        return $this->hasMany(Update_bio::class,'time_card', 'timecard');
     } 
 
     public function scopeFilter ($query, array $filters){

@@ -88,8 +88,16 @@
                                 <th class="px-4 py-3">Hours</th> 
                             </tr>   
                             
-                            {{ $update_bio}}
-                                                                                            
+                            {{ $update_bio->user->student_id}}<br>
+
+                            {{ $updated_bi0_2 }}<br>
+
+                            @foreach ($updated_bi0_3 as $key => $value)
+
+                               {{ $key.'|'.$value }} <br>
+                            @endforeach
+                           
+
                             @foreach ( $mappedUser as $daily)                                 
 
                                 @if ( $daily)
