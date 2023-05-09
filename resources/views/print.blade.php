@@ -90,12 +90,12 @@
                             
                             {{-- {{ $update_bio->user->student_id}}<br> --}}
 
-                            {{ $updated_bio_2 }}<br>
+                            {{-- {{ $updated_bio_2?? false }}<br> --}}
 
-                            @foreach ($updated_bio_3 as $key => $value)
+                            {{-- @foreach ($updated_bio_3 as $key => $value)
 
                                {{ $key.'|'.$value }} <br>
-                            @endforeach
+                            @endforeach --}}
                            
 
                             @foreach ( $mappedUser as $daily)                                 

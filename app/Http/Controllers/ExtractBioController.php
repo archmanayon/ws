@@ -20,24 +20,24 @@ class ExtractBioController extends Controller
 
          // A. ----------------updated bio----------------------------------       
          
-                // $updated_bio = Update_bio::where(DB::raw('SUBSTRING(biotext, 1, 6)'), '=',  $searched_user->timecard)
-                //                 ->where(DB::raw('SUBSTRING(biotext, 7, 6)'), '=', $date->format('mdy'))??false;
+                $updated_bio = Update_bio::where(DB::raw('SUBSTRING(biotext, 1, 6)'), '=',  $searched_user->timecard)
+                                ->where(DB::raw('SUBSTRING(biotext, 7, 6)'), '=', $date->format('mdy'))??false;
 
-                // $sub_updated_bio = $updated_bio->selectRaw
-                //     ('
-                //         SUBSTRING(biotext, 1, 6) AS timecard,
-                //         SUBSTRING(biotext, 1, 12) AS tc_date,
-                //         SUBSTRING(biotext, 7, 6) AS date,
-                //         SUBSTRING(biotext, 13, 4) AS hour,
-                //         SUBSTRING(biotext, 17, 1) AS in_out,
-                //         id AS id
-                //         ')
-                // ->get();
+                $sub_updated_bio = $updated_bio->selectRaw
+                    ('
+                        SUBSTRING(biotext, 1, 6) AS timecard,
+                        SUBSTRING(biotext, 1, 12) AS tc_date,
+                        SUBSTRING(biotext, 7, 6) AS date,
+                        SUBSTRING(biotext, 13, 4) AS hour,
+                        SUBSTRING(biotext, 17, 1) AS in_out,
+                        id AS id
+                        ')
+                ->get();
 
             // B. $sub_updated_bio = Update_bio::where('time_card', $str_tc)->where('date', $str_date); 
 
         // c. ----------------updated bio 3rd style----------------------------------     
-         $sub_updated_bio = $searched_user->update_bios->where('date', $str_date);
+        //  $sub_updated_bio = $searched_user->update_bios->where('date', $str_date);
 
         // ----------------orig bio----------------------------------
 
@@ -57,11 +57,13 @@ class ExtractBioController extends Controller
         //B. ________________________________________________________
         // if( $sub_updated_bio->exists())
         // C. _______________________________________________________
-        if($sub_updated_bio->contains($str_date))
+
+        if($sub_updated_bio->contains('date', $str_date))
         
-        {              
-                  
+        { 
+
             $all_bio_punches = $sub_updated_bio;
+            
         } else {
             
             $all_bio_punches = $sub_orig_bio;
