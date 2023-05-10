@@ -20,24 +20,25 @@ class ExtractBioController extends Controller
 
          // A. ----------------updated bio----------------------------------       
          
-                $updated_bio = Update_bio::where(DB::raw('SUBSTRING(biotext, 1, 6)'), '=',  $searched_user->timecard)
-                                ->where(DB::raw('SUBSTRING(biotext, 7, 6)'), '=', $date->format('mdy'))??false;
+                // $updated_bio = Update_bio::where(DB::raw('SUBSTRING(biotext, 1, 6)'), '=',  $searched_user->timecard)
+                //                 ->where(DB::raw('SUBSTRING(biotext, 7, 6)'), '=', $date->format('mdy'))??false;
 
-                $sub_updated_bio = $updated_bio->selectRaw
-                    ('
-                        SUBSTRING(biotext, 1, 6) AS timecard,
-                        SUBSTRING(biotext, 1, 12) AS tc_date,
-                        SUBSTRING(biotext, 7, 6) AS date,
-                        SUBSTRING(biotext, 13, 4) AS hour,
-                        SUBSTRING(biotext, 17, 1) AS in_out,
-                        id AS id
-                        ')
-                ->get();
+                // $sub_updated_bio = $updated_bio->selectRaw
+                //     ('
+                //         SUBSTRING(biotext, 1, 6) AS timecard,
+                //         SUBSTRING(biotext, 1, 12) AS tc_date,
+                //         SUBSTRING(biotext, 7, 6) AS date,
+                //         SUBSTRING(biotext, 13, 4) AS hour,
+                //         SUBSTRING(biotext, 17, 1) AS in_out,
+                //         id AS id
+                //         ')
+                // ->get();
 
-            // B. $sub_updated_bio = Update_bio::where('time_card', $str_tc)->where('date', $str_date); 
+            // B. _______________________
+            // $sub_updated_bio = Update_bio::where('time_card', $str_tc)->where('date', $str_date)->get(); 
 
         // c. ----------------updated bio 3rd style----------------------------------     
-        //  $sub_updated_bio = $searched_user->update_bios->where('date', $str_date);
+         $sub_updated_bio = $searched_user->update_bios->where('date', $str_date);
 
         // ----------------orig bio----------------------------------
 
@@ -58,7 +59,7 @@ class ExtractBioController extends Controller
         // if( $sub_updated_bio->exists())
         // C. _______________________________________________________
 
-        if($sub_updated_bio->contains('date', $str_date))
+        if($sub_updated_bio->pluck('date')->contains( $date->format('mdy')))
         
         { 
 
@@ -81,13 +82,13 @@ class ExtractBioController extends Controller
         $allowance_for_am = round((strtotime($bio_am_in) - strtotime($official->am_in))/3600,2);
         $allowance_for_pm = round((strtotime($official->pm_in) - strtotime($bio_pm_in))/3600,2);  
         
-        $am_in = $allowance_for_am <= 3 ? $bio_am_in : false;
+        $am_in = $official->am_in && $allowance_for_am <= 3 ? $bio_am_in : false;
 
-        $am_out =  $allowance_for_am <= 3 ? $bio_am_out : false;
+        $am_out =  $official->am_out && $allowance_for_am <= 3 ? $bio_am_out : false;
         
-        $pm_in = $allowance_for_pm <= 2 ? $bio_pm_in : false;
+        $pm_in = $official->pm_in && $allowance_for_pm <= 2 ? $bio_pm_in : false;
 
-        $pm_out = $allowance_for_pm <= 2 ? $bio_pm_out : false;  
+        $pm_out = $official->pm_in && $allowance_for_pm <= 2 ? $bio_pm_out : false;  
         
         return (object) [
             'am_in' => $am_in,

@@ -22,7 +22,7 @@ class ScheduleController extends Controller{
 
     public function absences_all()
     {
-        $searched_user = User::find(request('find_user'))??false;        
+        $searched_user = User::find(request('find_user'));        
 
         $holiday = array("01-05-23","01-06-23",
                             "02-24-23", "02-25-23",
@@ -41,7 +41,7 @@ class ScheduleController extends Controller{
         $user = app()->call(AbsenceCalendarController::class.'@adea_bio',
         [
             'collection_of_dates' => $collection,
-            'searched_user'=> $searched_user, 
+            'searched_user'=> $searched_user??false, 
             'holiday' =>$holiday
         ]);
                  

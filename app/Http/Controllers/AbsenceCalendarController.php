@@ -378,9 +378,10 @@ class AbsenceCalendarController extends Controller
             else {
                
                 return (object) [
-                    'student_id'=> $searched_user->student_id,
-                    'name'=> $searched_user->name,
-                    'timecard'=> $searched_user->timecard,
+                    'user' => $searched_user,
+                    // 'student_id'=> $searched_user->student_id,
+                    // 'name'=> $searched_user->name,
+                    // 'timecard'=> $searched_user->timecard,
                     'date'=> $d_date,                    
                     'type'=> $type,
                     'required_h'=> $required_h,
