@@ -20,6 +20,7 @@ use Carbon\CarbonPeriod;
 
 class ScheduleController extends Controller{
 
+    // individual search______________________________    
     public function absences_all()
     {
         $searched_user = User::find(request('find_user'));        
@@ -61,6 +62,7 @@ class ScheduleController extends Controller{
         ]);
     }
 
+    //  all users_____________________________________
     public function print_all_abs_old() 
     {
         // $user_all = User::with(['shift', 'manual_shifts', 'update_bios'])->get();

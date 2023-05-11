@@ -112,10 +112,12 @@ class ExtractBioController extends Controller
     public function extract_tardi($official, $day, $bio_punch)
     {
 
-        $am_late = $official->am_in && $bio_punch->am_in && $bio_punch->am_in < $official->am_out? 
+        $am_late = $official->am_in && $bio_punch->am_in && $bio_punch->am_in > $official->am_in
+            && $bio_punch->am_in <= $official->am_out? 
             round((strtotime($bio_punch->am_in)-strtotime($official->am_in))/3600,2) :
             0;
-        $pm_late = $official->pm_in && $bio_punch->pm_in && $bio_punch->pm_in < $official->pm_out? 
+        $pm_late = $official->pm_in && $bio_punch->pm_in && $bio_punch->pm_in > $official->pm_in
+            && $bio_punch->pm_in <= $official->pm_out? 
             round((strtotime($bio_punch->pm_in)-strtotime($official->pm_in))/3600,2) :
             0;
           

@@ -108,7 +108,7 @@
                                     <tr class="bg-gray-700 border-b border-gray-600">
                                         <td class="px-4 py-3">
                                             {{ $daily->user->student_id}} 
-                                            {{ dd($daily->punch) }}
+                                           
                                         </td>
                                         <td class="px-4 py-3">
                                             {{ $daily->user->name}}

@@ -51,11 +51,17 @@ class UpdateBioController extends Controller
         $updated_bio = Update_bio::where('time_card',$str_tc)
             ->where('date',$str_date)->get();
 
+        // $updated_bio = $searched_user->update_bios
+        //     ->where('date',$str_date);
+            
+
         return view ('update_bio',[
 
             'old_bio'       =>  $all_bio_punches,
 
             'updated_bio'   =>  $updated_bio?? false,
+
+            'updated_bios'   =>  $searched_user->update_bios?? false,      
 
             'pref_bio'      =>  $updated_bio[0]??false ? $updated_bio : $all_bio_punches,
             'str_tc'        =>  $str_tc,
