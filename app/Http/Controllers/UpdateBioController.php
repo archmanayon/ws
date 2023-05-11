@@ -13,7 +13,6 @@ use Carbon\CarbonPeriod;
 use App\Models\Update_bio;
 use Illuminate\Support\Str;
 
-
 use Illuminate\Http\Request;
 
 class UpdateBioController extends Controller
@@ -31,46 +30,29 @@ class UpdateBioController extends Controller
                 id AS id
                 ')
         ->get();
-
         
         $str_tc         = Str::limit($bio,6,'');
         $str_date       = substr($bio, 6, 6);
         $date_s         = Carbon::createFromFormat('mdy', $str_date);
         $date           = Carbon::parse($date_s);
-        $searched_user  = User::where('timecard',  $str_tc)->get()[0];
-        
+        $searched_user  = User::where('timecard',  $str_tc)->get()[0];        
 
         $official = app()->call(ManualShiftController::class.'@official_',
             [
                 // 'searched_user'     =>  User::where('timecard', $str_tc)->get(),
-                'searched_user'     =>   $searched_user,
+                'searched_user'     =>  $searched_user,
                 'date'              =>  $date,
                 'day'               =>  $date->format('l')
-            ]);
-
+        ]);
+        
         $updated_bio = Update_bio::where('time_card',$str_tc)
-            ->where('date',$str_date)->get();
-
-        // $updated_bio = $searched_user->update_bios
-        //     ->where('date',$str_date);
-            
+        ->where('date',$str_date)->get();           
 
         return view ('update_bio',[
 
             'old_bio'       =>  $all_bio_punches,
 
-            'updated_bio'   =>  $updated_bio?? false,
-
-            'updated_bios'   =>  $searched_user->update_bios
-                                ->where('date','042423')->pluck('hour')->map(
-                                    function ($hour){
-                                        return (object) [
-                                            'hour' => $hour
-                                        ];
-                                        
-                                    }
-                                ),  
-            
+            'updated_bio'   =>  $updated_bio?? false,          
 
             'pref_bio'      =>  $updated_bio[0]??false ? $updated_bio : $all_bio_punches,
             'str_tc'        =>  $str_tc,
