@@ -55,15 +55,20 @@ class ExtractBioController extends Controller
 
         // A---------------------------------------------------------        
         // if( $sub_updated_bio->pluck('tc_date')->contains( $str_tc.$str_date))
-        //B. ________________________________________________________
-        // if( $sub_updated_bio->exists())
+        
         // C. _______________________________________________________
 
-        if($sub_updated_bio->pluck('date')->contains( $date->format('mdy')))
-        
+        if($sub_updated_bio->pluck('date')->contains( $date->format('mdy')))        
         { 
+            // $all_bio_punches = $sub_updated_bio;
 
-            $all_bio_punches = $sub_updated_bio;
+            $all_bio_punches = $sub_updated_bio->pluck('hour')
+                ->map(function ($hour){
+                        return (object) [
+                            'hour' => $hour
+                        ];                        
+                    }
+                );
             
         } else {
             

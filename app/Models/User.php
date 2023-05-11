@@ -48,6 +48,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];  
 
+    
+
     public function punches()
     {
         return $this->hasMany(Punch::class);

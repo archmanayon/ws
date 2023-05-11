@@ -75,11 +75,12 @@
                             <tr>
                                 {{-- {{  $updated_bio->pluck('date')}}<br> --}}
                                 {{-- {{ $updated_bio->where('date','042823') }}<br> --}}
-                                @foreach ( $updated_bios->where('date','042423') as $key => $value)
-                                    {{ $key.'|'.$value->hour }}<br>
-                                @endforeach
-                                {{ $updated_bios->where('date','042423')[4]->name }}<br>
-                            </tr>
+                                {{-- @foreach ( $updated_bios as $key => $value)
+                                    {{ $key.'|'.$value}}<br>
+                                @endforeach --}}
+                                {{-- {{ $updated_bios->where('date','042423')->pluck('hour')[0] }}<br> --}}
+                                {{ $updated_bios[0]->hour }}<br>
+                            </tr> 
 
                             {{-- am in --}}
                             <tr>

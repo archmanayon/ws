@@ -61,7 +61,16 @@ class UpdateBioController extends Controller
 
             'updated_bio'   =>  $updated_bio?? false,
 
-            'updated_bios'   =>  $searched_user->update_bios?? false,      
+            'updated_bios'   =>  $searched_user->update_bios
+                                ->where('date','042423')->pluck('hour')->map(
+                                    function ($hour){
+                                        return (object) [
+                                            'hour' => $hour
+                                        ];
+                                        
+                                    }
+                                ),  
+            
 
             'pref_bio'      =>  $updated_bio[0]??false ? $updated_bio : $all_bio_punches,
             'str_tc'        =>  $str_tc,
