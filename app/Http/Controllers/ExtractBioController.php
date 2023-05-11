@@ -18,7 +18,7 @@ class ExtractBioController extends Controller
         $str_tc     = $searched_user->timecard;
         $str_date   = $date->format('mdy');
 
-         // A. ----------------updated bio----------------------------------       
+        // A. ----------------updated bio----------------------------------       
          
                 // $updated_bio = Update_bio::where(DB::raw('SUBSTRING(biotext, 1, 6)'), '=',  $searched_user->timecard)
                 //                 ->where(DB::raw('SUBSTRING(biotext, 7, 6)'), '=', $date->format('mdy'))??false;
@@ -34,11 +34,11 @@ class ExtractBioController extends Controller
                 //         ')
                 // ->get();
 
-            // B. _______________________
+        // B. _______________________
             // $sub_updated_bio = Update_bio::where('time_card', $str_tc)->where('date', $str_date)->get(); 
 
         // c. ----------------updated bio 3rd style----------------------------------     
-         $sub_updated_bio = $searched_user->update_bios->where('date', $str_date);
+        $sub_updated_bio = $searched_user->update_bios->where('date', $str_date);
 
         // ----------------orig bio----------------------------------
 
@@ -54,7 +54,7 @@ class ExtractBioController extends Controller
         ->get();
 
         // A---------------------------------------------------------        
-        // if( $sub_updated_bio->pluck('tc_date')->contains( $str_tc.$str_date))
+            // if( $sub_updated_bio->pluck('tc_date')->contains( $str_tc.$str_date))
         
         // C. _______________________________________________________
 
@@ -63,12 +63,8 @@ class ExtractBioController extends Controller
             // $all_bio_punches = $sub_updated_bio;
 
             $all_bio_punches = $sub_updated_bio->pluck('hour')
-                ->map(function ($hour){
-                        return (object) [
-                            'hour' => $hour
-                        ];                        
-                    }
-                );
+                ->map(function ($hour, $in_out){ return (object) ['hour' => $hour, 'in_out' => $in_out];                        
+                    });
             
         } else {
             

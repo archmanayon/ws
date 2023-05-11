@@ -79,7 +79,7 @@
                                     {{ $key.'|'.$value}}<br>
                                 @endforeach --}}
                                 {{-- {{ $updated_bios->where('date','042423')->pluck('hour')[0] }}<br> --}}
-                                {{ $updated_bios[0]->hour }}<br>
+                                {{-- {{ $updated_bios[0]->hour }}<br> --}}
                             </tr> 
 
                             {{-- am in --}}

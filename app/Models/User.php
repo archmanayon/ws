@@ -48,7 +48,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];  
 
-    
+    // protected $with = ['manual_shifts', 'shift', 'update_bios'];
 
     public function punches()
     {
