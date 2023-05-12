@@ -57,12 +57,22 @@
                                     
                                     <x-input-label for="find_user" :value="__('FIND')" />
                                     <select placeholder ={{request('find_user')??'Search Employee' }}
-                                        name="find_user" class="block mt-1 border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" placeholder ="find user">
+                                        name="find_user" 
+                                        placeholder ="find user"
+                                        class="block mt-1 border-gray-300 dark:border-gray-700 dark:bg-gray-700
+                                            dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500
+                                            dark:focus:ring-indigo-600 rounded-md shadow-sm"  
+                                            
+                                        >
                                             <option value="{{ $searched_user->id?? false }}">
                                                 {{$searched_user->name?? 'Search Employee' }}
                                             </option>
+
                                         @foreach($users as $user)
-                                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+
+                                            <option class="{{ request('find_user') == $user->id ? 'dark:bg-gray-1000 dark:bg-blue-700 dark:text-yellow-300 ' :'' }}"
+                                                value="{{ $user->id }}">{{ $user->name }}
+                                            </option>
                                         @endforeach
                                     </select>
                                 </div>
