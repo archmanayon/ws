@@ -72,8 +72,10 @@ class AbsenceCalendarController extends Controller
             $required_h = null ;
             $required_h_late = null;
             $required_h_und = null;
+            $type = null;
             
-            if (!$punch->am_in || !$punch->am_out || !$punch->pm_in || !$punch->pm_out||
+            if ($official->am_in && !$punch->am_in || $official->am_out && !$punch->am_out ||
+                $official->pm_in && !$punch->pm_in || $official->pm_out && !$punch->pm_out||
 
                 // $punch->all_bio_punches[0]->date_bio == '040323' ||
                 $am_late >= $official->am_num_hr && $official->am_num_hr != 0||
@@ -168,15 +170,17 @@ class AbsenceCalendarController extends Controller
                     'bio_daily_array' => $date->format('mdy'),
                     'all_bio_punches' =>  $punch->all_bio_punches,
                     'punch' => $punch,
-                    'official' => $official
+                    'official' => $official,
+                    'late' => $late
                 ];
             }
             // ________________________________________________________
 
             // return (object) [
-            //     'student_id'=> $searched_user->student_id,
-            //     'name'=> $searched_user->name,
-            //     'timecard'=> $searched_user->timecard,
+            //     'user' => $searched_user,
+            //     // 'student_id'=> $searched_user->student_id,
+            //     // 'name'=> $searched_user->name,
+            //     // 'timecard'=> $searched_user->timecard,
             //     'date'=> $d_date,                    
             //     'type'=> $type,
             //     'required_h'=> $required_h,
@@ -190,9 +194,8 @@ class AbsenceCalendarController extends Controller
             //     'bio_daily_array' => $date->format('mdy'),
             //     'all_bio_punches' =>  $punch->all_bio_punches,
             //     'punch' => $punch,
-            //     'am_late'    => $tardi->am_late,
-            //     'pm_late'    => $tardi->pm_late,
-            //     'late'       => $late
+            //     'official' => $official,
+            //     'late' => $late
             // ];
 
             
