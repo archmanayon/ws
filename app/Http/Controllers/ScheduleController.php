@@ -49,7 +49,7 @@ class ScheduleController extends Controller{
 
         return view ('print',[
 
-            'users'         => User::all()->sortBy('name'),
+            'users'         => User::all()->where('active', true)->sortBy('name'),
             'mappedUser'    => $user,
             'update_bio'    => Update_bio::find(2),
             // 'updated_bio_2' => Update_bio::where('time_card', $searched_user->timecard)->where('date', '040523')->exists(),
@@ -80,7 +80,7 @@ class ScheduleController extends Controller{
         $collection_of_dates = collect($dates);
         $count_dates = $period->count();
         
-        $mappedArray = collect(User::all())
+        $mappedArray = collect(User::all()->where('active', true))
             ->map(function ($user) use ($collection_of_dates, $holiday){
 
                 $user = app()->call(AbsenceCalendarController::class.'@adea_bio',

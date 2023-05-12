@@ -51,7 +51,7 @@
                             <td>
                                 <div class="mt-4">
                                     @php
-                                        $searched_user = User::find(request('find_user'))                                        
+                                        $searched_user = $users->find(request('find_user')) 
                                     @endphp
 
                                     
@@ -126,12 +126,12 @@
                                     <tr class="bg-gray-700 border-b border-gray-600">
                                         
                                         <td class="px-4 py-3">
-                                            {{ $daily->user->student_id.'|sa abs'}} 
+                                            {{ $daily->user->student_id}} 
                                            
                                         </td>
 
                                         <td class="px-4 py-3">
-                                            {{ $daily->user->name}}
+                                            {{ $daily->user->name.'|sa abs'}}
 
                                         <td>
                                             <x-dropdown >
@@ -172,155 +172,154 @@
                                             {{ $daily->required_h}}
                                         </td>                                        
 
-                                        {{-- und outside abs --}}
-                                        @if ($daily->ws_double)
-                                            </tr>
-                                            <tr class="bg-gray-700 border-b border-gray-600">
-                                                <td class="px-4 py-3">
-                                                    {{ $daily->user->student_id.'|sa und outside'}}
-                                                </td>
-                                                <td class="px-4 py-3">
-                                                    {{ $daily->user->name }}
-                                                <td>
-                                                    <x-dropdown>
-                                                        <x-slot name="trigger">
-                                                            <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-100 focus:outline-none transition ease-in-out duration-150">
-                                                                <div>{{ $daily->date }}</div>
-                                    
-                                                                <div class="ml-1">
-                                                                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                                                    </svg>
-                                                                </div>
-                                                            </button>
-                                                        </x-slot>
-        
-                                                        <x-slot name="content"> 
-                                                            
-                                                            @foreach ($daily->all_bio_punches as $bio)
+                                    {{-- und outside abs --}}
+                                    @if ($daily->ws_double)
+                                        </tr>
+                                        <tr class="bg-gray-700 border-b border-gray-600">
+                                            <td class="px-4 py-3">
+                                                {{ $daily->user->student_id}}
+                                            </td>
+                                            <td class="px-4 py-3">
+                                                {{ $daily->user->name.'|sa und outside' }}
+                                            <td>
+                                                <x-dropdown>
+                                                    <x-slot name="trigger">
+                                                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-100 focus:outline-none transition ease-in-out duration-150">
+                                                            <div>{{ $daily->date }}</div>
+                                
+                                                            <div class="ml-1">
+                                                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                                                </svg>
+                                                            </div>
+                                                        </button>
+                                                    </x-slot>
+    
+                                                    <x-slot name="content"> 
                                                         
-                                                                {{ $bio->hour.'~'.$bio->in_out }}
-                                                                <div class="inline-block pl-8 flex-shrink-0"> <a href="update_bio/{{ $daily->user->timecard.$daily->bio_daily_array}}"> {{ 'update' }} </a></div>
-                                                                <br>
-                                                            @endforeach      
-                                                            <div class="inline-block pl-8 flex-shrink-0">
-                                                                <a href="update_bio/{{ $daily->user->timecard.$daily->bio_daily_array}}">                                                                
-                                                                    {{ $daily->all_bio_punches[0] ?? false ? '': 'no punch'}}    
-                                                                </a>
-                                                            </div>      
-        
-                                                        </x-slot>
-                                                    </x-dropdown>
-                                                </td>
-                                                <td class="px-4 py-3">
-                                                    {{ 'UND' }}
-                                                </td>                                               
-                                                <td class="px-4 py-3">
-                                                    {{ $daily->ws_double }}
-                                                </td>
-                                                
-                                                
-                                        @endif
+                                                        @foreach ($daily->all_bio_punches as $bio)
+                                                    
+                                                            {{ $bio->hour.'~'.$bio->in_out }}
+                                                            <div class="inline-block pl-8 flex-shrink-0"> <a href="update_bio/{{ $daily->user->timecard.$daily->bio_daily_array}}"> {{ 'update' }} </a></div>
+                                                            <br>
+                                                        @endforeach      
+                                                        <div class="inline-block pl-8 flex-shrink-0">
+                                                            <a href="update_bio/{{ $daily->user->timecard.$daily->bio_daily_array}}">                                                                
+                                                                {{ $daily->all_bio_punches[0] ?? false ? '': 'no punch'}}    
+                                                            </a>
+                                                        </div>      
+    
+                                                    </x-slot>
+                                                </x-dropdown>
+                                            </td>
+                                            <td class="px-4 py-3">
+                                                {{ 'UND' }}
+                                            </td>                                               
+                                            <td class="px-4 py-3">
+                                                {{ $daily->ws_double }}
+                                            </td>  
 
-                                        {{-- late with abs --}}
-                                        @if ($daily->required_h_late > 0)
-                                            </tr>
-                                            <tr class="bg-gray-700 border-b border-gray-600">
-                                                <td class="px-4 py-3">
-                                                    {{ $daily->user->student_id.'|sa late w/ abs'}}
-                                                </td>
-                                                <td class="px-4 py-3">
-                                                    {{ $daily->user->name }}
-                                                </td>
-                                                <td>
-                                                    <x-dropdown>
-                                                        <x-slot name="trigger">
-                                                            <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-100 focus:outline-none transition ease-in-out duration-150">
-                                                                <div>{{ $daily->date }}</div>
-                                    
-                                                                <div class="ml-1">
-                                                                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                                                    </svg>
-                                                                </div>
-                                                            </button>
-                                                        </x-slot>
-        
-                                                        <x-slot name="content"> 
-                                                            
-                                                            @foreach ($daily->all_bio_punches as $bio)
-                                                        
-                                                                {{ $bio->hour.'~'.$bio->in_out }}
-                                                                <div class="inline-block pl-8 flex-shrink-0"> <a href="update_bio/{{ $daily->user->timecard.$daily->bio_daily_array}}"> {{ 'update' }} </a></div>
-                                                                <br>
-                                                            @endforeach      
-                                                            <div class="inline-block pl-8 flex-shrink-0">
-                                                                <a href="update_bio/{{ $daily->user->timecard.$daily->bio_daily_array}}">                                                                
-                                                                    {{ $daily->all_bio_punches[0] ?? false ? '': 'no punch'}}    
-                                                                </a>
-                                                            </div>      
-        
-                                                        </x-slot>
-                                                    </x-dropdown>
-                                                </td>
-                                                <td class="px-4 py-3">
-                                                    {{ $daily->type_late }}
-                                                </td>
-                                                <td class="px-4 py-3">
-                                                    {{ $daily->required_h_late }}
-                                                </td>
-                                            
-                                        @endif
+                                    @endif
 
-                                        {{-- und with abs --}}
-                                        @if ($daily->required_h_und > 0)
-                                            </tr>
-                                            <tr class="bg-gray-700 border-b border-gray-600">
-                                                <td class="px-4 py-3">
-                                                    {{ $daily->user->student_id.'|sa und w/ abs'}}
-                                                </td>
-                                                <td class="px-4 py-3">
-                                                    {{ $daily->user->name }}
-                                                </td>
-                                                <td>
-                                                    <x-dropdown>
-                                                        <x-slot name="trigger">
-                                                            <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-100 focus:outline-none transition ease-in-out duration-150">
-                                                                <div>{{ $daily->date }}</div>
-                                    
-                                                                <div class="ml-1">
-                                                                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                                                    </svg>
-                                                                </div>
-                                                            </button>
-                                                        </x-slot>
-        
-                                                        <x-slot name="content"> 
-                                                            
-                                                            @foreach ($daily->all_bio_punches as $bio)
+                                    {{-- late with abs --}}
+                                    @if ($daily->required_h_late > 0)
+                                        </tr>
+                                        <tr class="bg-gray-700 border-b border-gray-600">
+                                            <td class="px-4 py-3">
+                                                {{ $daily->user->student_id}}
+                                            </td>
+                                            <td class="px-4 py-3">
+                                                {{ $daily->user->name.'|sa late w/ abs' }}
+                                            </td>
+                                            <td>
+                                                <x-dropdown>
+                                                    <x-slot name="trigger">
+                                                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-100 focus:outline-none transition ease-in-out duration-150">
+                                                            <div>{{ $daily->date }}</div>
+                                
+                                                            <div class="ml-1">
+                                                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                                                </svg>
+                                                            </div>
+                                                        </button>
+                                                    </x-slot>
+    
+                                                    <x-slot name="content"> 
                                                         
-                                                                {{ $bio->hour.'~'.$bio->in_out }}
-                                                                <div class="inline-block pl-8 flex-shrink-0"> <a href="update_bio/{{ $daily->user->timecard.$daily->bio_daily_array}}"> {{ 'update' }} </a></div>
-                                                                <br>
-                                                            @endforeach      
-                                                            <div class="inline-block pl-8 flex-shrink-0">
-                                                                <a href="update_bio/{{ $daily->user->timecard.$daily->bio_daily_array}}">                                                                
-                                                                    {{ $daily->all_bio_punches[0] ?? false ? '': 'no punch'}}    
-                                                                </a>
-                                                            </div>      
-        
-                                                        </x-slot>
-                                                    </x-dropdown>
-                                                </td>
-                                                <td class="px-4 py-3">
-                                                    {{ $daily->type_under }}
-                                                </td>
-                                                <td class="px-4 py-3">
-                                                    {{ $daily->required_h_und }}
-                                                </td>
-                                                                                            
-                                        @endif                                       
+                                                        @foreach ($daily->all_bio_punches as $bio)
+                                                    
+                                                            {{ $bio->hour.'~'.$bio->in_out }}
+                                                            <div class="inline-block pl-8 flex-shrink-0"> <a href="update_bio/{{ $daily->user->timecard.$daily->bio_daily_array}}"> {{ 'update' }} </a></div>
+                                                            <br>
+                                                        @endforeach      
+                                                        <div class="inline-block pl-8 flex-shrink-0">
+                                                            <a href="update_bio/{{ $daily->user->timecard.$daily->bio_daily_array}}">                                                                
+                                                                {{ $daily->all_bio_punches[0] ?? false ? '': 'no punch'}}    
+                                                            </a>
+                                                        </div>      
+    
+                                                    </x-slot>
+                                                </x-dropdown>
+                                            </td>
+                                            <td class="px-4 py-3">
+                                                {{ $daily->type_late }}
+                                            </td>
+                                            <td class="px-4 py-3">
+                                                {{ $daily->required_h_late }}
+                                            </td>
+                                        
+                                    @endif
+
+                                    {{-- und with abs --}}
+                                    @if ($daily->required_h_und > 0)
+                                        </tr>
+                                        <tr class="bg-gray-700 border-b border-gray-600">
+                                            <td class="px-4 py-3">
+                                                {{ $daily->user->student_id}}
+                                            </td>
+                                            <td class="px-4 py-3">
+                                                {{ $daily->user->name.'|sa und w/ abs' }}
+                                            </td>
+                                            <td>
+                                                <x-dropdown>
+                                                    <x-slot name="trigger">
+                                                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-100 focus:outline-none transition ease-in-out duration-150">
+                                                            <div>{{ $daily->date }}</div>
+                                
+                                                            <div class="ml-1">
+                                                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                                                </svg>
+                                                            </div>
+                                                        </button>
+                                                    </x-slot>
+    
+                                                    <x-slot name="content"> 
+                                                        
+                                                        @foreach ($daily->all_bio_punches as $bio)
+                                                    
+                                                            {{ $bio->hour.'~'.$bio->in_out }}
+                                                            <div class="inline-block pl-8 flex-shrink-0"> <a href="update_bio/{{ $daily->user->timecard.$daily->bio_daily_array}}"> {{ 'update' }} </a></div>
+                                                            <br>
+                                                        @endforeach      
+                                                        <div class="inline-block pl-8 flex-shrink-0">
+                                                            <a href="update_bio/{{ $daily->user->timecard.$daily->bio_daily_array}}">                                                                
+                                                                {{ $daily->all_bio_punches[0] ?? false ? '': 'no punch'}}    
+                                                            </a>
+                                                        </div>      
+    
+                                                    </x-slot>
+                                                </x-dropdown>
+                                            </td>
+                                            <td class="px-4 py-3">
+                                                {{ $daily->type_under }}
+                                            </td>
+                                            <td class="px-4 py-3">
+                                                {{ $daily->required_h_und }}
+                                            </td>
+                                                                                        
+                                    @endif                                       
                                     
                                     </tr>
                                 @endif                            

@@ -14,7 +14,8 @@
 
     @php
         $bio_date = Carbon::createFromFormat('mdy', $str_date??false)
-                    ->format('F j, Y')
+                    ->format('F j, Y');
+        $bio_day = Carbon::parse($bio_date);
     @endphp
 
     <div class="py-12">
@@ -31,7 +32,7 @@
                             original
                             <th></th>
                             <th class="px-4 py-3">
-                                {{  $bio_date }}
+                                {{  $bio_date.' | '. $bio_day->format('l') }}
                             </th>
 
                         </tr>
