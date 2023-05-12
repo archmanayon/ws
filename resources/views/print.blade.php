@@ -170,7 +170,10 @@
                                         </td>
                                         <td class="px-4 py-3">
                                             {{ $daily->required_h}}
-                                        </td>                                        
+                                        </td>   
+                                        <td class="px-4 py-3">
+                                            {{ $daily->official->pm_num_hr}}
+                                        </td>                                      
 
                                     {{-- und outside abs --}}
                                     @if ($daily->ws_double)

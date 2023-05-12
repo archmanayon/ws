@@ -122,10 +122,12 @@ class ExtractBioController extends Controller
             round((strtotime($bio_punch->pm_in)-strtotime($official->pm_in))/3600,2) :
             0;
           
-        $am_und = $official->am_out &&  $bio_punch->am_out &&  $bio_punch->am_out >= $official->am_in ? 
+        $am_und = $official->am_out &&  $bio_punch->am_out &&  $bio_punch->am_out >= $official->am_in 
+            &&  $bio_punch->am_out > $official->am_in &&  $bio_punch->am_out < $official->am_out? 
             round((strtotime($official->am_out)-strtotime($bio_punch->am_out))/3600,2) :
             false;
-        $pm_und = $official->pm_out &&  $bio_punch->pm_out &&  $bio_punch->pm_out >= $official->am_in? 
+        $pm_und = $official->pm_out &&  $bio_punch->pm_out &&  $bio_punch->pm_out >= $official->am_in
+            &&  $bio_punch->pm_out >= $official->pm_in &&  $bio_punch->pm_out < $official->pm_out? 
             round((strtotime($official->pm_out)-strtotime($bio_punch->pm_out))/3600,2) :
             false;
        
@@ -134,8 +136,8 @@ class ExtractBioController extends Controller
             "am_late"   => $am_late > 0 ? $am_late : false,
             "pm_late"   => $pm_late> 0 ? $pm_late : false,
             // "late"      => $late> 0 ? $late : false,
-            "am_und"    => $am_und> 0 ? $am_und : false,
-            "pm_und"    => $pm_und> 0 ? $pm_und : false
+            "am_und"    => $am_und>= 0 ? $am_und : false,
+            "pm_und"    => $pm_und>= 0 ? $pm_und : false
         ];
  
     }
