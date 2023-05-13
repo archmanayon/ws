@@ -75,7 +75,9 @@ class AbsenceCalendarController extends Controller
             $type = null;
             
             if ($official->am_in && !$punch->am_in || $official->am_out && !$punch->am_out ||
+                $official->am_in && $punch->am_in >= $official->am_out ||
                 $official->pm_in && !$punch->pm_in || $official->pm_out && !$punch->pm_out||
+                $official->pm_in && $punch->pm_in >= $official->pm_out ||
 
                 // $punch->all_bio_punches[0]->date_bio == '040323' ||
                 $am_late >= $official->am_num_hr && $official->am_num_hr != 0||
@@ -93,14 +95,14 @@ class AbsenceCalendarController extends Controller
 
                 //Abs n_hour in AM only
                 } elseif(!$punch->am_in || !$punch->am_out || $am_late >=  $official->am_num_hr ||
-                        $am_und >=  $official->am_num_hr
+                        $am_und >=  $official->am_num_hr || $official->am_in && $punch->am_in >= $official->am_out
                     ){
 
                     $required_h = $official->am_num_hr;
 
                 //ABs n_hour in PM only
                 } elseif(!$punch->pm_in || !$punch->pm_out ||  $pm_late >=  $official->pm_num_hr ||
-                        $pm_und >=  $official->pm_num_hr
+                        $pm_und >=  $official->pm_num_hr || $official->pm_in && $punch->pm_in >= $official->pm_out
                     ){
 
                     $required_h = $official->pm_num_hr;
