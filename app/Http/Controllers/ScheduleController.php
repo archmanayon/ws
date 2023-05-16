@@ -80,7 +80,7 @@ class ScheduleController extends Controller{
         $collection_of_dates = collect($dates);
         $count_dates = $period->count();
         
-        $mappedArray = collect(User::all()->where('active', true))
+        $mappedArray = collect(User::all()->where('active', true)->where('role_id', 1))
             ->map(function ($user) use ($collection_of_dates, $holiday){
 
                 $user = app()->call(AbsenceCalendarController::class.'@adea_bio',
@@ -154,28 +154,43 @@ class ScheduleController extends Controller{
     }
 
     public function adea_bio_abs() 
-    {   $user_all = User::all();
-        $holiday = array("04-06-23", "04-07-23","04-08-23",
-                            "04-10-23","01-05-23","01-06-23",
-                            "01-07-23","01-16-23",
-                            "02-24-23", "02-25-23");
+    {
+        // $user_all = User::with(['shift', 'manual_shifts', 'update_bios'])->get();
+
+        $holiday = array("01-05-23","01-06-23",
+                            "02-24-23", "02-25-23",
+                            "04-06-23", "04-07-23",
+                            "04-08-23", "04-10-23",
+                            "04-21-23") ;
+
         $start_date = request('start_date')?? 0;
         $end_date = request('end_date')?? 0;
         $period = CarbonPeriod::create($start_date, $end_date);
         $dates = $period->toArray();
-        $collection = collect($dates);
+        $collection_of_dates = collect($dates);
         $count_dates = $period->count();
+        
+        $mappedArray = collect(User::all()->where('active', true)->where('role_id', 2))
+            ->map(function ($user) use ($collection_of_dates, $holiday){
 
-        $bio_punches = app()->call(AbsenceCalendarController::class.'@adea_bio',
-            [
-                'collection_of_dates' => $collection,
-                'searched_user'=> $user_all->find(9), 
-                'holiday' =>$holiday
-            ]);                      
+                $user = app()->call(AbsenceCalendarController::class.'@adea_bio',
+                [
+                    'collection_of_dates' => $collection_of_dates,
+                    'searched_user'=> User::find($user->id), 
+                    'holiday' =>$holiday
+                ]);
+
+                return $user;
+                
+            }
+        );       
 
         return view ('adea',[
 
-            'bio_punches' =>  $bio_punches
+            'mappedUser' =>  $mappedArray
+
+
+
         ]);
     }
 
