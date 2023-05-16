@@ -76,6 +76,7 @@ class AbsenceCalendarController extends Controller
             
             if ($official->am_in && !$punch->am_in || $official->am_out && !$punch->am_out ||
                 $official->am_in && $punch->am_in >= $official->am_out ||
+
                 $official->pm_in && !$punch->pm_in || $official->pm_out && !$punch->pm_out||
                 $official->pm_in && $punch->pm_in >= $official->pm_out ||
 
@@ -111,10 +112,12 @@ class AbsenceCalendarController extends Controller
                 //this is if there are absences and tardiness in one day
                 if($late > 0 && $under > 0 || 
                     //if in 2 enries only ; late am in with am out falls in pm
-                    $late && $punch->am_in > $official->am_in && $punch->am_in < $official->am_out && $am_late + $ten_min_allowance >= $official->am_num_hr|| 
-                    $late && $punch->pm_in > $official->pm_in && $punch->pm_in < $official->pm_out && $pm_late +$ten_min_allowance >= $official->pm_num_hr||
+                    // ($am_late < $official->am_num_hr || $pm_late < $official->pm_num_hr) 
+                    $late && $punch->am_in > $official->am_in && $punch->am_in < $official->am_out && $am_late - $ten_min_allowance > 0|| 
+                    $late && $punch->pm_in > $official->pm_in && $punch->pm_in < $official->pm_out && $pm_late - $ten_min_allowance > 0||
                     $under && $punch->am_out < $official->am_out && $punch->am_out > $official->am_in ||
-                    $under && $punch->pm_out < $official->pm_out && $punch->pm_out > $official->pm_in)  {
+                    $under && $punch->pm_out < $official->pm_out && $punch->pm_out > $official->pm_in)
+                {
                         $tardiness = 'abs_lte_und';
                         $type_late = 'LTE';
                         $type_under = 'UND';
