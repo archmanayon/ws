@@ -12,27 +12,27 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    // protected $fillable = [
+        /**
+         * The attributes that are mass assignable.
+         *
+         * @var array<int, string>
+         */
+        // protected $fillable = [
 
-    //     'active',
-    //     'timecard',
-    //     'student_id',
-    //     'name',
-    //     'username',
-    //     'email',
-    //     'password',
-    //     'image_path'
-    // ];
+        //     'active',
+        //     'timecard',
+        //     'student_id',
+        //     'name',
+        //     'username',
+        //     'email',
+        //     'password',
+        //     'image_path'
+        // ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
+        /**
+         * The attributes that should be hidden for serialization.
+         *
+         * @var array<int, string>
      */
     protected $hidden = [
         'password',
@@ -46,7 +46,9 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-    ];
+    ];  
+
+    // protected $with = ['manual_shifts', 'shift', 'update_bios'];
 
     public function punches()
     {
@@ -63,10 +65,32 @@ class User extends Authenticatable
         return $this->belongsTo(Shift::class);
     }
 
-    public function manual_shift()
+    public function manual_shifts()
     {
         return $this->hasMany(ManualShift::class);
     } 
+
+    public function update_bios()
+    {
+        return $this->hasMany(Update_bio::class,'time_card', 'timecard');
+    } 
+
+    public function scopeFilter ($query, array $filters){
+       
+        if($filters['search_name'] ?? false){
+
+            $query
+            ->where('student_id', 'like', '%'.$filters['search_name'].'%')
+            ->orWhere('name', 'like', '%'.$filters['search_name'].'%')
+            ->orWhere('username', 'like', '%'.$filters['search_name'].'%')
+            ->orWhere('email', 'like', '%'.$filters['search_name'].'%')
+            ->orWhere('student_id', 'like', '%'.$filters['search_name'].'%')
+            ->orWhere('username', 'like', '%'.$filters['search_name'].'%');
+
+        }
+
+
+    }
 
     public function role()
     {

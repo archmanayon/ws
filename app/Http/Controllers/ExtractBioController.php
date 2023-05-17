@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\Shift;
 use App\Models\Biometric;
+use App\Models\Update_bio;
 use \Carbon\Carbon;
 
 use Illuminate\Http\Request;
@@ -13,17 +14,62 @@ use Illuminate\Http\Request;
 class ExtractBioController extends Controller
 {
     public function extract_bio ($searched_user, $date, $official)
-    {        
-        $bio_daily_array = Biometric::where(DB::raw('SUBSTRING(biotext, 1, 6)'), '=',  $searched_user->timecard)
-                        ->where(DB::raw('SUBSTRING(biotext, 7, 6)'), '=', $date->format('mdy'));                
+    {          
+        $str_tc     = $searched_user->timecard;
+        $str_date   = $date->format('mdy');
 
-        $all_bio_punches = $bio_daily_array->selectRaw
+        // A. ----------------updated bio----------------------------------       
+         
+                // $updated_bio = Update_bio::where(DB::raw('SUBSTRING(biotext, 1, 6)'), '=',  $searched_user->timecard)
+                //                 ->where(DB::raw('SUBSTRING(biotext, 7, 6)'), '=', $date->format('mdy'))??false;
+
+                // $sub_updated_bio = $updated_bio->selectRaw
+                //     ('
+                //         SUBSTRING(biotext, 1, 6) AS timecard,
+                //         SUBSTRING(biotext, 1, 12) AS tc_date,
+                //         SUBSTRING(biotext, 7, 6) AS date,
+                //         SUBSTRING(biotext, 13, 4) AS hour,
+                //         SUBSTRING(biotext, 17, 1) AS in_out,
+                //         id AS id
+                //         ')
+                // ->get();
+
+        // B. _______________________
+            // $sub_updated_bio = Update_bio::where('time_card', $str_tc)->where('date', $str_date)->get(); 
+
+        // c. ----------------updated bio 3rd style----------------------------------     
+        $sub_updated_bio = $searched_user->update_bios->where('date', $str_date);
+
+        // ----------------orig bio----------------------------------
+
+        $orig_bio = Biometric::where(DB::raw('SUBSTRING(biotext, 1, 6)'), '=',  $searched_user->timecard)
+                        ->where(DB::raw('SUBSTRING(biotext, 7, 6)'), '=', $date->format('mdy'))??false;
+
+        $sub_orig_bio = $orig_bio->selectRaw
             ('                
                 SUBSTRING(biotext, 7, 6) AS date_bio,
                 SUBSTRING(biotext, 13, 4) AS hour,
                 SUBSTRING(biotext, 17, 1) AS in_out
                 ')
-        ->get();        
+        ->get();
+
+        // A---------------------------------------------------------        
+            // if( $sub_updated_bio->pluck('tc_date')->contains( $str_tc.$str_date))
+        
+        // C. _______________________________________________________
+
+        if($sub_updated_bio->pluck('date')->contains( $date->format('mdy')))        
+        { 
+            // $all_bio_punches = $sub_updated_bio;
+
+            $all_bio_punches = $sub_updated_bio->pluck('hour')
+                ->map(function ($hour, $in_out){ return (object) ['hour' => $hour, 'in_out' => $in_out];                        
+                    });
+            
+        } else {
+            
+            $all_bio_punches = $sub_orig_bio;
+        }
 
         $bio_am_in = $all_bio_punches[0]->hour??false;
         $bio_am_out = $all_bio_punches[1]->hour??false;
@@ -37,13 +83,13 @@ class ExtractBioController extends Controller
         $allowance_for_am = round((strtotime($bio_am_in) - strtotime($official->am_in))/3600,2);
         $allowance_for_pm = round((strtotime($official->pm_in) - strtotime($bio_pm_in))/3600,2);  
         
-        $am_in = $allowance_for_am <= 3 ? $bio_am_in : false;
+        $am_in = $official->am_in && $allowance_for_am <= 3 ? $bio_am_in : false;
 
-        $am_out =  $allowance_for_am <= 3 ? $bio_am_out : false;
+        $am_out =  $official->am_out && $allowance_for_am <= 3 ? $bio_am_out : false;
         
-        $pm_in = $allowance_for_pm <= 2 ? $bio_pm_in : false;
+        $pm_in = $official->pm_in && $allowance_for_pm <= 2 ? $bio_pm_in : false;
 
-        $pm_out = $allowance_for_pm <= 2 ? $bio_pm_out : false;  
+        $pm_out = $official->pm_in && $allowance_for_pm <= 2 ? $bio_pm_out : false;  
         
         return (object) [
             'am_in' => $am_in,
@@ -67,17 +113,21 @@ class ExtractBioController extends Controller
     public function extract_tardi($official, $day, $bio_punch)
     {
 
-        $am_late = $official->am_in && $bio_punch->am_in && $bio_punch->am_in < $official->am_out? 
+        $am_late = $official->am_in && $bio_punch->am_in && $bio_punch->am_out && $bio_punch->am_in > $official->am_in
+            && $bio_punch->am_in <= $official->am_out ? 
             round((strtotime($bio_punch->am_in)-strtotime($official->am_in))/3600,2) :
             0;
-        $pm_late = $official->pm_in && $bio_punch->pm_in && $bio_punch->pm_in < $official->pm_out? 
+        $pm_late = $official->pm_in && $bio_punch->pm_in && $bio_punch->pm_out && $bio_punch->pm_in > $official->pm_in
+            && $bio_punch->pm_in <= $official->pm_out? 
             round((strtotime($bio_punch->pm_in)-strtotime($official->pm_in))/3600,2) :
             0;
           
-        $am_und = $official->am_out &&  $bio_punch->am_out &&  $bio_punch->am_out >= $official->am_in ? 
+        $am_und = $official->am_out &&  $bio_punch->am_out &&  $bio_punch->am_out >= $official->am_in 
+            &&  $bio_punch->am_out > $official->am_in &&  $bio_punch->am_out < $official->am_out? 
             round((strtotime($official->am_out)-strtotime($bio_punch->am_out))/3600,2) :
             false;
-        $pm_und = $official->pm_out &&  $bio_punch->pm_out &&  $bio_punch->pm_out >= $official->am_in? 
+        $pm_und = $official->pm_out &&  $bio_punch->pm_out &&  $bio_punch->pm_out >= $official->am_in
+            &&  $bio_punch->pm_out >= $official->pm_in &&  $bio_punch->pm_out < $official->pm_out? 
             round((strtotime($official->pm_out)-strtotime($bio_punch->pm_out))/3600,2) :
             false;
        
@@ -86,8 +136,8 @@ class ExtractBioController extends Controller
             "am_late"   => $am_late > 0 ? $am_late : false,
             "pm_late"   => $pm_late> 0 ? $pm_late : false,
             // "late"      => $late> 0 ? $late : false,
-            "am_und"    => $am_und> 0 ? $am_und : false,
-            "pm_und"    => $pm_und> 0 ? $pm_und : false
+            "am_und"    => $am_und>= 0 ? $am_und : false,
+            "pm_und"    => $pm_und>= 0 ? $pm_und : false
         ];
  
     }

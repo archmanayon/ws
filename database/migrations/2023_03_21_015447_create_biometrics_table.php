@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('biotext')->nullable();
             $table->timestamps();
+            $table->boolean('active')->default(true);
         });
     }
 

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('update_bios', function (Blueprint $table) {
+        Schema::create('fingers', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->foreignId('time_card');
@@ -19,10 +19,9 @@ return new class extends Migration
             $table->string('hour');
             $table->string('in_out');
             $table->string('biotext')->unique();
-            $table->string('reason')->nullable();
+            $table->string('device_ip')->nullable();
             $table->boolean('active')->default(true);
             $table->timestamps();
-        
         });
     }
 
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('update_bios');
+        Schema::dropIfExists('fingers');
     }
 };

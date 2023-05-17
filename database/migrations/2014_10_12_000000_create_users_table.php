@@ -29,11 +29,12 @@ return new class extends Migration
             
             $table->string('password'); 
             $table->string('image_path')->nullable();
-            $table->foreignId('schedule_id')->nullable();
+            $table->foreignId('sc')->nullable();
             $table->foreignId('shift_id')->nullable();
             $table->timestamp('email_verified_at')->nullable();            
             $table->rememberToken();
             $table->timestamps();
+            $table->foreignId('role_id')->nullable();
         });
     }
 
