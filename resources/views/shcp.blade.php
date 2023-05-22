@@ -1,6 +1,6 @@
 @php
     use Illuminate\Support\Str;
-    use \Carbon\Carbon; 
+    use \Carbon\Carbon;
 @endphp
 
 <x-app-layout>
@@ -25,84 +25,74 @@
                         </td>
                         <td>
                             {{ $date->format('F j, Y')  }}
-                            
+
                         </td>
-                       
+
                 </div>
             </div>
-            
-        </div>  
-       
+
+        </div>
+
     </div>
 
 
 
-    <div class="py-12">
+    <div class="py-6">
         <form method="POST" action="{{ route('punches') }}">
-        @csrf         
-            <div class="max-w-xs mx-auto sm:px-6 lg:px-8">                                 
+        @csrf
+            <div class="max-w-xs mx-auto sm:px-6 lg:px-8">
 
-                    <div class="text-gray-900 dark:text-gray-100"> 
-            
+                    <div class="text-gray-900 dark:text-gray-100">
+
                         <x-responsive-nav-link :href="route('punches')"
                             class="text-6xl m-4 order-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600
                             focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
                             onclick="event.preventDefault(); this.closest('form').submit();">
                             {{ __('Punch Now') }}
-                        </x-responsive-nav-link>                       
-                                
+                        </x-responsive-nav-link>
+
                     </div>
-                    
+
             </div>
-        
+
         </form>
-       
-    </div> 
 
-    <div class="py-12">
-                                
+    </div>
+
+    <div class="py-6">
+
                 <table class="max-w-xl mx-auto sm:px-6 lg:px-8 p-6 text-gray-900 dark:text-gray-100" >
-                   
-                    <tr>
-                        <th>
-                            {{ '(today) ' }}
-                        </th>
-                        <th>{{ '______' }}</th>
-                        <th>{{ '______' }}</th>
-
-
-                    </tr>
 
                     @foreach ( $punches_today as $shcp)
                         <tr>
-                            
-                            <td> 
-                                {{ 
+
+                            <td>
+                                {{
                                     Carbon::createFromFormat('Hi', $shcp->hour??false)
                                     ->format('h:i a')
                                 }}
                             </td>
-                           
+
                             <td class="px-6">
                                 {{ '|' }}
                             </td>
-                            
-                            <td class=""> 
-                                {{ 
+
+                            <td class="">
+                                {{
                                     $shcp->in_out == 'I'? 'In' : 'Out'
                                 }}
                             </td>
 
-                            
-                            {{-- <td> 
-                                {{ 
+
+                            {{-- <td>
+                                {{
                                    $shcp->in_out
                                 }}
                             </td> --}}
                         </tr>
                     @endforeach
-                   
-        
+
+
     </div>
 
 </x-app-layout>
