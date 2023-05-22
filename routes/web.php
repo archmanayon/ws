@@ -10,18 +10,19 @@ use App\Models\Schedule;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\UpdateBioController;
+use App\Http\Controllers\PunchController;
 use Illuminate\Support\Facades\Route;
 
 
 /*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
+    |--------------------------------------------------------------------------
+    | Web Routes
+    |--------------------------------------------------------------------------
+    |
+    | Here is where you can register web routes for your application. These
+    | routes are loaded by the RouteServiceProvider within a group which
+    | contains the "web" middleware group. Now create something great!
+    |
 */
 
 /* Sample controller by arch
@@ -44,10 +45,10 @@ Route::get('js', function () {
     ]);
 });
 
-Route::get('shcp', function () {
-    return view ('shcp',[
-    ]);
-});
+// Route::get('shcp', function () {
+//     return view ('shcp',[
+//     ]);
+// });
 
 Route::get('hash_pw', function () {
     
@@ -83,6 +84,17 @@ Route::get('update_bio/{bio}', [UpdateBioController::class, 'new_bio'])
 Route::post('update_bio/{bio}', [UpdateBioController::class, 'store'])
 ->middleware(['auth', 'verified', 'admin'])->name('post_new_bio');
 
+
+
+Route::get('shcp', [PunchController::class, 'show'])
+->middleware(['auth', 'verified', 'admin'])->name('show_punches');
+
+Route::post('shcp', [PunchController::class, 'store'])
+->middleware(['auth', 'verified', 'admin'])->name('punches');
+
+
+
+
 Route::get('print', [ScheduleController::class, 'absences_all'])
 ->middleware(['auth', 'verified', 'admin'])->name('extract');
 
@@ -107,8 +119,6 @@ Route::get('all_absences', [ScheduleController::class, 'print_all_abs_old'])
 Route::post('all_absences', [ScheduleController::class, 'print_all_abs_old'])
 ->middleware(['auth', 'verified', 'admin'])->name('disp_by_cal');
 
-
-
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -116,23 +126,23 @@ Route::get('/dashboard', function () {
 
 // Route::get('/report/{ws:username}', function (User $ws) {
     
-//     // $sample = request()->url();
-//     // dd(basename($sample));
+    //     // $sample = request()->url();
+    //     // dd(basename($sample));
 
-//     if(auth()->user()->username == $ws->username ||
-//         auth()->user()->username == 'bitin112'){
+    //     if(auth()->user()->username == $ws->username ||
+    //         auth()->user()->username == 'bitin112'){
 
-//         return view('report', [
+    //         return view('report', [
 
-//             'user' => $ws,
-//             'punches' => Punch::all()
-//         ]);  
-        
-//     }
+    //             'user' => $ws,
+    //             'punches' => Punch::all()
+    //         ]);  
+            
+    //     }
 
-//     else {
-//         return redirect('dashboard');
-//        }
+    //     else {
+    //         return redirect('dashboard');
+    //        }
 
 // })->middleware(['auth', 'verified'])->name('report');
 

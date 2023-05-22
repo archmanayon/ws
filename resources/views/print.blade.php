@@ -131,7 +131,7 @@
                                         </td>
 
                                         <td class="px-4 py-3">
-                                            {{ $daily->user->name.'|sa abs'}}
+                                            {{ $daily->user->name}}
 
                                         <td>
                                             <x-dropdown >

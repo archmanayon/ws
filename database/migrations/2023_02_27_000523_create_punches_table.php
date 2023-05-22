@@ -12,15 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('punches', function (Blueprint $table) {
+
             $table->id();
-            $table->string('day');
             $table->foreignId('user_id');
-            $table->string('date');
-            $table->string('in');
-            $table->string('out');
-            $table->string('half');
+            $table->string('date');           
+            $table->string('hour');
+            $table->string('in_out');
+            $table->string('biotext')->unique();
             $table->boolean('active')->default(true);
-            $table->rememberToken();
             $table->timestamps();
         });
     }
