@@ -17,7 +17,9 @@ class PunchController extends Controller
         $currentDate    = $Date->format('mdy');
         $current_time   = $Date->format('Hi');       
         $searched_user  = User::find(auth()->user()->id);
-        $in_out         = $punches->pluck('in_out')->last() === 'I' ? 'O' : 'I';
+        $punches        = $searched_user->punches
+                            ->where('date', $currentDate);
+         $in_out         = $punches->pluck('in_out')->last() === 'I' ? 'O' : 'I';
 
 
 

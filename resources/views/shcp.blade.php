@@ -11,7 +11,7 @@
     </x-slot>
 
 
-    <div class="py-12">
+    <div class="py-6">
         <div class="max-w-xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
 
@@ -40,8 +40,7 @@
     <div class="py-12">
         <form method="POST" action="{{ route('punches') }}">
         @csrf         
-            <div class="max-w-xs mx-auto sm:px-6 lg:px-8">
-                                 
+            <div class="max-w-xs mx-auto sm:px-6 lg:px-8">                                 
 
                     <div class="text-gray-900 dark:text-gray-100"> 
             
@@ -50,8 +49,7 @@
                             focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
                             onclick="event.preventDefault(); this.closest('form').submit();">
                             {{ __('Punch Now') }}
-                        </x-responsive-nav-link>
-                       
+                        </x-responsive-nav-link>                       
                                 
                     </div>
                     
@@ -69,19 +67,29 @@
                         <th>
                             {{ '(today) ' }}
                         </th>
+                        <th>{{ '______' }}</th>
+                        <th>{{ '______' }}</th>
+
+
                     </tr>
 
                     @foreach ( $punches_today as $shcp)
                         <tr>
-                            <td> 
-                                {{ 
-                                    $shcp->in_out
-                                }}
-                            </td>
+                            
                             <td> 
                                 {{ 
                                     Carbon::createFromFormat('Hi', $shcp->hour??false)
                                     ->format('h:i a')
+                                }}
+                            </td>
+                           
+                            <td class="px-6">
+                                {{ '|' }}
+                            </td>
+                            
+                            <td class=""> 
+                                {{ 
+                                    $shcp->in_out == 'I'? 'In' : 'Out'
                                 }}
                             </td>
 

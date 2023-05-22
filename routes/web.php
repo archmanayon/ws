@@ -87,10 +87,10 @@ Route::post('update_bio/{bio}', [UpdateBioController::class, 'store'])
 
 
 Route::get('shcp', [PunchController::class, 'show'])
-->middleware(['auth', 'verified', 'admin'])->name('show_punches');
+->middleware(['auth', 'verified'])->name('show_punches');
 
 Route::post('shcp', [PunchController::class, 'store'])
-->middleware(['auth', 'verified', 'admin'])->name('punches');
+->middleware(['auth', 'verified'])->name('punches');
 
 
 
