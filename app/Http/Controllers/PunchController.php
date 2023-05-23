@@ -79,7 +79,8 @@ class PunchController extends Controller
             'usc_id'        => $usc_id,
             // 'usc_id'        => $searched_user->first()->timecard,
             'punches_today' => $punches,    
-            'end'           => $usc_id? $searched_user->timecard.$currentDate.$current_time.$in_out:false
+            'end'           => $usc_id? $searched_user->timecard.$currentDate.$current_time.$in_out:false,
+            'in_out'        => $in_out
             
         ]);
         
@@ -117,9 +118,7 @@ class PunchController extends Controller
         $searched_user  = User::where('student_id', $usc_id)->first();
         $punches        = $usc_id ? $searched_user->punches->where('date', $currentDate) : false;
         $in_out         = $punches->pluck('in_out')->last() === 'I' ? 'O' : 'I';                    
-
-         
-     
+              
         // auth()->logout();
 
         if($validatedData['student_id'] && 
@@ -132,7 +131,6 @@ class PunchController extends Controller
                     'in_out'    =>  $in_out,
                     'biotext'   =>  $searched_user->timecard.$currentDate.$current_time.$in_out
                 ]);       
-
 
                 return redirect()->route('show_punches_')
             ->with('usc_id', $validatedData['student_id']);
