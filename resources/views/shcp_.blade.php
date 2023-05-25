@@ -7,149 +7,128 @@
         {{ 'Dashboard' }}
     </h2>
 </x-slot>
+
+
 <div class="lg:grid lg:grid-cols-2 w-full">
-<x-guest-layout>
 
-    <div class="py-6">
-        <div class="mx-6 max-w-xl sm:px-6 lg:px-8 text-center">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg px-6 ">
+    <!-- 1st column -->    
+    <x-guest-layout class="mr-2 ml-12 ">
 
-                <div class="px-1 text-gray-900 dark:text-gray-100">
-                        <td>
+        <div class="py-6">
+            <div class="lg:px-8 mx-6 sm:px-6 text-center">
+                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg px-6 ">
 
-                            <div class="text-6xl mt-4 order-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600
-                                focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
-                                {{$date_->format('h:i A') }}
-                            </div>
-                        </td>
-                        <td>
-                            {{$date_->format('F j, Y')  }}
+                    <div class="px-1 text-gray-900 dark:text-gray-100">
+                            <td>
 
-                        </td>
+                                <div class="text-5xl mt-4 order-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600
+                                    focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
+                                    {{$date_->format('h:i A') }}
+                                </div>
+                            </td>
+                            <td>
+                                {{$date_->format('F j, Y')  }}
 
+                            </td>
+
+                    </div>
                 </div>
+
             </div>
 
         </div>
 
-    </div>
+
+        <!-- Session Status -->
+        <x-auth-session-status class= "m-auto-3" :status="session('status')" />
+
+        <form method="POST" action="{{ route('punches_') }}">
+            @csrf
+
+            <!-- USC ID Number -->
+            <div>
+                <x-input-label for="student_id" :value="__('USC ID Number')" />
+                <x-text-input id="student_id" class="block mt-1 w-48"
+                                type="text" name="student_id"
+                                :value="old('student_id')"
+                                :placeholder="$employee->student_id??false"
+                                required autofocus autocomplete="username" />
+                <x-input-error :messages="$errors->get('student_id')" class="mt-2" />
+            </div>
+
+            <!-- Password -->
+            <div class="mt-4">
+                <x-input-label for="punch_pw" :value="__('Password')" />
+
+                <x-text-input id="punch_pw" class="block mt-1 w-48"
+                                type="password"
+                                name="punch_pw"
+                                required autocomplete="current-punch_pw" />
+
+                <x-input-error :messages="$errors->get('punch_pw')" class="mt-2" />
+            </div>
 
 
-    <!-- Session Status -->
-    <x-auth-session-status class= "m-auto-3" :status="session('status')" />
+            <div class="">
 
-    <form method="POST" action="{{ route('punches_') }}">
-        @csrf
+                <x-primary-button class=" text-2xl m-auto-3 py-1 px-6 mt-4 mx-auto w-auto">
+                    {{ __('Punch with your ID') }}
+                    {{-- Punch
+                    {{ __( $in_out ? ($in_out == 'I'? 'In with your ID' :
+                        'Out with your ID') :
+                        'In with your ID') }} --}}
+                </x-primary-button>
 
-        <!-- USC ID Number -->
-        <div>
-            <x-input-label for="student_id" :value="__('USC ID Number')" />
-            <x-text-input id="student_id" class="block mt-1 w-full"
-                            type="text" name="student_id"
-                            :value="old('student_id')"
-                            required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('student_id')" class="mt-2" />
+            </div>
+        </form>
+
+    
+    </x-guest-layout>
+
+    <!-- 2nd column -->
+    <x-guest-layout>
+
+        <!-- punches -->
+        <div class="py-6">
+
+            <table class="block dark:text-gray-100 p-6 py-1 sm:px-6 text-gray-900 w-auto" >
+                    @if ($punches_today)
+                        
+                        <th>
+                            {{ $employee->name??false }}
+                        </th>
+                        <tr><td class="text-gray-800">{{ "~" }}</td></tr>
+                        @foreach ( $punches_today as $shcp)
+                                <tr>
+
+                                <td>
+                                    {{
+                                        Carbon::createFromFormat('Hi', $shcp->hour??false)
+                                        ->format('h:i a')
+                                    }}
+                                </td>
+
+                                <td class="text-gray-800 px-3">
+                                    {{ '|' }}
+                                </td>
+
+                                <td class="">
+                                    {{
+                                        $shcp->in_out == 'I'? 'In' : 'Out'
+                                    }}
+                                </td>
+
+                            </tr>
+                        @endforeach
+
+                @endif
+
         </div>
+    
+    </x-guest-layout>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="punch_pw" :value="__('Password')" />
-
-            <x-text-input id="punch_pw" class="block mt-1 w-full"
-                            type="password"
-                            name="punch_pw"
-                            required autocomplete="current-punch_pw" />
-
-            <x-input-error :messages="$errors->get('punch_pw')" class="mt-2" />
-        </div>
-
-
-        <div class="">
-
-            <x-primary-button class="m-auto-3 py-1 px-6 mt-4 mx-auto w-auto">
-                {{-- {{ __('Punch with your USC ID') }} --}}
-                {{ __( $in_out ? ($in_out == 'I'? 'Punch In with your USC ID' :
-                    'Punch Out with your USC ID') :
-                    'Punch In with your USC ID') }}
-            </x-primary-button>
-
-        </div>
-    </form>
-
-    <!-- punches -->
-    <div class="py-6">
-
-        <table class=" text-center max-w-xl mx-auto sm:px-6 lg:px-8 p-6 text-gray-900 dark:text-gray-100" >
-                @if ($punches_today)
-
-
-                    @foreach ( $punches_today as $shcp)
-                            <tr>
-
-                            <td>
-                                {{
-                                    Carbon::createFromFormat('Hi', $shcp->hour??false)
-                                    ->format('h:i a')
-                                }}
-                            </td>
-
-                            <td class="px-3">
-                                {{ '|' }}
-                            </td>
-
-                            <td class="">
-                                {{
-                                    $shcp->in_out == 'I'? 'In' : 'Out'
-                                }}
-                            </td>
-
-                        </tr>
-                    @endforeach
-
-             @endif
-
-
-    </div>
-
-</x-guest-layout>
-
-<x-guest-layout>
-
-
-    <!-- punches -->
-    <div class="py-6">
-
-        <table class=" text-center max-w-xl mx-auto sm:px-6 lg:px-8 p-6 text-gray-900 dark:text-gray-100" >
-                @if ($punches_today)
-
-
-                    @foreach ( $punches_today as $shcp)
-                            <tr>
-
-                            <td>
-                                {{
-                                    Carbon::createFromFormat('Hi', $shcp->hour??false)
-                                    ->format('h:i a')
-                                }}
-                            </td>
-
-                            <td class="px-3">
-                                {{ '|' }}
-                            </td>
-
-                            <td class="">
-                                {{
-                                    $shcp->in_out == 'I'? 'In' : 'Out'
-                                }}
-                            </td>
-
-                        </tr>
-                    @endforeach
-
-             @endif
-
-
-    </div>
-
-</x-guest-layout>
 </div>
+
+
+
+

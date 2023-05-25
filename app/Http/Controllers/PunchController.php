@@ -72,12 +72,12 @@ class PunchController extends Controller
         $in_out         = $punches?($punches->pluck('in_out')->last() === 'I' ? 'O' : 'I'):false;    
 
         return view('shcp_',[
-
+            
+            'employee'      => $searched_user ?? false,
             'date_'         => $Date,
             'currentDate'   => $currentDate,
             'current_time'  => $current_time, 
-            'usc_id'        => $usc_id,
-            // 'usc_id'        => $searched_user->first()->timecard,
+            'usc_id'        => $usc_id,            
             'punches_today' => $punches,    
             'end'           => $usc_id? $searched_user->timecard.$currentDate.$current_time.$in_out:false,
             'in_out'        => $in_out
