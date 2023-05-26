@@ -21,15 +21,24 @@
                     <div class="px-1 text-gray-900 dark:text-gray-100">
                             <td>
 
-                                <div class="text-5xl mt-4 order-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600
-                                    focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
-                                    {{$date_->format('h:i A') }}
+                                <div 
+                                {{-- class="text-5xl mt-4 order-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600
+                                    focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" --}}
+                                    >
+                                    {{-- {{$date_->format('h:i A') }}<br> --}}
+                                    
+                                    
+                                    <!--Dayspedia.com widget-->
+                                    <iframe class="text-5xl mt-4 order-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600
+                                        focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
+                                    width='243' height='164' style='padding:0!important;margin:0!important;border:none!important;background:none!important;background:transparent!important' marginheight='0' marginwidth='0' frameborder='0' scrolling='no' comment='/*defined*/' src='https://dayspedia.com/if/digit/?v=1&iframe=eyJ3LTEyIjp0cnVlLCJ3LTExIjp0cnVlLCJ3LTEzIjp0cnVlLCJ3LTE0Ijp0cnVlLCJ3LTE1IjpmYWxzZSwidy0xMTAiOmZhbHNlLCJ3LXdpZHRoLTAiOnRydWUsInctd2lkdGgtMSI6ZmFsc2UsInctd2lkdGgtMiI6ZmFsc2UsInctMTYiOiIyNHB4Iiwidy0xOSI6IjQ4Iiwidy0xNyI6IjE2Iiwidy0yMSI6dHJ1ZSwiYmdpbWFnZSI6LTEsImJnaW1hZ2VTZXQiOmZhbHNlLCJ3LTIxYzAiOiIjZmZmZmZmIiwidy0wIjp0cnVlLCJ3LTMiOmZhbHNlLCJ3LTNjMCI6IiMzNDM0MzQiLCJ3LTNiMCI6IjEiLCJ3LTYiOiIjMzQzNDM0Iiwidy0yMCI6dHJ1ZSwidy00IjoiI2ZmZmZmZiIsInctMTgiOmZhbHNlLCJ3LXdpZHRoLTJjLTAiOiIzMDAiLCJ3LTExNSI6ZmFsc2V9&lang=en&cityid=7613'></iframe>
+                                    <!--Dayspedia.com widget ENDS-->
                                 </div>
                             </td>
-                            <td>
+                            {{-- <td>
                                 {{$date_->format('F j, Y')  }}
 
-                            </td>
+                            </td> --}}
 
                     </div>
                 </div>
@@ -47,8 +56,8 @@
 
             <!-- USC ID Number -->
             <div>
-                <x-input-label for="student_id" :value="__('USC ID Number')" />
-                <x-text-input id="student_id" class="block mt-1 w-48"
+                <x-input-label for="student_id" :value="__('USC ID Number')" class="text-center" />
+                <x-text-input id="student_id" class="block mt-1 w-48 mx-auto"
                                 type="text" name="student_id"
                                 :value="old('student_id')"
                                 :placeholder="$employee->student_id??false"
@@ -58,9 +67,9 @@
 
             <!-- Password -->
             <div class="mt-4">
-                <x-input-label for="punch_pw" :value="__('Password')" />
+                <x-input-label for="punch_pw" :value="__('Password')" class="text-center"/>
 
-                <x-text-input id="punch_pw" class="block mt-1 w-48"
+                <x-text-input id="punch_pw" class="block mt-1 w-48 mx-auto"
                                 type="password"
                                 name="punch_pw"
                                 required autocomplete="current-punch_pw" />
@@ -69,7 +78,7 @@
             </div>
 
 
-            <div class="">
+            <div class="text-center">
 
                 <x-primary-button class=" text-2xl m-auto-3 py-1 px-6 mt-4 mx-auto w-auto">
                     {{ __('Punch with your ID') }}
