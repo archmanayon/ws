@@ -3,7 +3,7 @@
     use \Carbon\Carbon; 
 @endphp
 
-<x-app-layout>
+<x-guest-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             {{ 'Dashboard' }}
@@ -20,15 +20,20 @@
 
                 </div>
 
-                <div class="p-6 text-gray-900 dark:text-gray-100" >  
+                <div id=""
+                class="p-6 text-gray-900 dark:text-gray-100" >  
 
                     there                   
                     
                 </div>
 
+                <div id="m_clock"
+                class="p-6 text-gray-900 dark:text-gray-100">  
+                </div>
+
             </div>
         </div>        
 
-</x-app-layout>
+</x-guest-layout>
 
 
