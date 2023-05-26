@@ -86,7 +86,7 @@
                                             <td class="px-4 py-3">
                                                 {{ $daily->user->name}}
                                             <td>
-                                                <x-dropdown >
+                                                <x-dropdown relative='x' align='top'>
                                                     <x-slot name="trigger">
                                                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-100 focus:outline-none transition ease-in-out duration-150">
                                                             <div>{{ $daily->date }}</div>
@@ -103,9 +103,11 @@
                                                         
                                                         @foreach ($daily->all_bio_punches as $bio)
                                                             
-                                                            {{ $bio->hour.'~'.$bio->in_out }}
-                                                            <div class="inline-block pl-8 flex-shrink-0"> <a href="update_bio/{{ $daily->user->timecard.$daily->bio_daily_array}}"> {{ 'update' }} </a></div>
-                                                            <br>
+                                                            <div class="inline-block flex-shrink-0"> {{ $bio->hour }}</div>
+                                                            <div class="inline-block pl-3 flex-shrink-0"> {{ $bio->in_out }}</div>
+                                                            <div class="inline-block pl-3 flex-shrink-0"> 
+                                                                <a href="update_bio/{{ $daily->user->timecard.$daily->bio_daily_array}}"> {{ 'update' }} </a>
+                                                            </div> <br>
                                                         @endforeach      
                                                         <div class="inline-block pl-8 flex-shrink-0">
                                                             <a href="update_bio/{{ $daily->user->timecard.$daily->bio_daily_array}}">                                                                
@@ -133,7 +135,7 @@
                                                     <td class="px-4 py-3">
                                                         {{ $daily->user->name }}
                                                     <td>
-                                                        <x-dropdown>
+                                                        <x-dropdown relative='x' align='top'>
                                                             <x-slot name="trigger">
                                                                 <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-100 focus:outline-none transition ease-in-out duration-150">
                                                                     <div>{{ $daily->date }}</div>
@@ -150,9 +152,11 @@
                                                                 
                                                                 @foreach ($daily->all_bio_punches as $bio)
                                                             
-                                                                    {{ $bio->hour.'~'.$bio->in_out }}
-                                                                    <div class="inline-block pl-8 flex-shrink-0"> <a href="update_bio/{{ $daily->user->timecard.$daily->bio_daily_array}}"> {{ 'update' }} </a></div>
-                                                                    <br>
+                                                                    <div class="inline-block flex-shrink-0"> {{ $bio->hour }}</div>
+                                                                    <div class="inline-block pl-3 flex-shrink-0"> {{ $bio->in_out }}</div>
+                                                                    <div class="inline-block pl-3 flex-shrink-0"> 
+                                                                        <a href="update_bio/{{ $daily->user->timecard.$daily->bio_daily_array}}"> {{ 'update' }} </a>
+                                                                    </div> <br>
                                                                 @endforeach      
                                                                 <div class="inline-block pl-8 flex-shrink-0">
                                                                     <a href="update_bio/{{ $daily->user->timecard.$daily->bio_daily_array}}">                                                                
@@ -183,7 +187,7 @@
                                                         {{ $daily->user->name }}
                                                     </td>
                                                     <td>
-                                                        <x-dropdown>
+                                                        <x-dropdown relative='x' align='top'>
                                                             <x-slot name="trigger">
                                                                 <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-100 focus:outline-none transition ease-in-out duration-150">
                                                                     <div>{{ $daily->date }}</div>
@@ -200,9 +204,11 @@
                                                                 
                                                                 @foreach ($daily->all_bio_punches as $bio)
                                                             
-                                                                    {{ $bio->hour.'~'.$bio->in_out }}
-                                                                    <div class="inline-block pl-8 flex-shrink-0"> <a href="update_bio/{{ $daily->user->timecard.$daily->bio_daily_array}}"> {{ 'update' }} </a></div>
-                                                                    <br>
+                                                                    <div class="inline-block flex-shrink-0"> {{ $bio->hour }}</div>
+                                                                    <div class="inline-block pl-3 flex-shrink-0"> {{ $bio->in_out }}</div>
+                                                                    <div class="inline-block pl-3 flex-shrink-0"> 
+                                                                        <a href="update_bio/{{ $daily->user->timecard.$daily->bio_daily_array}}"> {{ 'update' }} </a>
+                                                                    </div> <br>
                                                                 @endforeach      
                                                                 <div class="inline-block pl-8 flex-shrink-0">
                                                                     <a href="update_bio/{{ $daily->user->timecard.$daily->bio_daily_array}}">                                                                
@@ -233,7 +239,7 @@
                                                         {{ $daily->user->name }}
                                                     </td>
                                                     <td>
-                                                        <x-dropdown>
+                                                        <x-dropdown relative='x' align='top'>
                                                             <x-slot name="trigger">
                                                                 <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-100 focus:outline-none transition ease-in-out duration-150">
                                                                     <div>{{ $daily->date }}</div>
@@ -250,9 +256,11 @@
                                                                 
                                                                 @foreach ($daily->all_bio_punches as $bio)
                                                             
-                                                                    {{ $bio->hour.'~'.$bio->in_out }}
-                                                                    <div class="inline-block pl-8 flex-shrink-0"> <a href="update_bio/{{ $daily->user->timecard.$daily->bio_daily_array}}"> {{ 'update' }} </a></div>
-                                                                    <br>
+                                                                    <div class="inline-block flex-shrink-0"> {{ $bio->hour }}</div>
+                                                                    <div class="inline-block pl-3 flex-shrink-0"> {{ $bio->in_out }}</div>
+                                                                    <div class="inline-block pl-3 flex-shrink-0"> 
+                                                                        <a href="update_bio/{{ $daily->user->timecard.$daily->bio_daily_array}}"> {{ 'update' }} </a>
+                                                                    </div> <br>
                                                                 @endforeach      
                                                                 <div class="inline-block pl-8 flex-shrink-0">
                                                                     <a href="update_bio/{{ $daily->user->timecard.$daily->bio_daily_array}}">                                                                
