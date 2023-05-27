@@ -3,7 +3,7 @@
     use \Carbon\Carbon; 
 @endphp
 
-<x-guest2-layout>
+<x-guest-layout>
 
     <div class="lg:grid lg:grid-cols-2">  
         <!---------------first column------------------>   
@@ -128,6 +128,6 @@
         </div>
     </div>      
 
-</x-guest2-layout>
+</x-guest-layout>
 
 
