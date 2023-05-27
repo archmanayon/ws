@@ -23,7 +23,7 @@
                             <td>
                                 
                                 <div id=""
-                                class="text-5xl mt-4 order-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600
+                                    class="text-5xl mt-4 order-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600
                                     focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
                                     >
                                     {{$date_->format('h:i:s A') }}<br>
@@ -42,7 +42,7 @@
                                 clock here
                                 </div> --}}
 
-                                <div id="clock_here"
+                                <div id=""
                                     class="p-6 text-gray-900 dark:text-gray-100">  clock_here_Here
                                 </div>
                                
@@ -113,36 +113,36 @@
         <div class="py-6">
 
             <table class="block dark:text-gray-100 p-6 py-1 sm:px-6 text-gray-900 w-auto" >
-                    @if ($punches_today)
-                        
-                        <th>
-                            {{ $employee->name??false }}
-                        </th>
-                        <tr><td class="text-gray-800">{{ "~" }}</td></tr>
-                        @foreach ( $punches_today as $shcp)
-                                <tr>
+                @if ($punches_today)
+                    
+                    <th>
+                        {{ $employee->name??false }}
+                    </th>
+                    <tr><td class="text-gray-800">{{ "~" }}</td></tr>
+                    @foreach ( $punches_today as $shcp)
+                        <tr>
+                            <td>
+                                {{
+                                    Carbon::createFromFormat('Hi', $shcp->hour??false)
+                                    ->format('h:i a')
+                                }}
+                            </td>
 
-                                <td>
-                                    {{
-                                        Carbon::createFromFormat('Hi', $shcp->hour??false)
-                                        ->format('h:i a')
-                                    }}
-                                </td>
+                            <td class="text-gray-800 px-3">
+                                {{ '|' }}
+                            </td>
 
-                                <td class="text-gray-800 px-3">
-                                    {{ '|' }}
-                                </td>
+                            <td class="">
+                                {{
+                                    $shcp->in_out == 'I'? 'In' : 'Out'
+                                }}
+                            </td>
 
-                                <td class="">
-                                    {{
-                                        $shcp->in_out == 'I'? 'In' : 'Out'
-                                    }}
-                                </td>
-
-                            </tr>
-                        @endforeach
+                        </tr>
+                    @endforeach
 
                 @endif
+            </table>
 
         </div>
     
