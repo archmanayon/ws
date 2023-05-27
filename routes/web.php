@@ -103,9 +103,6 @@ Route::post('shcp_', [PunchController::class, 'store_'])
 // ->middleware(['auth', 'verified'])
 ->name('punches_');
 
-
-
-
 Route::get('print', [ScheduleController::class, 'absences_all'])
 ->middleware(['auth', 'verified', 'admin'])->name('extract');
 
