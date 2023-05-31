@@ -5,7 +5,7 @@
 
 <x-grid-layout>
 
-    <div class="lg:grid lg:grid-cols-2">
+    <div class="justify-items-center lg:grid lg:grid-cols-2">
         <!---------------first column------------------>
         <div class="py-6">
             <div class="lg:px-8 mx-6 sm:px-6 text-center">
@@ -26,14 +26,14 @@
                             </div> --}}
                             {{-- <div id="m_clock" class="p-6 text-gray-900 dark:text-gray-100">
                             </div> --}}
-                            {{--
-                                <div id=""
+                            
+                                <div id="m_clock"
                                 class="text-5xl mt-4 order-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600
                                     focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
                                     >
                                 clock here
                                 </div>
-                            --}}
+                           
 
 
                         </td>
