@@ -69,8 +69,7 @@
                         <form method="POST" action="{{ $str_tc.$str_date }}" >
                             @csrf
                             <tr>                               
-                                {{ $searched_user->name }}<br>
-                                                         
+                                {{ $searched_user->name }}<br>                                                         
                                 
                             </tr>
                             <tr>

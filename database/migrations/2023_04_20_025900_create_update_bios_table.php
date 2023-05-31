@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('update_bios', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignId('time_card');
+            $table->string('time_card');
             $table->string('date');           
             $table->string('hour');
             $table->string('in_out');
