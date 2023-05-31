@@ -16,20 +16,17 @@
                             {{-- <div id=""
                                 class="text-5xl mt-4 order-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600
                                 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
-                                >
-                                {{$date_->format('h:i:s A') }}<br> --}}
-
-                             {{-- <div id=""
-                                >
-                                {{$date_->format('h:i:s A') }}<br>
-
-                            </div> --}}
-                            {{-- <div id="m_clock" class="p-6 text-gray-900 dark:text-gray-100">
-                            </div> --}}
-                            
+                                > --}}
+                                {{-- {{$date_->format('h:i:s A') }}<br> --}}
+                                             
                                 <div id="m_clock"
-                                class="text-5xl mt-4 order-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600
-                                    focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
+                                class="text-5xl mt-2 order-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600
+                                    focus:ring-indigo-500 dark:focus:ring-indigo-600 shadow-sm"
+                                    >
+                                clock here
+                                </div>
+                                <div id="sec"
+                                class="dark:bg-gray-700 dark:border-gray-700 dark:focus:border-indigo-600 dark:focus:ring-indigo-600 dark:text-gray-300 focus:border-indigo-500 focus:ring-indigo-500 mt-0 order-gray-300 shadow-sm text-xl"
                                     >
                                 clock here
                                 </div>
@@ -43,7 +40,7 @@
 
                             <!-- USC ID Number -->
                             <div>
-                                <x-input-label for="student_id" :value="__('USC ID Number')" class="text-center" />
+                                <x-input-label for="student_id" :value="__('USC ID Number')" class="block dark:text-gray-300 font-medium mt-8 text-center text-gray-700 text-sm" />
                                 <x-text-input id="student_id" class="block mt-1 w-48 mx-auto"
                                                 type="text" name="student_id"
                                                 :value="old('student_id')"
@@ -67,7 +64,7 @@
 
                             <div class="text-center">
 
-                                <x-primary-button class=" text-2xl m-auto-3 py-1 px-6 mt-4 mx-auto w-auto">
+                                <x-primary-button class=" text-2xl m-auto-3 py-1 mt-8 mx-auto w-3/4">
                                     {{ __('Punch with your ID') }}
                                     {{-- Punch
                                     {{ __( $in_out ? ($in_out == 'I'? 'In with your ID' :
@@ -88,7 +85,7 @@
 
         <!---------------second column------------------>
         <div class="py-6">
-            <div class="lg:px-8 mx-6 sm:px-6 text-center">
+            <div class="">
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg px-6 ">
                     <div class="px-1 text-gray-900 dark:text-gray-100">
                         <table class="block dark:text-gray-100 p-6 py-1 sm:px-6 text-gray-900 w-auto" >
