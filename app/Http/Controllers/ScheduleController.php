@@ -70,7 +70,7 @@ class ScheduleController extends Controller{
         $holiday = array("01-05-23","01-06-23",
                             "02-24-23", "02-25-23",
                             "04-06-23", "04-07-23",
-                            "04-08-23", "04-10-23",
+                            "04-08-23", "04-10-23","05-01-23",
                             "04-21-23") ;
 
         $start_date = request('start_date')?? 0;
@@ -151,7 +151,7 @@ class ScheduleController extends Controller{
 
         $holiday = array("01-01-23", "01-02-23","01-03-23",
                             "01-04-23","01-05-23","01-06-23",
-                            "01-07-23","01-16-23",
+                            "01-07-23","01-16-23", "05-01-23",
                             "02-24-23", "02-25-23");
 
         // $num_days = in_array($month_, $thirty_days) ? '30':
