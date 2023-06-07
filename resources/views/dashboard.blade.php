@@ -42,14 +42,29 @@
                             hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
                             focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
                             USC EMPLOYEES</a>     <br>               
-                    @endadmin
+                    
 
                    
                     <a href="js" class="font-semibold text-gray-600
                             hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
                             focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
-                            Java Script Pratice</a>  
+                            Java Script Pratice
+                    </a> 
+                    
+                            <br>
+
+                    
+                    
+                    @endadmin 
+
+                    <a href="task" class="font-semibold text-gray-600
+                            hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
+                            focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
+                            Daily Task Report
+                    </a>
+                     
                     <br>
+                    
                  
                     <a href="shcp" class="font-semibold text-gray-600
                             hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
