@@ -17,14 +17,14 @@ class TaskController extends Controller
 {
     public function show()
     {
-        $user           = session('user_session');
-        $tasks           = session('task_session');
        
-        return view('task',[
-            'user'          => $user,
-            'tasks'          => $tasks,
-            'currentDate'   => session('currentDate'),
-            'current_time'  => session('current_time')
+        return view('task',
+        [
+            'user'          => session('user_session')??false,
+            'tasks'         => session('task_session')??false,
+            'currentDate'   => session('currentDate')??false,
+            'current_time'  => session('current_time')??false,
+            'current_task' => session('current_task')??false
             
         ]);
         
@@ -39,7 +39,6 @@ class TaskController extends Controller
         $currentDate    = $Date->format('mdy');
         $current_time   = $Date->format('Hi');
 
-        $tasks          = $user->tasks;
         // $in_out         = $tasks->pluck('biotext')->last() === 'I' ? 'O' : 'I';      
 
         // $tasks = Task::create([
@@ -49,10 +48,12 @@ class TaskController extends Controller
         // ]);      
         
         return redirect()->route('show_task')->with([
+
             'user_session' => $user,
             'task_session' => $task,
             'currentDate'  => $currentDate,
-            'current_time' => $current_time
+            'current_time' => $current_time,
+            'current_task' => $user->tasks
         ]);
         
     }

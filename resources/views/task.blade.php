@@ -52,7 +52,7 @@
                         
                         <tr class="border-b-2">
                             <td class="px-4 py-3 w-3/4 ">
-                               {{ $tasks->task_done??false}}
+                               {{ $current_task??false}}
                             </td>
                             <td class="px-4 py-3">05/25/23</td>                            
                             <td class="px-4 py-3">approved</td>
@@ -63,7 +63,7 @@
                         {{-- @endforeach --}}
                         <tr class="border-b-2">
                             <td class="px-4 py-3 w-3/4">
-                                {{ $user->id??false }} <br>
+                                {{-- {{ dd($tasks) }} <br> --}}
                                 {{ $user->timecard??false }}{{ $currentDate??false }}{{ $current_time??false }}<br>
                                 {{ $tasks??false }}
                             </td>
