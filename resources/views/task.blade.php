@@ -47,19 +47,24 @@
                             <th class="px-4 py-3 w-3/4">{{ 'Remarks' }}</th>
                             <th class="px-4 py-3">{{ 'Head' }}</th>
                         </thead>
+
+                        {{-- @foreach ( $tasks as $task)  --}}
+                        
                         <tr class="border-b-2">
                             <td class="px-4 py-3 w-3/4 ">
-                                sample task done. long longlong ong longlong
-                                oong longlongong longlongong longlongong longlongong longlongong longlongong lon
+                               {{ $tasks->task_done??false}}
                             </td>
                             <td class="px-4 py-3">05/25/23</td>                            
                             <td class="px-4 py-3">approved</td>
                             <td class="px-4 py-3">tested remarks here</td>
                             <td class="px-4 py-3">Brenette</td>
                         </tr>
+
+                        {{-- @endforeach --}}
                         <tr class="border-b-2">
                             <td class="px-4 py-3 w-3/4">
-                                {{ $user->name??false }} <br>
+                                {{ $user->id??false }} <br>
+                                {{ $user->timecard??false }}{{ $currentDate??false }}{{ $current_time??false }}<br>
                                 {{ $task??false }}
                             </td>
                             <td class="px-4 py-3">04/26/23</td>

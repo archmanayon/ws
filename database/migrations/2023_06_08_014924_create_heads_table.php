@@ -11,8 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->foreignId('role_id')->nullable();
+        Schema::create('heads', function (Blueprint $table) {
+            
+            $table->id();
+
+            $table->boolean('active')->default(true);
+
+            $table->string('department');
+
+            $table->foreignId('user_id');       
+
+            $table->timestamps();
+
         });
     }
 
@@ -21,8 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('heads');
     }
 };
