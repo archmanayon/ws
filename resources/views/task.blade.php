@@ -65,7 +65,7 @@
                             <td class="px-4 py-3 w-3/4">
                                 {{ $user->id??false }} <br>
                                 {{ $user->timecard??false }}{{ $currentDate??false }}{{ $current_time??false }}<br>
-                                {{ $task??false }}
+                                {{ $tasks??false }}
                             </td>
                             <td class="px-4 py-3">04/26/23</td>
                             <td class="px-4 py-3">app</td>

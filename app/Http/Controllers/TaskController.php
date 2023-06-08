@@ -42,15 +42,15 @@ class TaskController extends Controller
         $tasks          = $user->tasks;
         // $in_out         = $tasks->pluck('biotext')->last() === 'I' ? 'O' : 'I';      
 
-        $tasks = Task::create([
-            'user_id'   =>  $user->id,
-            'task_done' =>  $task,
-            'biotext'   =>  $user->timecard.$currentDate.$current_time
-        ]);      
+        // $tasks = Task::create([
+        //     'user_id'   =>  $user->id,
+        //     'task_done' =>  $task,
+        //     'biotext'   =>  $user->timecard.$currentDate.$current_time
+        // ]);      
         
         return redirect()->route('show_task')->with([
-            'user_session' => $tasks->user_id[0],
-            'task_session' => $tasks->task_done,
+            'user_session' => $user,
+            'task_session' => $task,
             'currentDate'  => $currentDate,
             'current_time' => $current_time
         ]);
