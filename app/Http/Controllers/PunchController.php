@@ -158,7 +158,8 @@ class PunchController extends Controller
         // auth()->logout();
 
         if($validatedData['student_id'] && 
-            Hash::check($validatedData['punch_pw'], $searched_user->password))
+           Hash::check($validatedData['punch_pw'], $searched_user->password)
+            )
             {
                 Punch::create([
                     'user_id'   =>  $searched_user->id,
@@ -170,7 +171,6 @@ class PunchController extends Controller
 
                 return redirect()->route('show_punches_')
             ->with('usc_id', $validatedData['student_id']);
-
         }
 
         throw ValidationException::withMessages([

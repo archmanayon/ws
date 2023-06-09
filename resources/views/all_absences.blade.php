@@ -27,7 +27,7 @@
                     @endforeach<br> --}}
 
                     <table>
-                        <form method="POST" action="{{ route('all_absences') }}">
+                        <form method="POST" action="{{ route('disp_by_cal') }}">
                             @csrf    
                             
                             <td>
