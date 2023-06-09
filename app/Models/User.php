@@ -55,6 +55,11 @@ class User extends Authenticatable
         return $this->hasMany(Punch::class);
     }   
 
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
+    } 
+
     public function schedule()
     {
         return $this->belongsTo(Schedule::class);

@@ -130,6 +130,7 @@ class UpdateBioController extends Controller
 
         }
 
+        
         return redirect('print')
             ->with('success_message', 'Updated Biometrics');
         

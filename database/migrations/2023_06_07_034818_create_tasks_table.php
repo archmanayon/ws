@@ -11,18 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('update_bios', function (Blueprint $table) {
+        Schema::create('tasks', function (Blueprint $table) {
+
             $table->id();
-            $table->string('name');
-            $table->string('time_card');
-            $table->string('date');           
-            $table->string('hour');
-            $table->string('in_out');
+            $table->foreignId('user_id');
+            $table->string('task_done');
+            $table->boolean('status')->nullable();
+            $table->string('remarks')->nullable();         
+            $table->string('head')->nullable();
             $table->string('biotext')->unique();
-            $table->string('reason')->nullable();
             $table->boolean('active')->default(true);
             $table->timestamps();
-        
+
         });
     }
 
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('update_bios');
+        Schema::dropIfExists('tasks');
     }
 };

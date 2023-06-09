@@ -213,6 +213,7 @@ class AbsenceCalendarController extends Controller
         
         return $mappedArray;
     }
+    
     public function calendar_absences($collection_of_dates,$searched_user, $holiday) 
     {   
         $mappedArray = collect($collection_of_dates)
@@ -333,9 +334,9 @@ class AbsenceCalendarController extends Controller
 
             $sched_out = $day.'_out';
 
-            $official_in = $searched_user->schedule->$sched_in;
+            $official_in = $searched_user->schedule->$sched_in??false;
 
-            $official_out = $searched_user->schedule->$sched_out;    
+            $official_out = $searched_user->schedule->$sched_out??false;    
 
             $official_num_hr = round((strtotime($official_out) - 
                 strtotime($official_in))/3600,2);   

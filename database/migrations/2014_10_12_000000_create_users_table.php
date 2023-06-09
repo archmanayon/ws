@@ -17,7 +17,7 @@ return new class extends Migration
 
             $table->boolean('active')->default(true);
           
-            $table->string('timecard')->unique();
+            $table->string('timecard')->unique()->nullable();
 
             $table->string('student_id')->unique();
 
