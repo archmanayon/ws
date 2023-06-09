@@ -20,11 +20,11 @@ class TaskController extends Controller
        
         return view('task',
         [
-            'user'          => session('user_session')??(auth()->user()??false),
-            'tasks'         => session('task_session')??false,
-            'currentDate'   => session('currentDate')??false,
-            'current_time'  => session('current_time')??false,
-            'current_task' => session('current_task')??[]
+            'user'          => session('user_session')??(auth()->user()??false)
+            // 'tasks'         => session('task_session')??false,
+            // 'currentDate'   => session('currentDate')??false,
+            // 'current_time'  => session('current_time')??false,
+            // 'current_task' => session('current_task')??[]
             
         ]);
         
@@ -41,19 +41,19 @@ class TaskController extends Controller
 
         // $in_out         = $tasks->pluck('biotext')->last() === 'I' ? 'O' : 'I';      
 
-        // $tasks = Task::create([
-        //     'user_id'   =>  $user->id,
-        //     'task_done' =>  $task,
-        //     'biotext'   =>  $user->timecard.$currentDate.$current_time
-        // ]);      
+        $tasks = Task::create([
+            'user_id'   =>  $user->id,
+            'task_done' =>  $task,
+            'biotext'   =>  $user->timecard.$currentDate.$current_time
+        ]);      
         
         return redirect()->route('show_task')->with([
 
-            'user_session' => $user,
-            'task_session' => $task,
-            'currentDate'  => $currentDate,
-            'current_time' => $current_time,
-            'current_task' => $user->tasks
+            'user_session' => $user
+            // 'task_session' => $task,
+            // 'currentDate'  => $currentDate,
+            // 'current_time' => $current_time,
+            // 'current_task' => $user->tasks
             // 'current_task' => $user->tasks
         ]);
         
