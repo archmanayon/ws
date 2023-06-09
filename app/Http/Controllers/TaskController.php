@@ -20,11 +20,11 @@ class TaskController extends Controller
        
         return view('task',
         [
-            'user'          => session('user_session')??false,
+            'user'          => session('user_session')??(auth()->user()??false),
             'tasks'         => session('task_session')??false,
             'currentDate'   => session('currentDate')??false,
             'current_time'  => session('current_time')??false,
-            'current_task' => session('current_task')??false
+            'current_task' => session('current_task')??[]
             
         ]);
         
@@ -54,6 +54,7 @@ class TaskController extends Controller
             'currentDate'  => $currentDate,
             'current_time' => $current_time,
             'current_task' => $user->tasks
+            // 'current_task' => $user->tasks
         ]);
         
     }

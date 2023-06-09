@@ -48,40 +48,31 @@
                             <th class="px-4 py-3">{{ 'Head' }}</th>
                         </thead>
 
-                        {{-- @foreach ( $tasks as $task)  --}}
-                        
+                        @foreach ( $user->tasks as $current_task)
                         <tr class="border-b-2">
-                            <td class="px-4 py-3 w-3/4 ">
-                               {{ $current_task??false}}
-                            </td>
-                            <td class="px-4 py-3">05/25/23</td>                            
-                            <td class="px-4 py-3">approved</td>
-                            <td class="px-4 py-3">tested remarks here</td>
-                            <td class="px-4 py-3">Brenette</td>
-                        </tr>
 
-                        {{-- @endforeach --}}
-                        <tr class="border-b-2">
-                            <td class="px-4 py-3 w-3/4">
-                                {{-- {{ dd($tasks) }} <br> --}}
-                                {{ $user->timecard??false }}{{ $currentDate??false }}{{ $current_time??false }}<br>
-                                {{ $tasks??false }}
+                            <td class="px-4 py-3">
+                                {{ $current_task->task_done }}
                             </td>
-                            <td class="px-4 py-3">04/26/23</td>
-                            <td class="px-4 py-3">app</td>
-                            <td class="px-4 py-3">disaproval</td>
-                            <td class="px-4 py-3">Brenette</td>
-                        </tr>
-                        <tr class="border-b-2">
-                            <td class="px-4 py-3 w-3/4">
-                                another sample
+
+                            <td class="px-4 py-3">
+                                {{ $current_task->created_at->format('m/d/y') }}
                             </td>
-                            <td class="px-4 py-3">04/25/23</td>
-                            <td class="px-4 py-3">diapprovedapproved</td>
-                            <td class="px-4 py-3">disaproval</td>
-                            <td class="px-4 py-3">Brenette</td>
+
+                            <td class="px-4 py-3">
+                                {{ $current_task->status }}
+                            </td>
+                            
+                            <td class="px-4 py-3">
+                                {{ $current_task->remarks }}
+                            </td>
+
+                            <td class="px-4 py-3">
+                                {{ $current_task->head }}
+                            </td>
+
                         </tr>
-                        
+                        @endforeach
                        
                     </table>
 
