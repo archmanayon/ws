@@ -20,8 +20,7 @@
 
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     {{ 'Task Done' }}<br>
-                    {{ $user->name??false }} <br>
-                    {{ $user->head->user->id??false }}
+                    {{ $user->name??false }}
                     <form method="post" action="{{ route('store_task') }}">
                         @csrf
                         <textarea class="w-full rounded-t-lg m-5 w-5/6 mx-auto bg-gray-800 text-gray-200"
@@ -49,35 +48,35 @@
                             <th class="px-4 py-3">{{ 'Head' }}</th>
                         </thead>
 
-                        @foreach ( $user->tasks as $current_task)
-                        <tr class="border-b-2">
+                        @if ($user)
 
-                            <td class="px-4 py-3">
-                                {{ $current_task->task_done }}
-                            </td>
+                            @foreach ( $user->tasks as $current_task)
+                            <tr class="border-b-2">
 
-                            <td class="px-4 py-3">
-                                {{ $current_task->created_at->format('m/d/y') }}
-                            </td>
+                                <td class="px-4 py-3">
+                                    {{ $current_task->task_done }}
+                                </td>
 
-                            <td class="px-4 py-3">
-                                {{ $current_task->status }}
-                            </td>
+                                <td class="px-4 py-3">
+                                    {{ $current_task->created_at->format('m/d/y') }}
+                                </td>
+
+                                <td class="px-4 py-3">
+                                    {{ $current_task->status }}
+                                </td>
+                                
+                                <td class="px-4 py-3">
+                                    {{ $current_task->remarks }}
+                                </td>
+
+                                <td class="px-4 py-3">
+                                    {{ $current_task->head }}
+                                </td>
+
+                            </tr>
+                            @endforeach
                             
-                            <td class="px-4 py-3">
-                                {{ $current_task->remarks }}
-                            </td>
-
-                            <td class="px-4 py-3">
-                                {{ $current_task->user->head->user->name }}
-                            </td>
-
-                            <td class="px-4 py-3">
-                                {{ $current_task->head }}
-                            </td>
-
-                        </tr>
-                        @endforeach
+                        @endif
                        
                     </table>
 

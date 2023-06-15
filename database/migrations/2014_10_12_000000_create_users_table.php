@@ -17,7 +17,7 @@ return new class extends Migration
 
             $table->boolean('active')->default(true);
           
-            $table->string('timecard')->unique()->nullable();
+            $table->string('timecard')->nullable();
 
             $table->string('student_id')->unique();
 
@@ -35,6 +35,7 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
             $table->foreignId('role_id')->nullable();
+            $table->foreignId('head_id')->nullable();
         });
     }
 
