@@ -75,13 +75,16 @@ class AbsenceCalendarController extends Controller
             $type = null;
             
             if ($official->am_in && !$punch->am_in || $official->am_out && !$punch->am_out ||
+
                 $official->am_in && $punch->am_in >= $official->am_out ||
 
-                $official->pm_in && !$punch->pm_in || $official->pm_out && !$punch->pm_out||
+                $official->am_in && $punch->am_out <= $official->am_in ||
 
-                $official->pm_in && $punch->pm_out <=$official->pm_in||
+                $official->pm_in && !$punch->pm_in || $official->pm_out && !$punch->pm_out||                
 
                 $official->pm_in && $punch->pm_in >= $official->pm_out ||
+
+                $official->pm_in && $punch->pm_out <= $official->pm_in ||
 
                 // $punch->all_bio_punches[0]->date_bio == '040323' ||
                 $am_late >= $official->am_num_hr && $official->am_num_hr != 0||
