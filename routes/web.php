@@ -28,7 +28,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 /* Sample controller by arch
-    public function new_bio($bio){          
+    public function new_bio($bio){
 
         return view ('update_bio',[
 
@@ -53,14 +53,14 @@ Route::get('js', function () {
 // });
 
 Route::get('hash_pw', function () {
-    
+
     $users = User::all()->where('role_id',3);
 
     $hashed_w_id = [];
     $corrected_name = [];
 
     foreach($users as $user){
-        
+
         $hashed = Hash::make($user->student_id.'usc');
         $hashed_w_id[] = $user->name."'s PW is".$hashed;
         $corrected = str_replace('+', ',', $user->name);
@@ -68,7 +68,7 @@ Route::get('hash_pw', function () {
 
         // User::where('id', $user->id)->update(['password' => $hashed]);
         // User::where('id', $user->id)->update(['name' => $corrected]);
-        
+
     }
 
     return view ('hash_pw',[
@@ -133,6 +133,14 @@ Route::get('adea', [ScheduleController::class, 'adea_bio_abs'])
 Route::post('adea', [ScheduleController::class, 'adea_bio_abs'])
 ->middleware(['auth', 'verified', 'admin'])->name('adea_post');
 
+Route::get('text_files', [ScheduleController::class, 'text_files'])
+->middleware(['auth', 'verified', 'admin'])->name('text_files');
+
+Route::post('text_files', [ScheduleController::class, 'text_files'])
+->middleware(['auth', 'verified', 'admin'])->name('text_files_post');
+
+
+
 Route::get('all_absences', [ScheduleController::class, 'print_all_abs_old'])
 ->middleware(['auth', 'verified', 'admin'])->name('all_absences');
 
@@ -145,7 +153,7 @@ Route::get('/dashboard', function () {
 
 
 // Route::get('/report/{ws:username}', function (User $ws) {
-    
+
     //     // $sample = request()->url();
     //     // dd(basename($sample));
 
@@ -156,8 +164,8 @@ Route::get('/dashboard', function () {
 
     //             'user' => $ws,
     //             'punches' => Punch::all()
-    //         ]);  
-            
+    //         ]);
+
     //     }
 
     //     else {
@@ -174,15 +182,15 @@ Route::middleware('auth')->group(function () {
 
 
 
-// Route::get('/extract', function () {   
-   
+// Route::get('/extract', function () {
+
     //     return view('extract', [
 
     //         'user' => User::all(),
     //         'punches' => Punch::all(),
     //         'schedule' => Schedule::find(5),
     //         'manual_shift' => ManualShift::all()
-    //     ]); 
+    //     ]);
 
 // })->middleware(['auth', 'verified', 'admin'])->name('extract');
 

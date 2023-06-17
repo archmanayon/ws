@@ -27,9 +27,9 @@
                     @endforeach<br> --}}
 
                     <table>
-                        <form method="POST" action="{{ route('adea_post') }}">
+                        <form method="POST" action="{{ route('text_files') }}">
                             @csrf
-                            
+
                             <td>
                                 <div class="mt-4" >
                                     <x-input-label for="start_date" :value="__('Start Date')" />
