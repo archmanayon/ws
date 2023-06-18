@@ -10,6 +10,7 @@ use App\Models\ManualShift;
 use App\Models\Punch;
 use App\Models\Schedule;
 use App\Http\Controllers\AbsenceCalendarController;
+use App\Http\Controllers\BiometricController;
 
 use App\Models\Shift;
 use App\Models\Update_bio;
@@ -181,8 +182,6 @@ class ScheduleController extends Controller{
 
     public function text_files()
     {
-        // $user_all = User::with(['shift', 'manual_shifts', 'update_bios'])->get();
-
         $holiday = array(
             // "01-05-23", "01-06-23",
             // "02-24-23", "02-25-23",
@@ -198,14 +197,12 @@ class ScheduleController extends Controller{
         $collection_of_dates = collect($dates);
         $count_dates = $period->count();
 
-        $mappedArray = collect(User::all()->where('active',
-            true
-        )->where('role_id', 2))
+        $mappedArray = collect(User::all()->where('active',true)->where('role_id', 2))
         ->map(
             function ($user) use ($collection_of_dates, $holiday) {
 
                 $user = app()->call(
-                    AbsenceCalendarController::class . '@adea_bio',
+                    BiometricController::class . '@text_files',
                     [
                         'collection_of_dates' => $collection_of_dates,
                         'searched_user' => User::find($user->id),
@@ -220,8 +217,6 @@ class ScheduleController extends Controller{
         return view('text_files', [
 
             'mappedUser' =>  $mappedArray
-
-
 
         ]);
     }
