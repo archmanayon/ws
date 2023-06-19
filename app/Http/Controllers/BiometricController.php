@@ -53,7 +53,12 @@ class BiometricController extends Controller
                         'official'          => $official
                     ]
                 );
-                $punches = array($punch->am_in, $punch->am_out, $punch->pm_in, $punch->pm_out);
+                $punches = array(
+                    $punch->am_in?$searched_user->timecard.$date->format('mdy').$punch->am_in.'I':'',
+                    $punch->am_out?$searched_user->timecard.$date->format('mdy').$punch->am_out.'O':'',
+                    $punch->pm_in?$searched_user->timecard.$date->format('mdy').$punch->pm_in.'I':'',
+                    $punch->pm_out?$searched_user->timecard.$date->format('mdy').$punch->pm_out.'O':''
+                );
 
                 // ________________________________________________________
 

@@ -73,17 +73,19 @@
 
                                 @foreach ( $each_user as $daily)
 
-                                    @if ($daily->punch)
+                                    @if ($daily)
 
                                         @foreach ($daily->punch as $punch)
 
-                                            <tr class="bg-gray-700 border-b border-gray-600">
-                                                <td class="px-4 py-3">
-                                                    {{$daily->user->timecard}}
-                                                    {{$daily->date}}
-                                                    {{$punch}}
-                                                </td>
-                                            </tr>
+                                            @if ($punch)
+
+                                                <tr class="bg-gray-700 border-b border-gray-600">
+                                                    <td class="px-4 py-3">
+                                                        {{$punch}}
+                                                    </td>
+                                                </tr>
+
+                                            @endif
 
                                         @endforeach
 
