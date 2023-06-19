@@ -1,7 +1,9 @@
 @php
+
     use Illuminate\Support\Str;
     use Carbon\Carbon;
     use App\Models\Task;
+    
 
 @endphp
 
@@ -21,16 +23,7 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     {{ 'Task Done' }}<br>
                     {{ $user->name??false }} <br>
-                    {{ $user->head->user->id??false }}
-                    <form method="post" action="{{ route('store_task') }}">
-                        @csrf
-                        <textarea class="w-full rounded-t-lg m-5 w-5/6 mx-auto bg-gray-800 text-gray-200"
-                           id="" name="task_text" placeholder="Descriptive Task"></textarea>
-                        <br>
-                        <button type="submit" name="save_task" value="save_new" class="border w-48"
-                            >Submit for Endorsement Now 
-                        </button>
-                    </form>
+                    {{ $user->head->user->id??false }}                    
                 </div>
 
             </div>
@@ -52,30 +45,47 @@
                         @foreach ( $user->tasks as $current_task)
                         <tr class="border-b-2">
 
-                            <td class="px-4 py-3">
-                                {{ $current_task->task_done }}
-                            </td>
+                            <form method="post" action="{{ route('store_dept_head') }}">
+                            @csrf
 
-                            <td class="px-4 py-3">
-                                {{ $current_task->created_at->format('m/d/y') }}
-                            </td>
+                                <td class="px-4 py-3">
+                                    {{ $current_task->task_done }}
+                                </td>
 
-                            <td class="px-4 py-3">
-                                {{ $current_task->status }}
-                            </td>
+                                <td class="px-4 py-3">
+                                    {{ $current_task->created_at->format('m/d/y') }}
+                                </td>
+                                
+                                <td class="px-4 py-3">                                   
+                                    
+                                    <select name="option" id="task_stat" class="bg-white m-5 dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                                        <option value="stat01">Endorse</option>
+                                        <option value="stat02">Disapprove</option>
+                                        <option value="stat03">HOLD</option>
+                                    </select>
+                                    
+                                </td>                                                          
                             
-                            <td class="px-4 py-3">
-                                {{ $current_task->remarks }}
-                            </td>
+                                <td class="px-4 py-3">
+                                    {{ $current_task->remarks }}
+                                </td>
 
-                            <td class="px-4 py-3">
-                                {{ $current_task->user->head->user->name }}
-                            </td>
+                                <td class="px-4 py-3">
+                                    {{ $current_task->user->head->user->name }}
+                                </td>
 
-                            <td class="px-4 py-3">
-                                {{ $current_task->head }}
-                            </td>
+                                <td class="px-4 py-3">
+                                    {{ $current_task->head }}
+                                </td>  
+                                
+                                <td class="px-4 py-3">
 
+                                    <button type="submit" name="endorse_task" value="endorse_task" class="border w-48"
+                                        >Endorse 
+                                    </button>
+                                </td>
+
+                            </form>  
                         </tr>
                         @endforeach
                        

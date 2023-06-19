@@ -90,13 +90,17 @@ Route::get('task', [TaskController::class, 'show'])
 ->middleware(['auth', 'verified'])
 ->name('show_task');
 
+Route::post('task', [TaskController::class, 'store'])
+->middleware(['auth', 'verified'])
+->name('store_task');
+
 Route::get('dept_head', [HeadController::class, 'show'])
 // ->middleware(['auth', 'verified'])
 ->name('show_dept_head');
 
-Route::post('task', [TaskController::class, 'store'])
-->middleware(['auth', 'verified'])
-->name('store_task');
+Route::post('dept_head', [HeadController::class, 'store'])
+// ->middleware(['auth', 'verified'])
+->name('store_dept_head');
 
 Route::get('shcp', [PunchController::class, 'show'])
 // ->middleware(['auth', 'verified'])
