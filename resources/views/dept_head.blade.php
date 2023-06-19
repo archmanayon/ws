@@ -35,7 +35,7 @@
 
                     <table class="rounded-t-lg m-5 w-5/6 mx-auto bg-gray-800 text-gray-200">
                         <thead class="text-left border-b border-gray-300">
-                            <th class="px-4 py-3 w-3/4">{{ 'Tasks' }}</th>
+                            <th class="py-1 w-16 w-3/4">{{ 'Tasks' }}</th>
                             <th class="px-4 py-3">{{ 'Date' }}</th>
                             <th class="px-4 py-3">{{ 'Status' }}</th>
                             <th class="px-4 py-3 w-full">
@@ -50,11 +50,11 @@
                             <form method="post" action="{{ route('store_dept_head') }}">
                             @csrf
 
-                                <td class="px-4 py-3">
+                                <td class="px-1 py-3  sm:scale-95 text-base">
                                     {{ $current_task->task_done }}
                                 </td>
 
-                                <td class="px-4 py-3">
+                                <td class="pr-4 py-3 text-base">
                                     {{ $current_task->created_at->format('m/d/y') }}
                                 </td>
 
@@ -68,7 +68,7 @@
 
                                 </td>
 
-                                <td class="px-4 py-3">
+                                <td class="bg-gray-800 m-5 mx-auto rounded-t-lg text-gray-200 w-48">
                                     {{-- {{ $current_task->remarks }} --}}
                                     <textarea class="w-full rounded-t-lg m-5 mx-auto bg-gray-800 text-gray-200"
                                         id="" name="head_remarks" placeholder="Remarks"></textarea>
