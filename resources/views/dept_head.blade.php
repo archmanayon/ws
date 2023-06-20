@@ -116,12 +116,12 @@
 
                                 <td class="">
 
-                                    @if ($current_task->status)
+                                    @if (!$current_task->status)
 
-                                        <button type="submit" name="task_id" value="{{ $current_task->id }}" class="">
+                                        {{-- <button type="submit" name="task_id" value="{{ $current_task->id }}" class="">
                                             Edit
                                         </button>
-                                    @else
+                                    @else --}}
 
                                         <button type="submit" name="task_id" value="{{ $current_task->id }}" class="">
                                             Submit
