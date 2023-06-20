@@ -49,33 +49,60 @@
                             {{-- <th class="px-4 py-3">{{ 'Head' }}</th> --}}
                         </thead>
 
-                        @foreach ( $user->heads[0]->tasks as $current_task)
+                        @foreach ( $user->heads[0]->tasks->sortBy('status') as $current_task)
                         <tr class="border-b">
 
-                            <form method="post" action="{{ route('store_dept_head') }}">
+                            <form method="post" action="{{ route('endorse_task') }}">
                             @csrf
 
+                                {{-- date --}}
                                 <td class="px-4">
                                     {{ $current_task->created_at->format('m/d/y') }}
                                 </td>
 
+                                {{-- task --}}
                                 <td class="px-4 sm:max-w-sm ">
                                     {{ $current_task->task_done }}
                                 </td>                                
 
-                                <td class="w-auto">
-                                    {{-- {{ $current_task->remarks }} --}}
-                                    <textarea class="bg-gray-800 border-gray-700 mt-2 rounded text-gray-200 text-sm"
-                                        id="" name="head_remarks" placeholder="type..."></textarea>
+                                {{-- remarks --}}
+                                <td class="w-auto">   
+
+                                    @if ($current_task->remarks)
+
+                                        {{ $current_task->remarks }}
+
+                                    @else
+
+                                        <textarea class="bg-gray-800 border-gray-700 h-9 mt-2 rounded text-gray-200 text-sm"
+                                        id="" name="head_remarks" placeholder="type...">
+
+                                        {{ $current_task->remarks?? false }}
+                                        </textarea>
+
+                                    @endif               
+                                    
                                 </td>
 
+                                {{-- status --}}
                                 <td class="px-4 w-auto">
-                                    
-                                    <select name="option" id="task_stat" class="bg-gray-800 border-transparent mt-2 px-0 py-1 rounded text-1xl text-gray-200 w-auto">
-                                        <option value="stat01">Pending</option>
-                                        <option value="stat02">Endorse</option>
-                                        <option value="stat03">Disapprove</option>
-                                    </select>
+
+                                   
+                                    @if ($current_task->status)
+
+                                        {{ $current_task->status == 1 ? "Endorsed" : 
+                                            ($current_task->status == 2 ? "Disapproved" : "Pending") 
+                                        }}
+
+                                        @else
+                                                                                                
+                                            <select name="stat_option" id="task_stat" class="bg-gray-800 border-transparent mt-2 px-0 py-1 rounded text-1xl text-gray-200 w-auto">
+                                                <option value="0">Pending</option>
+                                                <option value="1">Endorse</option>
+                                                <option value="2">Disapprove</option>
+                                            </select>
+
+                                    @endif
 
                                 </td>                               
 
@@ -89,9 +116,18 @@
 
                                 <td class="">
 
-                                    <button type="submit" name="endorse_task" value="endorse_task" class="">
-                                        Submit
-                                    </button>
+                                    @if ($current_task->status)
+
+                                        <button type="submit" name="task_id" value="{{ $current_task->id }}" class="">
+                                            Edit
+                                        </button>
+                                    @else
+
+                                        <button type="submit" name="task_id" value="{{ $current_task->id }}" class="">
+                                            Submit
+                                        </button>
+
+                                    @endif
 
                                 </td>
 

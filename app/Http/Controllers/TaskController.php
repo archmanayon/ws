@@ -20,7 +20,7 @@ class TaskController extends Controller
        
         return view('task',
         [
-            'user'          => session('user_session')??(auth()->user()??false)
+            'user'          => auth()->user()??false
             // 'tasks'         => session('task_session')??false,
             // 'currentDate'   => session('currentDate')??false,
             // 'current_time'  => session('current_time')??false,
@@ -50,15 +50,44 @@ class TaskController extends Controller
             'biotext'   =>  $user->timecard.$currentDate.$current_time
         ]);      
         
-        return redirect()->route('show_task')->with([
+        return redirect()->route('show_task')
+            // ->with([
+            //     'user_session' => $user
+            //     // 'task_session' => $task,
+            //     // 'currentDate'  => $currentDate,
+            //     // 'current_time' => $current_time,
+            //     // 'current_task' => $user->tasks
+            //     // 'current_task' => $user->tasks
+            // ])
+        ;
+        
+    }
 
-            'user_session' => $user
-            // 'task_session' => $task,
-            // 'currentDate'  => $currentDate,
-            // 'current_time' => $current_time,
-            // 'current_task' => $user->tasks
-            // 'current_task' => $user->tasks
-        ]);
+    public function endorse()
+    {
+        $user           = auth()->user()??false;
+        
+        $head_remarks   = request('head_remarks');
+        $stat_option    = request('stat_option');
+
+        // $in_out         = $tasks->pluck('biotext')->last() === 'I' ? 'O' : 'I';      
+
+        $tasks = Task::find(request('task_id'))->update([
+            
+            'status'    =>  $stat_option,
+            'remarks'   =>  $head_remarks
+        ]);      
+        
+        return redirect()->route('show_dept_head')
+            // ->with([
+                // 'user_session' => $user
+                // 'task_session' => $task,
+                // 'currentDate'  => $currentDate,
+                // 'current_time' => $current_time,
+                // 'current_task' => $user->tasks
+                // 'current_task' => $user->tasks
+            // ])
+        ;
         
     }
 }
