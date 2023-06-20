@@ -23,7 +23,7 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     {{ 'Task Done' }}<br>
                     {{ $user->name??false }} <br>
-                    {{ $user->head->user->id??false }}
+                    {{ $user->head->user->name??false }}
                 </div>
 
             </div>
@@ -33,46 +33,51 @@
 
                 <div class="p-6 text-gray-900 dark:text-gray-100">
 
-                    <table class="rounded-t-lg m-5 w-5/6 mx-auto bg-gray-800 text-gray-200">
-                        <thead class="text-left border-b border-gray-300">
-                            <th class="py-1 w-16 w-3/4">{{ 'Tasks' }}</th>
+                    <table class="bg-gray-800 rounded-t-lg text-sm w-full">
+                        <thead class="border-b border-gray-300 text-left">
+
                             <th class="px-4 py-3">{{ 'Date' }}</th>
-                            <th class="px-4 py-3">{{ 'Status' }}</th>
-                            <th class="px-4 py-3 w-full">
-                            {{-- {{ 'Remarks' }} --}}
+
+                            <th class="px-4 w-auto">{{ 'Tasks' }}</th>                            
+                            
+                            <th class="px-3 py-3  w-auto"> 
+                                {{ 'Remarks' }}
                             </th>
+
+                            <th class="px-4 py-3 w-auto">{{ 'Status' }}</th>
+
                             {{-- <th class="px-4 py-3">{{ 'Head' }}</th> --}}
                         </thead>
 
-                        @foreach ( $user->tasks as $current_task)
-                        <tr class="border-b-2 sm:text-left">
+                        @foreach ( $user->heads[0]->tasks as $current_task)
+                        <tr class="border-b">
 
                             <form method="post" action="{{ route('store_dept_head') }}">
                             @csrf
 
-                                <td class="px-1 py-3  sm:scale-95 text-base">
-                                    {{ $current_task->task_done }}
-                                </td>
-
-                                <td class="pr-4 py-3 text-base">
+                                <td class="px-4">
                                     {{ $current_task->created_at->format('m/d/y') }}
                                 </td>
 
-                                <td class="px-4 py-3">
+                                <td class="px-4 sm:max-w-sm ">
+                                    {{ $current_task->task_done }}
+                                </td>                                
 
-                                    <select name="option" id="task_stat" class="bg-white m-5 dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg text-sm w-auto border-transparent  sm:mx-auto">
-                                        <option value="stat01">Endorse</option>
-                                        <option value="stat02">Disapprove</option>
-                                        <option value="stat03">HOLD</option>
+                                <td class="w-auto">
+                                    {{-- {{ $current_task->remarks }} --}}
+                                    <textarea class="bg-gray-800 border-gray-700 mt-2 rounded text-gray-200 text-sm"
+                                        id="" name="head_remarks" placeholder="type..."></textarea>
+                                </td>
+
+                                <td class="px-4 w-auto">
+                                    
+                                    <select name="option" id="task_stat" class="bg-gray-800 border-transparent mt-2 px-0 py-1 rounded text-1xl text-gray-200 w-auto">
+                                        <option value="stat01">Pending</option>
+                                        <option value="stat02">Endorse</option>
+                                        <option value="stat03">Disapprove</option>
                                     </select>
 
-                                </td>
-
-                                <td class="bg-gray-800 m-5 mx-auto rounded-t-lg text-gray-200 w-48">
-                                    {{-- {{ $current_task->remarks }} --}}
-                                    <textarea class="w-full rounded-t-lg m-5 mx-auto bg-gray-800 text-gray-200"
-                                        id="" name="head_remarks" placeholder="Remarks"></textarea>
-                                </td>
+                                </td>                               
 
                                 {{-- <td class="px-4 py-3">
                                     {{ $current_task->user->head->user->name }}
@@ -82,9 +87,9 @@
                                     {{ $current_task->head }}
                                 </td> --}}
 
-                                <td class="px-4 py-3">
+                                <td class="">
 
-                                    <button type="submit" name="endorse_task" value="endorse_task" class="ml-12 w-auto">
+                                    <button type="submit" name="endorse_task" value="endorse_task" class="">
                                         Submit
                                     </button>
 

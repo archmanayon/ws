@@ -44,6 +44,9 @@ class TaskController extends Controller
         $tasks = Task::create([
             'user_id'   =>  $user->id,
             'task_done' =>  $task,
+            'status'    =>  null,
+            // 'remarks'   =>  ,
+            'head_id'      =>  $user->head->id,
             'biotext'   =>  $user->timecard.$currentDate.$current_time
         ]);      
         

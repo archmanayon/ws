@@ -40,41 +40,48 @@
 
                 <div class="p-6 text-gray-900 dark:text-gray-100">                  
 
-                    <table class="rounded-t-lg m-5 w-5/6 mx-auto bg-gray-800 text-gray-200">
-                        <thead class="text-left border-b border-gray-300">
-                            <th class="px-4 py-3 w-3/4">{{ 'Tasks' }}</th>
-                            <th class="px-4 py-3">{{ 'Date' }}</th>                            
-                            <th class="px-4 py-3">{{ 'Status' }}</th>
-                            <th class="px-4 py-3 w-3/4">{{ 'Remarks' }}</th>
-                            <th class="px-4 py-3">{{ 'Head' }}</th>
+                    <table class="bg-gray-800 rounded-t-lg text-sm w-full">
+                        <thead class="border-b border-gray-300 text-left">
+
+                            <th class="px-4 py-3">{{ 'Date' }}</th>
+
+                            <th class="px-4 w-auto">{{ 'Tasks' }}</th>                            
+                            
+                            <th class="px-3 py-3  w-auto"> 
+                                {{ 'Remarks' }}
+                            </th>
+
+                            <th class="px-4 py-3 w-auto">{{ 'Status' }}</th>
+
+                            {{-- <th class="px-4 py-3">{{ 'Head' }}</th> --}}
                         </thead>
 
                         @foreach ( $user->tasks as $current_task)
-                        <tr class="border-b-2">
+                        <tr class="border-b">
 
-                            <td class="px-4 py-3">
-                                {{ $current_task->task_done }}
-                            </td>
-
-                            <td class="px-4 py-3">
+                            <td class="px-4">
                                 {{ $current_task->created_at->format('m/d/y') }}
                             </td>
 
-                            <td class="px-4 py-3">
-                                {{ $current_task->status }}
+                            <td class="px-4 sm:max-w-sm ">
+                                {{ $current_task->task_done }}
                             </td>
                             
-                            <td class="px-4 py-3">
+                            <td class="w-auto ">
                                 {{ $current_task->remarks }}
                             </td>
 
-                            <td class="px-4 py-3">
+                            <td class="px-4">
+                                {{ $current_task->status }}
+                            </td>
+                            
+                            <td class="px-4">
                                 {{ $current_task->user->head->user->name }}
                             </td>
 
-                            <td class="px-4 py-3">
+                            {{-- <td class="px-4 py-3">
                                 {{ $current_task->head }}
-                            </td>
+                            </td> --}}
 
                         </tr>
                         @endforeach

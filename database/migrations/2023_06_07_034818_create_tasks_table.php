@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('task_done');
             $table->boolean('status')->nullable();
             $table->string('remarks')->nullable();         
-            $table->string('head')->nullable();
+            $table->string('head_id')->nullable();
             $table->string('biotext')->unique();
             $table->boolean('active')->default(true);
             $table->timestamps();

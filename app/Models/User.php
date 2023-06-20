@@ -75,6 +75,11 @@ class User extends Authenticatable
         return $this->belongsTo(Head::class);
     }
 
+    public function heads()
+    {
+        return $this->hasMany(Head::class);
+    }
+
     public function manual_shifts()
     {
         return $this->hasMany(ManualShift::class);
