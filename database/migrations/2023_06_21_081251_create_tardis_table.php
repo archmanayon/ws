@@ -15,7 +15,7 @@ return new class extends Migration
 
             $table->id();
             $table->foreignId('user_id');
-            $table->string('sy');
+            $table->string('sy_id');
             $table->integer('month');
             $table->integer('total');
             $table->foreignId('tardi_id');
@@ -25,7 +25,7 @@ return new class extends Migration
             $table->timestamp('sig_date')->nullable();
             $table->string('remarks')->nullable();
             $table->timestamps();
-            
+
         });
     }
 
