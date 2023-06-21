@@ -63,8 +63,8 @@
                                 {{-- task --}}
                                 <td class="px-4 sm:max-w-sm ">
                                     {{ $current_task->task_done }}
-                                </td>                                
-
+                                </td>                                         
+                             
                                 {{-- remarks --}}
                                 <td class="w-auto">   
 
@@ -72,17 +72,15 @@
 
                                         {{ $current_task->remarks }}
 
-                                    @elseif ($current_task->remarks)                                      
-
-                                        {{ $current_task->remarks }}
+                                    @elseif ($current_task->remarks) 
+                                    
+                                        <textarea class="bg-gray-800 border-gray-700 h-9 mt-2 rounded text-gray-200 text-sm"
+                                            id="" name="head_remarks" placeholder="{{ $current_task->remarks?? 'type...' }}"></textarea>
                                     
                                     @else
 
                                         <textarea class="bg-gray-800 border-gray-700 h-9 mt-2 rounded text-gray-200 text-sm"
-                                        id="" name="head_remarks" placeholder="type...">
-
-                                        {{ $current_task->remarks?? false }}
-                                        </textarea>
+                                        id="" name="head_remarks" placeholder="type...">{{ $current_task->remarks?? false }}</textarea>
 
                                     @endif               
                                     
