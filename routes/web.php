@@ -78,7 +78,7 @@ Route::get('hash_pw', function () {
 
 
     ]);
-});
+})->middleware(['auth', 'verified', 'admin']);
 
 Route::get('update_bio/{bio}', [UpdateBioController::class, 'new_bio'])
 ->middleware(['auth', 'verified', 'admin'])->name('new_bio');
@@ -98,14 +98,20 @@ Route::post('task', [TaskController::class, 'store'])
 
 
 Route::get('dept_head', [HeadController::class, 'show'])
-->middleware(['auth', 'verified'])
+->middleware(['auth', 'verified', 'head'])
 ->name('show_dept_head');
 
 Route::post('dept_head', [TaskController::class, 'endorse'])
-->middleware(['auth', 'verified'])
+->middleware(['auth', 'verified', 'head'])
 ->name('endorse_task');
 
+Route::get('history_tasks', [HeadController::class, 'show_all_tasks'])
+->middleware(['auth', 'verified', 'head'])
+->name('show_history_tasks');
 
+Route::post('history_tasks', [TaskController::class, 'endorse'])
+->middleware(['auth', 'verified', 'head'])
+->name('endorse_history_tasks');
 
 
 Route::get('shcp', [PunchController::class, 'show'])
@@ -115,7 +121,6 @@ Route::get('shcp', [PunchController::class, 'show'])
 Route::post('shcp', [PunchController::class, 'store'])
 // ->middleware(['auth', 'verified'])
 ->name('punches');
-
 
 Route::get('shcp_', [PunchController::class, 'show_'])
 // ->middleware(['auth', 'verified'])
@@ -189,6 +194,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+
 
 
 

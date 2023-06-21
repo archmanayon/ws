@@ -15,7 +15,7 @@
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:grid lg:px-8 ">
+        <div class="lg:grid lg:px-8 m-5 mx-6 sm:px-6">
 
             {{-- 1st column --}}
             <div class="bg-white m-5 dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg w-full">
@@ -23,7 +23,7 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     {{ 'Task Done' }}<br>
                     {{ $user->name??false }} <br>
-                    {{ $user->head->department??false }}
+                    {{ $user->head->user->name??false }}
                 </div>
 
             </div>
@@ -36,8 +36,7 @@
                     <table class="bg-gray-800 rounded-t-lg text-sm w-full">
                         <thead class="border-b border-gray-300 text-left">
 
-                           <th class="px-4 py-3">{{ 'Staff' }}</th>
-
+                            <th class="px-4 py-3">{{ 'Staff' }}</th>
 
                             <th class="px-4 py-3">{{ 'Date' }}</th>
 
@@ -52,7 +51,7 @@
                             {{-- <th class="px-4 py-3">{{ 'Head' }}</th> --}}
                         </thead>
 
-                        @foreach ( $user->heads[0]->tasks->sortBy('status')->where('status', 0) as $current_task)
+                        @foreach ( $user->heads[0]->tasks->sortBy('status') as $current_task)
                         <tr class="border-b">
 
                             <form method="post" action="{{ route('endorse_task') }}">
@@ -65,7 +64,7 @@
 
                                 {{-- date --}}
                                 <td class="px-4">
-                                    {{ $current_task->created_at}}
+                                    {{ $current_task->created_at->format('m/d/y') }}
                                 </td>
 
                                 {{-- task --}}
@@ -147,7 +146,6 @@
 
                     </table>
 
-
                 </div>
 
             </div>
@@ -157,10 +155,10 @@
 
                 <div class="p-3 text-gray-900 dark:text-gray-100">
 
-                    <a href="history_tasks" class="font-semibold text-gray-600
+                    <a href="dept_head" class="font-semibold text-gray-600
                             hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
                             focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
-                            {{ 'History' }}
+                            {{ 'Back' }}
                     </a>
                     
                 </div>

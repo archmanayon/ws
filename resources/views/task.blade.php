@@ -56,7 +56,7 @@
                             {{-- <th class="px-4 py-3">{{ 'Head' }}</th> --}}
                         </thead>
 
-                        @foreach ( $user->tasks as $current_task)
+                        @foreach ( $user->tasks->sortBy('status') as $current_task)
                         <tr class="border-b">
 
                             <td class="px-4">
@@ -72,11 +72,15 @@
                             </td>
 
                             <td class="px-4">
-                                {{ $current_task->status }}
+                               
+                                {{ $current_task->status == 1 ? "Endorsed" : 
+                                    ($current_task->status == 2 ? "Disapproved" : "Pending") 
+                                }}
+
                             </td>
                             
                             <td class="px-4">
-                                {{ $current_task->user->head->user->name }}
+                                {{ $current_task->head->user->name }}
                             </td>
 
                             {{-- <td class="px-4 py-3">
