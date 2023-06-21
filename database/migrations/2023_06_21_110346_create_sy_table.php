@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('sy', function (Blueprint $table) {
             $table->id();
-            $table->string('sy')->nullable();
+            $table->string('school_year')->nullable();
             $table->boolean('active')->default(false);            
             $table->timestamps();
         });
