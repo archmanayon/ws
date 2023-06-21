@@ -87,7 +87,6 @@ Route::post('update_bio/{bio}', [UpdateBioController::class, 'store'])
 ->middleware(['auth', 'verified', 'admin'])->name('post_new_bio');
 
 
-
 Route::get('task', [TaskController::class, 'show'])
 ->middleware(['auth', 'verified', 'staff'])
 ->name('show_task');
