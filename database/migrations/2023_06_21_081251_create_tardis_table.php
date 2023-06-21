@@ -18,12 +18,12 @@ return new class extends Migration
             $table->string('sy_id');
             $table->integer('month');
             $table->integer('total');
-            $table->foreignId('tardi_id');
+            $table->foreignId('tardi_description_id');
             $table->string('conforme')->nullable();
             $table->timestamp('con_date')->nullable();
             $table->string('head_sig')->nullable();
             $table->timestamp('sig_date')->nullable();
-            $table->string('remarks')->nullable();
+            $table->text('remarks')->nullable();
             $table->timestamps();
 
         });
