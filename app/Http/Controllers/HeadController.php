@@ -11,7 +11,22 @@ class HeadController extends Controller
        
         return view('dept_head',
         [
-            'user'          => session('user_session')??(auth()->user()??false)
+            'user'          => auth()->user()??false
+            // 'tasks'         => session('task_session')??false,
+            // 'currentDate'   => session('currentDate')??false,
+            // 'current_time'  => session('current_time')??false,
+            // 'current_task' => session('current_task')??[]
+            
+        ]);
+        
+    }
+
+    public function show_all_tasks()
+    {
+       
+        return view('history_tasks',
+        [
+            'user'          => auth()->user()??false
             // 'tasks'         => session('task_session')??false,
             // 'currentDate'   => session('currentDate')??false,
             // 'current_time'  => session('current_time')??false,

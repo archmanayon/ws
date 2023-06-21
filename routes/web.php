@@ -28,7 +28,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 /* Sample controller by arch
-    public function new_bio($bio){          
+    public function new_bio($bio){
 
         return view ('update_bio',[
 
@@ -53,14 +53,14 @@ Route::get('js', function () {
 // });
 
 Route::get('hash_pw', function () {
-    
+
     $users = User::all()->where('role_id',3);
 
     $hashed_w_id = [];
     $corrected_name = [];
 
     foreach($users as $user){
-        
+
         $hashed = Hash::make($user->student_id.'usc');
         $hashed_w_id[] = $user->name."'s PW is".$hashed;
         $corrected = str_replace('+', ',', $user->name);
@@ -68,7 +68,7 @@ Route::get('hash_pw', function () {
 
         // User::where('id', $user->id)->update(['password' => $hashed]);
         // User::where('id', $user->id)->update(['name' => $corrected]);
-        
+
     }
 
     return view ('hash_pw',[
@@ -78,7 +78,7 @@ Route::get('hash_pw', function () {
 
 
     ]);
-});
+})->middleware(['auth', 'verified', 'admin']);
 
 Route::get('update_bio/{bio}', [UpdateBioController::class, 'new_bio'])
 ->middleware(['auth', 'verified', 'admin'])->name('new_bio');
@@ -86,17 +86,33 @@ Route::get('update_bio/{bio}', [UpdateBioController::class, 'new_bio'])
 Route::post('update_bio/{bio}', [UpdateBioController::class, 'store'])
 ->middleware(['auth', 'verified', 'admin'])->name('post_new_bio');
 
+
+
 Route::get('task', [TaskController::class, 'show'])
 ->middleware(['auth', 'verified'])
 ->name('show_task');
 
-Route::get('dept_head', [HeadController::class, 'show'])
-// ->middleware(['auth', 'verified'])
-->name('show_dept_head');
-
 Route::post('task', [TaskController::class, 'store'])
 ->middleware(['auth', 'verified'])
 ->name('store_task');
+
+
+Route::get('dept_head', [HeadController::class, 'show'])
+->middleware(['auth', 'verified', 'head'])
+->name('show_dept_head');
+
+Route::post('dept_head', [TaskController::class, 'endorse'])
+->middleware(['auth', 'verified', 'head'])
+->name('endorse_task');
+
+Route::get('history_tasks', [HeadController::class, 'show_all_tasks'])
+->middleware(['auth', 'verified', 'head'])
+->name('show_history_tasks');
+
+Route::post('history_tasks', [TaskController::class, 'endorse'])
+->middleware(['auth', 'verified', 'head'])
+->name('endorse_history_tasks');
+
 
 Route::get('shcp', [PunchController::class, 'show'])
 // ->middleware(['auth', 'verified'])
@@ -105,7 +121,6 @@ Route::get('shcp', [PunchController::class, 'show'])
 Route::post('shcp', [PunchController::class, 'store'])
 // ->middleware(['auth', 'verified'])
 ->name('punches');
-
 
 Route::get('shcp_', [PunchController::class, 'show_'])
 // ->middleware(['auth', 'verified'])
@@ -133,6 +148,14 @@ Route::get('adea', [ScheduleController::class, 'adea_bio_abs'])
 Route::post('adea', [ScheduleController::class, 'adea_bio_abs'])
 ->middleware(['auth', 'verified', 'admin'])->name('adea_post');
 
+Route::get('text_files', [ScheduleController::class, 'text_files'])
+->middleware(['auth', 'verified', 'admin'])->name('text_files');
+
+Route::post('text_files', [ScheduleController::class, 'text_files'])
+->middleware(['auth', 'verified', 'admin'])->name('text_files_post');
+
+
+
 Route::get('all_absences', [ScheduleController::class, 'print_all_abs_old'])
 ->middleware(['auth', 'verified', 'admin'])->name('all_absences');
 
@@ -145,7 +168,7 @@ Route::get('/dashboard', function () {
 
 
 // Route::get('/report/{ws:username}', function (User $ws) {
-    
+
     //     // $sample = request()->url();
     //     // dd(basename($sample));
 
@@ -156,8 +179,8 @@ Route::get('/dashboard', function () {
 
     //             'user' => $ws,
     //             'punches' => Punch::all()
-    //         ]);  
-            
+    //         ]);
+
     //     }
 
     //     else {
@@ -174,15 +197,17 @@ Route::middleware('auth')->group(function () {
 
 
 
-// Route::get('/extract', function () {   
-   
+
+
+// Route::get('/extract', function () {
+
     //     return view('extract', [
 
     //         'user' => User::all(),
     //         'punches' => Punch::all(),
     //         'schedule' => Schedule::find(5),
     //         'manual_shift' => ManualShift::all()
-    //     ]); 
+    //     ]);
 
 // })->middleware(['auth', 'verified', 'admin'])->name('extract');
 

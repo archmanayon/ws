@@ -24,7 +24,9 @@ class AppServiceProvider extends ServiceProvider
     {
         Model::unguard();
 
+      
         Blade::if('admin', function () {
+          
             return auth()->user()->username == 'abmanayon'?
                     request()->user()->cannot('admin'):
                     request()->user()->can('admin');
@@ -32,7 +34,31 @@ class AppServiceProvider extends ServiceProvider
                     // auth()->user()->cannot('admin'):
                     // auth()->user()->can('admin');
         });
+
+        Blade::if('head', function () {
+          
+            return  auth()->user()->username == 'abmanayon'||
+                    auth()->user()->role_id == 4 ?
+                    request()->user()->cannot('head'):
+                    request()->user()->can('head');
+        });
+
+        Blade::if('staff', function () {
+          
+            return  auth()->user()->username == 'abmanayon' ||
+                    auth()->user()->role_id == 2?
+                    request()->user()->cannot('staff'):
+                    request()->user()->can('staff');
+        });
         
+        Blade::if('ws', function () {
+          
+            return  auth()->user()->username == 'abmanayon' ||
+                    auth()->user()->role_id == 2 ||
+                    auth()->user()->role_id == 1?
+                    request()->user()->cannot('ws'):
+                    request()->user()->can('ws');
+        });
 
     }
 }

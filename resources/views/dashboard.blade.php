@@ -17,66 +17,75 @@
                 </div>
 
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    @admin
-                    <a href="all_absences" class="font-semibold text-gray-600
-                            hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
-                            focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
-                            All WS Absences Report
-                    </a> <br>
-                    @endadmin
-                    
-                    <a href="report/{{ auth()->user()->username }}" class="font-semibold text-gray-600
-                            hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
-                            focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
-                            My Absences</a><br>                         
-                   
-                    @admin
-                    <a href="print" class="font-semibold text-gray-600
-                            hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
-                            focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
-                            Extract Abs</a><br>                 
-                    @endadmin
+                        @admin
+                                <a href="all_absences" class="font-semibold text-gray-600
+                                        hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
+                                        focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
+                                        All WS Absences Report
+                                </a><br>
 
-                    @admin
-                    <a href="adea" class="font-semibold text-gray-600
-                            hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
-                            focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
-                            USC EMPLOYEES</a>     <br>               
-                    
+                                <a href="print" class="font-semibold text-gray-600
+                                        hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
+                                        focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
+                                        Extract Abs
+                                </a><br> 
 
-                   
-                    <a href="js" class="font-semibold text-gray-600
-                            hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
-                            focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
-                            Java Script Pratice
-                    </a> 
-                    
-                            <br>
+                                <a href="adea" class="font-semibold text-gray-600
+                                        hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
+                                        focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
+                                        USC EMPLOYEES
+                                </a><br> 
 
-                    
-                    
-                    @endadmin 
+                                <a href="js" class="font-semibold text-gray-600
+                                        hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
+                                        focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
+                                        Java Script Pratice
+                                </a><br> 
+                        @endadmin
 
-                    <a href="task" class="font-semibold text-gray-600
-                            hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
-                            focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
-                            Daily Task Report
-                    </a>
-                     
-                    <br>
+                        @ws
                     
-                 
-                    <a href="shcp" class="font-semibold text-gray-600
-                            hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
-                            focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
-                            SHCP Biometrics Report</a>     <br>       
-                    @admin
-{{-- 
+                                <a href="report/{{ auth()->user()->username }}" class="font-semibold text-gray-600
+                                        hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
+                                        focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
+                                        My Absences
+                                </a><br>
+                        @endws
+                        
+                        @staff
+
+                                <a href="task" class="font-semibold text-gray-600
+                                        hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
+                                        focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
+                                        Daily Task Report
+                                </a><br>
+
+                                <a href="shcp" class="font-semibold text-gray-600
+                                        hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
+                                        focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
+                                        Biometrics
+                                </a><br>  
+
+                        @endstaff
+
+                        @head
+                                
+                                <a href="dept_head" class="font-semibold text-gray-600
+                                        hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
+                                        focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
+                                        Endorse Tasks
+                                </a><br>
+                               
+                        @endhead                 
+                        
+
+                    {{-- @admin
+
                     <a href="hash_pw" class="font-semibold text-gray-600
                             hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
                             focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
-                            Hash</a>     <br>              --}}
-                    @endadmin
+                            Hash</a>     <br>             
+                    @endadmin --}}
                     
                    
                                 
