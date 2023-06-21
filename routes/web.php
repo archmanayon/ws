@@ -89,11 +89,11 @@ Route::post('update_bio/{bio}', [UpdateBioController::class, 'store'])
 
 
 Route::get('task', [TaskController::class, 'show'])
-->middleware(['auth', 'verified'])
+->middleware(['auth', 'verified', 'staff'])
 ->name('show_task');
 
 Route::post('task', [TaskController::class, 'store'])
-->middleware(['auth', 'verified'])
+->middleware(['auth', 'verified', 'staff'])
 ->name('store_task');
 
 
@@ -137,10 +137,12 @@ Route::post('print', [ScheduleController::class, 'absences_all'])
 ->middleware(['auth', 'verified', 'admin'])->name('print_post');
 
 Route::get('/report/{ws:username}', [ScheduleController::class, 'owner_abs'])
-->middleware(['auth', 'verified' ])->name('report');
+->middleware(['auth', 'verified', 'scholars'])
+->name('report');
 
 Route::post('/report/{ws:username}', [ScheduleController::class, 'owner_abs'])
-->middleware(['auth', 'verified' ])->name('own_by_cal');
+->middleware(['auth', 'verified', 'scholars'])
+->name('own_by_cal');
 
 Route::get('adea', [ScheduleController::class, 'adea_bio_abs'])
 ->middleware(['auth', 'verified', 'admin'])->name('adea_get');

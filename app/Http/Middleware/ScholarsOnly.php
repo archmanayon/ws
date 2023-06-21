@@ -15,6 +15,11 @@ class ScholarsOnly
      */
     public function handle(Request $request, Closure $next): Response
     {
+        if(auth()->user()->role_id === 4){ 
+            
+            return redirect('dashboard'); 
+            
+        }
         return $next($request);
     }
 }
