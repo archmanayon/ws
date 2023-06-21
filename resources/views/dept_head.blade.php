@@ -68,10 +68,14 @@
                                 {{-- remarks --}}
                                 <td class="w-auto">   
 
-                                    @if ($current_task->remarks)
+                                    @if ($current_task->status)
 
                                         {{ $current_task->remarks }}
 
+                                    @elseif ($current_task->remarks)                                      
+
+                                        {{ $current_task->remarks }}
+                                    
                                     @else
 
                                         <textarea class="bg-gray-800 border-gray-700 h-9 mt-2 rounded text-gray-200 text-sm"
