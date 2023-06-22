@@ -13,6 +13,7 @@ use App\Http\Controllers\UpdateBioController;
 use App\Http\Controllers\PunchController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\HeadController;
+use App\Http\Controllers\TardiController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -47,11 +48,6 @@ Route::get('js', function () {
     ]);
 });
 
-// Route::get('shcp', function () {
-//     return view ('shcp',[
-//     ]);
-// });
-
 Route::get('hash_pw', function () {
 
     $users = User::all()->where('role_id',3);
@@ -85,6 +81,19 @@ Route::get('update_bio/{bio}', [UpdateBioController::class, 'new_bio'])
 
 Route::post('update_bio/{bio}', [UpdateBioController::class, 'store'])
 ->middleware(['auth', 'verified', 'admin'])->name('post_new_bio');
+
+
+Route::get('tardi_variance', [TardiController::class, 'show'])
+->middleware(['auth', 'verified', 'admin'])
+->name('show_tardi_variance');
+
+Route::get('tardi_staff', [TardiController::class, 'show_staff'])
+->middleware(['auth', 'verified', 'admin'])
+->name('show_tardi_vstaff');
+
+Route::get('tardi', [TardiController::class, 'show_tardi'])
+->middleware(['auth', 'verified', 'admin'])
+->name('show_tardi');
 
 
 Route::get('task', [TaskController::class, 'show'])

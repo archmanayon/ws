@@ -45,63 +45,42 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
 
                     <table class="bg-gray-800 rounded-t-lg text-sm w-3/4">
-
-                        <thead class="border-b border-gray-300 text-left">
-
-                            <th class="px-4 py-3">{{ 'Reported Tardiness' }}</th> 
- 
-                            <th class="px-4 py-3">{{ 'Month' }}</th>
- 
-                            <th class="px-4 py-3">{{ 'Total' }}</th>                         
-                             
-                            <th class="px-4 py-3">{{ 'Status' }}</th>
-
-                            <th class="px-4 py-3">{{ "Head's Remarks" }}</th> 
-
-                            <th class="px-4 py-3">{{ "Action Taken" }}</th>        
-                            <th class="px-4 py-3">{{ "Date" }}</th>  
-                            <th class="px-4 py-3">{{ 'Conforme' }}</th>
-      
-                            
-                        </thead>
-
+                        
+                        {{-- total --}}
                         <tr>
                             <td class="px-4 py-3">
-                                {{ 'tardi desc' }}
-                            </td>
-                        
-                            <td class="px-4 py-3">
-                                {{ 'month' }}
+                                {{ 'Total Number of Times Late' }}
                             </td>
 
                             <td class="px-4 py-3">
-                                {{ 'total' }}
-                            </td>
-
-                            <td class="px-4 py-3">
-                                {{ 'con_date' }}
-                            </td>
-
-                            <td class="px-4 py-3">
-                                {{ 'remarks' }}
-                            </td>
-
-                            <td class="px-4 py-3">
-                                {{ 'if already actioned by head, show here' }}
-                            </td>
-
-                            <td class="px-4 py-3">
-                                {{ 'sig_date' }}
-                            </td>
-
-                            <td class="px-4 py-3">
-                                {{-- only shows once head already made remarks --}}
-                                <a href="">
-                                    {{ 'show clickable after addressed by head' }}
-                                </a>
-                               
+                                {{ '30' }}
                             </td>
                         </tr>
+
+                        {{-- tardiness --}}
+                        <tr>
+                            <td class="px-4 py-3">
+                                {{ 'Reported Tardiness' }}
+                            </td>
+
+                            <td class="px-4 py-3">
+                                {{ 'Ten (10) times late' }}
+                            </td>
+                        </tr>
+
+                        {{-- action to take --}}
+                        <tr>
+                            <td class="px-4 py-3">
+                                {{ 'Action to be taken' }}
+                            </td>
+
+                            <td class="px-4 py-3">
+                                {{-- if signed by head, show --}}
+                                {{ 'Oral warning by immediate Head' }}
+                            </td>
+                        </tr>
+                       
+
                     </table>
 
                 </div>
