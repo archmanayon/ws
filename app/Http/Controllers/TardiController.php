@@ -12,7 +12,7 @@ class TardiController extends Controller
     {
         $tardis = Tardi::find(request('conforme'))??false; 
 
-        if($tardis ){
+        if($tardis){
        
             return view('tardi_variance',
             [
@@ -88,8 +88,6 @@ class TardiController extends Controller
              ]);   
 
         }
-        
-         
         
     }
 

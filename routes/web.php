@@ -82,6 +82,9 @@ Route::get('update_bio/{bio}', [UpdateBioController::class, 'new_bio'])
 Route::post('update_bio/{bio}', [UpdateBioController::class, 'store'])
 ->middleware(['auth', 'verified', 'admin'])->name('post_new_bio');
 
+
+
+
 // tardiness
 
 // 01 tardi variance the staff will conforme based on what head remarks
@@ -108,6 +111,9 @@ Route::get('tardi', [TardiController::class, 'show_tardi'])
 Route::post('tardi', [TardiController::class, 'post_tardi'])
 ->middleware(['auth', 'verified'])
 ->name('post_tardi');
+
+
+
 
 // tasks
 Route::get('task', [TaskController::class, 'show'])
