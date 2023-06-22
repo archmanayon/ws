@@ -1,7 +1,7 @@
 @php
 
-    use Illuminate\Support\Str;
-    use Carbon\Carbon;
+    use Illuminate\Support\Str;    
+    use Carbon\Carbon;    
     use App\Models\Task;
 
 
@@ -50,58 +50,93 @@
 
                             <th class="px-4 py-3">{{ 'Reported Tardiness' }}</th> 
  
+                            <th class="px-4 py-3">{{ 'SY' }}</th>
+
                             <th class="px-4 py-3">{{ 'Month' }}</th>
  
-                            <th class="px-4 py-3">{{ 'Total' }}</th>                         
-                             
-                            <th class="px-4 py-3">{{ 'Status' }}</th>
+                            <th class="px-4 py-3">{{ 'Total' }}</th> 
 
                             <th class="px-4 py-3">{{ "Head's Remarks" }}</th> 
 
-                            <th class="px-4 py-3">{{ "Action Taken" }}</th>        
+                            <th class="px-4 py-3">{{ "Action Taken" }}</th>  
+
                             <th class="px-4 py-3">{{ "Date" }}</th>  
+
+                            <th class="px-4 py-3">{{ 'Status' }}</th>
+
                             <th class="px-4 py-3">{{ 'Conforme' }}</th>
       
                             
                         </thead>
+                        
+                        @foreach ($user->tardis as $tardi)
 
                         <tr>
+                            {{-- reported tardiness --}}
                             <td class="px-4 py-3">
-                                {{ 'tardi desc' }}
+                                {{ $tardi->tardi_description->tardiness }}
+                            </td>
+
+                            {{-- school year --}}
+                            <td class="px-4 py-3">
+                                {{ $tardi->term->school_year }}
                             </td>
                         
+                            {{-- month --}}
                             <td class="px-4 py-3">
-                                {{ 'month' }}
+                                {{ Carbon::create()->month($tardi->month)->format('F')}} 
                             </td>
 
+                            {{-- total --}}
                             <td class="px-4 py-3">
-                                {{ 'total' }}
+                                {{ $tardi->total}}
                             </td>
 
+                            {{-- remarks --}}
                             <td class="px-4 py-3">
-                                {{ 'con_date' }}
+                                {{ $tardi->remarks }}
                             </td>
 
+                            {{-- action --}}
                             <td class="px-4 py-3">
-                                {{ 'remarks' }}
+                                {{ $tardi->tardi_description->action }}
                             </td>
-
+                            {{-- date --}}
                             <td class="px-4 py-3">
-                                {{ 'if already actioned by head, show here' }}
+                                {{ $tardi->sig_date }}
                             </td>
-
+                            {{-- status --}}
                             <td class="px-4 py-3">
-                                {{ 'sig_date' }}
+                                {{ $tardi->conforme }}
                             </td>
-
+                            
                             <td class="px-4 py-3">
+                            <form method="POST" action="{{route('post_tardi')}}" >
+                                @csrf
                                 {{-- only shows once head already made remarks --}}
-                                <a href="">
-                                    {{ 'show clickable after addressed by head' }}
-                                </a>
+                                @if (!$tardi->conforme)
+                                
+                                    @if ($tardi->head_sig)
+                                        <button type="submit" name="conforme" value="{{$tardi->id}}">Conforme</button>
+                                    @else
+                                        {{ 'pls. remind head' }}
+                                    @endif
+
+                                @else
+
+                                    @if ($tardi->conforme)
+                                        <button type="submit" name="conforme" value="{{$tardi->id}}">Open</button>
+                                    
+                                    @endif                                    
+
+                                @endif   
+                            </form>                             
                                
                             </td>
+                            
                         </tr>
+
+                        @endforeach
                     </table>
 
                 </div>

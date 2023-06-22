@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tardi_description', function (Blueprint $table) {
-            
+        Schema::create('s_y_s', function (Blueprint $table) {
             $table->id();
-            $table->text('tardiness');
-            $table->text('action');
-            
+            $table->string('school_year')->nullable();
+            $table->boolean('active')->default(false);            
             $table->timestamps();
         });
     }
@@ -26,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tardi_description');
+        Schema::dropIfExists('s_y_s');
     }
 };

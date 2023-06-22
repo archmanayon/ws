@@ -50,6 +50,11 @@ class User extends Authenticatable
 
     // protected $with = ['manual_shifts', 'shift', 'update_bios'];
 
+    public function tardis()
+    {
+        return $this->hasMany(Tardi::class);
+    }  
+
     public function punches()
     {
         return $this->hasMany(Punch::class);
