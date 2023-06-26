@@ -66,21 +66,6 @@ class TardiController extends Controller
 
     }
 
-    public function show_tardi_staff()
-    {
-
-        return view('tardi_staff',
-        [
-            'user'          => auth()->user()??false
-            // 'tasks'         => session('task_session')??false,
-            // 'currentDate'   => session('currentDate')??false,
-            // 'current_time'  => session('current_time')??false,
-            // 'current_task' => session('current_task')??[]
-
-        ]);
-
-    }
-
     public function post_tardi()
     {
 
@@ -98,10 +83,25 @@ class TardiController extends Controller
                 // 'current_task' => session('current_task')??[]
 
              ]);
-
         }
+    }
+
+    public function show_tardi_staff()
+    {
+
+        return view('tardi_staff',
+        [
+            'user'          => auth()->user()??false
+            // 'tasks'         => session('task_session')??false,
+            // 'currentDate'   => session('currentDate')??false,
+            // 'current_time'  => session('current_time')??false,
+            // 'current_task' => session('current_task')??[]
+
+        ]);
 
     }
+
+    
 
     public function conforme()
     {

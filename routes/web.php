@@ -108,7 +108,7 @@ Route::get('tardi_group', [TardiController::class, 'tardi_group'])
 ->name('show_tardi_group');
 
 
-// 03 tardi displays all tardiness sanction
+// 03 tardi displays all tardiness sanction of individual staff
 Route::get('tardi', [TardiController::class, 'show_tardi'])
 ->middleware(['auth', 'verified'])
 ->name('show_tardi');
