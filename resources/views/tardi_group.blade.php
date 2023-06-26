@@ -65,8 +65,6 @@
 
                             <th class="px-4 py-3">{{ "Date" }}</th>
 
-                            <th class="px-4 py-3">{{ 'Status' }}</th>
-
                             <th class="px-4 py-3">{{ 'Conforme' }}</th>
 
 
@@ -116,30 +114,24 @@
                                     <td class="px-4 py-3">
                                         {{ $tardi->sig_date }}
                                     </td>
-                                    {{-- status --}}
-                                    <td class="px-4 py-3">
-                                        {{ $tardi->conforme }}
-                                    </td>
+                                    {{--head status --}}
+                                   
+                                    <td class="px-4 py-3 text-red-300">
 
-                                    <td class="px-4 py-3">
-
-                                        <form method="POST" action="{{route('post_tardi')}}" >
+                                        <form method="POST" action="{{route('staff_variance')}}" >
                                             @csrf
                                             {{-- only shows once head already made remarks --}}
                                             @if (!$tardi->conforme)
 
                                                 @if ($tardi->head_sig)
-                                                    <button type="submit" name="conforme" value="{{$tardi->id}}">Conforme</button>
+                                                    {{ 'Addressed' }}
                                                 @else
-                                                    {{ 'pls. remind head' }}
+                                                    <button type="submit" name="pre_address" value="{{$tardi->id}}">Pls click to Address</button>
                                                 @endif
 
                                             @else
 
-                                                @if ($tardi->conforme)
-                                                    <button type="submit" name="conforme" value="{{$tardi->id}}">Open</button>
-
-                                                @endif
+                                                {{ 'Addressed' }}
 
                                             @endif
 
@@ -159,11 +151,11 @@
             </div>
 
             {{-- 3rd column --}}
-            <div class="bg-white dark:bg-gray-800 m-5 overflow-hidden shadow-sm sm:rounded-lg w-20">
+            {{-- <div class="bg-white dark:bg-gray-800 m-5 overflow-hidden shadow-sm sm:rounded-lg w-20">
 
                 <div class="p-3 text-gray-900 dark:text-gray-100">
 
-                    <a href="dept_head" class="font-semibold text-gray-600
+                    <a href="tardi_group" class="font-semibold text-gray-600
                             hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
                             focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
                             {{ 'Back' }}
@@ -171,7 +163,7 @@
 
                 </div>
 
-            </div>
+            </div> --}}
 
         </div>
 

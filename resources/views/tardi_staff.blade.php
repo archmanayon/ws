@@ -33,8 +33,8 @@
 
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                    
-                    {{ $user->name??false }} <br>
-                    {{ $user->head->department??false }}
+                    {{ $tardis->user->name??false }} <br>
+                    {{ $tardis->user->head->department??false }}
                 </div>
 
             </div>
@@ -53,7 +53,7 @@
                             </td>
 
                             <td class="px-4 py-3">
-                                {{ '30' }}
+                                {{ $tardis->total??false }}
                             </td>
                         </tr>
 
@@ -64,7 +64,7 @@
                             </td>
 
                             <td class="px-4 py-3">
-                                {{ 'Ten (10) times late' }}
+                                {{ $tardis->tardi_description->tardiness??false }}
                             </td>
                         </tr>
 
@@ -76,19 +76,9 @@
 
                             <td class="px-4 py-3">
                                 {{-- if signed by head, show --}}
-                                {{ 'Oral warning by immediate Head' }}
+                                {{ $tardis->tardi_description->action??false }}
                             </td>
-                        </tr>
-
-                        <tr>
-                            
-                            <td class="px-4 py-3">
-                                <a href="">
-                                {{ 'click to address' }}
-                                </a>
-                            </td>
-                        </tr>
-                       
+                        </tr>                        
 
                     </table>
 
@@ -96,12 +86,40 @@
 
             </div>
 
-            {{-- 3rd column --}}
+            {{-- 3rd --}}
             <div class="bg-white dark:bg-gray-800 m-5 overflow-hidden shadow-sm sm:rounded-lg w-20">
 
                 <div class="p-3 text-gray-900 dark:text-gray-100">
 
-                    <a href="dept_head" class="font-semibold text-gray-600
+                    @if (!$tardis->conforme)                                
+                            
+                            <form method="POST" action="{{route('post_tardi_group')}}" >
+                             @csrf
+                               <tr>
+                                    <td class="px-4 py-3">
+                                        <button type="submit" name="tardis_id" value="{{ $tardis->id??false }}">Address</button>
+                                    </td>
+                               </tr>
+
+                               <tr>
+                                <td class="px-4 py-3">
+                                    {{ 'with remarks' }}
+                                </td>
+                           </tr>
+                            </form>
+
+                            @endif     
+                    
+                </div>
+
+            </div>
+
+            {{-- 4th --}}
+            <div class="bg-white dark:bg-gray-800 m-5 overflow-hidden shadow-sm sm:rounded-lg w-20">
+
+                <div class="p-3 text-gray-900 dark:text-gray-100">
+
+                    <a href="tardi_group" class="font-semibold text-gray-600
                             hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
                             focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
                             {{ 'Back' }}

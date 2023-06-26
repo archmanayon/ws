@@ -88,34 +88,41 @@ Route::post('update_bio/{bio}', [UpdateBioController::class, 'store'])
 // tardiness
 
 // 01 tardi variance the staff will conforme based on what head remarks
-Route::get('tardi_variance', [TardiController::class, 'show'])
-->middleware(['auth', 'verified'])
-->name('show_tardi_variance');
+// Route::get('tardi_variance', [TardiController::class, 'show'])
+// ->middleware(['auth', 'verified'])
+// ->name('show_tardi_variance');
 
 Route::post('tardi_variance', [TardiController::class, 'conforme'])
 ->middleware(['auth', 'verified'])
 ->name('post_tardi_variance');
 
 
-// 02 tardi staff the head will address the tardiness
-Route::get('tardi_staff', [TardiController::class, 'show_tardi_staff'])
-->middleware(['auth', 'verified'])
-->name('show_tardi_staff');
-
-// tardi group of staff under head
+// 01
 Route::get('tardi_group', [TardiController::class, 'tardi_group'])
 ->middleware(['auth', 'verified'])
 ->name('show_tardi_group');
 
+// 02
+Route::post('tardi_staff', [TardiController::class, 'staff_variance'])
+->middleware(['auth', 'verified'])
+->name('staff_variance');
 
-// 03 tardi displays all tardiness sanction
+// 03
+Route::post('tardi_group', [TardiController::class, 'post_address'])
+->middleware(['auth', 'verified'])
+->name('post_tardi_group')
+;
+
+
+// 03 tardi displays all tardiness sanction of owner
 Route::get('tardi', [TardiController::class, 'show_tardi'])
 ->middleware(['auth', 'verified'])
 ->name('show_tardi');
 
-Route::post('tardi', [TardiController::class, 'post_tardi'])
+Route::post('tardi', [TardiController::class, 'show'])
 ->middleware(['auth', 'verified'])
 ->name('post_tardi');
+
 
 
 

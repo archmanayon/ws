@@ -123,12 +123,7 @@
                                     @endif
 
                                 @else
-
-                                    @if ($tardi->conforme)
-                                        <button type="submit" name="conforme" value="{{$tardi->id}}">Open</button>
-                                    
-                                    @endif                                    
-
+                                    <button type="submit" name="conforme" value="{{$tardi->id}}">Open</button>
                                 @endif   
                             </form>                             
                                
