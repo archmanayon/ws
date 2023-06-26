@@ -88,9 +88,9 @@ Route::post('update_bio/{bio}', [UpdateBioController::class, 'store'])
 // tardiness
 
 // 01 tardi variance the staff will conforme based on what head remarks
-// Route::get('tardi_variance', [TardiController::class, 'show'])
-// ->middleware(['auth', 'verified'])
-// ->name('show_tardi_variance');
+Route::get('tardi_variance', [TardiController::class, 'show'])
+->middleware(['auth', 'verified'])
+->name('show_tardi_variance');
 
 Route::post('tardi_variance', [TardiController::class, 'conforme'])
 ->middleware(['auth', 'verified'])

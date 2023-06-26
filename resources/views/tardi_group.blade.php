@@ -115,7 +115,7 @@
                                         {{ $tardi->sig_date }}
                                     </td>
                                     {{--head status --}}
-                                   
+
                                     <td class="px-4 py-3 text-red-300">
 
                                         <form method="POST" action="{{route('staff_variance')}}" >
@@ -123,10 +123,14 @@
                                             {{-- only shows once head already made remarks --}}
                                             @if (!$tardi->conforme)
 
-                                                @if ($tardi->head_sig)
-                                                    {{ 'Addressed' }}
+                                                @if ($tardi->head_sig??false)
+
+                                                    {{'Pls remind. '.$user->name}}
+
                                                 @else
+
                                                     <button type="submit" name="pre_address" value="{{$tardi->id}}">Pls click to Address</button>
+
                                                 @endif
 
                                             @else
