@@ -18,10 +18,6 @@ class TardiController extends Controller
             [
 
                 'tardis' => $tardis
-                 // 'tasks'         => session('task_session')??false,
-                 // 'currentDate'   => session('currentDate')??false,
-                 // 'current_time'  => session('current_time')??false,
-                 // 'current_task' => session('current_task')??[]
 
             ]);
 
@@ -43,11 +39,6 @@ class TardiController extends Controller
         return view('tardi',
         [
             'user'          => auth()->user()??false
-            // 'tasks'         => session('task_session')??false,
-            // 'currentDate'   => session('currentDate')??false,
-            // 'current_time'  => session('current_time')??false,
-            // 'current_task' => session('current_task')??[]
-
         ]);
 
     }
@@ -145,10 +136,8 @@ class TardiController extends Controller
 
         if ($tardis) {
 
-            return view(
-                'tardi_staff',
+            return view('tardi_staff',
                 [
-
                     'tardis' => $tardis
                     // 'tasks'         => session('task_session')??false,
                     // 'currentDate'   => session('currentDate')??false,
