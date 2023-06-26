@@ -1,7 +1,7 @@
 @php
 
-    use Illuminate\Support\Str;    
-    use Carbon\Carbon;    
+    use Illuminate\Support\Str;
+    use Carbon\Carbon;
     use App\Models\Task;
 
 
@@ -9,7 +9,7 @@
 
 <x-app-layout>
     <x-slot name="header">
-        
+
     </x-slot>
 
     <div class="py-12">
@@ -32,7 +32,7 @@
             <div class="bg-white m-5 dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg w-3/4">
 
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                   
+
                     {{ $user->name??false }} <br>
                     {{ $user->head->department??false }}
                 </div>
@@ -48,27 +48,27 @@
 
                         <thead class="border-b border-gray-300 text-left">
 
-                            <th class="px-4 py-3">{{ 'Reported Tardiness' }}</th> 
- 
+                            <th class="px-4 py-3">{{ 'Reported Tardiness' }}</th>
+
                             <th class="px-4 py-3">{{ 'SY' }}</th>
 
                             <th class="px-4 py-3">{{ 'Month' }}</th>
- 
-                            <th class="px-4 py-3">{{ 'Total' }}</th> 
 
-                            <th class="px-4 py-3">{{ "Head's Remarks" }}</th> 
+                            <th class="px-4 py-3">{{ 'Total' }}</th>
 
-                            <th class="px-4 py-3">{{ "Action Taken" }}</th>  
+                            <th class="px-4 py-3">{{ "Head's Remarks" }}</th>
 
-                            <th class="px-4 py-3">{{ "Date" }}</th>  
+                            <th class="px-4 py-3">{{ "Action Taken" }}</th>
+
+                            <th class="px-4 py-3">{{ "Date" }}</th>
 
                             <th class="px-4 py-3">{{ 'Status' }}</th>
 
-                            <th class="px-4 py-3">{{ 'Conforme' }}</th>
-      
-                            
+                            <th class="px-4 py-3">{{ '' }}</th>
+
+
                         </thead>
-                        
+
                         @foreach ($user->tardis as $tardi)
 
                         <tr>
@@ -81,10 +81,10 @@
                             <td class="px-4 py-3">
                                 {{ $tardi->term->school_year }}
                             </td>
-                        
+
                             {{-- month --}}
                             <td class="px-4 py-3">
-                                {{ Carbon::create()->month($tardi->month)->format('F')}} 
+                                {{ Carbon::create()->month($tardi->month)->format('F')}}
                             </td>
 
                             {{-- total --}}
@@ -109,26 +109,29 @@
                             <td class="px-4 py-3">
                                 {{ $tardi->conforme }}
                             </td>
-                            
+
                             <td class="px-4 py-3">
                             <form method="POST" action="{{route('post_tardi')}}" >
                                 @csrf
                                 {{-- only shows once head already made remarks --}}
                                 @if (!$tardi->conforme)
-                                
+
                                     @if ($tardi->head_sig)
-                                        <button type="submit" name="conforme" value="{{$tardi->id}}">Conforme</button>
+                                        <button class="text-orange-300" type="submit" name="conforme" value="{{$tardi->id}}">Conforme</button>
                                     @else
-                                        {{ 'pls. remind head' }}
+                                        <div class="text-red-300">
+                                            {{ 'pls. remind head' }}
+                                        </div>
+
                                     @endif
 
                                 @else
-                                    <button type="submit" name="conforme" value="{{$tardi->id}}">Open</button>
-                                @endif   
-                            </form>                             
-                               
+                                    <button class="text-green-600" type="submit" name="conforme" value="{{$tardi->id}}">Open</button>
+                                @endif
+                            </form>
+
                             </td>
-                            
+
                         </tr>
 
                         @endforeach
@@ -148,7 +151,7 @@
                             focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
                             {{ 'Back' }}
                     </a>
-                    
+
                 </div>
 
             </div>

@@ -9,7 +9,7 @@
 
 <x-app-layout>
     <x-slot name="header">
-        
+
     </x-slot>
 
     <div class="py-12">
@@ -32,7 +32,7 @@
             <div class="bg-white m-5 dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg w-3/4">
 
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                   
+
                     {{ $tardis->user->name??false }} <br>
                     {{ $tardis->user->head->department??false }}
                 </div>
@@ -45,7 +45,7 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
 
                     <table class="bg-gray-800 rounded-t-lg text-sm w-3/4">
-                        
+
                         {{-- total --}}
                         <tr>
                             <td class="px-4 py-3">
@@ -81,12 +81,12 @@
                         </tr>
 
                         <tr>
-                            @if (!$tardis->conforme)                                
-                            
+                            @if (!$tardis->conforme)
+
                             <form method="POST" action="{{route('post_tardi_variance')}}" >
                              @csrf
                                <td class="px-4 py-3">
-                                    <button type="submit" name="tardis_id" value="{{ $tardis->id??false }}">Conforme</button>
+                                    <button class="text-orange-300" type="submit" name="tardis_id" value="{{ $tardis->id??false }}">Conforme</button>
                                </td>
                             </form>
 
@@ -110,7 +110,7 @@
                             focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
                             {{ 'Back' }}
                     </a>
-                    
+
                 </div>
 
             </div>
