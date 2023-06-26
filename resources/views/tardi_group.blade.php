@@ -59,13 +59,13 @@
 
                             <th class="px-4 py-3">{{ 'Total' }}</th>
 
-                            <th class="px-4 py-3">{{ "Head's Remarks" }}</th>
-
                             <th class="px-4 py-3">{{ "Action Taken" }}</th>
 
                             <th class="px-4 py-3">{{ "Date" }}</th>
 
-                            <th class="px-4 py-3">{{ 'Conforme' }}</th>
+                            <th class="px-4 py-3">{{ "Head's Remarks" }}</th>
+
+                            <th class="px-4 py-3">{{ '' }}</th>
 
 
                         </thead>
@@ -101,11 +101,6 @@
                                         {{ $tardi->total}}
                                     </td>
 
-                                    {{-- remarks --}}
-                                    <td class="px-4 py-3">
-                                        {{ $tardi->remarks }}
-                                    </td>
-
                                     {{-- action --}}
                                     <td class="px-4 py-3">
                                         {{ $tardi->tardi_description->action }}
@@ -113,6 +108,11 @@
                                     {{-- date --}}
                                     <td class="px-4 py-3">
                                         {{ $tardi->sig_date }}
+                                    </td>
+
+                                    {{-- remarks --}}
+                                    <td class="px-4 py-3">
+                                        {{ $tardi->remarks }}
                                     </td>
                                     {{--head status --}}
 
