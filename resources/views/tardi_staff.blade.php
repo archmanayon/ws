@@ -9,7 +9,7 @@
 
 <x-app-layout>
     <x-slot name="header">
-        
+
     </x-slot>
 
     <div class="py-12">
@@ -32,7 +32,7 @@
             <div class="bg-white m-5 dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg w-3/4">
 
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                   
+
                     {{ $tardis->user->name??false }} <br>
                     {{ $tardis->user->head->department??false }}
                 </div>
@@ -45,7 +45,7 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
 
                     <table class="bg-gray-800 rounded-t-lg text-sm w-3/4">
-                        
+
                         {{-- total --}}
                         <tr>
                             <td class="px-4 py-3">
@@ -78,7 +78,7 @@
                                 {{-- if signed by head, show --}}
                                 {{ $tardis->tardi_description->action??false }}
                             </td>
-                        </tr>                        
+                        </tr>
 
                     </table>
 
@@ -87,47 +87,41 @@
             </div>
 
             {{-- 3rd --}}
-            <div class="bg-white dark:bg-gray-800 m-5 overflow-hidden shadow-sm sm:rounded-lg w-20">
+            <div class="bg-white dark:bg-gray-800 m-5 overflow-hidden shadow-sm sm:rounded-lg w-3/4">
 
                 <div class="p-3 text-gray-900 dark:text-gray-100">
 
-                    @if (!$tardis->conforme)                                
-                            
+                    @if (!$tardis->conforme)
+
                             <form method="POST" action="{{route('post_tardi_group')}}" >
                              @csrf
-                               <tr>
-                                    <td class="px-4 py-3">
-                                        <button type="submit" name="tardis_id" value="{{ $tardis->id??false }}">Address</button>
-                                    </td>
+
+                               <tr class="px-4 py-3">
+
+                                    <textarea class="bg-gray-800 border-gray-700 h-20 rounded text-gray-200 text-sm w-3/4"
+                                            id="" name="h_remarks" placeholder="{{ 'remarks...' }}"></textarea>
+                                </tr><br>
+                                <tr>
+
+                                    <button class="border border-gray-400 font-sans rounded-md text-base w-20" type="submit" name="post_address" value="{{ $tardis->id??false }}">Submit</button>
+
                                </tr>
 
-                               <tr>
-                                <td class="px-4 py-3">
-                                    {{ 'with remarks' }}
-                                </td>
-                           </tr>
                             </form>
 
-                            @endif     
-                    
+                            @endif
+
                 </div>
 
             </div>
 
             {{-- 4th --}}
-            <div class="bg-white dark:bg-gray-800 m-5 overflow-hidden shadow-sm sm:rounded-lg w-20">
 
-                <div class="p-3 text-gray-900 dark:text-gray-100">
+                <a href="tardi_group" class="bg-white dark:bg-gray-800 dark:hover:text-white dark:text-gray-400 focus:outline focus:outline-2 focus:outline-red-500 focus:rounded-sm font-semibold h-8 hover:text-gray-900 m-5 overflow-hidden shadow-sm sm:rounded-lg text-center text-gray-600 text-xl w-20">
+                   {{ 'Back' }}
+                </a>
 
-                    <a href="tardi_group" class="font-semibold text-gray-600
-                            hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
-                            focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
-                            {{ 'Back' }}
-                    </a>
-                    
-                </div>
 
-            </div>
 
         </div>
 

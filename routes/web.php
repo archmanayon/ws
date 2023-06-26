@@ -107,6 +107,11 @@ Route::post('tardi_staff', [TardiController::class, 'staff_variance'])
 ->middleware(['auth', 'verified'])
 ->name('staff_variance');
 
+// get only, won't show if no pending for head's signature
+Route::get('tardi_staff', [TardiController::class, 'tardi_staff'])
+->middleware(['auth', 'verified'])
+->name('tardi_staff');
+
 // 03
 Route::post('tardi_group', [TardiController::class, 'post_address'])
 ->middleware(['auth', 'verified'])
@@ -122,8 +127,6 @@ Route::get('tardi', [TardiController::class, 'show_tardi'])
 Route::post('tardi', [TardiController::class, 'show'])
 ->middleware(['auth', 'verified'])
 ->name('post_tardi');
-
-
 
 
 

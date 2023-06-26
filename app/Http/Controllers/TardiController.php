@@ -35,7 +35,7 @@ class TardiController extends Controller
             ;
         }
 
-    }    
+    }
 
     public function show_tardi()
     {
@@ -70,7 +70,7 @@ class TardiController extends Controller
 
              ]);
         }
-    }    
+    }
 
     public function conforme()
     {
@@ -138,24 +138,56 @@ class TardiController extends Controller
 
     }
 
-    public function post_address()
-    {      
-        $user           = auth()->user()??false;
-        $Date           = Carbon::now('Asia/Kuala_Lumpur');
-        
-        Tardi::find(request('pre_address'))?->update([
+    public function tardi_staff()
+    {
 
-            'head_sig'    =>  $user->username,
-            'remarks'    =>  $Date
-        ]);
+        $tardis = Tardi::find(request('pre_address')) ?? false;
 
-        return redirect()->route('tardi_group')
+        if ($tardis) {
 
-        ;       
+            return view(
+                'tardi_staff',
+                [
 
-       
+                    'tardis' => $tardis
+                    // 'tasks'         => session('task_session')??false,
+                    // 'currentDate'   => session('currentDate')??false,
+                    // 'current_time'  => session('current_time')??false,
+                    // 'current_task' => session('current_task')??[]
+
+                ]
+            );
+        } else {
+
+            return redirect()->route('show_tardi_group')
+                // ->with([
+                // 'user_session' => $user
+
+                // ])
+            ;
+        }
     }
 
-    
+    public function post_address()
+    {
+        $user           = auth()->user()??false;
+        $Date           = Carbon::now('Asia/Kuala_Lumpur');
+
+        $sige = Tardi::find(request('post_address'))->update([
+
+            'head_sig'  =>  $user->username,
+            'sig_date'  =>  $Date,
+            'remarks'   =>  request('h_remarks'),
+
+        ]);
+
+        return redirect()->route('show_tardi_group')
+
+        ;
+
+
+    }
+
+
 
 }
