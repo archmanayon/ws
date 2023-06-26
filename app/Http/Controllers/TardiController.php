@@ -17,13 +17,14 @@ class TardiController extends Controller
             return view('tardi_variance',
             [
 
-                'user'          => auth()->user()??false
+                'tardis' => $tardis
                  // 'tasks'         => session('task_session')??false,
                  // 'currentDate'   => session('currentDate')??false,
                  // 'current_time'  => session('current_time')??false,
                  // 'current_task' => session('current_task')??[]
 
             ]);
+
         } else {
 
             return redirect()->route('show_tardi')
@@ -34,22 +35,7 @@ class TardiController extends Controller
             ;
         }
 
-    }
-
-    public function tardi_group()
-    {
-        return view('tardi_group',
-            [
-                'user'          => auth()->user() ?? false,
-                'group'         => auth()->user()->heads[0]->users
-                // 'tasks'         => session('task_session')??false,
-                // 'currentDate'   => session('currentDate')??false,
-                // 'current_time'  => session('current_time')??false,
-                // 'current_task' => session('current_task')??[]
-
-            ]
-        );
-    }
+    }    
 
     public function show_tardi()
     {
@@ -72,10 +58,10 @@ class TardiController extends Controller
         $tardis = Tardi::find(request('conforme'))??false;
 
         if($tardis){
+
             return view('tardi_variance',
             [
-                 'user'      => auth()->user()??false,
-                 'tardis'    => $tardis,
+                'tardis'    => $tardis
 
                 // 'tasks'         => session('task_session')??false,
                 // 'currentDate'   => session('currentDate')??false,
@@ -84,33 +70,15 @@ class TardiController extends Controller
 
              ]);
         }
-    }
-
-    public function show_tardi_staff()
-    {
-
-        return view('tardi_staff',
-        [
-            'user'          => auth()->user()??false
-            // 'tasks'         => session('task_session')??false,
-            // 'currentDate'   => session('currentDate')??false,
-            // 'current_time'  => session('current_time')??false,
-            // 'current_task' => session('current_task')??[]
-
-        ]);
-
-    }
-
-    
+    }    
 
     public function conforme()
     {
-        $user           = auth()->user()??false;
         $Date           = Carbon::now('Asia/Kuala_Lumpur');
         // $currentDate    = $Date->format('m/d/y');
         // $current_time   = $Date->format('Hi');
 
-        $tasks = Tardi::find(request('tardis_id'))->update([
+        Tardi::find(request('tardis_id'))?->update([
 
             'conforme'    =>  'sent',
             'con_date'    =>  $Date
@@ -122,5 +90,72 @@ class TardiController extends Controller
 
     }
 
+    // 01
+    public function tardi_group()
+    {
+        return view('tardi_group',
+            [
+                'user'          => auth()->user() ?? false,
+                'group'         => auth()->user()->heads[0]->users
+                // 'tasks'         => session('task_session')??false,
+                // 'currentDate'   => session('currentDate')??false,
+                // 'current_time'  => session('current_time')??false,
+                // 'current_task' => session('current_task')??[]
+
+            ]
+        );
+    }
+
+    // 02
+
+    public function staff_variance()
+    {
+
+        $tardis = Tardi::find(request('pre_address'))??false;
+
+        if($tardis){
+
+            return view('tardi_staff',
+            [
+
+                'tardis' => $tardis
+                 // 'tasks'         => session('task_session')??false,
+                 // 'currentDate'   => session('currentDate')??false,
+                 // 'current_time'  => session('current_time')??false,
+                 // 'current_task' => session('current_task')??[]
+
+            ]);
+
+        } else {
+
+            return redirect()->route('show_tardi_group')
+            // ->with([
+                // 'user_session' => $user
+
+            // ])
+            ;
+        }
+
+    }
+
+    public function post_address()
+    {      
+        $user           = auth()->user()??false;
+        $Date           = Carbon::now('Asia/Kuala_Lumpur');
+        
+        Tardi::find(request('pre_address'))?->update([
+
+            'head_sig'    =>  $user->username,
+            'remarks'    =>  $Date
+        ]);
+
+        return redirect()->route('tardi_group')
+
+        ;       
+
+       
+    }
+
+    
 
 }

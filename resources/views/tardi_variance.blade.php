@@ -33,8 +33,8 @@
 
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                    
-                    {{ $user->name??false }} <br>
-                    {{ $user->head->department??false }}
+                    {{ $tardis->user->name??false }} <br>
+                    {{ $tardis->user->head->department??false }}
                 </div>
 
             </div>
@@ -81,8 +81,7 @@
                         </tr>
 
                         <tr>
-                            @if (!$tardis->conforme)
-                                
+                            @if (!$tardis->conforme)                                
                             
                             <form method="POST" action="{{route('post_tardi_variance')}}" >
                              @csrf
@@ -94,9 +93,6 @@
                             @endif
 
                         </tr>
-
-                        
-                       
 
                     </table>
 
