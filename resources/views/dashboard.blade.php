@@ -21,7 +21,7 @@
                                 <a href="all_absences" class="font-semibold text-gray-600
                                         hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
                                         focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
-                                        All WS Absences Report
+                                        View All WS Absences
                                 </a><br>
 
                                 <a href="print" class="font-semibold text-gray-600
@@ -33,7 +33,7 @@
                                 <a href="adea" class="font-semibold text-gray-600
                                         hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
                                         focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
-                                        USC EMPLOYEES
+                                        View USC EMPLOYEE Absences
                                 </a><br>
 
                                 <a href="js" class="font-semibold text-gray-600
@@ -48,7 +48,7 @@
                                 <a href="report/{{ auth()->user()->username }}" class="font-semibold text-gray-600
                                         hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
                                         focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
-                                        My Absences
+                                        View My Absences
                                 </a><br>
                         @endws
 
@@ -57,13 +57,19 @@
                                 <a href="task" class="font-semibold text-gray-600
                                         hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
                                         focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
-                                        Daily Task Report
+                                        Submit Daily Task Report
                                 </a><br>
 
                                 <a href="shcp" class="font-semibold text-gray-600
                                         hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
                                         focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
-                                        Biometrics
+                                        Punch to Biometrics
+                                </a><br>
+
+                                  <a href="tardi" class="font-semibold text-gray-600
+                                        hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
+                                        focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
+                                        View Personal Tardiness Variance
                                 </a><br>
 
                         @endstaff
@@ -79,7 +85,7 @@
                                 <a href="tardi_group" class="font-semibold text-gray-600
                                         hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
                                         focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
-                                        Staff Tardiness Report
+                                        View Staff Tardiness Report
                                 </a><br>
 
                         @endhead

@@ -99,33 +99,33 @@ Route::post('tardi_variance', [TardiController::class, 'conforme'])
 
 // 01
 Route::get('tardi_group', [TardiController::class, 'tardi_group'])
-->middleware(['auth', 'verified'])
+->middleware(['auth', 'verified', 'head'])
 ->name('show_tardi_group');
 
 // 02
 Route::post('tardi_staff', [TardiController::class, 'staff_variance'])
-->middleware(['auth', 'verified'])
+->middleware(['auth', 'verified', 'head'])
 ->name('staff_variance');
 
 // get only, won't show if no pending for head's signature
 Route::get('tardi_staff', [TardiController::class, 'tardi_staff'])
-->middleware(['auth', 'verified'])
+->middleware(['auth', 'verified', 'head'])
 ->name('tardi_staff');
 
 // 03
 Route::post('tardi_group', [TardiController::class, 'post_address'])
-->middleware(['auth', 'verified'])
+->middleware(['auth', 'verified', 'head'])
 ->name('post_tardi_group')
 ;
 
 
 // 03 tardi displays all tardiness sanction of owner
 Route::get('tardi', [TardiController::class, 'show_tardi'])
-->middleware(['auth', 'verified'])
+->middleware(['auth', 'verified', 'staff'])
 ->name('show_tardi');
 
 Route::post('tardi', [TardiController::class, 'show'])
-->middleware(['auth', 'verified'])
+->middleware(['auth', 'verified', 'staff'])
 ->name('post_tardi');
 
 
