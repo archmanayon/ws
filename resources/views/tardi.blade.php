@@ -16,7 +16,7 @@
         <div class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight text-center">
             <h2>
                 {{ 'Personnel Tardiness Variance Record' }}
-            </h2>            
+            </h2>
         </div>
 
         <div class="lg:grid lg:px-8 m-5 mx-6 sm:px-6">
@@ -89,7 +89,9 @@
                             </td>
                             {{-- date --}}
                             <td class="px-4 py-3 w-4">
-                                {{  Carbon::parse($tardi->sig_date)->format('m/d/y')}}
+                                @if ($tardi->sig_date != '0000-00-00 00:00:00')
+                                    {{  Carbon::parse($tardi->sig_date)->format('m/d/y')}}
+                                @endif
                             </td>
 
                             {{-- remarks --}}
@@ -107,7 +109,7 @@
                                         <button class="text-orange-300" type="submit" name="conforme" value="{{$tardi->id}}">Conforme</button>
                                     @else
                                         <div class="text-red-300">
-                                            {{ 'pls. remind head' }}
+                                            {{ 'Pls. talk with your head' }}
                                         </div>
 
                                     @endif

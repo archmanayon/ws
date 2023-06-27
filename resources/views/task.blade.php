@@ -28,7 +28,7 @@
                            id="" name="task_text" placeholder="Descriptive Task"></textarea>
                         <br>
                         <button type="submit" name="save_task" value="save_new" class="border w-48"
-                            >Submit for Endorsement Now 
+                            >Submit for Endorsement Now
                         </button>
                     </form>
                 </div>
@@ -38,16 +38,16 @@
             {{-- 2nd column --}}
             <div class="bg-white m-5 dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg w-full">
 
-                <div class="p-6 text-gray-900 dark:text-gray-100">                  
+                <div class="p-6 text-gray-900 dark:text-gray-100">
 
                     <table class="bg-gray-800 rounded-t-lg text-sm w-full">
                         <thead class="border-b border-gray-300 text-left">
 
                             <th class="px-4 py-3">{{ 'Date' }}</th>
 
-                            <th class="px-4 w-auto">{{ 'Tasks' }}</th>                            
-                            
-                            <th class="px-3 py-3  w-auto"> 
+                            <th class="px-4 w-auto">{{ 'Tasks' }}</th>
+
+                            <th class="px-3 py-3  w-auto">
                                 {{ 'Remarks' }}
                             </th>
 
@@ -66,21 +66,22 @@
                             <td class="px-4 sm:max-w-sm ">
                                 {{ $current_task->task_done }}
                             </td>
-                            
+
                             <td class="w-auto ">
                                 {{ $current_task->remarks }}
                             </td>
 
                             <td class="px-4">
-                               
-                                {{ $current_task->status == 1 ? "Endorsed" : 
-                                    ($current_task->status == 2 ? "Disapproved" : "Pending") 
+
+                                {{ $current_task->status == 1 ? "Endorsed" :
+                                    ($current_task->status == 2 ? "Disapproved" : "Pending")
                                 }}
 
                             </td>
-                            
+
                             <td class="px-4">
-                                {{ $current_task->head->user->name }}
+                                {{$current_task->status?$current_task->head->user->name:''}}
+                                {{-- {{ $current_task->head->user->name }} --}}
                             </td>
 
                             {{-- <td class="px-4 py-3">
@@ -89,7 +90,7 @@
 
                         </tr>
                         @endforeach
-                       
+
                     </table>
 
 
