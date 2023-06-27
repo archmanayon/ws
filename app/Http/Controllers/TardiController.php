@@ -87,7 +87,7 @@ class TardiController extends Controller
         return view('tardi_group',
             [
                 'user'          => auth()->user() ?? false,
-                'group'         => auth()->user()->heads[0]->tardis
+                'group'         => auth()->user()->heads[0]->users
                 // 'tasks'         => session('task_session')??false,
                 // 'currentDate'   => session('currentDate')??false,
                 // 'current_time'  => session('current_time')??false,
@@ -164,7 +164,7 @@ class TardiController extends Controller
 
         $sige = Tardi::find(request('post_address'))->update([
 
-            'head_sig'  =>  $user->heads[0]->id,
+            'head_sig'  =>  $user->username,
             'sig_date'  =>  $Date,
             'remarks'   =>  request('h_remarks'),
 

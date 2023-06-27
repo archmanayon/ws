@@ -12,33 +12,29 @@
 
     </x-slot>
 
-    <div class="py-2">
+    <div class="py-12">
+        <div class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight text-center">
+            <h2>
+                {{ 'Personnel Tardiness Variance Record' }}
+            </h2>
+            <h3 >
+                {{ 'Academic Year 2022-2023' }}
+            </h3>
+
+            <h4>
+                {{ 'From the month of March' }}
+            </h4>
+        </div>
 
         <div class="lg:grid lg:px-8 m-5 mx-6 sm:px-6">
 
             {{-- 1st column --}}
             <div class="bg-white m-5 dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg w-3/4">
 
-                <div class="py-6 pl-10 text-gray-900 dark:text-gray-100 text-lg">
-                    <div class="border-b pb-3 w-96">
-                        <h2>
-                            {{ 'Personnel Tardiness Variance Record' }}
-                        </h2>
-                        <h3 >
-                            {{ 'Academic Year: ' }}{{ $tardis->term->school_year }}
-                        </h3>
-        
-                        <h4>
-                            {{ 'From the month of ' }}{{ Carbon::create()->month($tardis->month)->format('F')}}
-                        </h4>
-                    </div>
-
-                    <div class="pt-3">
+                <div class="p-6 text-gray-900 dark:text-gray-100">
 
                     {{ $tardis->user->name??false }} <br>
                     {{ $tardis->user->head->department??false }}
-
-                    </div>
                 </div>
 
             </div>
@@ -84,16 +80,18 @@
                             </td>
                         </tr>
 
-                        <tr class="px-4 py-3">
+                        <tr>
+                            @if (!$tardis->conforme)
 
-                            <td class="px-4 py-3">
-                                {{ "Dept. Head's Remarks" }}
-                            </td>
+                            <form method="POST" action="{{route('post_tardi_variance')}}" >
+                             @csrf
+                               <td class="px-4 py-3">
+                                    <button class="text-orange-300" type="submit" name="tardis_id" value="{{ $tardis->id??false }}">Conforme</button>
+                               </td>
+                            </form>
 
-                            <td class="px-4 py-3 {{ !$tardis->conforme?'text-green-600':'' }}">
-                                {{ $tardis->remarks??false}}
-                            </td>
-                            
+                            @endif
+
                         </tr>
 
                     </table>
@@ -102,27 +100,7 @@
 
             </div>
 
-            {{-- 3rd --}}
-            @if (!$tardis->conforme) 
-                <div class="bg-white dark:bg-gray-800 m-5 overflow-hidden pl-8 shadow-sm sm:rounded-lg w-48">
-
-                    <div class="p-3 text-gray-900 dark:text-gray-100">
-
-                            <form method="POST" action="{{route('post_tardi_variance')}}" >
-                            @csrf
-                                <tr>
-                                    <td class="px-4 py-3">
-                                        <button class="text-orange-300" type="submit" name="tardis_id" value="{{ $tardis->id??false }}">Conforme</button>
-                                    </td>
-                                </tr>
-                            </form>
-
-                    </div>
-
-                </div>
-            @endif 
-
-            {{-- 4th --}}
+            {{-- 3rd column --}}
             <div class="bg-white dark:bg-gray-800 m-5 overflow-hidden shadow-sm sm:rounded-lg w-20">
 
                 <div class="p-3 text-gray-900 dark:text-gray-100">
