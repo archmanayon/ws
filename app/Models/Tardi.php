@@ -23,4 +23,5 @@ class Tardi extends Model
     {
         return $this->belongsTo(Term::class);
     } 
+    
 }

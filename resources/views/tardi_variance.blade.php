@@ -19,17 +19,17 @@
             {{-- 1st column --}}
             <div class="bg-white m-5 dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg w-3/4">
 
-                <div class="p-6 text-gray-900 dark:text-gray-100 text-lg">
+                <div class="py-6 pl-10 text-gray-900 dark:text-gray-100 text-lg">
                     <div class="border-b pb-3 w-96">
                         <h2>
                             {{ 'Personnel Tardiness Variance Record' }}
                         </h2>
                         <h3 >
-                            {{ 'Academic Year 2022-2023' }}
+                            {{ 'Academic Year: ' }}{{ $tardis->term->school_year }}
                         </h3>
         
                         <h4>
-                            {{ 'From the month of March' }}
+                            {{ 'From the month of ' }}{{ Carbon::create()->month($tardis->month)->format('F')}}
                         </h4>
                     </div>
 
