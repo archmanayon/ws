@@ -80,18 +80,16 @@
                             </td>
                         </tr>
 
-                        <tr>
-                            @if (!$tardis->conforme)
+                        <tr class="px-4 py-3">
 
-                            <form method="POST" action="{{route('post_tardi_variance')}}" >
-                             @csrf
-                               <td class="px-4 py-3">
-                                    <button class="text-orange-300" type="submit" name="tardis_id" value="{{ $tardis->id??false }}">Conforme</button>
-                               </td>
-                            </form>
+                            <td class="px-4 py-3">
+                                {{ "Dept. Head's Remarks" }}
+                            </td>
 
-                            @endif
-
+                            <td class="px-4 py-3 {{ !$tardis->conforme?'text-green-600':'' }}">
+                                {{ $tardis->remarks??false}}
+                            </td>
+                            
                         </tr>
 
                     </table>
@@ -100,7 +98,27 @@
 
             </div>
 
-            {{-- 3rd column --}}
+            {{-- 3rd --}}
+            @if (!$tardis->conforme) 
+                <div class="bg-white dark:bg-gray-800 m-5 overflow-hidden pl-8 shadow-sm sm:rounded-lg w-48">
+
+                    <div class="p-3 text-gray-900 dark:text-gray-100">
+
+                            <form method="POST" action="{{route('post_tardi_variance')}}" >
+                            @csrf
+                                <tr>
+                                    <td class="px-4 py-3">
+                                        <button class="text-orange-300" type="submit" name="tardis_id" value="{{ $tardis->id??false }}">Conforme</button>
+                                    </td>
+                                </tr>
+                            </form>
+
+                    </div>
+
+                </div>
+            @endif 
+
+            {{-- 4th --}}
             <div class="bg-white dark:bg-gray-800 m-5 overflow-hidden shadow-sm sm:rounded-lg w-20">
 
                 <div class="p-3 text-gray-900 dark:text-gray-100">

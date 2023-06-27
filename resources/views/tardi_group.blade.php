@@ -116,7 +116,7 @@
                                     </td>
                                     {{--head status --}}
 
-                                    <td class="px-4 py-3 text-red-300">
+                                    <td class="px-4 py-3 {{ !$tardi->conforme?'text-red-300':'' }}">
 
                                         <form method="POST" action="{{route('staff_variance')}}" >
                                             @csrf

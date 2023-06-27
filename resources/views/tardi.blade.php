@@ -100,7 +100,7 @@
                             </td>
 
                             {{-- remarks --}}
-                            <td class="px-4 py-3">
+                            <td class="px-4 py-3 {{ !$tardi->conforme?'text-green-600':'' }} ">
                                 {{ $tardi->remarks }}
                             </td>
 
