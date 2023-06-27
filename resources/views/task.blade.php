@@ -24,7 +24,7 @@
                     {{ $user->head->user->id??false }}
                     <form method="post" action="{{ route('store_task') }}">
                         @csrf
-                        <textarea class="w-full rounded-t-lg m-5 w-5/6 mx-auto bg-gray-800 text-gray-200"
+                        <textarea class=" rounded-t-lg m-5 w-5/6 mx-auto bg-gray-800 text-gray-200"
                            id="" name="task_text" placeholder="Descriptive Task"></textarea>
                         <br>
                         <button type="submit" name="save_task" value="save_new" class="border w-48"

@@ -18,7 +18,7 @@
         <div class="lg:grid lg:px-8 m-5 mx-6 sm:px-6">
 
             {{-- 1st column --}}
-            <div class="bg-white m-5 dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg w-full">
+            <div class="bg-white m-5 dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
 
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     {{ 'Task Done' }}<br>
@@ -29,7 +29,7 @@
             </div>
 
             {{-- 2nd column --}}
-            <div class="bg-white m-5 dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg w-full">
+            <div class="bg-white m-5 dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
 
                 <div class="p-6 text-gray-900 dark:text-gray-100">
 
@@ -40,9 +40,9 @@
 
                             <th class="px-4 py-3">{{ 'Date' }}</th>
 
-                            <th class="px-4 w-auto">{{ 'Tasks' }}</th>                            
-                            
-                            <th class="px-3 py-3  w-auto"> 
+                            <th class="px-4 w-auto">{{ 'Tasks' }}</th>
+
+                            <th class="px-3 py-3  w-auto">
                                 {{ 'Remarks' }}
                             </th>
 
@@ -70,41 +70,41 @@
                                 {{-- task --}}
                                 <td class="px-4 sm:max-w-sm ">
                                     {{ $current_task->task_done }}
-                                </td>                                         
-                             
+                                </td>
+
                                 {{-- remarks --}}
-                                <td class="w-auto">   
+                                <td class="w-auto">
 
                                     @if ($current_task->status)
 
                                         {{ $current_task->remarks }}
 
-                                    @elseif ($current_task->remarks) 
-                                    
+                                    @elseif ($current_task->remarks)
+
                                         <textarea class="bg-gray-800 border-gray-700 h-9 mt-2 rounded text-gray-200 text-sm"
                                             id="" name="head_remarks" placeholder="{{ $current_task->remarks?? 'type...' }}"></textarea>
-                                    
+
                                     @else
 
                                         <textarea class="bg-gray-800 border-gray-700 h-9 mt-2 rounded text-gray-200 text-sm"
                                         id="" name="head_remarks" placeholder="type...">{{ $current_task->remarks?? false }}</textarea>
 
-                                    @endif               
-                                    
+                                    @endif
+
                                 </td>
 
                                 {{-- status --}}
                                 <td class="px-4 w-auto">
 
-                                   
+
                                     @if ($current_task->status)
 
-                                        {{ $current_task->status == 1 ? "Endorsed" : 
-                                            ($current_task->status == 2 ? "Disapproved" : "Pending") 
+                                        {{ $current_task->status == 1 ? "Endorsed" :
+                                            ($current_task->status == 2 ? "Disapproved" : "Pending")
                                         }}
 
                                         @else
-                                                                                                
+
                                             <select name="stat_option" id="task_stat" class="bg-gray-800 border-transparent mt-2 px-0 py-1 rounded text-1xl text-gray-200 w-auto">
                                                 <option value="0">Pending</option>
                                                 <option value="1">Endorse</option>
@@ -113,7 +113,7 @@
 
                                     @endif
 
-                                </td>                               
+                                </td>
 
                                 {{-- <td class="px-4 py-3">
                                     {{ $current_task->user->head->user->name }}
@@ -160,7 +160,7 @@
                             focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
                             {{ 'Back' }}
                     </a>
-                    
+
                 </div>
 
             </div>
