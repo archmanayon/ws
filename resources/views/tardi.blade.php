@@ -60,7 +60,7 @@
 
                         </thead>
 
-                        @foreach ($user->tardis as $tardi)
+                        @foreach ($user->tardis->sortBy('head_sig')->reverse()->sortBy('conforme') as $tardi)
 
                         <tr>
                             {{-- reported tardiness --}}
