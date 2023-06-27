@@ -15,11 +15,10 @@ return new class extends Migration
 
             $table->id();
             $table->foreignId('user_id');
-            $table->string('term_id');
+            $table->string('sy_id');
             $table->integer('month');
             $table->integer('total');
             $table->foreignId('tardi_description_id');
-            $table->foreignId('head_id')->nullable();
             $table->string('conforme')->nullable();
             $table->timestamp('con_date')->nullable();
             $table->string('head_sig')->nullable();

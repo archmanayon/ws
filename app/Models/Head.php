@@ -23,9 +23,4 @@ class Head extends Model
     {
         return $this->hasMany(Task::class);
     } 
-
-    public function tardis()
-    {
-        return $this->hasMany(Tardi::class);
-    }  
 }
