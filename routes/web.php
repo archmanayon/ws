@@ -14,6 +14,7 @@ use App\Http\Controllers\PunchController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\HeadController;
 use App\Http\Controllers\TardiController;
+use App\Http\Controllers\ExtractBioController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -82,7 +83,9 @@ Route::get('update_bio/{bio}', [UpdateBioController::class, 'new_bio'])
 Route::post('update_bio/{bio}', [UpdateBioController::class, 'store'])
 ->middleware(['auth', 'verified', 'admin'])->name('post_new_bio');
 
-
+// raw Bio
+Route::get('rawbio/{rawbio}', [ExtractBioController::class, 'rawbio'])
+->middleware(['auth', 'verified', 'admin'])->name('show_rawbio');
 
 
 // tardiness

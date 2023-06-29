@@ -6,8 +6,10 @@ use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\Shift;
 use App\Models\Biometric;
+use App\Models\Rawbio;
 use App\Models\Update_bio;
 use \Carbon\Carbon;
+use Illuminate\Support\Str;
 
 use Illuminate\Http\Request;
 
@@ -112,6 +114,8 @@ class ExtractBioController extends Controller
         ];
     }
 
+
+
     public function extract_tardi($official, $day, $bio_punch)
     {
 
@@ -142,5 +146,38 @@ class ExtractBioController extends Controller
             "pm_und"    => $pm_und>= 0 ? $pm_und : false
         ];
  
+    }
+
+    public function rawbio ($rawbio)
+    {                  
+        $str_tc         = Str::limit($rawbio,6,'');
+        $str_date       = substr($rawbio, 6, 6);
+        $date_s         = Carbon::createFromFormat('mdy', $str_date);
+        $date           = Carbon::parse($date_s);
+        $searched_user  = User::where('timecard',  $str_tc)->get()[0];      
+
+        // ----------------orig bio----------------------------------
+
+        $orig_bio = Rawbio::where(DB::raw('SUBSTRING(biotext, 1, 6)'), '=',  $searched_user->timecard)
+                        ->where(DB::raw('SUBSTRING(biotext, 7, 6)'), '=', $date->format('mdy'))??false;
+
+        $rawbio = $orig_bio->selectRaw
+            ('                
+                SUBSTRING(biotext, 7, 6) AS date,
+                SUBSTRING(biotext, 13, 4) AS hour,
+                SUBSTRING(biotext, 17, 1) AS in_out
+                ')
+        ->get();  
+
+          
+        
+        return view ('rawbio',[
+
+            'str_tc'        =>  $str_tc,
+            'str_date'      =>  $str_date,            
+            'searched_user' =>  $searched_user,
+            'rawbio'        =>  $rawbio
+
+        ]);
     }
 }

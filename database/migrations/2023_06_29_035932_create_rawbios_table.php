@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('s_y_s', function (Blueprint $table) {
+        Schema::create('rawbios', function (Blueprint $table) {
             $table->id();
-            $table->string('school_year')->nullable();
-            $table->boolean('active')->default(false);            
+            $table->string('biotext');
             $table->timestamps();
+            $table->boolean('active')->nullable()->default(true);
         });
     }
 
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('s_y_s');
+        Schema::dropIfExists('rawbios');
     }
 };
