@@ -87,6 +87,9 @@ Route::post('update_bio/{bio}', [UpdateBioController::class, 'store'])
 Route::get('rawbio/{rawbio}', [ExtractBioController::class, 'rawbio'])
 ->middleware(['auth', 'verified', 'admin'])->name('show_rawbio');
 
+Route::post('rawbio/{rawbio}', [UpdateBioController::class, 'store_rawbio'])
+->middleware(['auth', 'verified', 'admin'])->name('post_rawbio');
+
 
 // tardiness
 

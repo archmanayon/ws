@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\ManualShift;
 use App\Models\Shift;
 use App\Models\Biometric;
+use App\Models\Rawbio;
 
 use \Carbon\Carbon;
 use Carbon\CarbonPeriod;
@@ -133,6 +134,82 @@ class UpdateBioController extends Controller
         
         return redirect('print')
             ->with('success_message', 'Updated Biometrics');
+        
+    }
+
+    public function store_rawbio(Request $request, $rawbio)
+    {
+        $str_tc         = Str::limit($rawbio,6,'');
+        $str_date       = substr($rawbio, 6, 6);
+        $searched_user  = User::where('timecard',  $str_tc)->get()[0];
+
+        $validated_new_bio = $request->validate([
+                'new_bio.0' => 'nullable|string|min:4|max:4',
+                'new_bio.1' => 'nullable|string|min:4|max:4',
+                'new_bio.2' => 'nullable|string|min:4|max:4',
+                'new_bio.3' => 'nullable|string|min:4|max:4'
+            ]
+            ,
+            [
+                'new_bio.0.string' => 'The name field must be a string.',
+                'new_bio.0.min' => 'The name field may be lesser than :min characters.',
+                'new_bio.0.max' => 'The name field may be greater than :max characters.',
+
+                'new_bio.1.string' => 'The name field must be a string.',
+                'new_bio.1.min' => 'The name field may be lesser than :min characters.',
+                'new_bio.1.max' => 'The name field may be greater than :max characters.',
+
+                'new_bio.2.string' => 'The name field must be a string.',
+                'new_bio.2.min' => 'The name field may be lesser than :min characters.',
+                'new_bio.2.max' => 'The name field may be greater than :max characters.',
+
+                'new_bio.3.string' => 'The name field must be a string.',
+                'new_bio.3.min' => 'The name field may be lesser than :min characters.',
+                'new_bio.3.max' => 'The name field may be greater than :max characters.'
+            ]
+        );
+
+        $new_input = [];
+
+        $iteration = 0 ;
+
+        foreach ($validated_new_bio['new_bio'] as $key => $value){
+
+            if($value){
+
+                $in_out = $iteration == 0 || $iteration == 2?"I":"O";
+
+                // if display in arrays only
+                $new_input[] = $iteration == 0 || $iteration == 2?
+                                $str_tc.$str_date.$value."I":
+                                $str_tc.$str_date.$value."O";          
+
+                // Update_bio::create([
+                //     'name'      => $searched_user->name,
+                //     'time_card' => $str_tc,
+                //     'date'      => $str_date,
+                //     'hour'      => $value,
+                //     'in_out'    => $in_out,
+                //     'biotext'   => $str_tc.$str_date.$value.$in_out,
+                //     'reason'    => request('reason_bio')
+                // ]);
+
+                $iteration ++;
+            }
+
+        }
+
+        return redirect('rawbio/'.$str_tc.$str_date)
+            ->with([
+                // 'user_session' => $user
+                // 'task_session' => $task,
+                // 'currentDate'  => $currentDate,
+                // 'current_time' => $current_time,
+                // 'current_task' => $user->tasks
+                // 'current_task' => $user->tasks
+                'new_input'     => $new_input??false
+            ])
+        ;
         
     }
 }

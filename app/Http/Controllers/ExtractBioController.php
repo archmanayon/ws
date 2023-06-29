@@ -8,6 +8,7 @@ use App\Models\Shift;
 use App\Models\Biometric;
 use App\Models\Rawbio;
 use App\Models\Update_bio;
+use App\Models\ManualShift;
 use \Carbon\Carbon;
 use Illuminate\Support\Str;
 
@@ -114,8 +115,6 @@ class ExtractBioController extends Controller
         ];
     }
 
-
-
     public function extract_tardi($official, $day, $bio_punch)
     {
 
@@ -169,15 +168,33 @@ class ExtractBioController extends Controller
                 ')
         ->get();  
 
+
+        // ----------------Official Shift----------------------------------
+
+        $official = app()->call(ManualShiftController::class.'@official_',
+            [                
+                'searched_user'     =>  $searched_user,
+                'date'              =>  $date,
+                'day'               =>  $date->format('l')
+        ]);
+
+
+        // ----------------Updated bio ----------------------------------
+        
+        $updated_bio = Update_bio::where('time_card',$str_tc)
+        ->where('date',$str_date)->get();   
+
           
         
         return view ('rawbio',[
 
-            'str_tc'        =>  $str_tc,
-            'str_date'      =>  $str_date,            
-            'searched_user' =>  $searched_user,
-            'rawbio'        =>  $rawbio
-
+            'str_tc'        =>  $str_tc ?? false,
+            'str_date'      =>  $str_date ?? false,      
+            'searched_user' =>  $searched_user ?? false,
+            'rawbio'        =>  $rawbio ?? false,
+            'official'      =>  $official ?? false,
+            'updated_bio'   =>  $updated_bio?? false,
+            'new_input'     =>  session('new_input')??false,
         ]);
     }
 }
