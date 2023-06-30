@@ -182,9 +182,7 @@ class ExtractBioController extends Controller
         // ----------------Updated bio ----------------------------------
         
         $updated_bio = Update_bio::where('time_card',$str_tc)
-        ->where('date',$str_date)->get();   
-
-          
+        ->where('date',$str_date)->get();            
         
         return view ('rawbio',[
 

@@ -144,45 +144,42 @@ class UpdateBioController extends Controller
         $searched_user  = User::where('timecard',  $str_tc)->get()[0];
 
         $validated_new_bio = $request->validate([
-                'new_bio.0' => 'nullable|string|min:4|max:4',
-                'new_bio.1' => 'nullable|string|min:4|max:4',
-                'new_bio.2' => 'nullable|string|min:4|max:4',
-                'new_bio.3' => 'nullable|string|min:4|max:4'
+                'new_bio.*' => 'nullable|string|min:4|max:4'                
             ]
             ,
             [
-                'new_bio.0.string' => 'The name field must be a string.',
-                'new_bio.0.min' => 'The name field may be lesser than :min characters.',
-                'new_bio.0.max' => 'The name field may be greater than :max characters.',
-
-                'new_bio.1.string' => 'The name field must be a string.',
-                'new_bio.1.min' => 'The name field may be lesser than :min characters.',
-                'new_bio.1.max' => 'The name field may be greater than :max characters.',
-
-                'new_bio.2.string' => 'The name field must be a string.',
-                'new_bio.2.min' => 'The name field may be lesser than :min characters.',
-                'new_bio.2.max' => 'The name field may be greater than :max characters.',
-
-                'new_bio.3.string' => 'The name field must be a string.',
-                'new_bio.3.min' => 'The name field may be lesser than :min characters.',
-                'new_bio.3.max' => 'The name field may be greater than :max characters.'
+                'new_bio.*.string' => 'The name field must be a string.',
+                'new_bio.*.min' => 'The name field may be lesser than :min characters.',
+                'new_bio.*.max' => 'The name field may be greater than :max characters.',
+              
             ]
         );
+        // ----- sort the validated -------------
+        $validated_new_bio = collect($validated_new_bio['new_bio'])->sortBy(function ($value) {
+            return $value;
+        })->all();
 
         $new_input = [];
 
         $iteration = 0 ;
 
-        foreach ($validated_new_bio['new_bio'] as $key => $value){
+        // foreach ($validated_new_bio['new_bio'] as $key => $value){
+        foreach ($validated_new_bio as $value){    
 
             if($value){
 
                 $in_out = $iteration == 0 || $iteration == 2?"I":"O";
 
                 // if display in arrays only
-                $new_input[] = $iteration == 0 || $iteration == 2?
-                                $str_tc.$str_date.$value."I":
-                                $str_tc.$str_date.$value."O";          
+                // $new_input[] = $iteration == 0 || $iteration == 2?
+                //                 $str_tc.$str_date.$value."I":
+                //                 $str_tc.$str_date.$value."O";    
+                
+                $new_input [] = (object) [
+
+                    'bio' => $iteration % 2 == 0 ? $str_tc.$str_date.$value."I": $str_tc.$str_date.$value."O"
+
+                ];
 
                 // Update_bio::create([
                 //     'name'      => $searched_user->name,
@@ -201,13 +198,10 @@ class UpdateBioController extends Controller
 
         return redirect('rawbio/'.$str_tc.$str_date)
             ->with([
-                // 'user_session' => $user
-                // 'task_session' => $task,
-                // 'currentDate'  => $currentDate,
-                // 'current_time' => $current_time,
-                // 'current_task' => $user->tasks
-                // 'current_task' => $user->tasks
-                'new_input'     => $new_input??false
+                
+                // 'new_input'     => collect($new_input)->sortBy('bio')->values(),
+                'new_input'     => $new_input
+
             ])
         ;
         

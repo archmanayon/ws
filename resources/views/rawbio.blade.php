@@ -1,5 +1,6 @@
 @php
     use Illuminate\Support\Str;
+    // use Illuminate\Support\Collection;
     use Carbon\Carbon;
     use App\Models\Update_bio;
 
@@ -45,14 +46,25 @@
                                 <tr>    <td></td>
                                     <td class="px-4 py-3">
                                         <div class="mt-2 block " >                                        
-                                            <input class="" type="checkbox" name="new_bio[]" id="" value="{{ $bio_punch->hour }}">
-                                            <label class="" for="new_bio[]">
-                                                {{ $bio_punch->hour." | ".$bio_punch->in_out." | "}} {{ $loop->iteration }}
+                                            <input class="" type="checkbox" 
+                                                {{-- name="new_bio['{{ $loop->index }}']"  --}}
+                                                name="new_bio['{{ $loop->index }}']" 
+                                                id="" 
+                                                {{-- value="{{ $bio_punch->hour }}" {{ 'checked' }} --}}
+                                                value="{{ $bio_punch->hour }}"  {{ old("new_bio.$loop->index") ?  'checked':''  }}
+                                                {{-- value="{{$bio_punch->hour}}"  {{ 'checked' }} --}}
+                                                >
+                                            <label class="" for="new_bio['{{ $loop->index }}']">
+                                                {{ $bio_punch->hour." | ".$bio_punch->in_out." | "}} {{ $loop->index }}
                                             </label>
                                         
                                         </div>
                                     </td>
                                 </tr>
+                                <tr><td>@if ($loop->last)
+                                    {{ $loop->index }}
+                                    @php $last_index = $loop->index @endphp
+                                @endif</td></tr>
                             @endforeach
                         </table>
 
@@ -80,7 +92,7 @@
                                 <td>
 
                                     <x-text-input  id="new_am_in" class="block mt-1" type="text"
-                                        {{-- value="{{ old('new_bio.0')?:($pref_bio[0]->hour??false) }}" --}}
+                                        value="{{ old('new_bio.0')??false }}"
                                         placeholder="{{ $official->am_in??false }}"
                                         name="new_bio[]" autofocus autocomplete="{{ ($pref_bio[0]->hour??false )}}" />
                                     <x-input-error :messages="$errors->get('new_bio.0')" class="mt-2" />
@@ -102,7 +114,7 @@
                                 <td>
 
                                     <x-text-input  id="new_am_out" class="block mt-1" type="text"
-                                        {{-- value="{{ old('new_bio.1')?:$pref_bio[1]->hour??false }}" --}}
+                                        value="{{ old('new_bio.1')??false }}"
                                         placeholder="{{ $official->am_out??false }}"
                                         name="new_bio[]" autofocus autocomplete="{{ $pref_bio[0]->hour??false }}" />
                                     <x-input-error :messages="$errors->get('new_bio.1')" class="mt-2" />
@@ -120,7 +132,7 @@
                                 <td>
 
                                     <x-text-input  id="new_pm_in" class="block mt-1" type="text"
-                                        {{-- value="{{ old('new_bio.2')?:$pref_bio[2]->hour??$pref_bio[0]->hour??false }}" --}}
+                                        value="{{ old('new_bio.2')??false }}"
                                         placeholder="{{ $official->pm_in??false }}"
                                         name="new_bio[]" autofocus autocomplete="{{ $pref_bio[2]->hour??false }}" />
                                     <x-input-error :messages="$errors->get('new_bio.2')" class="mt-2" />
@@ -140,7 +152,7 @@
                                 <td>
 
                                     <x-text-input  id="new_pm_out" class="block mt-1" type="text"
-                                        {{-- value="{{ old('new_bio.3')?:$pref_bio[3]->hour??($pref_bio[2]->hour??false?'':'') }}" --}}
+                                        value="{{ old('new_bio.3')??false }}"
                                         {{-- placeholder="{{ $pref_bio[3]->hour??$official->pm_out??
                                                         $pref_bio[2]->hour??$pref_bio[1]->hour??false }}" --}}
                                         placeholder="{{ $official->pm_out??false }}"
@@ -187,14 +199,14 @@
                                 </th>
 
                             </tr>
-                            @if ($new_input??false)
+                            @if ($new_input??false)                            
 
                                 @foreach ($new_input as $new_input)
-                                    <tr>
-                                        <td> {{ $new_input }}</td>
-                                    </tr>
+                                <tr>
+                                    <td> {{ $new_input->bio }}</td>
+                                </tr>
 
-                                @endforeach
+                            @endforeach
                                 
                             @endif
                             
