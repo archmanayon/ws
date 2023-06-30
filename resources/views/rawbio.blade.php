@@ -43,6 +43,7 @@
                             </tr>
 
                             @foreach ($rawbio as $bio_punch)
+
                                 <tr>    <td></td>
                                     <td class="px-4 py-3">
                                         <div class="mt-2 block " >                                        
@@ -61,6 +62,7 @@
                                         </div>
                                     </td>
                                 </tr>
+                                
                                 <tr><td>@if ($loop->last)
                                     {{ $loop->index }}
                                     @php $last_index = $loop->index @endphp
