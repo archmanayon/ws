@@ -42,31 +42,40 @@
 
                             </tr>
 
+                            @php $inde_x = 4; @endphp
+
                             @foreach ($rawbio as $bio_punch)
 
                                 <tr>    <td></td>
                                     <td class="px-4 py-3">
                                         <div class="mt-2 block " >                                        
-                                            <input class="" type="checkbox" 
-                                                {{-- name="new_bio['{{ $loop->index }}']"  --}}
-                                                name="new_bio['{{ $loop->index }}']" 
-                                                id="" 
-                                                {{-- value="{{ $bio_punch->hour }}" {{ 'checked' }} --}}
-                                                value="{{ $bio_punch->hour }}"  {{ old("new_bio.$loop->index") ?  'checked':''  }}
-                                                {{-- value="{{$bio_punch->hour}}"  {{ 'checked' }} --}}
-                                                >
-                                            <label class="" for="new_bio['{{ $loop->index }}']">
-                                                {{ $bio_punch->hour." | ".$bio_punch->in_out." | "}} {{ $loop->index }}
+                                            <input class="" type="checkbox" name="new_bio[{{ $inde_x }}]" id="" 
+                                                value="{{ $bio_punch->hour }}"  {{ old("new_bio.$inde_x")??false ?  'checked':''  }}
+                                            >
+                                            <label class="" for="new_bio['{{ $inde_x }}']">
+                                                {{ $bio_punch->hour." | ".$bio_punch->in_out." | ".$inde_x." | "}} {{ old('new_bio.3') }}
                                             </label>
                                         
                                         </div>
                                     </td>
                                 </tr>
+
+                                @php $inde_x++ @endphp
                                 
-                                <tr><td>@if ($loop->last)
-                                    {{ $loop->index }}
-                                    @php $last_index = $loop->index @endphp
-                                @endif</td></tr>
+                                <tr>
+                                    
+                                    <td>
+                                        @if ($loop->last)
+                                            {{-- {{ $loop->index }} --}}
+                                            @php 
+                                                
+                                                $inde_x = 4;
+
+                                            @endphp
+                                        @endif
+                                    </td>
+                                
+                                </tr>
                             @endforeach
                         </table>
 
@@ -96,7 +105,7 @@
                                     <x-text-input  id="new_am_in" class="block mt-1" type="text"
                                         value="{{ old('new_bio.0')??false }}"
                                         placeholder="{{ $official->am_in??false }}"
-                                        name="new_bio[]" autofocus autocomplete="{{ ($pref_bio[0]->hour??false )}}" />
+                                        name="new_bio[0]" autofocus autocomplete="{{ ($pref_bio[0]->hour??false )}}" />
                                     <x-input-error :messages="$errors->get('new_bio.0')" class="mt-2" />
 
 
@@ -118,7 +127,7 @@
                                     <x-text-input  id="new_am_out" class="block mt-1" type="text"
                                         value="{{ old('new_bio.1')??false }}"
                                         placeholder="{{ $official->am_out??false }}"
-                                        name="new_bio[]" autofocus autocomplete="{{ $pref_bio[0]->hour??false }}" />
+                                        name="new_bio[1]" autofocus autocomplete="{{ $pref_bio[0]->hour??false }}" />
                                     <x-input-error :messages="$errors->get('new_bio.1')" class="mt-2" />
 
                                 </td>
@@ -136,7 +145,7 @@
                                     <x-text-input  id="new_pm_in" class="block mt-1" type="text"
                                         value="{{ old('new_bio.2')??false }}"
                                         placeholder="{{ $official->pm_in??false }}"
-                                        name="new_bio[]" autofocus autocomplete="{{ $pref_bio[2]->hour??false }}" />
+                                        name="new_bio[2]" autofocus autocomplete="{{ $pref_bio[2]->hour??false }}" />
                                     <x-input-error :messages="$errors->get('new_bio.2')" class="mt-2" />
 
                                 </td>
@@ -158,7 +167,7 @@
                                         {{-- placeholder="{{ $pref_bio[3]->hour??$official->pm_out??
                                                         $pref_bio[2]->hour??$pref_bio[1]->hour??false }}" --}}
                                         placeholder="{{ $official->pm_out??false }}"
-                                        name="new_bio[]" autofocus autocomplete="{{ $pref_bio[3]->hour??false }}" />
+                                        name="new_bio[3]" autofocus autocomplete="{{ $pref_bio[3]->hour??false }}" />
                                     <x-input-error :messages="$errors->get('new_bio.3')" class="mt-2" />
 
                                 </td>
@@ -205,12 +214,13 @@
 
                                 @foreach ($new_input as $new_input)
                                 <tr>
-                                    <td> {{ $new_input->bio }}</td>
+                                    <td> {{ $new_input->bio ." | ". $loop->index }}</td>
                                 </tr>
 
-                            @endforeach
+                            @endforeach                            
                                 
                             @endif
+                           
                             
                         </table>
 

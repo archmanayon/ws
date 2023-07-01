@@ -34,6 +34,7 @@ class BiometricController extends Controller
                 $ten_min_allowance = 0.17;
                 // $ten_min_allowance = 0;
 
+                
                 //---to choose between 'official shift' and 'manual shift'
                 $official = app()->call(
                     ManualShiftController::class . '@official_',

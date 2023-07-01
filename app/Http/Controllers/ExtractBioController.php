@@ -166,7 +166,7 @@ class ExtractBioController extends Controller
                 SUBSTRING(biotext, 13, 4) AS hour,
                 SUBSTRING(biotext, 17, 1) AS in_out
                 ')
-        ->get();  
+        ->get();
 
 
         // ----------------Official Shift----------------------------------
@@ -192,7 +192,8 @@ class ExtractBioController extends Controller
             'rawbio'        =>  $rawbio ?? false,
             'official'      =>  $official ?? false,
             'updated_bio'   =>  $updated_bio?? false,
-            'new_input'     =>  session('new_input')??false,
+            'new_input'         => session('new_input')??false,
+            'validated_new_bio' => session('validated_new_bio')??false,
         ]);
     }
 }

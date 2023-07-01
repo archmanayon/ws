@@ -196,14 +196,24 @@ class UpdateBioController extends Controller
 
         }
 
-        return redirect('rawbio/'.$str_tc.$str_date)
+        return redirect()->back()
             ->with([
                 
                 // 'new_input'     => collect($new_input)->sortBy('bio')->values(),
-                'new_input'     => $new_input
+                'new_input'     => $new_input,
+                'validated_new_bio' =>$validated_new_bio
 
             ])
         ;
+
+        // return redirect('rawbio/'.$str_tc.$str_date)
+        //     ->with([
+                
+        //         // 'new_input'     => collect($new_input)->sortBy('bio')->values(),
+        //         'new_input'     => $new_input
+
+        //     ])
+        // ;
         
     }
 }
