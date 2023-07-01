@@ -48,33 +48,33 @@
 
                                 <tr>    <td></td>
                                     <td class="px-4 py-3">
-                                        <div class="mt-2 block " >                                        
-                                            <input class="" type="checkbox" name="new_bio[{{ $inde_x }}]" id="" 
+                                        <div class="mt-2 block " >
+                                            <input class="" type="checkbox" name="new_bio[{{ $inde_x }}]" id=""
                                                 value="{{ $bio_punch->hour }}"  {{ old("new_bio.$inde_x")??false ?  'checked':''  }}
                                             >
                                             <label class="" for="new_bio['{{ $inde_x }}']">
-                                                {{ $bio_punch->hour." | ".$bio_punch->in_out." | ".$inde_x." | "}} {{ old('new_bio.3') }}
+                                                {{ $bio_punch->hour." | ".$bio_punch->in_out." | ".$inde_x." | "}} {{ old("new_bio.$inde_x") }}
                                             </label>
-                                        
+
                                         </div>
                                     </td>
                                 </tr>
 
                                 @php $inde_x++ @endphp
-                                
+
                                 <tr>
-                                    
+
                                     <td>
                                         @if ($loop->last)
                                             {{-- {{ $loop->index }} --}}
-                                            @php 
-                                                
+                                            @php
+
                                                 $inde_x = 4;
 
                                             @endphp
                                         @endif
                                     </td>
-                                
+
                                 </tr>
                             @endforeach
                         </table>
@@ -194,34 +194,34 @@
                                     <button type="submit" name="save_new" value="save_new">Update Bio</button>
                                 </td>
                             </tr>
-                        
 
 
-                            
+
+
                         </table>
 
                         <br>
 
                         <table class="rounded-t-lg m-5 w-5/6 mx-auto bg-gray-800 text-gray-200">
                             <tr class="text-left border-b border-gray-300 ">
-                                
+
                                 <th class="px-4 py-3">
                                     {{  $bio_date.' | '. $bio_day->format('l') }}
                                 </th>
 
                             </tr>
-                            @if ($new_input??false)                            
+                            @if ($new_input??false)
 
                                 @foreach ($new_input as $new_input)
                                 <tr>
                                     <td> {{ $new_input->bio ." | ". $loop->index }}</td>
                                 </tr>
 
-                            @endforeach                            
-                                
+                            @endforeach
+
                             @endif
-                           
-                            
+
+
                         </table>
 
                     </div>
@@ -230,17 +230,17 @@
                 </div>
 
                 {{-- 3rd column https://www.youtube.com/watch?v=S1yXIAjCbQw--}}
-                
 
-                    
 
-                
-        
+
+
+
+
             </div>
 
         </form>
 
-        
+
 
 </x-app-layout>
 

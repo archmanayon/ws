@@ -18,7 +18,7 @@ use Illuminate\Http\Request;
 
 class UpdateBioController extends Controller
 {
-    public function new_bio($bio){        
+    public function new_bio($bio){
 
         $bio_daily_array = Biometric::where(DB::raw('SUBSTRING(biotext, 1, 12)'),'=',$bio);
         $all_bio_punches = $bio_daily_array->selectRaw
@@ -31,12 +31,12 @@ class UpdateBioController extends Controller
                 id AS id
                 ')
         ->get();
-        
+
         $str_tc         = Str::limit($bio,6,'');
         $str_date       = substr($bio, 6, 6);
         $date_s         = Carbon::createFromFormat('mdy', $str_date);
         $date           = Carbon::parse($date_s);
-        $searched_user  = User::where('timecard',  $str_tc)->get()[0];        
+        $searched_user  = User::where('timecard',  $str_tc)->get()[0];
 
         $official = app()->call(ManualShiftController::class.'@official_',
             [
@@ -45,15 +45,15 @@ class UpdateBioController extends Controller
                 'date'              =>  $date,
                 'day'               =>  $date->format('l')
         ]);
-        
+
         $updated_bio = Update_bio::where('time_card',$str_tc)
-        ->where('date',$str_date)->get();           
+        ->where('date',$str_date)->get();
 
         return view ('update_bio',[
 
             'old_bio'       =>  $all_bio_punches,
 
-            'updated_bio'   =>  $updated_bio?? false,          
+            'updated_bio'   =>  $updated_bio?? false,
 
             'pref_bio'      =>  $updated_bio[0]??false ? $updated_bio : $all_bio_punches,
             'str_tc'        =>  $str_tc,
@@ -114,7 +114,7 @@ class UpdateBioController extends Controller
                 // if display in arrays only
                 $new_input_date[] = $iteration == 0 || $iteration == 2?
                                 $str_tc.$str_date.$value."I":
-                                $str_tc.$str_date.$value."O";          
+                                $str_tc.$str_date.$value."O";
 
                 Update_bio::create([
                     'name'      => $searched_user->name,
@@ -131,10 +131,10 @@ class UpdateBioController extends Controller
 
         }
 
-        
+
         return redirect('print')
             ->with('success_message', 'Updated Biometrics');
-        
+
     }
 
     public function store_rawbio(Request $request, $rawbio)
@@ -144,14 +144,14 @@ class UpdateBioController extends Controller
         $searched_user  = User::where('timecard',  $str_tc)->get()[0];
 
         $validated_new_bio = $request->validate([
-                'new_bio.*' => 'nullable|string|min:4|max:4'                
+                'new_bio.*' => 'nullable|string|min:4|max:4'
             ]
             ,
             [
                 'new_bio.*.string' => 'The name field must be a string.',
                 'new_bio.*.min' => 'The name field may be lesser than :min characters.',
                 'new_bio.*.max' => 'The name field may be greater than :max characters.',
-              
+
             ]
         );
         // ----- sort the validated -------------
@@ -164,21 +164,20 @@ class UpdateBioController extends Controller
         $iteration = 0 ;
 
         // foreach ($validated_new_bio['new_bio'] as $key => $value){
-        foreach ($validated_new_bio as $value){    
+        foreach ($validated_new_bio as $value){
 
             if($value){
 
-                $in_out = $iteration == 0 || $iteration == 2?"I":"O";
+                $in_out = $iteration % 2 == 0 ?"I":"O";
 
                 // if display in arrays only
                 // $new_input[] = $iteration == 0 || $iteration == 2?
                 //                 $str_tc.$str_date.$value."I":
-                //                 $str_tc.$str_date.$value."O";    
-                
+                //                 $str_tc.$str_date.$value."O";
+
                 $new_input [] = (object) [
 
                     'bio' => $iteration % 2 == 0 ? $str_tc.$str_date.$value."I": $str_tc.$str_date.$value."O"
-
                 ];
 
                 // Update_bio::create([
@@ -198,22 +197,21 @@ class UpdateBioController extends Controller
 
         return redirect()->back()
             ->with([
-                
+
                 // 'new_input'     => collect($new_input)->sortBy('bio')->values(),
                 'new_input'     => $new_input,
                 'validated_new_bio' =>$validated_new_bio
-
             ])
         ;
 
         // return redirect('rawbio/'.$str_tc.$str_date)
         //     ->with([
-                
+
         //         // 'new_input'     => collect($new_input)->sortBy('bio')->values(),
         //         'new_input'     => $new_input
 
         //     ])
         // ;
-        
+
     }
 }
