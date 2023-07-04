@@ -73,7 +73,7 @@
 
                                 @foreach ( $each_user as $daily)
 
-                                    @if ($daily)
+                                    @if ($daily && $daily->punch->count()>=5)
 
                                         <tr class="bg-gray-700 border-b border-gray-600">
                                             <td class="px-4 py-3">
