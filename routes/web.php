@@ -91,6 +91,25 @@ Route::post('rawbio/{rawbio}', [UpdateBioController::class, 'store_rawbio'])
 ->middleware(['auth', 'verified', 'admin'])->name('post_rawbio');
 
 
+
+
+Route::get('raw_bio_text', [ScheduleController::class, 'raw_bio_text'])
+->middleware(['auth', 'verified', 'admin'])->name('raw_bio_text');
+
+Route::post('raw_bio_text', [ScheduleController::class, 'raw_bio_text'])
+->middleware(['auth', 'verified', 'admin'])->name('raw_bio_text_post');
+
+
+
+Route::get('text_files', [ScheduleController::class, 'text_files'])
+->middleware(['auth', 'verified', 'admin'])->name('text_files');
+
+Route::post('text_files', [ScheduleController::class, 'text_files'])
+->middleware(['auth', 'verified', 'admin'])->name('text_files_post');
+
+
+
+
 // tardiness
 
 // 01 tardi variance the staff will conforme based on what head remarks
@@ -198,13 +217,6 @@ Route::get('adea', [ScheduleController::class, 'adea_bio_abs'])
 
 Route::post('adea', [ScheduleController::class, 'adea_bio_abs'])
 ->middleware(['auth', 'verified', 'admin'])->name('adea_post');
-
-Route::get('text_files', [ScheduleController::class, 'text_files'])
-->middleware(['auth', 'verified', 'admin'])->name('text_files');
-
-Route::post('text_files', [ScheduleController::class, 'text_files'])
-->middleware(['auth', 'verified', 'admin'])->name('text_files_post');
-
 
 
 Route::get('all_absences', [ScheduleController::class, 'print_all_abs_old'])

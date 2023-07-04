@@ -196,4 +196,5 @@ class ExtractBioController extends Controller
             'validated_new_bio' => session('validated_new_bio')??false,
         ]);
     }
+    
 }
