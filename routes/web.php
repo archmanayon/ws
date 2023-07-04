@@ -15,6 +15,7 @@ use App\Http\Controllers\TaskController;
 use App\Http\Controllers\HeadController;
 use App\Http\Controllers\TardiController;
 use App\Http\Controllers\ExtractBioController;
+use App\Http\Controllers\BiometricController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -93,10 +94,10 @@ Route::post('rawbio/{rawbio}', [UpdateBioController::class, 'store_rawbio'])
 
 
 
-Route::get('raw_bio_text', [ScheduleController::class, 'raw_bio_text'])
+Route::get('raw_bio_text', [BiometricController::class, 'raw_bio_text'])
 ->middleware(['auth', 'verified', 'admin'])->name('raw_bio_text');
 
-Route::post('raw_bio_text', [ScheduleController::class, 'raw_bio_text'])
+Route::post('raw_bio_text', [BiometricController::class, 'raw_bio_text'])
 ->middleware(['auth', 'verified', 'admin'])->name('raw_bio_text_post');
 
 

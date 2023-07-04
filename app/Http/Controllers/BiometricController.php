@@ -9,8 +9,10 @@ use App\Models\Shift;
 use App\Models\Punch;
 use App\Models\Schedule;
 use App\Models\Biometric;
+use App\Models\Rawbio;
 
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 
 use Illuminate\Http\Request;
 
@@ -35,7 +37,7 @@ class BiometricController extends Controller
                 $ten_min_allowance = 0.17;
                 // $ten_min_allowance = 0;
 
-                
+
                 //---to choose between 'official shift' and 'manual shift'
                 $official = app()->call(
                     ManualShiftController::class . '@official_',
@@ -77,5 +79,61 @@ class BiometricController extends Controller
             })->toArray();
 
         return $mappedArray;
+    }
+
+    public function raw_bio_text()
+    {
+        $holiday = array(
+            "01-05-23", "01-06-23",
+            "02-24-23", "02-25-23",
+            "04-06-23", "04-07-23",
+            "04-08-23", "04-10-23", "05-01-23",
+            "04-21-23", "06-12-23", "06-28-23"
+        );
+
+        $start_date = request('start_date') ?? 0;
+        $end_date = request('end_date') ?? 0;
+        $period = CarbonPeriod::create($start_date, $end_date);
+        $dates = $period->toArray();
+        $collection_of_dates = collect($dates);
+        $count_dates = $period->count();
+
+        $mappedArray = collect(User::all()->where('active', true)->where('role_id', 2))
+        ->map(function ($user) use ($collection_of_dates) {
+
+            $user = $collection_of_dates
+                ->map(function ($date) use ($user) {
+
+                    $date = Carbon::parse($date);
+
+                    $d_date = $date->format('m-d-y');
+
+                    $day = $date->format('l');
+
+                    $punches = Rawbio::where(DB::raw('SUBSTRING(biotext, 1, 6)'), '=',  $user->timecard)
+                        ->where(DB::raw('SUBSTRING(biotext, 7, 6)'), '=', $date->format('mdy')) ?? false;
+
+                    $rawbio = $punches->selectRaw('
+                        SUBSTRING(biotext, 1, 6) AS timecard,
+                        SUBSTRING(biotext, 7, 6) AS date,
+                        SUBSTRING(biotext, 13, 4) AS hour,
+                        SUBSTRING(biotext, 17, 1) AS in_out,
+                        SUBSTRING(biotext, 1, 17) AS text
+                        ')
+                        ->get();
+
+                    return (object) [
+                        'punch' => $rawbio
+                    ];
+                })->toArray();
+
+            return $user;
+        });
+
+        return view('raw_bio_text', [
+
+            'mappedUser' =>  $mappedArray
+
+        ]);
     }
 }
