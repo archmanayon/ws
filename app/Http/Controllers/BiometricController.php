@@ -123,7 +123,8 @@ class BiometricController extends Controller
                         ->get();
 
                     return (object) [
-                        'punch' => $rawbio
+                        'punch' => $rawbio,
+                        'user'  => $user
                     ];
                 })->toArray();
 

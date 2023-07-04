@@ -77,7 +77,13 @@
 
                                         <tr class="bg-gray-700 border-b border-gray-600">
                                             <td class="px-4 py-3">
-                                                {{ $daily->punch->count() }}
+                                                 <a href="rawbio/{{$daily->user->timecard.$daily->punch[0]->date}}" class="font-semibold text-gray-600
+                                                    hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
+                                                    focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
+                                                    {{ $daily->user->name." = ".$daily->punch->count()." | ".
+                                                        $daily->user->timecard.$daily->punch[0]->date}}
+                                                </a>
+
                                             </td>
                                         </tr>
 
