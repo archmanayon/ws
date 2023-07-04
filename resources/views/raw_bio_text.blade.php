@@ -87,7 +87,7 @@
                                             </td>
                                         </tr>
 
-                                        @foreach ($daily->punch as $punch)
+                                        {{-- @foreach ($daily->punch as $punch)
 
                                             @if ($punch)
 
@@ -99,7 +99,7 @@
 
                                             @endif
 
-                                        @endforeach
+                                        @endforeach --}}
 
                                     @endif
 
