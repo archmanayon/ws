@@ -230,7 +230,7 @@
 
                                     @foreach ($updated_bio as $updated_bio)
                                         <tr>
-                                            <td> {{ 'biotext'  }}</td>
+                                            <td> {{ $updated_bio->biotext  }}</td>
                                         </tr>
 
                                     @endforeach
