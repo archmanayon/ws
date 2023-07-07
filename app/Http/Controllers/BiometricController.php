@@ -93,31 +93,16 @@ class BiometricController extends Controller
 
                 $day = $date->format('l');
 
-                $am_in = $day . "_am_in";
-
-                $pm_in = $day . "_pm_in";
-
-                $ten_min_allowance = 0.17;
-                // $ten_min_allowance = 0;
-
 
                 //---to choose between 'official shift' and 'manual shift'
-                $official = app()->call(
-                    ManualShiftController::class . '@official_',
-                    [
-                        'searched_user'     =>  $searched_user,
-                        'date'              =>  $date,
-                        'day'               =>  $day
-                    ]
-                );
+
 
                 //---to extract punch 'object' from bio text files
                 $punches = app()->call(
                     ExtractBioController::class . '@extract_bio_part_two',
                     [
                         'searched_user'     => $searched_user,
-                        'date'              => $date,
-                        'official'          => $official
+                        'date'              => $date
                     ]
                 );
 
