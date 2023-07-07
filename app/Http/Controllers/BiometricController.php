@@ -81,6 +81,60 @@ class BiometricController extends Controller
         return $mappedArray;
     }
 
+    public function text_files_part_2($collection_of_dates, $searched_user, $holiday)
+    {
+
+        $mappedArray = $collection_of_dates
+            ->map(function ($date) use ($searched_user, $holiday) {
+
+                $date = Carbon::parse($date);
+
+                $d_date = $date->format('m-d-y');
+
+                $day = $date->format('l');
+
+                $am_in = $day . "_am_in";
+
+                $pm_in = $day . "_pm_in";
+
+                $ten_min_allowance = 0.17;
+                // $ten_min_allowance = 0;
+
+
+                //---to choose between 'official shift' and 'manual shift'
+                $official = app()->call(
+                    ManualShiftController::class . '@official_',
+                    [
+                        'searched_user'     =>  $searched_user,
+                        'date'              =>  $date,
+                        'day'               =>  $day
+                    ]
+                );
+
+                //---to extract punch 'object' from bio text files
+                $punches = app()->call(
+                    ExtractBioController::class . '@extract_bio_part_two',
+                    [
+                        'searched_user'     => $searched_user,
+                        'date'              => $date,
+                        'official'          => $official
+                    ]
+                );
+
+                // ________________________________________________________
+
+                return (object) [
+                    'user' => $searched_user,
+                    'date'=> $d_date,
+                    'punch' => $punches
+                ];
+
+
+            })->toArray();
+
+        return $mappedArray;
+    }
+
     public function raw_bio_text()
     {
         $holiday = array(

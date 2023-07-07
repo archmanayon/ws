@@ -79,11 +79,15 @@
 
                                             @if ($punch)
 
-                                                <tr class="bg-gray-700 border-b border-gray-600">
-                                                    <td class="px-4 py-3">
-                                                        {{$punch}}
-                                                    </td>
-                                                </tr>
+                                                @foreach ( $punch as $bio)  
+
+                                                    <tr class="bg-gray-700 border-b border-gray-600">
+                                                        <td class="px-4 py-3">
+                                                            {{ $bio->biotext }}
+                                                        </td>
+                                                    </tr>
+
+                                                @endforeach
 
                                             @endif
 

@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
+
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
+
 use App\Models\User;
 use App\Models\ManualShift;
 use App\Models\Shift;
@@ -170,25 +174,47 @@ class UpdateBioController extends Controller
 
                 $in_out = $iteration % 2 == 0 ?"I":"O";
 
-                // if display in arrays only
-                // $new_input[] = $iteration == 0 || $iteration == 2?
-                //                 $str_tc.$str_date.$value."I":
-                //                 $str_tc.$str_date.$value."O";
+                $biotext = $iteration % 2 == 0 ? $str_tc.$str_date.$value."I": $str_tc.$str_date.$value."O";
 
                 $new_input [] = (object) [
 
-                    'bio' => $iteration % 2 == 0 ? $str_tc.$str_date.$value."I": $str_tc.$str_date.$value."O"
+                    'bio' => $biotext
                 ];
+                
 
-                // Update_bio::create([
-                //     'name'      => $searched_user->name,
-                //     'time_card' => $str_tc,
-                //     'date'      => $str_date,
-                //     'hour'      => $value,
-                //     'in_out'    => $in_out,
-                //     'biotext'   => $str_tc.$str_date.$value.$in_out,
-                //     'reason'    => request('reason_bio')
-                // ]);
+                // Additional data to be validated (not from the input form)
+                    $additionalData = [
+                        'biotext' => $biotext,                    
+                    ];
+
+                    // Define validation rules for additional data
+                    $additionalValidationRules = [
+                        'biotext' => 'required|unique:update_bios,biotext',                    
+                    ];
+
+                    // Define custom error messages for additional data
+                    $customErrorMessages = [
+                        'biotext.required'   => 'Biotext field is required.',
+                        'biotext.unique'     => 'Double Entry'
+                    ];
+                                
+                    // Create a new Validator instance and validate the additional data
+                    $validator = Validator::make($additionalData, $additionalValidationRules,$customErrorMessages);
+
+                    if ($validator->fails()) {
+                        return redirect()->back()->withErrors($validator)->withInput();
+                    }
+                // ____________________
+                
+                Update_bio::create([
+                    'name'      => $searched_user->name,
+                    'time_card' => $str_tc,
+                    'date'      => $str_date,
+                    'hour'      => $value,
+                    'in_out'    => $in_out,
+                    'biotext'   => $str_tc.$str_date.$value.$in_out,
+                    'reason'    => request('reason_bio')
+                ]);
 
                 $iteration ++;
             }

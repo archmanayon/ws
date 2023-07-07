@@ -201,6 +201,16 @@
                         </table>
 
                         <br>
+                        {{-- display errors here --}}
+                        @if($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach($errors->all() as $error)
+                                        <li class="text-red-400 text-xs">{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
 
                         <table class="rounded-t-lg m-5 w-5/6 mx-auto bg-gray-800 text-gray-200">
                             <tr class="text-left border-b border-gray-300 ">
@@ -210,16 +220,30 @@
                                 </th>
 
                             </tr>
-                            @if ($new_input??false)
 
-                                @foreach ($new_input as $new_input)
-                                <tr>
-                                    <td> {{ $new_input->bio ." | ". $loop->index }}</td>
-                                </tr>
+                           
 
-                            @endforeach
+                            @if ($updated_bio??false)
+
+                                @foreach ($updated_bio as $updated_bio)
+                                    <tr>
+                                        <td> {{ $updated_bio->biotext ." | ". $loop->index }}</td>
+                                    </tr>
+
+                                @endforeach
 
                             @endif
+                            
+                            {{-- @if ($new_input??false)
+
+                                @foreach ($new_input as $new_input)
+                                    <tr>
+                                        <td> {{ $new_input->bio ." | ". $loop->index }}</td>
+                                    </tr>
+
+                                @endforeach
+
+                            @endif --}}
 
 
                         </table>
