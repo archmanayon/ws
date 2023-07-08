@@ -45,8 +45,11 @@ class ExtractBioController extends Controller
 
         // ----------------orig bio----------------------------------
 
-        $orig_bio = Biometric::where(DB::raw('SUBSTRING(biotext, 1, 6)'), '=',  $searched_user->timecard)
-                        ->where(DB::raw('SUBSTRING(biotext, 7, 6)'), '=', $date->format('mdy'))??false;
+        // $orig_bio = Biometric::where(DB::raw('SUBSTRING(biotext, 1, 6)'), '=',  $searched_user->timecard)
+        //                 ->where(DB::raw('SUBSTRING(biotext, 7, 6)'), '=', $date->format('mdy'))??false;
+        
+        $orig_bio = Rawbio::where(DB::raw('SUBSTRING(biotext, 1, 6)'), '=',  $searched_user->timecard)
+                        ->where(DB::raw('SUBSTRING(biotext, 7, 6)'), '=', $date->format('mdy'))??false;                        
 
         $sub_orig_bio = $orig_bio->selectRaw
             ('
@@ -149,7 +152,8 @@ class ExtractBioController extends Controller
 
         return (object) [
 
-            'all_bio_punches' => $all_bio_punches
+            'all_bio_punches' => $all_bio_punches,
+            'orig_raw_bio'      => $sub_orig_bio
         ];
     }
 

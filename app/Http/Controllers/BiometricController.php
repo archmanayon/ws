@@ -93,9 +93,7 @@ class BiometricController extends Controller
 
                 $day = $date->format('l');
 
-
                 //---to choose between 'official shift' and 'manual shift'
-
 
                 //---to extract punch 'object' from bio text files
                 $punches = app()->call(

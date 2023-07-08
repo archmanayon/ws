@@ -85,6 +85,7 @@
                                                 </a>
 
                                             </td>
+                                            
                                         </tr>
 
                                         {{-- @foreach ($daily->punch as $punch)
