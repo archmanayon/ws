@@ -214,14 +214,14 @@
                     <div class="bg-white m-5 dark:bg-gray-800 shadow-sm sm:rounded-lg p-4">
 
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                        {{ $searched_user->name }}
+                        {{-- {{ $searched_user->name }} --}}
                             {{-- display errors here --}}                            
 
-                            <table class="rounded-t-lg m-5 w-5/6 mx-auto bg-gray-800 text-gray-200">
+                            <table class="bg-gray-800 rounded-t-lg text-gray-200">
                                 <tr class="text-left border-b border-gray-300 ">
 
-                                    <th class="px-4 py-3">
-                                        {{  $bio_date.' | '. $bio_day->format('l') }}
+                                    <th class="px-6">
+                                        {{  $bio_day->format('l') }}
                                     </th>
 
                                 </tr>
@@ -229,7 +229,7 @@
                                 @if ($updated_bio??false)
 
                                     @foreach ($updated_bio as $updated_bio)
-                                        <tr>
+                                        <tr class="text-lg">
                                             <td> {{ $updated_bio->biotext  }}</td>
                                         </tr>
 
