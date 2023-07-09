@@ -177,6 +177,35 @@
 
                             </tr>
 
+                            {{-- SOURCE --}}
+                            <tr>
+                                <td></td>
+                                <td class="block dark:bg-gray-700 mt-1 rounded-md shadow-sm">
+                                    @php
+                                        $options = [
+                                            'Bio'   => 1,
+                                            'Sl'    => 2,
+                                            'Vl'    => 3,
+                                            'El'    => 4,
+                                            'MP'    => 5,
+                                            'DO'    => 6,
+                                            'dtr'   => 7,
+                                            'list'  => 8,
+                                            'oth'   => 9
+                                        ];
+                                    @endphp
+
+                                    <select name="punch" class="border-transparent dark:bg-gray-700 dark:text-gray-300">
+                                        <option value="">Select an option</option>
+                                        @foreach ($options as $label => $value)
+                                            <option value="{{ $value }}">{{ $label }}</option>
+                                        @endforeach
+                                    </select>
+
+                                </td>
+
+                            </tr>
+
                                 <tr>
                                     <td></td>
                                     <td>
@@ -190,7 +219,9 @@
                                 <tr>
                                     <td></td>
                                     <td>
-                                        <button type="submit" name="save_new" value="save_new">Update Bio</button>
+                                        <div class="mt-2 py-6">
+                                        <button  class="borde" type="submit" name="save_new" value="save_new">Update Bio</button>
+                                        </div>
                                     </td>
                                 </tr>
 
@@ -215,7 +246,7 @@
 
                         <div class="p-6 text-gray-900 dark:text-gray-100">
                         {{-- {{ $searched_user->name }} --}}
-                            {{-- display errors here --}}                            
+                            {{-- display errors here --}}
 
                             <table class="bg-gray-800 rounded-t-lg text-gray-200">
                                 <tr class="text-left border-b border-gray-300 ">
