@@ -106,16 +106,15 @@ class BiometricController extends Controller
 
                 // ________________________________________________________
 
-                return (object) [
-                    'user' => $searched_user,
-                    'date'=> $d_date,
-                    'punch' => $punches
-                ];
-
+                return $punches;
 
             })->toArray();
 
-        return $mappedArray;
+        return (object) [
+            
+            'punches' => $mappedArray
+        ];
+
     }
 
     public function raw_bio_text()

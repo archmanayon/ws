@@ -24,7 +24,7 @@ class UpdateBioController extends Controller
 {
     public function new_bio($bio){
 
-        $bio_daily_array = Biometric::where(DB::raw('SUBSTRING(biotext, 1, 12)'),'=',$bio);
+        $bio_daily_array = Rawbio::where(DB::raw('SUBSTRING(biotext, 1, 12)'),'=',$bio);
         $all_bio_punches = $bio_daily_array->selectRaw
             ('
                 SUBSTRING(biotext, 1, 6) AS timecard,
@@ -180,16 +180,16 @@ class UpdateBioController extends Controller
 
                     'bio' => $biotext
                 ];
-                
+
 
                 // Additional data to be validated (not from the input form)
                     $additionalData = [
-                        'biotext' => $biotext,                    
+                        'biotext' => $biotext,
                     ];
 
                     // Define validation rules for additional data
                     $additionalValidationRules = [
-                        'biotext' => 'required|unique:update_bios,biotext',                    
+                        'biotext' => 'required|unique:update_bios,biotext',
                     ];
 
                     // Define custom error messages for additional data
@@ -197,7 +197,7 @@ class UpdateBioController extends Controller
                         'biotext.required'   => 'Biotext field is required.',
                         'biotext.unique'     => 'Double Entry'
                     ];
-                                
+
                     // Create a new Validator instance and validate the additional data
                     $validator = Validator::make($additionalData, $additionalValidationRules,$customErrorMessages);
 
@@ -205,7 +205,7 @@ class UpdateBioController extends Controller
                         return redirect()->back()->withErrors($validator)->withInput();
                     }
                 // ____________________
-                
+
                 Update_bio::create([
                     'name'      => $searched_user->name,
                     'time_card' => $str_tc,

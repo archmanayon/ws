@@ -71,23 +71,19 @@
 
                             @foreach ( $mappedUser as $each_user)
 
-                                @foreach ( $each_user as $daily)
+                                @foreach ( $each_user->punches as $daily)
 
                                     @if ($daily)
 
-                                        @foreach ($daily->punch as $punch)
+                                        @foreach ($daily->processed_punch as $punch)
 
                                             @if ($punch)
 
-                                                @foreach ( $punch as $bio)  
-
-                                                    <tr class="bg-gray-700 border-b border-gray-600">
-                                                        <td class="px-4 py-3">
-                                                            {{ $bio->biotext }}
-                                                        </td>
-                                                    </tr>
-
-                                                @endforeach
+                                                <tr class="bg-gray-700 border-b border-gray-600">
+                                                    <td class="px-4 py-3">
+                                                        {{ $punch->biotext }}
+                                                    </td>
+                                                </tr>
 
                                             @endif
 
