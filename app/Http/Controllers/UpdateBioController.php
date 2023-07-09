@@ -152,9 +152,9 @@ class UpdateBioController extends Controller
             ]
             ,
             [
-                'new_bio.*.string' => 'The name field must be a string.',
-                'new_bio.*.min' => 'The name field may be lesser than :min characters.',
-                'new_bio.*.max' => 'The name field may be greater than :max characters.',
+                'new_bio.*.string' => 'Must be a string.',
+                'new_bio.*.min' => 'HOUR string may be lesser than :min characters.',
+                'new_bio.*.max' => 'HOUR string may be greater than :max characters.',
 
             ]
         );
