@@ -259,24 +259,12 @@
 
                                     @foreach ($updated_bio as $updated_bio)
                                         <tr>
-                                            <td> {{ 'biotext'  }}</td>
+                                            <td> {{ $updated_bio->biotext  }}</td>
                                         </tr>
 
                                     @endforeach
 
                                 @endif
-
-                                {{-- @if ($new_input??false)
-
-                                    @foreach ($new_input as $new_input)
-                                        <tr>
-                                            <td> {{ $new_input->bio ." | ". $loop->index }}</td>
-                                        </tr>
-
-                                    @endforeach
-
-                                @endif --}}
-
 
                             </table>
 
