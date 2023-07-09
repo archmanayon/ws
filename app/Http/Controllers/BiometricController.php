@@ -10,6 +10,7 @@ use App\Models\Punch;
 use App\Models\Schedule;
 use App\Models\Biometric;
 use App\Models\Rawbio;
+use App\Models\Update_bio;
 
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
@@ -111,7 +112,7 @@ class BiometricController extends Controller
             })->toArray();
 
         return (object) [
-            
+
             'punches' => $mappedArray
         ];
 
@@ -158,9 +159,15 @@ class BiometricController extends Controller
                         ')
                         ->get();
 
+                        // ----------------Updated bio ----------------------------------
+
+                        $updated_bio = Update_bio::where('time_card', $user->timecard)
+                            ->where('date', $d_date)->get();
+
                     return (object) [
-                        'punch' => $rawbio,
-                        'user'  => $user
+                        'punch'        => $rawbio,
+                        'updated_bio'  => $updated_bio,
+                        'user'         => $user
                     ];
                 })->toArray();
 
