@@ -24,7 +24,7 @@
         <form method="POST" action="{{ $str_tc.$str_date }}" >
             @csrf
 
-            <div class="">
+            <div class="container">
                 <div class="grid grid-cols-3">
                     {{-- 1st column --}}
                     <div class="bg-white m-5 dark:bg-gray-800 shadow-sm sm:rounded-lg p-4">
@@ -86,98 +86,98 @@
                     <div class="bg-white m-5 dark:bg-gray-800 shadow-sm sm:rounded-lg p-4">
 
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                        {{ $searched_user->name }}
+                            {{ $searched_user->name }}
 
                             <table class="rounded-t-lg m-5 w-5/6 mx-auto bg-gray-800 text-gray-200">
                                 <tr class="text-left border-b border-gray-300">
-                                    <th class="px-4"></th>
-                                    <th class="px-4">
+                                    <th></th>
+                                    <th class="px-4 py-3">
                                         {{  "DATE:".$bio_date }}
                                     </th>
                                 </tr>
 
                                 {{-- am in --}}
-                            <tr>
-                                <td class="text-lg"> <x-input-label for="new_am_in" :value="__('AM In')" /> </td>
-                                <td>
+                                <tr>
+                                    <td class="text-lg"> <x-input-label for="new_am_in" :value="__('AM In')" /> </td>
+                                    <td>
 
-                                    <x-text-input  id="new_am_in" class="block mt-1" type="text"
-                                        {{-- value="{{ old('new_bio.0')?:($pref_bio[0]->hour??false) }}" --}}
-                                        placeholder="{{ $official->am_in??false }}"
-                                        name="new_bio[]"  autofocus autocomplete="{{ ($pref_bio[0]->hour??false )}}" />
-                                    <x-input-error :messages="$errors->get('new_bio.0')" class="mt-2" />
-
-
-                                </td>
-
-                                <td>
-                                    {{ $updated_bio[0]->hour??false }}<br>
-
-                                </td>
+                                        <x-text-input  id="new_am_in" class="block mt-1" type="text"
+                                            value="{{ old('new_bio.0')??false }}"
+                                            placeholder="{{ $official->am_in??false }}"
+                                            name="new_bio[0]" autofocus autocomplete="{{ ($pref_bio[0]->hour??false )}}" />
+                                        <x-input-error :messages="$errors->get('new_bio.0')" class="mt-2" />
 
 
-                            </tr>
+                                    </td>
 
-                            {{-- am out --}}
-                            <tr>
-                                <td class="text-lg"> <x-input-label for="new_am_out" :value="__('AM Out')" /> </td>
-                                <td>
+                                    <td>
+                                        {{ $updated_bio[0]->hour??false }}<br>
 
-                                    <x-text-input  id="new_am_out" class="block mt-1" type="text"
-                                        {{-- value="{{ old('new_bio.1')?:$pref_bio[1]->hour??false }}" --}}
-                                        placeholder="{{ $official->am_out??false }}"
-                                        name="new_bio[]"  autofocus autocomplete="{{ $pref_bio[0]->hour??false }}" />
-                                    <x-input-error :messages="$errors->get('new_bio.1')" class="mt-2" />
-
-                                </td>
-                                <td>
-                                    {{ $updated_bio[1]->hour??false }}
-                                </td>
-
-                            </tr>
-
-                            {{-- pm in --}}
-                            <tr>
-                                <td class="text-lg"> <x-input-label for="new_pm_in" :value="__('PM In')" /> </td>
-                                <td>
-
-                                    <x-text-input  id="new_pm_in" class="block mt-1" type="text"
-                                        {{-- value="{{ old('new_bio.2')?:$pref_bio[2]->hour??$pref_bio[0]->hour??false }}" --}}
-                                        placeholder="{{ $official->pm_in??false }}"
-                                        name="new_bio[]" autofocus autocomplete="{{ $pref_bio[2]->hour??false }}" />
-                                    <x-input-error :messages="$errors->get('new_bio.2')" class="mt-2" />
-
-                                </td>
-                                <td>
-                                    {{ $updated_bio[2]->hour??false }}
-
-                                </td>
+                                    </td>
 
 
-                            </tr>
+                                </tr>
 
-                            {{-- pm out --}}
-                            <tr>
-                                <td class="text-lg"> <x-input-label for="new_pm_out" :value="__('PM Out')" /> </td>
-                                <td>
+                                {{-- am out --}}
+                                <tr>
+                                    <td class="text-lg"> <x-input-label for="new_am_out" :value="__('AM Out')" /> </td>
+                                    <td>
 
-                                    <x-text-input  id="new_pm_out" class="block mt-1" type="text"
-                                        {{-- value="{{ old('new_bio.3')?:$pref_bio[3]->hour??($pref_bio[2]->hour??false?'':'') }}" --}}
-                                        {{-- placeholder="{{ $pref_bio[3]->hour??$official->pm_out??
-                                                        $pref_bio[2]->hour??$pref_bio[1]->hour??false }}" --}}
-                                        placeholder="{{ $official->pm_out??false }}"
-                                        name="new_bio[]" autofocus autocomplete="{{ $pref_bio[3]->hour??false }}" />
-                                    <x-input-error :messages="$errors->get('new_bio.3')" class="mt-2" />
+                                        <x-text-input  id="new_am_out" class="block mt-1" type="text"
+                                            value="{{ old('new_bio.1')??false }}"
+                                            placeholder="{{ $official->am_out??false }}"
+                                            name="new_bio[1]" autofocus autocomplete="{{ $pref_bio[0]->hour??false }}" />
+                                        <x-input-error :messages="$errors->get('new_bio.1')" class="mt-2" />
 
-                                </td>
-                                <td>
-                                    {{ $updated_bio[3]->hour??false }}
+                                    </td>
+                                    <td>
+                                        {{ $updated_bio[1]->hour??false }}
+                                    </td>
 
-                                </td>
+                                </tr>
 
-                            </tr>
+                                {{-- pm in --}}
+                                <tr>
+                                    <td class="text-lg"> <x-input-label for="new_pm_in" :value="__('PM In')" /> </td>
+                                    <td>
 
-                            {{-- SOURCE --}}
+                                        <x-text-input  id="new_pm_in" class="block mt-1" type="text"
+                                            value="{{ old('new_bio.2')??false }}"
+                                            placeholder="{{ $official->pm_in??false }}"
+                                            name="new_bio[2]" autofocus autocomplete="{{ $pref_bio[2]->hour??false }}" />
+                                        <x-input-error :messages="$errors->get('new_bio.2')" class="mt-2" />
+
+                                    </td>
+                                    <td>
+                                        {{ $updated_bio[2]->hour??false }}
+
+                                    </td>
+
+
+                                </tr>
+
+                                {{-- pm out --}}
+                                <tr>
+                                    <td class="text-lg"> <x-input-label for="new_pm_out" :value="__('PM Out')" /> </td>
+                                    <td>
+
+                                        <x-text-input  id="new_pm_out" class="block mt-1" type="text"
+                                            value="{{ old('new_bio.3')??false }}"
+                                            {{-- placeholder="{{ $pref_bio[3]->hour??$official->pm_out??
+                                                            $pref_bio[2]->hour??$pref_bio[1]->hour??false }}" --}}
+                                            placeholder="{{ $official->pm_out??false }}"
+                                            name="new_bio[3]" autofocus autocomplete="{{ $pref_bio[3]->hour??false }}" />
+                                        <x-input-error :messages="$errors->get('new_bio.3')" class="mt-2" />
+
+                                    </td>
+                                    <td>
+                                        {{ $updated_bio[3]->hour??false }}
+
+                                    </td>
+
+                                </tr>
+
+                                {{-- SOURCE --}}
                             <tr>
                                 <td></td>
                                 <td class="block dark:bg-gray-700 mt-1 rounded-md shadow-sm">
@@ -219,14 +219,23 @@
                                 <tr>
                                     <td></td>
                                     <td>
-                                        <div class="mt-2 py-6">
-                                        <button  class="borde" type="submit" name="save_new" value="save_new">Update Bio</button>
-                                        </div>
+                                        <button type="submit" name="save_new" value="save_new">Update Bio</button>
                                     </td>
                                 </tr>
 
                             </table>
 
+                        </div>
+
+                    </div>
+
+                    {{-- 3rd column --}}
+                    <div class="bg-white m-5 dark:bg-gray-800 shadow-sm sm:rounded-lg p-4">
+
+
+                        <div class="p-6 text-gray-900 dark:text-gray-100">
+                            {{ $searched_user->name }}
+                            {{-- display errors here --}}
                             @if($errors->any())
                                 <div class="alert alert-danger">
                                     <ul>
@@ -237,22 +246,11 @@
                                 </div>
                             @endif
 
-                        </div>
-
-                    </div>
-
-                    {{-- 3rd column --}}
-                    <div class="bg-white m-5 dark:bg-gray-800 shadow-sm sm:rounded-lg p-4">
-
-                        <div class="p-6 text-gray-900 dark:text-gray-100">
-                        {{-- {{ $searched_user->name }} --}}
-                            {{-- display errors here --}}
-
-                            <table class="bg-gray-800 rounded-t-lg text-gray-200">
+                            <table class="rounded-t-lg m-5 w-5/6 mx-auto bg-gray-800 text-gray-200">
                                 <tr class="text-left border-b border-gray-300 ">
 
-                                    <th class="px-6">
-                                        {{  $bio_day->format('l') }}
+                                    <th class="px-4 py-3">
+                                        {{  $bio_date.' | '. $bio_day->format('l') }}
                                     </th>
 
                                 </tr>
@@ -260,8 +258,8 @@
                                 @if ($updated_bio??false)
 
                                     @foreach ($updated_bio as $updated_bio)
-                                        <tr class="text-lg">
-                                            <td> {{ $updated_bio->biotext  }}</td>
+                                        <tr>
+                                            <td> {{ 'biotext'  }}</td>
                                         </tr>
 
                                     @endforeach
