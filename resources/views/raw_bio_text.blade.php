@@ -63,10 +63,10 @@
                     <div class="p-6 text-gray-900 dark:text-gray-100 border">
                         {{-- <p class="text-lg text-center font-bold m-5">Dark Table Design</p> --}}
                             <table class="rounded-t-lg m-5 w-5/6 mx-auto bg-gray-800 text-gray-200">
-                                <tr class="text-left border-b border-gray-300">
-                                    <th class="px-4 py-3">Raw Bio Text Files
+                                <tr class="border text-left border-b border-gray-300">
+                                    <th class="border-r px-4 py-3">Raw Bio Text Files
                                     </th>
-                                    <th class="px-4 py-3">Updated Bio Text Files
+                                    <th class="">Updated Bio Text Files
                                     </th>
 
                                 </tr>
@@ -77,37 +77,34 @@
 
                                         @if ($daily && $daily->punch->count()>=5)
 
-                                            <tr class="bg-gray-700 border-b border-gray-600">
+                                            <tr class="border bg-gray-700 border-b border-gray-600">
 
                                                 @if ($daily->updated_bio[0]->date??false )
 
-                                                    <td class="px-4 py-3">
+                                                    <td class="border-r py-3">
 
-                                                        {{ $daily->user->name." = ".$daily->punch->count().'</br>'.
-                                                            $daily->punch[0]->date." = ".$daily->punch[0]->hour}}
+                                                        {{ $daily->user->name." = ".$daily->punch->count()."| ".
+                                                        $daily->punch[0]->date." | ".$daily->punch[0]->hour}}
 
                                                     </td>
 
-                                                    <td class="px-4 py-3">
-                                                        {{ $daily->updated_bio[0]->name." = ".$daily->updated_bio->count().'</br>'.
-                                                            $daily->updated_bio[0]->date." = ".$daily->updated_bio[0]->hour}}
+                                                    <td class="py-3">
+                                                        {{ $daily->updated_bio[0]->name." = ".$daily->updated_bio->count()."| ".
+                                                        $daily->updated_bio[0]->date." | ".$daily->updated_bio[0]->hour}}
                                                     </td
                                                 @else
 
-                                                    <td>
+                                                    <td class="border-r py-3">                                                        
+                                                            {{ $daily->user->name." = ".$daily->punch->count()."| ".$daily->punch[0]->date}}
+                                                    </td>
 
-                                                        <a href="rawbio/{{$daily->user->timecard.$daily->punch[0]->date}}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
-                                                            {{ $daily->user->name." = ".$daily->punch->count()." | ".$daily->user->timecard.$daily->punch[0]->date}}
-
+                                                    <td class="border-r py-3">
+                                                        
+                                                        <a href="rawbio/{{$daily->user->timecard.$daily->punch[0]->date}}" class=" border-r font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
+                                                            {{ "Update!"}}
                                                         </a>
                                                     </td>
 
-                                                @endif
-
-                                                @if ($daily->updated_bio??false)
-                                                    <td class="px-4 py-3">
-                                                        {{ $daily->updated_bio[0]->date??false }}
-                                                    </td>
                                                 @endif
 
                                             </tr>
