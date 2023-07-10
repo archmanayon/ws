@@ -135,10 +135,10 @@ class BiometricController extends Controller
         $collection_of_dates = collect($dates);
         $count_dates = $period->count();
 
-        $mappedArray = collect(User::all()->where('active', true)->where('role_id', 2))
+        $mappedUsers = collect(User::all()->where('active', true)->where('role_id', 2))
         ->map(function ($user) use ($collection_of_dates) {
 
-            $user = $collection_of_dates
+            $mapped_dates = $collection_of_dates
                 ->map(function ($date) use ($user) {
 
                     $date = Carbon::parse($date);
@@ -157,26 +157,27 @@ class BiometricController extends Controller
                         SUBSTRING(biotext, 17, 1) AS in_out,
                         SUBSTRING(biotext, 1, 17) AS text
                         ')
-                        ->get();
+                    ->get();
 
-                        // ----------------Updated bio ----------------------------------
+                    // ----------------Updated bio ----------------------------------
 
-                        $updated_bio = Update_bio::where('time_card', $user->timecard)
-                            ->where('date', $d_date)->get();
+                    $updated_bio = Update_bio::where('time_card', $user->timecard)
+                        ->where('date', $d_date)->get();
 
                     return (object) [
                         'punch'        => $rawbio,
-                        'updated_bio'  => $updated_bio,
+                        'updated_bio'  => $updated_bio??false,
                         'user'         => $user
                     ];
+
                 })->toArray();
 
-            return $user;
+            return $mapped_dates;
         });
 
         return view('raw_bio_text', [
 
-            'mappedUser' =>  $mappedArray
+            'mappedUser' =>  $mappedUsers
 
         ]);
     }

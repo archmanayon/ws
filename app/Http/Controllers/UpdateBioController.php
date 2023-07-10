@@ -148,7 +148,9 @@ class UpdateBioController extends Controller
         $searched_user  = User::where('timecard',  $str_tc)->get()[0];
 
         $validated_new_bio = $request->validate([
-                'new_bio.*' => 'nullable|string|min:4|max:4'
+                'new_bio.*' => 'nullable|string|min:4|max:4',
+                'punch_source' => 'required',
+                'reason_bio' => 'required|max:255'
             ]
             ,
             [

@@ -24,7 +24,7 @@
         <form method="POST" action="{{ $str_tc.$str_date }}" >
             @csrf
 
-            <div class="container">
+            
                 <div class="grid grid-cols-3">
                     {{-- 1st column --}}
                     <div class="bg-white m-5 dark:bg-gray-800 shadow-sm sm:rounded-lg p-4">
@@ -195,7 +195,7 @@
                                         ];
                                     @endphp
 
-                                    <select name="punch" class="border-transparent dark:bg-gray-700 dark:text-gray-300">
+                                    <select name="punch_source" class="border-transparent dark:bg-gray-700 dark:text-gray-300">
                                         <option value="">Select an option</option>
                                         @foreach ($options as $label => $value)
                                             <option value="{{ $value }}">{{ $label }}</option>
@@ -272,7 +272,7 @@
 
                     </div>
                 </div>
-            </div>
+            
 
 
         </form>

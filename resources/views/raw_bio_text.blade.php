@@ -58,58 +58,66 @@
 
                 </div>
 
-                <div class="p-6 text-gray-900 dark:text-gray-100 border">
+                <div class="grid grid-cols-2">
+                    {{-- 1st column --}}
+                    <div class="p-6 text-gray-900 dark:text-gray-100 border">
+                        {{-- <p class="text-lg text-center font-bold m-5">Dark Table Design</p> --}}
+                            <table class="rounded-t-lg m-5 w-5/6 mx-auto bg-gray-800 text-gray-200">
+                                <tr class="text-left border-b border-gray-300">
+                                    <th class="px-4 py-3">textfile
+                                    </th>
 
-                    <p class="text-lg text-center font-bold m-5">Dark Table Design</p>
+                                </tr>
 
-                        <table class="rounded-t-lg m-5 w-5/6 mx-auto bg-gray-800 text-gray-200">
-                            <tr class="text-left border-b border-gray-300">
-                                <th class="px-4 py-3">textfile
-                                </th>
+                                @foreach ( $mappedUser as $each_user => $daily)
 
-                            </tr>
+                                    @foreach ( $daily as $daily)
 
-                            @foreach ( $mappedUser as $each_user)
+                                        @if ($daily && $daily->punch->count()>=5)
 
-                                @foreach ( $each_user as $daily)
+                                            <tr class="bg-gray-700 border-b border-gray-600">
+                                                <td class="px-4 py-3">
+                                                    <a href="rawbio/{{$daily->user->timecard.$daily->punch[0]->date}}" class="font-semibold text-gray-600
+                                                        hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
+                                                        focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
+                                                        {{ $daily->user->name." = ".$daily->punch->count()." | ".
+                                                            $daily->user->timecard.$daily->punch[0]->date}}
+                                                    </a>
 
-                                    @if ($daily && $daily->punch->count()>=5)
+                                                </td>
+                                                <td class="px-4 py-3">
+                                                    {{ $daily->updated_bio[0]??false }}
+                                                </td>
+                                                
+                                            </tr>
 
-                                        <tr class="bg-gray-700 border-b border-gray-600">
-                                            <td class="px-4 py-3">
-                                                 <a href="rawbio/{{$daily->user->timecard.$daily->punch[0]->date}}" class="font-semibold text-gray-600
-                                                    hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
-                                                    focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
-                                                    {{ $daily->user->name." = ".$daily->punch->count()." | ".
-                                                        $daily->user->timecard.$daily->punch[0]->date}}
-                                                </a>
+                                            {{-- @foreach ($daily->punch as $punch)
 
-                                            </td>
-                                            
-                                        </tr>
+                                                @if ($punch)
 
-                                        {{-- @foreach ($daily->punch as $punch)
+                                                    <tr class="bg-gray-700 border-b border-gray-600">
+                                                        <td class="px-4 py-3">
+                                                            {{$punch->timecard." | ". $punch->date." | ". $punch->text}}
+                                                        </td>
+                                                    </tr>
 
-                                            @if ($punch)
+                                                @endif
 
-                                                <tr class="bg-gray-700 border-b border-gray-600">
-                                                    <td class="px-4 py-3">
-                                                        {{$punch->timecard." | ". $punch->date." | ". $punch->text}}
-                                                    </td>
-                                                </tr>
+                                            @endforeach --}}
 
-                                            @endif
+                                        @endif
 
-                                        @endforeach --}}
-
-                                    @endif
+                                    @endforeach
 
                                 @endforeach
 
-                            @endforeach
+                            </table>
 
-                        </table>
+                    </div>
 
+                    {{-- 2nd column --}}
+                    <div class="p-6 text-gray-900 dark:text-gray-100 border">
+                    </div>
                 </div>
 
             </div>
