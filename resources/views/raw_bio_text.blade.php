@@ -64,7 +64,9 @@
                         {{-- <p class="text-lg text-center font-bold m-5">Dark Table Design</p> --}}
                             <table class="rounded-t-lg m-5 w-5/6 mx-auto bg-gray-800 text-gray-200">
                                 <tr class="text-left border-b border-gray-300">
-                                    <th class="px-4 py-3">textfile
+                                    <th class="px-4 py-3">Raw Bio Text Files
+                                    </th>
+                                    <th class="px-4 py-3">Updated Bio Text Files
                                     </th>
 
                                 </tr>
@@ -81,13 +83,13 @@
 
                                                     <td class="px-4 py-3">
 
-                                                        {{ $daily->user->name." = ".$daily->punch->count()." | ".
-                                                            $daily->user->date." = ".$daily->punch[0]->hour}}
+                                                        {{ $daily->user->name." = ".$daily->punch->count().'</br>'.
+                                                            $daily->punch[0]->date." = ".$daily->punch[0]->hour}}
 
                                                     </td>
 
                                                     <td class="px-4 py-3">
-                                                        {{ $daily->updated_bio[0]->name." = ".$daily->updated_bio->count()." | ".
+                                                        {{ $daily->updated_bio[0]->name." = ".$daily->updated_bio->count().'</br>'.
                                                             $daily->updated_bio[0]->date." = ".$daily->updated_bio[0]->hour}}
                                                     </td
                                                 @else
