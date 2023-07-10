@@ -85,9 +85,12 @@
                                                     </a>
 
                                                 </td>
-                                                <td class="px-4 py-3">
-                                                    {{ $daily->updated_bio[0]??false }}
-                                                </td>
+                                                @if ($daily->updated_bio??false)
+                                                    <td class="px-4 py-3">
+                                                        {{ $daily->updated_bio[0]->date??false }}
+                                                    </td>
+                                                @endif
+                                                
                                                 
                                             </tr>
 
@@ -117,6 +120,38 @@
 
                     {{-- 2nd column --}}
                     <div class="p-6 text-gray-900 dark:text-gray-100 border">
+                        <table class="rounded-t-lg m-5 w-5/6 mx-auto bg-gray-800 text-gray-200">
+                            <tr class="text-left border-b border-gray-300">
+                                <th class="px-4 py-3">textfile
+                                </th>
+
+                            </tr>
+
+                            @foreach ( $mappedUser as $each_user => $daily)
+
+                                @foreach ( $daily as $daily)
+
+                                    @if ($daily && $daily->punch->count()>=5)
+
+                                        <tr class="bg-gray-700 border-b border-gray-600">
+                                            @if ($daily->updated_bio)
+
+                                                <td>
+                                                    {{ $daily->updated_bio[0] }}
+                                                </td>  
+                                                
+                                            @endif
+                                                                             
+                                            
+                                        </tr>                                       
+
+                                    @endif
+
+                                @endforeach
+
+                            @endforeach
+
+                        </table>
                     </div>
                 </div>
 

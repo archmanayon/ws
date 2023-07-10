@@ -143,7 +143,7 @@ class BiometricController extends Controller
 
                     $date = Carbon::parse($date);
 
-                    $d_date = $date->format('m-d-y');
+                    $d_date = $date->format('mdy');
 
                     $day = $date->format('l');
 
@@ -161,8 +161,7 @@ class BiometricController extends Controller
 
                     // ----------------Updated bio ----------------------------------
 
-                    $updated_bio = Update_bio::where('time_card', $user->timecard)
-                        ->where('date', $d_date)->get();
+                    $updated_bio = $user->update_bios->where('date', $d_date);
 
                     return (object) [
                         'punch'        => $rawbio,
