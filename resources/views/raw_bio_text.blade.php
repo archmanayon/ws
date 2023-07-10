@@ -82,24 +82,23 @@
                                                     <td class="px-4 py-3">
 
                                                         {{ $daily->user->name." = ".$daily->punch->count()." | ".
-                                                            $daily->user->date." = ".$$daily->punch[0]->hour}}
+                                                            $daily->user->date." = ".$daily->punch[0]->hour}}
 
                                                     </td>
 
                                                     <td class="px-4 py-3">
                                                         {{ $daily->updated_bio[0]->name." = ".$daily->updated_bio->count()." | ".
-                                                            $daily->updated_bio[0]->date." = ".$$daily->updated_bio[0]->hour}}
+                                                            $daily->updated_bio[0]->date." = ".$daily->updated_bio[0]->hour}}
                                                     </td
                                                 @else
 
-                                                    <td class="px-4 py-3">
+                                                    <td>
 
-                                                        <a href="rawbio/{{$daily->user->timecard.$daily->punch[0]->date}}" class="font-semibold text-gray-600
-                                                            hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
-                                                            focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
-                                                            {{ $daily->user->name." = ".$daily->punch->count()." | ".
-                                                                $daily->user->timecard.$daily->punch[0]->date}}
+                                                        <a href="rawbio/{{$daily->user->timecard.$daily->punch[0]->date}}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
+                                                            {{ $daily->user->name." = ".$daily->punch->count()." | ".$daily->user->timecard.$daily->punch[0]->date}}
+
                                                         </a>
+                                                    </td>
 
                                                 @endif
 
