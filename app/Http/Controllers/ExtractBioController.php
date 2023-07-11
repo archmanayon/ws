@@ -131,13 +131,14 @@ class ExtractBioController extends Controller
                         ->where(DB::raw('SUBSTRING(biotext, 7, 6)'), '=', $date->format('mdy'))??false;
 
         $sub_orig_bio = $orig_bio->selectRaw
-            ('
+            (
+            '
                 SUBSTRING(biotext, 7, 6) AS date,
                 SUBSTRING(biotext, 13, 4) AS hour,
                 SUBSTRING(biotext, 17, 1) AS in_out,
-                SUBSTRING(biotext, 1, 17) AS biotext
+                SUBSTRING(biotext, 1, 17) AS biotext,
+                SUBSTRING(punchtype_id, 1,1) AS punchtype_id
                 ');
-
 
         if($sub_updated_bio->pluck('date')->contains( $date->format('mdy')))
         {
