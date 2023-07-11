@@ -106,11 +106,11 @@
                                                             <div class="inline-block flex-shrink-0"> {{ $bio->hour }}</div>
                                                             <div class="inline-block pl-3 flex-shrink-0"> {{ $bio->in_out }}</div>
                                                             <div class="inline-block pl-3 flex-shrink-0">
-                                                                <a href="update_bio/{{ $daily->user->timecard.$daily->bio_daily_array}}"> {{ 'update' }} </a>
+                                                                <a href="rawbio/{{ $daily->user->timecard.$daily->bio_daily_array}}"> {{ 'update' }} </a>
                                                             </div> <br>
                                                         @endforeach
                                                         <div class="inline-block pl-8 flex-shrink-0">
-                                                            <a href="update_bio/{{ $daily->user->timecard.$daily->bio_daily_array}}">
+                                                            <a href="rawbio/{{ $daily->user->timecard.$daily->bio_daily_array}}">
                                                                 {{ $daily->all_bio_punches[0] ?? false ? '': 'no punch'}}
                                                             </a>
                                                         </div>
@@ -155,11 +155,11 @@
                                                                     <div class="inline-block flex-shrink-0"> {{ $bio->hour }}</div>
                                                                     <div class="inline-block pl-3 flex-shrink-0"> {{ $bio->in_out }}</div>
                                                                     <div class="inline-block pl-3 flex-shrink-0">
-                                                                        <a href="update_bio/{{ $daily->user->timecard.$daily->bio_daily_array}}"> {{ 'update' }} </a>
+                                                                        <a href="rawbio/{{ $daily->user->timecard.$daily->bio_daily_array}}"> {{ 'update' }} </a>
                                                                     </div> <br>
                                                                 @endforeach
                                                                 <div class="inline-block pl-8 flex-shrink-0">
-                                                                    <a href="update_bio/{{ $daily->user->timecard.$daily->bio_daily_array}}">
+                                                                    <a href="rawbio/{{ $daily->user->timecard.$daily->bio_daily_array}}">
                                                                         {{ $daily->all_bio_punches[0] ?? false ? '': 'no punch'}}
                                                                     </a>
                                                                 </div>
@@ -207,11 +207,11 @@
                                                                     <div class="inline-block flex-shrink-0"> {{ $bio->hour }}</div>
                                                                     <div class="inline-block pl-3 flex-shrink-0"> {{ $bio->in_out }}</div>
                                                                     <div class="inline-block pl-3 flex-shrink-0">
-                                                                        <a href="update_bio/{{ $daily->user->timecard.$daily->bio_daily_array}}"> {{ 'update' }} </a>
+                                                                        <a href="rawbio/{{ $daily->user->timecard.$daily->bio_daily_array}}"> {{ 'update' }} </a>
                                                                     </div> <br>
                                                                 @endforeach
                                                                 <div class="inline-block pl-8 flex-shrink-0">
-                                                                    <a href="update_bio/{{ $daily->user->timecard.$daily->bio_daily_array}}">
+                                                                    <a href="rawbio/{{ $daily->user->timecard.$daily->bio_daily_array}}">
                                                                         {{ $daily->all_bio_punches[0] ?? false ? '': 'no punch'}}
                                                                     </a>
                                                                 </div>
@@ -259,11 +259,11 @@
                                                                     <div class="inline-block flex-shrink-0"> {{ $bio->hour }}</div>
                                                                     <div class="inline-block pl-3 flex-shrink-0"> {{ $bio->in_out }}</div>
                                                                     <div class="inline-block pl-3 flex-shrink-0">
-                                                                        <a href="update_bio/{{ $daily->user->timecard.$daily->bio_daily_array}}"> {{ 'update' }} </a>
+                                                                        <a href="rawbio/{{ $daily->user->timecard.$daily->bio_daily_array}}"> {{ 'update' }} </a>
                                                                     </div> <br>
                                                                 @endforeach
                                                                 <div class="inline-block pl-8 flex-shrink-0">
-                                                                    <a href="update_bio/{{ $daily->user->timecard.$daily->bio_daily_array}}">
+                                                                    <a href="rawbio/{{ $daily->user->timecard.$daily->bio_daily_array}}">
                                                                         {{ $daily->all_bio_punches[0] ?? false ? '': 'no punch'}}
                                                                     </a>
                                                                 </div>

@@ -81,27 +81,27 @@
 
                                                 @if ($daily->updated_bio[0]->date??false )
 
-                                                    <td class="border-r py-3">
+                                                    <td class="border-r dark:text-gray-400 py-3 text-xs">
 
                                                         {{ $daily->user->name." = ".$daily->punch->count()."| ".
-                                                        $daily->punch[0]->date." | ".$daily->punch[0]->hour}}
+                                                        $daily->punch[0]->date}}
 
                                                     </td>
 
-                                                    <td class="py-3">
+                                                    <td class="border-r dark:text-gray-400 py-3 text-xs">
                                                         {{ $daily->updated_bio[0]->name." = ".$daily->updated_bio->count()."| ".
-                                                        $daily->updated_bio[0]->date." | ".$daily->updated_bio[0]->hour}}
+                                                        $daily->updated_bio[0]->date}}
                                                     </td
                                                 @else
 
                                                     <td class="border-r py-3">                                                        
-                                                            {{ $daily->user->name." = ".$daily->punch->count()."| ".$daily->punch[0]->date}}
+                                                            {{ $daily->user->name."| ".$daily->punch[0]->date}}
                                                     </td>
 
                                                     <td class="border-r py-3">
-                                                        
-                                                        <a href="rawbio/{{$daily->user->timecard.$daily->punch[0]->date}}" class=" border-r font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
-                                                            {{ "Update!"}}
+
+                                                        <a href="rawbio/{{$daily->user->timecard.$daily->punch[0]->date}}" class="border-r dark:hover:text-white focus:outline focus:outline-2 focus:outline-red-500 focus:rounded-sm hover:text-gray-900 text-orange-300">
+                                                            {{ $daily->user->name." = ".$daily->punch->count()}}
                                                         </a>
                                                     </td>
 
