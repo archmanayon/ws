@@ -184,14 +184,12 @@
                                     @php
                                         $options = [
                                             'Bio'   => 1,
-                                            'Sl'    => 2,
-                                            'Vl'    => 3,
-                                            'El'    => 4,
-                                            'MP'    => 5,
-                                            'DO'    => 6,
-                                            'dtr'   => 7,
-                                            'list'  => 8,
-                                            'oth'   => 9
+                                            'Lv'    => 2,
+                                            'Mp'    => 3,
+                                            'Do'    => 4,
+                                            'DTR'    => 5,
+                                            'List'    => 6,
+                                            'Others'  => 7
                                         ];
                                     @endphp
 

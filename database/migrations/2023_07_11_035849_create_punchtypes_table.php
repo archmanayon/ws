@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('rawbios', function (Blueprint $table) {
-            $table->id();
-            $table->string('biotext')->unique();
-            $table->foreignId('punchtype_id')->nullable();
+        Schema::create('punchtypes', function (Blueprint $table) {
+            $table->id();                  
+            $table->string('punchtype');
+            $table->boolean('active')->default(true);    
             $table->timestamps();
-            $table->boolean('active')->nullable()->default(true);
         });
     }
 
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('rawbios');
+        Schema::dropIfExists('punchtypes');
     }
 };
