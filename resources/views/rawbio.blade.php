@@ -3,6 +3,7 @@
     // use Illuminate\Support\Collection;
     use Carbon\Carbon;
     use App\Models\Update_bio;
+    use App\Models\Punchtype;
 
 @endphp
 
@@ -55,7 +56,14 @@
                                                     {{ $bio_punch->hour." | ".$bio_punch->in_out." | ".$inde_x." | "}} {{ old("new_bio.$inde_x") }}
                                                 </label>
 
+                                                {{ $orig_bio[$loop->index]->punchtype->punchtype }}
+                                                {{ $bio_punch->punchtype->punchtype }}
+
                                             </div>
+                                        </td>
+
+                                        <td class="px-4 py-3">
+                                            
                                         </td>
                                     </tr>
 
@@ -178,44 +186,62 @@
                                 </tr>
 
                                 {{-- SOURCE --}}
-                            <tr>
-                                <td></td>
-                                <td class="block dark:bg-gray-700 mt-1 rounded-md shadow-sm">
-                                    @php
-                                        $options = [
-                                            'Bio'   => 1,
-                                            'Lv'    => 2,
-                                            'Mp'    => 3,
-                                            'Do'    => 4,
-                                            'DTR'    => 5,
-                                            'List'    => 6,
-                                            'Others'  => 7
-                                        ];
-                                    @endphp
+                                <tr>
+                                    <td></td>
+                                    <td class="block dark:bg-gray-700 mt-1 rounded-md shadow-sm">
+                                        @php
+                                            $options = [
+                                                'Bio'   => 1,
+                                                'Lv'    => 2,
+                                                'Mp'    => 3,
+                                                'Do'    => 4,
+                                                'DTR'    => 5,
+                                                'List'    => 6,
+                                                'Others'  => 7
+                                            ];
+                                        @endphp
 
-                                    <select name="punch_source" class="border-transparent dark:bg-gray-700 dark:text-gray-300">
-                                        <option value="">Select an option</option>
-                                        @foreach ($options as $label => $value)
-                                            <option value="{{ $value }}">{{ $label }}</option>
-                                        @endforeach
-                                    </select>
+                                        <select name="punch_source" class="border-transparent dark:bg-gray-700 dark:text-gray-300">
+                                            <option value="{{ null }}">Select Punch Source</option>
+                                            @foreach ($options as $label => $value)
+                                                <option value="{{ $value }}">{{ $label }}</option>
+                                            @endforeach
+                                        </select>                                    
 
-                                </td>
+                                        {{-- @error('punch_source')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror --}}
+                                    </td>
 
-                            </tr>
+                                    @if($errors->any())
+
+                                        <tr class="alert alert-danger">
+                                            <td></td>
+                                            <td>                                                    
+                                                @error('punch_source')
+                                                    <span class="text-red-400 text-xs text-danger">{{ $message }}</span>
+                                                @enderror
+                                                                                    
+                                            </td>
+                                        </tr>
+                                    @endif
+                                    
+
+                                </tr>
 
                                 <tr>
                                     <td></td>
                                     <td>
                                         <x-text-input  id="reason_bio" class="block mt-1" type="text"
                                             placeholder="Reason"
-                                            name="reason_bio" required autofocus/>
-                                        <x-input-error :messages="$errors->get('reason_bio')" class="mt-2" />
+                                            name="reason_bio" autofocus/>
+                                        <x-input-error :messages="$errors->get('reason_bio')" class="mt-2 text-xs" />
                                     </td>
                                 </tr>
 
                                 <tr>
                                     <td></td>
+                                   
                                     <td>
                                         <button type="submit" name="save_new" value="save_new">Update Bio</button>
                                     </td>

@@ -200,15 +200,15 @@ class ExtractBioController extends Controller
         // ----------------orig bio----------------------------------
 
         $orig_bio = Rawbio::where(DB::raw('SUBSTRING(biotext, 1, 6)'), '=',  $searched_user->timecard)
-                        ->where(DB::raw('SUBSTRING(biotext, 7, 6)'), '=', $date->format('mdy'))??false;
+                        ->where(DB::raw('SUBSTRING(biotext, 7, 6)'), '=', $date->format('mdy'));
 
         $rawbio = $orig_bio->selectRaw
             ('
                 SUBSTRING(biotext, 7, 6) AS date,
                 SUBSTRING(biotext, 13, 4) AS hour,
-                SUBSTRING(biotext, 17, 1) AS in_out
-                ')
-        ->get();
+                SUBSTRING(biotext, 17, 1) AS in_out,
+                SUBSTRING(punchtype_id, 1,1) AS punchtype_id
+                ');
 
 
         // ----------------Official Shift----------------------------------
@@ -231,7 +231,8 @@ class ExtractBioController extends Controller
             'str_tc'        =>  $str_tc ?? false,
             'str_date'      =>  $str_date ?? false,
             'searched_user' =>  $searched_user ?? false,
-            'rawbio'        =>  $rawbio ?? false,
+            'rawbio'        =>  $rawbio->with(['punchtype'])->get(),
+            'orig_bio'      =>  $orig_bio->with(['punchtype'])->get(),
             'official'      =>  $official ?? false,
             'updated_bio'   =>  $updated_bio->sortBy('biotext')?? false,
             'new_input'         => session('new_input')??false,

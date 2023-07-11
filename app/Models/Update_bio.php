@@ -12,5 +12,10 @@ class Update_bio extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'time_card', 'timecard');
+    }
+
+    public function punchtype()
+    {
+        return $this->belongsTo(Punchtype::class);
     }  
 }

@@ -148,15 +148,13 @@ class UpdateBioController extends Controller
         $searched_user  = User::where('timecard',  $str_tc)->get()[0];
 
         $validated_new_bio = $request->validate([
-                'new_bio.*' => 'nullable|string|min:4|max:4',
-                'punch_source' => 'required',
-                'reason_bio' => 'required|max:255'
+                'new_bio.*' => 'nullable|string|min:4|max:4'
             ]
             ,
             [
                 'new_bio.*.string' => 'Must be a string.',
                 'new_bio.*.min' => 'HOUR string may be lesser than :min characters.',
-                'new_bio.*.max' => 'HOUR string may be greater than :max characters.',
+                'new_bio.*.max' => 'HOUR string may be greater than :max characters.'
 
             ]
         );
@@ -178,8 +176,8 @@ class UpdateBioController extends Controller
 
                 $biotext = $iteration % 2 == 0 ? $str_tc.$str_date.$value."I": $str_tc.$str_date.$value."O";
 
+                // nothing to w/ db, for session purposes only
                 $new_input [] = (object) [
-
                     'bio' => $biotext
                 ];
 
@@ -187,17 +185,26 @@ class UpdateBioController extends Controller
                 // Additional data to be validated (not from the input form)
                     $additionalData = [
                         'biotext' => $biotext,
+                        'reason_bio' => request('reason_bio'),
+                        'punch_source' => request('punch_source')
                     ];
 
                     // Define validation rules for additional data
                     $additionalValidationRules = [
                         'biotext' => 'required|unique:update_bios,biotext',
+                        'punch_source' =>'required',
+                        'reason_bio' =>'required|max:255'
+                       
                     ];
 
                     // Define custom error messages for additional data
                     $customErrorMessages = [
                         'biotext.required'   => 'Biotext field is required.',
-                        'biotext.unique'     => 'Double Entry'
+                        'biotext.unique'     => 'Double Entry',
+                        'punch_source.required'   => 'Source is required.',
+                        'reason_bio.required'   => 'Reason is required.',
+                        'reason_bio.max'   => 'Must not this many words'
+                        
                     ];
 
                     // Create a new Validator instance and validate the additional data
@@ -214,7 +221,9 @@ class UpdateBioController extends Controller
                     'date'      => $str_date,
                     'hour'      => $value,
                     'in_out'    => $in_out,
-                    'biotext'   => $str_tc.$str_date.$value.$in_out,
+                    'biotext'   => $biotext,
+                    'punchtype_id'   => request('punch_source'),
+                    // 'biotext'   => $str_tc.$str_date.$value.$in_out,
                     'reason'    => request('reason_bio')
                 ]);
 

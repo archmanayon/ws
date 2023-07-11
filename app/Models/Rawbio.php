@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Rawbio extends Model
 {
     use HasFactory;
+
+    public function punchtype()
+    {
+        return $this->belongsTo(Punchtype::class);
+    }  
 }
