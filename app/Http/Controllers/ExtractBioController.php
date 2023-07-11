@@ -136,8 +136,7 @@ class ExtractBioController extends Controller
                 SUBSTRING(biotext, 13, 4) AS hour,
                 SUBSTRING(biotext, 17, 1) AS in_out,
                 SUBSTRING(biotext, 1, 17) AS biotext
-                ')
-        ->get();
+                ');
 
 
         if($sub_updated_bio->pluck('date')->contains( $date->format('mdy')))
@@ -146,14 +145,14 @@ class ExtractBioController extends Controller
 
         } else {
 
-            $all_bio_punches = $sub_orig_bio;
+            $all_bio_punches = $sub_orig_bio->with(['punchtype'])->get();
         }
 
 
         return (object) [
 
             'processed_punch' => $all_bio_punches,
-            'orig_raw_bio'  => $sub_orig_bio
+            'orig_raw_bio'  => $sub_orig_bio->with(['punchtype'])->get()
         ];
     }
 

@@ -75,7 +75,7 @@
 
                                     @if ($daily)
 
-                                        @foreach ($daily->processed_punch as $punch)
+                                        @foreach ($daily->orig_raw_bio as $punch)
 
                                             @if ($punch)
 
@@ -88,6 +88,14 @@
                                                     </td>
                                                     <td class="px-4 py-3">
                                                         {{ $punch->hour }}
+                                                    </td>
+
+                                                    <td class="px-4 py-3">
+                                                        {{ $punch->in_out }}
+                                                    </td>
+
+                                                      <td class="px-4 py-3">
+                                                        {{ $punch->punchtype->punchtype??false }}
                                                     </td>
                                                 </tr>
 
