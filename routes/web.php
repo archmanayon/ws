@@ -16,6 +16,7 @@ use App\Http\Controllers\HeadController;
 use App\Http\Controllers\TardiController;
 use App\Http\Controllers\ExtractBioController;
 use App\Http\Controllers\BiometricController;
+use App\Http\Controllers\RawbioController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -106,6 +107,15 @@ Route::get('text_files', [ScheduleController::class, 'text_files'])
 
 Route::post('text_files', [ScheduleController::class, 'text_files'])
 ->middleware(['auth', 'verified', 'admin'])->name('text_files_post');
+
+
+
+// attendance summary per user
+Route::get('dtr', [RawbioController::class, 'dtr'])
+->middleware(['auth', 'verified', 'admin'])->name('dtr');
+
+Route::post('dtr', [RawbioController::class, 'dtr'])
+->middleware(['auth', 'verified', 'admin'])->name('dtr_post');
 
 
 

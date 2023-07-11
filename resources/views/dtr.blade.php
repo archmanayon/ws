@@ -25,7 +25,7 @@
                     @endforeach<br> --}}
 
                     <table>
-                        <form method="POST" action="{{ route('text_files_post') }}">
+                        <form method="POST" action="{{ route('dtr_post') }}">
                             @csrf
 
                             <td>
@@ -82,6 +82,12 @@
                                                 <tr class="bg-gray-700 border-b border-gray-600">
                                                     <td class="px-4 py-3">
                                                         {{ $punch->biotext }}
+                                                    </td>
+                                                    <td class="px-4 py-3">
+                                                        {{ $punch->date }}
+                                                    </td>
+                                                    <td class="px-4 py-3">
+                                                        {{ $punch->hour }}
                                                     </td>
                                                 </tr>
 
