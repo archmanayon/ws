@@ -15,7 +15,7 @@ return new class extends Migration
 
             $table->id();
             $table->foreignId('user_id');
-            $table->string('date');           
+            $table->string('date');
             $table->string('hour');
             $table->string('in_out');
             $table->string('biotext')->unique();

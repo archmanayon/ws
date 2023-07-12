@@ -16,27 +16,27 @@ class PunchController extends Controller
 {
     public function show()
     {
-        $Date           = Carbon::now('Asia/Kuala_Lumpur');                
+        $Date           = Carbon::now('Asia/Kuala_Lumpur');
         $currentDate    = $Date->format('mdy');
         $current_time   = $Date->format('Hi');
-        $usc_id         = session('usc_id')??false;     
-        $searched_user  = User::where('student_id', $usc_id)->first();        
+        $usc_id         = session('usc_id')??false;
+        $searched_user  = User::where('student_id', $usc_id)->first();
         $punches        = $usc_id ? $searched_user->punches->where('date', $currentDate) : false;
-        $in_out         = $punches?($punches->pluck('in_out')->last() === 'I' ? 'O' : 'I'):false;    
+        $in_out         = $punches?($punches->pluck('in_out')->last() === 'I' ? 'O' : 'I'):false;
 
         return view('shcp',[
-            
+
             'employee'      => $searched_user ?? false,
             'date_'         => $Date,
             'currentDate'   => $currentDate,
-            'current_time'  => $current_time, 
-            'usc_id'        => $usc_id,            
-            'punches_today' => $punches,    
+            'current_time'  => $current_time,
+            'usc_id'        => $usc_id,
+            'punches_today' => $punches,
             'end'           => $usc_id? $searched_user->timecard.$currentDate.$current_time.$in_out:false,
             'in_out'        => $in_out
-            
+
         ]);
-        
+
     }
 
     public function store()
@@ -46,7 +46,7 @@ class PunchController extends Controller
                 'student_id' => ['required','string','min:7', 'max:8',Rule::exists('users', 'student_id')],
 
                 'punch_pw' => ['required', 'max:255', 'min:7']
-               
+
             ]
             // ,
                 // [
@@ -60,20 +60,20 @@ class PunchController extends Controller
                 //     'punch_pw.required'   => 'The field is required.',
                 //     'punch_pw.string'     => 'Must be a string.'
             // ]
-            
+
         );
 
-        $Date           = Carbon::now('Asia/Kuala_Lumpur');                
+        $Date           = Carbon::now('Asia/Kuala_Lumpur');
         $currentDate    = $Date->format('mdy');
         $current_time   = $Date->format('Hi');
-        $usc_id         = $validatedData['student_id'];     
+        $usc_id         = $validatedData['student_id'];
         $searched_user  = User::where('student_id', $usc_id)->first();
         $punches        = $usc_id ? $searched_user->punches->where('date', $currentDate) : false;
-        $in_out         = $punches->pluck('in_out')->last() === 'I' ? 'O' : 'I';                    
-              
+        $in_out         = $punches->pluck('in_out')->last() === 'I' ? 'O' : 'I';
+
         // auth()->logout();
 
-        if($validatedData['student_id'] && 
+        if($validatedData['student_id'] &&
             Hash::check($validatedData['punch_pw'], $searched_user->password))
             {
                 Punch::create([
@@ -81,8 +81,9 @@ class PunchController extends Controller
                     'date'     =>   $currentDate,
                     'hour'      =>  $current_time,
                     'in_out'    =>  $in_out,
-                    'biotext'   =>  $searched_user->timecard.$currentDate.$current_time.$in_out
-                ]);       
+                    'biotext'   =>  $searched_user->timecard.$currentDate.$current_time.$in_out,
+                    'punchtype_id' => 8
+                ]);
 
                 return redirect()->route('show_punches')
             ->with('usc_id', $validatedData['student_id']);
@@ -95,34 +96,34 @@ class PunchController extends Controller
             'error' => 'Could not be verified'
 
         ]);
-        
+
     }
 
     public function show_()
     {
-        $Date           = Carbon::now('Asia/Kuala_Lumpur');                
+        $Date           = Carbon::now('Asia/Kuala_Lumpur');
         $currentDate    = $Date->format('mdy');
         $current_time   = $Date->format('Hi');
-        $usc_id         = session('usc_id')??false;     
-        $searched_user  = User::where('student_id', $usc_id)->first();        
+        $usc_id         = session('usc_id')??false;
+        $searched_user  = User::where('student_id', $usc_id)->first();
         $punches        = $usc_id ? $searched_user->punches->where('date', $currentDate) : false;
-        $in_out         = $punches?($punches->pluck('in_out')->last() === 'I' ? 'O' : 'I'):false;    
+        $in_out         = $punches?($punches->pluck('in_out')->last() === 'I' ? 'O' : 'I'):false;
 
         return view('shcp_',[
-            
+
             'employee'      => $searched_user ?? false,
             'date_'         => $Date,
             'currentDate'   => $currentDate,
-            'current_time'  => $current_time, 
-            'usc_id'        => $usc_id,            
-            'punches_today' => $punches,    
+            'current_time'  => $current_time,
+            'usc_id'        => $usc_id,
+            'punches_today' => $punches,
             'end'           => $usc_id? $searched_user->timecard.$currentDate.$current_time.$in_out:false,
             'in_out'        => $in_out
-            
+
         ]);
-        
+
     }
-    
+
     public function store_()
     {
         $validatedData = request()->validate(
@@ -130,7 +131,7 @@ class PunchController extends Controller
                 'student_id' => ['required','string','min:7', 'max:8',Rule::exists('users', 'student_id')],
 
                 'punch_pw' => ['required', 'max:255', 'min:7']
-               
+
             ]
             // ,
                 // [
@@ -144,20 +145,20 @@ class PunchController extends Controller
                 //     'punch_pw.required'   => 'The field is required.',
                 //     'punch_pw.string'     => 'Must be a string.'
             // ]
-            
+
         );
 
-        $Date           = Carbon::now('Asia/Kuala_Lumpur');                
+        $Date           = Carbon::now('Asia/Kuala_Lumpur');
         $currentDate    = $Date->format('mdy');
         $current_time   = $Date->format('Hi');
-        $usc_id         = $validatedData['student_id'];     
+        $usc_id         = $validatedData['student_id'];
         $searched_user  = User::where('student_id', $usc_id)->first();
         $punches        = $usc_id ? $searched_user->punches->where('date', $currentDate) : false;
-        $in_out         = $punches->pluck('in_out')->last() === 'I' ? 'O' : 'I';                    
-              
+        $in_out         = $punches->pluck('in_out')->last() === 'I' ? 'O' : 'I';
+
         // auth()->logout();
 
-        if($validatedData['student_id'] && 
+        if($validatedData['student_id'] &&
            Hash::check($validatedData['punch_pw'], $searched_user->password)
             )
             {
@@ -167,7 +168,7 @@ class PunchController extends Controller
                     'hour'      =>  $current_time,
                     'in_out'    =>  $in_out,
                     'biotext'   =>  $searched_user->timecard.$currentDate.$current_time.$in_out
-                ]);       
+                ]);
 
                 return redirect()->route('show_punches_')
             ->with('usc_id', $validatedData['student_id']);
@@ -179,6 +180,6 @@ class PunchController extends Controller
             'error' => 'Could not be verified'
 
         ]);
-        
+
     }
 }
