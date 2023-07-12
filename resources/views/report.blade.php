@@ -78,7 +78,7 @@
                     
                         <table class="rounded-t-lg m-5 w-5/6 mx-auto bg-gray-800 text-gray-200">
                             <tr class="text-left border-b border-gray-300">
-                                <th class="px-4 py-3">Student ID</th>
+                                <th class="px-4 py-3"></th>
                                 <th class="px-4 py-3">Name</th>
                                 <th class="px-4 py-3">Date</th>
                                 <th class="px-4 py-3">Type</th> 
@@ -92,7 +92,7 @@
                                     <tr class="bg-gray-700 border-b border-gray-600">
                                         
                                         <td class="px-4 py-3">
-                                            {{ $daily->user->student_id}} 
+                                            {{-- {{ $daily->user->student_id}}  --}}
                                            
                                         </td>
 
@@ -142,10 +142,10 @@
                                         </tr>
                                         <tr class="bg-gray-700 border-b border-gray-600">
                                             <td class="px-4 py-3">
-                                                {{ $daily->user->student_id}}
+                                                {{-- {{ $daily->user->student_id}} --}}
                                             </td>
                                             <td class="px-4 py-3">
-                                                {{ $daily->user->name.'|sa und outside' }}
+                                                {{ $daily->user->name }}
                                             <td>
                                                 <x-dropdown relative='x' align='top'>
                                                     <x-slot name="trigger">
@@ -188,10 +188,10 @@
                                         </tr>
                                         <tr class="bg-gray-700 border-b border-gray-600">
                                             <td class="px-4 py-3">
-                                                {{ $daily->user->student_id}}
+                                                {{-- {{ $daily->user->student_id}} --}}
                                             </td>
                                             <td class="px-4 py-3">
-                                                {{ $daily->user->name.'|sa late w/ abs' }}
+                                                {{ $daily->user->name }}
                                             </td>
                                             <td>
                                                 <x-dropdown relative='x' align='top'>
@@ -236,10 +236,10 @@
                                         </tr>
                                         <tr class="bg-gray-700 border-b border-gray-600">
                                             <td class="px-4 py-3">
-                                                {{ $daily->user->student_id}}
+                                                {{-- {{ $daily->user->student_id}} --}}
                                             </td>
                                             <td class="px-4 py-3">
-                                                {{ $daily->user->name.'|sa und w/ abs' }}
+                                                {{ $daily->user->name }}
                                             </td>
                                             <td>
                                                 <x-dropdown relative='x' align='top'>

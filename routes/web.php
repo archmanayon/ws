@@ -49,7 +49,7 @@ Route::get('/', function () {
 Route::get('js', function () {
     return view ('js',[
     ]);
-});
+})->middleware(['auth', 'verified', 'admin']);
 
 Route::get('hash_pw', function () {
 
@@ -116,6 +116,13 @@ Route::get('dtr', [RawbioController::class, 'dtr'])
 
 Route::post('dtr', [RawbioController::class, 'dtr'])
 ->middleware(['auth', 'verified', 'admin'])->name('dtr_post');
+
+
+Route::get('my_dtr', [RawbioController::class, 'my_dtr'])
+->middleware(['auth', 'verified'])->name('my_dtr');
+
+Route::post('my_dtr', [RawbioController::class, 'my_dtr'])
+->middleware(['auth', 'verified'])->name('my_dtr_post');
 
 
 

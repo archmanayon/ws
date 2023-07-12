@@ -1,6 +1,7 @@
 @php
     use Illuminate\Support\Str;
-    use \Carbon\Carbon;
+    use Carbon\Carbon;
+    use Carbon\CarbonPeriod;
 @endphp
 
 <x-app-layout>
@@ -44,6 +45,40 @@
                             </td>
 
                             <td>
+                                <div class="mt-4">
+                                    @php
+                                        $searched_user = $users->find(request('find_user')) 
+                                    @endphp
+
+                                    
+                                    <x-input-label for="find_user" :value="__('FIND')" />
+                                    <select placeholder ={{request('find_user')??'Search Employee' }}
+                                        name="find_user" 
+                                        placeholder ="find user"
+                                        class="block mt-1 border-gray-300 dark:border-gray-700 dark:bg-gray-700
+                                            dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500
+                                            dark:focus:ring-indigo-600 rounded-md shadow-sm"  
+                                            
+                                        >
+                                            <option value="{{ $searched_user->id?? false }}">
+                                                {{$searched_user->name?? 'Search Employee' }}
+                                            </option>
+
+                                        @foreach($users as $user)
+
+                                            <option class="{{ request('find_user') == $user->id ? 'dark:bg-gray-1000 dark:bg-blue-700 dark:text-yellow-300 ' :'' }}"
+                                                value="{{ $user->id }}">{{ $user->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </td>
+
+
+
+
+
+                            <td>
 
                                 <div class="mt-4 order-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600
                                 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
@@ -63,15 +98,24 @@
                     <p class="text-lg text-center font-bold m-5">Dark Table Design</p>
 
                         <table class="rounded-t-lg m-5 w-5/6 mx-auto bg-gray-800 text-gray-200">
-                            <tr class="text-left border-b border-gray-300">
-                                <th class="px-4 py-3">textfile
-                                </th>
+                            <thead class="text-left border-b border-gray-300">
+                                <tr class="text-left border-b border-gray-300">
+                                    <th class="px-4 py-3">Day
+                                    </th>
+                                    <th class="px-4 py-3">Date
+                                    </th>
+                                    <th class="px-4 py-3">Time
+                                    </th>
+                                    <th class="px-4 py-3">
+                                    </th>
+                                    <th class="px-4 py-3">Source
+                                    </th>
+    
+                                </tr>   
 
-                            </tr>
+                            </thead>                           
 
-                            @foreach ( $mappedUser as $each_user)
-
-                                @foreach ( $each_user->punches as $daily)
+                                @foreach ( $mapped_days as $daily)
 
                                     @if ($daily)
 
@@ -81,10 +125,11 @@
 
                                                 <tr class="bg-gray-700 border-b border-gray-600">
                                                     <td class="px-4 py-3">
-                                                        {{ $punch->biotext }}
+                                                       
+                                                        {{ $daily->day}}
                                                     </td>
                                                     <td class="px-4 py-3">
-                                                        {{ $punch->date }}
+                                                        {{ $daily->date }}
                                                     </td>
                                                     <td class="px-4 py-3">
                                                         {{ $punch->hour }}
@@ -107,7 +152,7 @@
 
                                 @endforeach
 
-                            @endforeach
+                            
 
                         </table>
 

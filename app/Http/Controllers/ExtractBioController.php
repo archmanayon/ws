@@ -122,6 +122,7 @@ class ExtractBioController extends Controller
     {
         $str_tc     = $searched_user->timecard;
         $str_date   = $date->format('mdy');
+        $day        = $date->format('l');
 
         $sub_updated_bio = $searched_user->update_bios->where('date', $str_date);
 
@@ -146,14 +147,16 @@ class ExtractBioController extends Controller
 
         } else {
 
-            $all_bio_punches = $sub_orig_bio->with(['punchtype'])->get();
+            $all_bio_punches = $sub_orig_bio->with(['punchtype'])->get()->sortBy('biotext');
         }
 
 
         return (object) [
 
             'processed_punch' => $all_bio_punches,
-            'orig_raw_bio'  => $sub_orig_bio->with(['punchtype'])->get()
+            'orig_raw_bio'  => $sub_orig_bio->with(['punchtype'])->get()->sortBy('biotext'),
+            'date'          => $date->format('m/d/y'),
+            'day'           => $day
         ];
     }
 

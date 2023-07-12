@@ -111,10 +111,7 @@ class BiometricController extends Controller
 
             })->toArray();
 
-        return (object) [
-
-            'punches' => $mappedArray
-        ];
+        return  $mappedArray;
 
     }
 

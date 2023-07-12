@@ -1,6 +1,7 @@
 @php
     use Illuminate\Support\Str;
-    use \Carbon\Carbon;
+    use Carbon\Carbon;
+    use Carbon\CarbonPeriod;
 @endphp
 
 <x-app-layout>
@@ -14,18 +15,11 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-
-                    <a href="{{ auth()->user()->username }}">
+                    
                         {{ auth()->user()->name }}
-                    </a>
-                    {{-- <br>
-
-                    @foreach ($bio as $bio)
-                        {{$bio->hour}} <br>
-                    @endforeach<br> --}}
-
+                   
                     <table>
-                        <form method="POST" action="{{ route('text_files_post') }}">
+                        <form method="POST" action="{{ route('my_dtr_post') }}">
                             @csrf
 
                             <td>
@@ -60,28 +54,49 @@
 
                 <div class="p-6 text-gray-900 dark:text-gray-100 border">
 
-                    <p class="text-lg text-center font-bold m-5">Dark Table Design</p>
+                    <p class="text-lg text-center font-bold m-5"></p>
 
                         <table class="rounded-t-lg m-5 w-5/6 mx-auto bg-gray-800 text-gray-200">
-                            <tr class="text-left border-b border-gray-300">
-                                <th class="px-4 py-3">textfile
+                            <thead class="text-left border-b border-gray-300">
+                                <th class="px-4 py-3">Day
+                                </th>
+                                <th class="px-4 py-3">Date
+                                </th>
+                                <th class="px-4 py-3">Time
+                                </th>
+                                <th class="px-4 py-3">
+                                </th>
+                                <th class="px-4 py-3">Source
                                 </th>
 
-                            </tr>
+                            </thead>                           
 
-                            @foreach ( $mappedUser as $each_user)
-
-                                @foreach ( $each_user as $daily)
+                                @foreach ( $mapped_days as $daily)
 
                                     @if ($daily)
 
-                                        @foreach ($daily->processed_punch as $punch)
+                                        @foreach ($daily->orig_raw_bio as $punch)
 
                                             @if ($punch)
 
                                                 <tr class="bg-gray-700 border-b border-gray-600">
                                                     <td class="px-4 py-3">
-                                                        {{ $punch->biotext }}
+                                                       
+                                                        {{ $daily->day}}
+                                                    </td>
+                                                    <td class="px-4 py-3">
+                                                        {{ $daily->date }}
+                                                    </td>
+                                                    <td class="px-4 py-3">
+                                                        {{ $punch->hour }}
+                                                    </td>
+
+                                                    <td class="px-4 py-3">
+                                                        {{ $punch->in_out }}
+                                                    </td>
+
+                                                      <td class="px-4 py-3">
+                                                        {{ $punch->punchtype->punchtype??false }}
                                                     </td>
                                                 </tr>
 
@@ -93,7 +108,7 @@
 
                                 @endforeach
 
-                            @endforeach
+                            
 
                         </table>
 
