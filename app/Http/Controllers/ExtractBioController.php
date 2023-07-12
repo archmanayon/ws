@@ -9,6 +9,7 @@ use App\Models\Biometric;
 use App\Models\Rawbio;
 use App\Models\Update_bio;
 use App\Models\ManualShift;
+use App\Models\Punch;
 use \Carbon\Carbon;
 use Illuminate\Support\Str;
 
@@ -126,10 +127,30 @@ class ExtractBioController extends Controller
 
         $sub_updated_bio = $searched_user->update_bios->where('date', $str_date);
 
+        // how to merge two table different columns
+
+            // $query1 = DB::table('table1')
+            // ->select('column_name1', 'column_name2')
+            // ->where('condition', '=', 'value1');
+
+            // $query2 = DB::table('table2')
+            //     ->select('column_name1', 'column_name2', 'column_name3')
+            //     ->where('condition', '=', 'value2');
+
+        // $data = $query1->union($query2)->get();
+
         // ----------------orig bio----------------------------------
 
         $orig_bio = Rawbio::where(DB::raw('SUBSTRING(biotext, 1, 6)'), '=',  $searched_user->timecard)
                         ->where(DB::raw('SUBSTRING(biotext, 7, 6)'), '=', $date->format('mdy'))??false;
+
+            $query1 = Punch::select('biotext')->where('date', '=', $date->format('mdy'));
+
+            // $query2 = DB::table('table2')
+            //     ->select('column_name1', 'column_name2', 'column_name3')
+            //     ->where('condition', '=', 'value2');
+
+        // $data = $query1->union($query2)->get();
 
         $sub_orig_bio = $orig_bio->selectRaw
             (
@@ -156,7 +177,8 @@ class ExtractBioController extends Controller
             'processed_punch' => $all_bio_punches,
             'orig_raw_bio'  => $sub_orig_bio->with(['punchtype'])->get()->sortBy('biotext'),
             'date'          => $date->format('m/d/y'),
-            'day'           => $day
+            'day'           => $day,
+            'query1'         => $query1
         ];
     }
 

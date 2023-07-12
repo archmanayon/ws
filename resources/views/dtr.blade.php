@@ -47,18 +47,18 @@
                             <td>
                                 <div class="mt-4">
                                     @php
-                                        $searched_user = $users->find(request('find_user')) 
+                                        $searched_user = $users->find(request('find_user'))
                                     @endphp
 
-                                    
+
                                     <x-input-label for="find_user" :value="__('FIND')" />
                                     <select placeholder ={{request('find_user')??'Search Employee' }}
-                                        name="find_user" 
+                                        name="find_user"
                                         placeholder ="find user"
                                         class="block mt-1 border-gray-300 dark:border-gray-700 dark:bg-gray-700
                                             dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500
-                                            dark:focus:ring-indigo-600 rounded-md shadow-sm"  
-                                            
+                                            dark:focus:ring-indigo-600 rounded-md shadow-sm"
+
                                         >
                                             <option value="{{ $searched_user->id?? false }}">
                                                 {{$searched_user->name?? 'Search Employee' }}
@@ -73,10 +73,6 @@
                                     </select>
                                 </div>
                             </td>
-
-
-
-
 
                             <td>
 
@@ -95,7 +91,7 @@
 
                 <div class="p-6 text-gray-900 dark:text-gray-100 border">
 
-                    <p class="text-lg text-center font-bold m-5">Dark Table Design</p>
+                    {{-- <p class="text-lg text-center font-bold m-5">Dark Table Design</p> --}}
 
                         <table class="rounded-t-lg m-5 w-5/6 mx-auto bg-gray-800 text-gray-200">
                             <thead class="text-left border-b border-gray-300">
@@ -110,10 +106,12 @@
                                     </th>
                                     <th class="px-4 py-3">Source
                                     </th>
-    
-                                </tr>   
+                                    <th class="px-4 py-3">Punch from SHCP
+                                    </th>
 
-                            </thead>                           
+                                </tr>
+
+                            </thead>
 
                                 @foreach ( $mapped_days as $daily)
 
@@ -125,7 +123,7 @@
 
                                                 <tr class="bg-gray-700 border-b border-gray-600">
                                                     <td class="px-4 py-3">
-                                                       
+
                                                         {{ $daily->day}}
                                                     </td>
                                                     <td class="px-4 py-3">
@@ -142,6 +140,10 @@
                                                       <td class="px-4 py-3">
                                                         {{ $punch->punchtype->punchtype??false }}
                                                     </td>
+
+                                                    <td class="px-4 py-3">
+                                                        {{ $daily->query1??false }}
+                                                    </td>
                                                 </tr>
 
                                             @endif
@@ -152,7 +154,7 @@
 
                                 @endforeach
 
-                            
+
 
                         </table>
 
