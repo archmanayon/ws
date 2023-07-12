@@ -169,7 +169,7 @@ class ExtractBioController extends Controller
                 SUBSTRING(biotext, 13, 4) AS hour,
                 SUBSTRING(biotext, 17, 1) AS in_out,
                 SUBSTRING(biotext, 1, 17) AS biotext,
-                SUBSTRING(biotext, 1,1) AS punchtype_id
+                SUBSTRING(punchtype_id, 1,1) AS punchtype_id
                 '
             );
 

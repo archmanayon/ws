@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('hour');
             $table->string('in_out');
             $table->string('biotext')->unique();
+            $table->foreignId('punchtype_id')->nullable();
             $table->boolean('active')->default(true);
             $table->timestamps();
         });
