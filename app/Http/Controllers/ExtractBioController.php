@@ -207,6 +207,7 @@ class ExtractBioController extends Controller
                 SUBSTRING(biotext, 7, 6) AS date,
                 SUBSTRING(biotext, 13, 4) AS hour,
                 SUBSTRING(biotext, 17, 1) AS in_out,
+                SUBSTRING(biotext, 1, 17) AS biotext,
                 SUBSTRING(punchtype_id, 1,1) AS punchtype_id
                 ');
 
@@ -231,8 +232,8 @@ class ExtractBioController extends Controller
             'str_tc'        =>  $str_tc ?? false,
             'str_date'      =>  $str_date ?? false,
             'searched_user' =>  $searched_user ?? false,
-            'rawbio'        =>  $rawbio->with(['punchtype'])->get(),
-            'orig_bio'      =>  $orig_bio->with(['punchtype'])->get(),
+            'rawbio'        =>  $rawbio->with(['punchtype'])->get()->sortBy('biotext'),
+            'orig_bio'      =>  $orig_bio->with(['punchtype'])->get()->sortBy('biotext'),
             'official'      =>  $official ?? false,
             'updated_bio'   =>  $updated_bio->sortBy('biotext')?? false,
             'new_input'         => session('new_input')??false,

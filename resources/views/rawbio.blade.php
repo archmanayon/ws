@@ -44,7 +44,7 @@
 
                                 @php $inde_x = 4; @endphp
 
-                                @foreach ($rawbio as $bio_punch)
+                                @foreach ($rawbio->sortBy('biotext') as $bio_punch)
 
                                     <tr>    <td></td>
                                         <td class="px-4 py-3">
@@ -56,7 +56,7 @@
                                                     {{ $bio_punch->hour." | ".$bio_punch->in_out." | ".$inde_x." | "}} {{ old("new_bio.$inde_x") }}
                                                 </label>
 
-                                                {{ $orig_bio[$loop->index]->punchtype->punchtype }}
+                                                {{-- {{ $orig_bio[$loop->index]->punchtype->punchtype }} --}}
                                                 {{ $bio_punch->punchtype->punchtype }}
 
                                             </div>
