@@ -98,6 +98,7 @@
                                                       <td class="px-4 py-3">
                                                         {{ $punch->punchtype->punchtype??false }}
                                                     </td>
+                                                    
                                                 </tr>
 
                                             @endif

@@ -1,7 +1,7 @@
 @php
     use Illuminate\Support\Str;
     use Carbon\Carbon;
-    use Carbon\CarbonPeriod;
+    use Carbon\CarbonPeriod;    
 @endphp
 
 <x-app-layout>
@@ -113,7 +113,7 @@
 
                             </thead>
 
-                                @foreach ( $mapped_days as $daily)
+                                @foreach ( $mapped_days as $daily)                                
 
                                     @if ($daily)
 
@@ -142,7 +142,8 @@
                                                     </td>
 
                                                     <td class="px-4 py-3">
-                                                        {{ $daily->query1??false }}
+                                                        {{$daily->query1}}
+                                                        
                                                     </td>
                                                 </tr>
 
