@@ -106,8 +106,8 @@
                                     </th>
                                     <th class="px-4 py-3">Source
                                     </th>
-                                    <th class="px-4 py-3">Punch from SHCP
-                                    </th>
+                                    {{-- <th class="px-4 py-3">Punch from SHCP
+                                    </th> --}}
 
                                 </tr>
 
@@ -141,10 +141,10 @@
                                                         {{ $punch->punchtype->punchtype??false }}
                                                     </td>
 
-                                                    <td class="px-4 py-3">
+                                                    {{-- <td class="px-4 py-3">
                                                         {{$daily->query1}}
 
-                                                    </td>
+                                                    </td> --}}
                                                 </tr>
 
                                             @endif
