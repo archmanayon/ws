@@ -94,7 +94,7 @@ class BiometricController extends Controller
 
                 $day = $date->format('l');
 
-                //---to choose between 'official shift' and 'manual shift'
+                //---to choose between 'official shift' and 'manual shift'[]
 
                 //---to extract punch 'object' from bio text files
                 $punches = app()->call(
@@ -133,10 +133,10 @@ class BiometricController extends Controller
         $count_dates = $period->count();
 
         $mappedUsers = collect(User::all()->where('active', true)->where('role_id', 2))
-        ->map(function ($user) use ($collection_of_dates) {
+        ->map(function ($searched_user) use ($collection_of_dates) {
 
             $mapped_dates = $collection_of_dates
-                ->map(function ($date) use ($user) {
+                ->map(function ($date) use ($searched_user) {
 
                     $date = Carbon::parse($date);
 
@@ -144,26 +144,43 @@ class BiometricController extends Controller
 
                     $day = $date->format('l');
 
-                    $punches = Rawbio::where(DB::raw('SUBSTRING(biotext, 1, 6)'), '=',  $user->timecard)
-                        ->where(DB::raw('SUBSTRING(biotext, 7, 6)'), '=', $date->format('mdy')) ?? false;
+                    // ----------------orig bio----------------------------------
+                    $orig_bio = Rawbio::where(DB::raw('SUBSTRING(biotext, 1, 6)'), '=',  $searched_user->timecard)
+                    ->where(DB::raw('SUBSTRING(biotext, 7, 6)'), '=', $date->format('mdy'));
 
-                    $rawbio = $punches->selectRaw('
-                        SUBSTRING(biotext, 1, 6) AS timecard,
+                    $sub_orig_bio = $orig_bio->selectRaw(
+                        '
                         SUBSTRING(biotext, 7, 6) AS date,
                         SUBSTRING(biotext, 13, 4) AS hour,
                         SUBSTRING(biotext, 17, 1) AS in_out,
-                        SUBSTRING(biotext, 1, 17) AS text
-                        ')
-                    ->get();
+                        SUBSTRING(biotext, 1, 17) AS biotext,
+                        SUBSTRING(punchtype_id, 1,1) AS punchtype_id
+                        '
+                    );
+
+                    // querry fron shcp bio
+                    $shcp_punch =  Punch::where('user_id', $searched_user->id)->where('date', $d_date);                    
+
+                    $sub_shcp_punch = $shcp_punch->selectRaw(
+                        '
+                        SUBSTRING(biotext, 7, 6) AS date,
+                        SUBSTRING(biotext, 13, 4) AS hour,
+                        SUBSTRING(biotext, 17, 1) AS in_out,
+                        SUBSTRING(biotext, 1, 17) AS biotext,
+                        SUBSTRING(punchtype_id, 1,1) AS punchtype_id
+                        '
+                    );
+
+                    $merged = $sub_orig_bio->union($sub_shcp_punch);                    
 
                     // ----------------Updated bio ----------------------------------
 
-                    $updated_bio = $user->update_bios->where('date', $d_date);
+                    $updated_bio = $searched_user->update_bios->where('date', $d_date);
 
                     return (object) [
-                        'punch'        => $rawbio,
+                        'punch'        => $merged->with(['punchtype'])->get()->sortBy('biotext'),
                         'updated_bio'  => $updated_bio??false,
-                        'user'         => $user
+                        'user'         => $searched_user
                     ];
 
                 })->toArray();

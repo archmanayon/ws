@@ -44,7 +44,7 @@ class AbsenceCalendarController extends Controller
             ]);
 
                 //---to extract punch 'object' from bio text files
-            $punch = app()->call(ExtractBioController::class.'@extract_bio',
+            $punch = app()->call(ExtractBioController::class.'@extract_bio_part_two',
             [
                 'searched_user'     => $searched_user,
                 'date'              => $date,

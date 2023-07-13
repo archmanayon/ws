@@ -42,7 +42,7 @@ class ScheduleController extends Controller{
         $count_dates = $period->count();
 
 
-        $user = app()->call(AbsenceCalendarController::class.'@adea_bio',
+        $mappedDates = app()->call(AbsenceCalendarController::class.'@adea_bio',
         [
             'collection_of_dates' => $collection,
             'searched_user'=> $searched_user??false,
@@ -52,8 +52,10 @@ class ScheduleController extends Controller{
 
         return view ('print',[
 
+            // used for searching user dropdown
             'users'         => User::all()->where('active', true)->sortBy('name'),
-            'mappedUser'    => $user,
+
+            'mappedUser'    => $mappedDates,
             'update_bio'    => Update_bio::find(2),
             // 'updated_bio_2' => Update_bio::where('time_card', $searched_user->timecard)->where('date', '040523')->exists(),
             // 'updated_bio_2' => $searched_user->update_bios->where('date', '042423')->pluck('date')->contains('042423'),
