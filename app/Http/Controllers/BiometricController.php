@@ -94,14 +94,21 @@ class BiometricController extends Controller
 
                 $day = $date->format('l');
 
-                //---to choose between 'official shift' and 'manual shift'[]
+                //---NOT to choose between 'official shift' and 'manual shift'[], this is just to provide for paramereter 
+                $official = app()->call(ManualShiftController::class.'@official_',
+            [
+                'searched_user'     =>  $searched_user,
+                'date'              =>  $date,
+                'day'               =>  $day
+            ]);
 
                 //---to extract punch 'object' from bio text files
                 $punches = app()->call(
                     ExtractBioController::class . '@extract_bio_part_two',
                     [
                         'searched_user'     => $searched_user,
-                        'date'              => $date
+                        'date'              => $date,
+                        'official'         => $official
                     ]
                 );
 
