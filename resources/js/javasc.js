@@ -44,17 +44,25 @@ const movies = {
     hobbies : ["coding", "lupad"],
     list    : function()
     {
+        let all_hobbies = [];
         
         this.hobbies.forEach(function(hobby){
 
+            all_hobbies.push(hobby);
+
             // document.getElementById('here').innerHTML = hobby;  
-            console.log(hobby + " | " + movies.first);  
+            // console.log(hobby + " | " + movies.first);  
 
         });
 
-        
+        document.getElementById('here').innerHTML = all_hobbies.join('- \n'); 
     }
 
 };
 
 movies.list();
+
+const myBtn = document.getElementById('btn');
+myBtn.addEventListener('click', function (e){
+    console.log(e);
+});

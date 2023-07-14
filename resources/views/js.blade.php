@@ -29,11 +29,16 @@
 
                     <div id="there" class="p-6 text-gray-900 dark:text-gray-100" >there</div>
 
+                    <div id="" class="p-6 text-gray-900 dark:text-gray-100" >
+                        <button id="btn"> Click Me </button>
+                    </div>
+
                 </div>
             </div>
         </div>
 
     </div>
 </x-guest-layout>
+
 
 
