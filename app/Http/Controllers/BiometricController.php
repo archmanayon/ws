@@ -104,7 +104,7 @@ class BiometricController extends Controller
 
                 //---to extract punch 'object' from bio text files
                 $punches = app()->call(
-                    ExtractBioController::class . '@extract_bio_part_two',
+                    ExtractBioController::class . '@extract_bio_textfiles',
                     [
                         'searched_user'     => $searched_user,
                         'date'              => $date,

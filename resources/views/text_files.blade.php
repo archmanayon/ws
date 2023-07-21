@@ -75,7 +75,7 @@
 
                                     @if ($daily)
 
-                                        @foreach ($daily->processed_punch as $punch)
+                                        @foreach ($daily->all_bio_punches as $punch)
 
                                             @if ($punch)
 

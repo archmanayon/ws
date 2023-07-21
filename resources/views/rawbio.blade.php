@@ -53,7 +53,7 @@
                                                     value="{{ $bio_punch->hour }}"  {{ old("new_bio.$inde_x")??false ?  'checked':''  }}
                                                 >
                                                 <label class="" for="new_bio['{{ $inde_x }}']">
-                                                    {{ $bio_punch->hour." | ".$bio_punch->in_out." | ".$inde_x." | "}} {{ old("new_bio.$inde_x") }}
+                                                    {{ $bio_punch->hour." | ".$bio_punch->in_out." | ".$bio_punch->in_out." | ".$inde_x." | "}} {{ old("new_bio.$inde_x") }}
                                                 </label>
 
                                                 {{-- {{ $orig_bio[$loop->index]->punchtype->punchtype }} --}}
