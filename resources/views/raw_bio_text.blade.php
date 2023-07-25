@@ -75,12 +75,13 @@
 
                                     @foreach ( $daily as $daily)
 
-                                        @if ($daily && $daily->punch->count()>=5)
+                                        @if ($daily && $daily->punch->count() >= 5)
 
-                                            <tr class="border bg-gray-700 border-b border-gray-600">
+                                            <tr class="border bg-gray-700 border-b border-gray-600">                                                
 
                                                 @if ($daily->updated_bio[0]->date??false )
 
+                                                    {{-- for first table column --}}
                                                     <td class="border-r dark:text-gray-400 py-3 text-xs">
 
                                                         {{ $daily->user->name." = ".$daily->punch->count()."| ".
@@ -88,16 +89,27 @@
 
                                                     </td>
 
+                                                    {{-- for second table column --}}
                                                     <td class="border-r dark:text-gray-400 py-3 text-xs">
                                                         {{ $daily->updated_bio[0]->name." = ".$daily->updated_bio->count()."| ".
                                                         $daily->updated_bio[0]->date}}
                                                     </td
                                                 @else
 
-                                                    <td class="border-r py-3">                                                        
-                                                            {{ $daily->user->name."| ".$daily->punch[0]->date}}
-                                                    </td>
+                                                    {{-- for first table column --}}                                                     
+                                                    <td class="border-r py-3"> 
+                                                        {{ $daily->user->name." = ".$daily->punch->count()."| ".$daily->punch[0]->date}} 
 
+                                                        {{-- @if ($daily->updated_bio??false)
+                                                            @foreach ( $daily->updated_bio as $index => $value )
+                                                                {{ "\n".$index."||".$value->hour}}  
+                                                            @endforeach                                                            
+                                                        @endif --}}
+                                                       
+                                                       
+                                                    </td> 
+
+                                                    {{-- for second table column WITH 'HREF'--}}
                                                     <td class="border-r py-3">
 
                                                         <a href="rawbio/{{$daily->user->timecard.$daily->punch[0]->date}}" class="border-r dark:hover:text-white focus:outline focus:outline-2 focus:outline-red-500 focus:rounded-sm hover:text-gray-900 text-orange-300">

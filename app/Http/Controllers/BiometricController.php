@@ -139,7 +139,7 @@ class BiometricController extends Controller
         $collection_of_dates = collect($dates);
         $count_dates = $period->count();
 
-        $mappedUsers = collect(User::all()->where('active', true)->where('role_id', 2))
+        $mappedUsers = collect(User::where('active', true)->where('role_id', 2)->get())
         ->map(function ($searched_user) use ($collection_of_dates) {
 
             $mapped_dates = $collection_of_dates
@@ -166,7 +166,7 @@ class BiometricController extends Controller
                     );
 
                     // querry fron shcp bio
-                    $shcp_punch =  Punch::where('user_id', $searched_user->id)->where('date', $d_date);                    
+                    $shcp_punch =  Punch::where('user_id', $searched_user->id)->where('date', $d_date)??false;                    
 
                     $sub_shcp_punch = $shcp_punch->selectRaw(
                         '
@@ -184,9 +184,12 @@ class BiometricController extends Controller
 
                     $updated_bio = $searched_user->update_bios->where('date', $d_date);
 
+                    
+
                     return (object) [
                         'punch'        => $merged->with(['punchtype'])->get()->sortBy('biotext'),
-                        'updated_bio'  => $updated_bio??false,
+                        // 'punch'        => $merged,
+                        'updated_bio'  => $updated_bio->values(),
                         'user'         => $searched_user
                     ];
 
