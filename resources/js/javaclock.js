@@ -1,13 +1,11 @@
 function changeTime(){
-
     var now = new Date();
     var hour_options = {
                 timeZone: 'Asia/Manila',
                 hour: 'numeric',
                 minute: 'numeric'
                 // second: 'numeric'
-            };
-    
+            };    
     var seconds_option = {
                 
                 second: 'numeric'
@@ -26,5 +24,24 @@ function changeTime(){
 
 setInterval(changeTime,1000);
 
-document.getElementById('toytoy').innerHTML = "toytoy";
+setTimeout(function() {
+    // document.getElementById('student_id').value = '';
+    // if(document.getElementById('student_id').getAttribute('placeholder')==''){
+    
+    // } else {
+        
+    //     location.reload();
+    // }
+    
+    if(document.getElementById('student_id').getAttribute('placeholder')){
+        document.getElementById('student_id').value = '';
+        location.reload();
+    } else {
+        
+        
+    }
+    
+}, 10000);
+
+
 
