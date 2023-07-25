@@ -5,34 +5,34 @@
 
 <x-div-grid>
     <x-slot name="picture">
-        
+
     </x-slot>
-        
+
     <x-slot name="time">
         @if ($punches_today)
             <div class="justify-items-center lg:grid lg:grid-cols-3">
         @else
             <div class="justify-items-center lg:grid">
         @endif
-        
+
             <!---------------first column------------------>
             <div class="py-6">
                 <div class="lg:px-8 mx-6 sm:px-6 text-center">
                     <div class "bg-white dark:bg-gray-800 mt-6 overflow-hidden px-6 py-4 shadow-md sm:rounded-lg w-full">
                         <div class="px-1 text-gray-900 dark:text-gray-100">
                             <td>
-                                                
+
                                     <div id="m_clock"
                                     class="text-5xl mt-2 order-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600
                                         focus:ring-indigo-500 dark:focus:ring-indigo-600 shadow-sm"
                                         >
-                                    
+
                                     </div>
                                     <div id="sec"
                                     class="dark:bg-gray-700 dark:border-gray-700 dark:focus:border-indigo-600 dark:focus:ring-indigo-600 dark:text-gray-300 focus:border-indigo-500 focus:ring-indigo-500 mt-0 order-gray-300 shadow-sm text-xl"
                                         >
                                     clock
-                                    </div>                          
+                                    </div>
 
 
                             </td>
@@ -132,14 +132,14 @@
                 <div class="">
                     <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg px-6 ">
                         <div class="px-1 text-gray-900 dark:text-gray-100">
-                            @if ($employee->image_path??false)
-                                <img src="images/{{ $employee->username }}.jpg" alt="images/usc.png" width="400" height="400">
-                            @endif   
+                            @if ($employee->username??false)
+                                <img src="images/{{$employee->username}}.jpg" alt="png" width="400" height="400">
+                            @endif
                         </div>
                     </div>
                 </div>
-            </div>            
-            
+            </div>
+
         </div>
         </div>
     </x-slot>
