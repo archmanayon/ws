@@ -36,12 +36,11 @@ setTimeout(function() {
     if(document.getElementById('student_id').getAttribute('placeholder')){
         document.getElementById('student_id').value = '';
         location.reload();
-    } else {
-        
-        
     }
     
 }, 10000);
+
+
 
 
 
