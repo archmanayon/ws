@@ -29,9 +29,13 @@
                     <div id="here" class="p-6 text-gray-900 dark:text-gray-100">here</div>
 
                     <div id="there" class="p-6 text-gray-900 dark:text-gray-100" >there</div>
+                    <div id="div01" class="p-6 text-gray-900 dark:text-gray-100" >d01</div>
 
                     <div id="" class="p-6 text-gray-900 dark:text-gray-100" >
                         <button id="btn"> Click Me </button>
+                    </div>
+                    <div id="" class="p-6 text-gray-900 dark:text-gray-100" >
+                        <button id="classBtn"> classes </button>
                     </div>
 
                 </div>
