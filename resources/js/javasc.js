@@ -136,5 +136,17 @@ clickMe.addEventListener('click',
 
 );
 
+class Item {
+    constructor(name, category){
+        this.name = name;
+        this.cat = category;
+    }
+}
 
+let clsBtn = document.getElementById('classBtn');
 
+clsBtn.addEventListener(
+    'click', ()=>{
+        clsBtn.innerHTML = Item.cat;
+    }
+);
