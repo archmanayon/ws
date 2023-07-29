@@ -136,17 +136,38 @@ clickMe.addEventListener('click',
 
 );
 
-class Item {
-    constructor(name, category){
+class Talent {
+    constructor(name, art){
         this.name = name;
-        this.cat = category;
+        this.categ = art;
     }
+    static fee = '$500';
 }
 
 let clsBtn = document.getElementById('classBtn');
 
+let iTalent = new Talent('lethman', 'music');
+
+// clsBtn.addEventListener(
+//     'click', ()=>{
+//         clsBtn.innerHTML = iTalent.cat + '|-|' + iTalent.name;
+//     }
+// );
+
+class ProjT extends Talent {
+    constructor (name, categ, project){
+        super(name, categ);
+        this.project = project; 
+    }
+    
+    static displayfunc = () => super.fee;
+}
+
+let N_proj = new ProjT('arc', 'vid', 'music video');
+
 clsBtn.addEventListener(
     'click', ()=>{
-        clsBtn.innerHTML = Item.cat;
+        clsBtn.innerHTML = N_proj.project + '|' + N_proj.name + '|' + N_proj.categ + '|' + Talent.fee;
+        console.log(ProjT.displayfunc());
     }
 );
