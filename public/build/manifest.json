@@ -16,5 +16,10 @@
     "file": "assets/app-f271da48.js",
     "isEntry": true,
     "src": "resources/js/app.js"
+  },
+  "resources/js/javasc.js": {
+    "file": "assets/javasc-1acc2a0f.js",
+    "isEntry": true,
+    "src": "resources/js/javasc.js"
   }
 }
