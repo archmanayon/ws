@@ -28,31 +28,29 @@
                         <form method="POST" action="{{ route('raw_bio_text_post') }}">
                             @csrf
 
-                            <td>
+                            <div class="flex gap-2">
                                 <div class="mt-4" >
                                     <x-input-label for="start_date" :value="__('Start Date')" />
                                     <x-text-input  id="start_date" class="block mt-1" type="date" name="start_date" :value="request('start_date')" required autofocus autocomplete="start_date" />
                                     <x-input-error :messages="$errors->get('start_date')" class="mt-2" />
                                 </div>
-                            </td>
-                            <td>
                                 <div class="mt-4">
                                     <x-input-label for="end_date" :value="__('End Date')" />
                                     <x-text-input id="end_date" class="block mt-1" type="date" name="end_date" :value="request('end_date')" required autofocus autocomplete="end_date" />
                                     <x-input-error :messages="$errors->get('end_date')" class="mt-2" />
                                 </div>
-                            </td>
-
-                            <td>
-
-                                <div class="mt-4 order-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600
-                                focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
-                                    <button type="submit" name="submit_indi" value="">
+                                <div >
+                                    <button
+                                      type="submit"
+                                      name="submit_indi"
+                                      value=""
+                                      class="mt-4 order-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600
+                                focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm p-2 text-base"
+                                    >
                                         Submit
                                     </button>
                                 </div>
-                            </td>
-
+                            </div>
                         </form>
                     </table>
 
@@ -77,7 +75,7 @@
 
                                         @if ($daily && $daily->punch->count() >= 5)
 
-                                            <tr class="border bg-gray-700 border-b border-gray-600">                                                
+                                            <tr class="border bg-gray-700 border-b border-gray-600">
 
                                                 @if ($daily->updated_bio[0]->date??false )
 
@@ -96,18 +94,18 @@
                                                     </td
                                                 @else
 
-                                                    {{-- for first table column --}}                                                     
-                                                    <td class="border-r py-3"> 
-                                                        {{ $daily->user->name." = ".$daily->punch->count()."| ".$daily->punch[0]->date}} 
+                                                    {{-- for first table column --}}
+                                                    <td class="border-r py-3">
+                                                        {{ $daily->user->name." = ".$daily->punch->count()."| ".$daily->punch[0]->date}}
 
                                                         {{-- @if ($daily->updated_bio??false)
                                                             @foreach ( $daily->updated_bio as $index => $value )
-                                                                {{ "\n".$index."||".$value->hour}}  
-                                                            @endforeach                                                            
+                                                                {{ "\n".$index."||".$value->hour}}
+                                                            @endforeach
                                                         @endif --}}
-                                                       
-                                                       
-                                                    </td> 
+
+
+                                                    </td>
 
                                                     {{-- for second table column WITH 'HREF'--}}
                                                     <td class="border-r py-3">
