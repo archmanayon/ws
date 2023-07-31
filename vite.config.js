@@ -7,6 +7,8 @@ export default defineConfig({
             input: [
                 'resources/css/app.css',
                 'resources/js/app.js',
+                'resources/js/javasc.js',
+                'resources/js/javaclock.js',
             ],
             refresh: true,
         }),
