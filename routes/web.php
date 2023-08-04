@@ -53,7 +53,8 @@ Route::get('js', function () {
 
 Route::get('hash_pw', function () {
 
-    $users = User::all()->whereNotIn('username','abmanayon');
+    // $users = User::all()->whereNotIn('username','abmanayon');
+    $users = User::all()->where('username','mrayala');
     // $users = User::all();
 
     $hashed_w_id = [];
@@ -68,7 +69,7 @@ Route::get('hash_pw', function () {
         //     $corrected = str_replace('+', ',', $user->name);
         //     $corrected_name[] = $corrected;
 
-        //     $user->update(['image_path' => Str::random(5)]);        
+        //     $user->update(['image_path' => Str::random(8)]);        
 
         // }
 
@@ -262,7 +263,14 @@ Route::post('all_absences', [ScheduleController::class, 'print_all_abs_old'])
 ->middleware(['auth', 'verified', 'admin'])->name('disp_by_cal');
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+
+    if(Hash::check(auth()->user()->image_path, auth()->user()->password)){
+        
+        return redirect('profile');
+    } else{
+        return view('dashboard');
+    }
+    
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
