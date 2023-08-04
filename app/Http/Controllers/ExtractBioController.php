@@ -172,12 +172,12 @@ class ExtractBioController extends Controller
         {
             // $all_bio_punches = $sub_updated_bio->sortBy('biotext');
 
-            $all_bio_punches = $sub_updated_bio->pluck('hour')
+            $all_bio_punches = $sub_updated_bio->sortBy('biotext')->pluck('hour')
                 ->map(function ($hour, $in_out){
                     return (object) 
                         [
                             'hour' => $hour,
-                            'in_out' => $in_out,
+                            'in_out' => $in_out
                         ];
                     });
 
@@ -192,11 +192,9 @@ class ExtractBioController extends Controller
 
         } else {
 
-            $all_bio_punches = $merged->orderBy('biotext', 'asc')->with(['punchtype'])->get()
-            // ->sortBy('biotext')
-            ;
+            $all_bio_punches = $merged->orderBy('biotext', 'asc')->with(['punchtype'])->get();;
         }
-
+        
         // to extract punches for abs report
         $bio_am_in = $all_bio_punches[0]->hour??false;
         $bio_am_out = $all_bio_punches[1]->hour??false;
@@ -294,7 +292,7 @@ class ExtractBioController extends Controller
         if($sub_updated_bio->pluck('date')->contains( $str_date))
         {
             $all_bio_punches = $sub_updated_bio->sortBy('biotext');
-            $biot = $all_bio_punches;
+            
 
             // $all_bio_punches = $sub_updated_bio->pluck('hour')
             //     ->map(function ($hour, $in_out){
@@ -316,9 +314,10 @@ class ExtractBioController extends Controller
 
         } else {
 
-            $all_bio_punches = $merged->with(['punchtype'])->get()->sortBy('biotext');
-            $biot = $all_bio_punches;
+            $all_bio_punches = $merged->orderBy('biotext', 'asc')->with(['punchtype'])->get();
+            
         }
+        
 
         // to extract punches for abs report
         $bio_am_in = $all_bio_punches[0]->hour??false;
@@ -357,7 +356,7 @@ class ExtractBioController extends Controller
             'pm_in' => $pm_in,
             'pm_out' => $pm_out,
             'all_bio_punches' => $all_bio_punches,
-            'biot' => $biot,
+            
             'am_render' =>  round((strtotime($am_out) - strtotime($am_in))/3600,2) < 0 ? false :
                             round((strtotime($am_out) - strtotime($am_in))/3600,2),
 
