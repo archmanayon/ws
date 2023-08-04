@@ -271,8 +271,7 @@ class ExtractBioController extends Controller
                 SUBSTRING(biotext, 13, 4) AS hour,
                 SUBSTRING(biotext, 17, 1) AS in_out,
                 SUBSTRING(biotext, 1, 17) AS biotext,
-                SUBSTRING(punchtype_id, 1,1) AS punchtype_id,
-                SUBSTRING(biotext, 1, 16) AS biot
+                SUBSTRING(punchtype_id, 1,1) AS punchtype_id
                 '
         );
 
@@ -286,8 +285,7 @@ class ExtractBioController extends Controller
                 SUBSTRING(biotext, 13, 4) AS hour,
                 SUBSTRING(biotext, 17, 1) AS in_out,
                 SUBSTRING(biotext, 1, 17) AS biotext,
-                SUBSTRING(punchtype_id, 1,1) AS punchtype_id,
-                SUBSTRING(biotext, 1, 16) AS biot
+                SUBSTRING(punchtype_id, 1,1) AS punchtype_id
                 '
         );
 
@@ -296,6 +294,7 @@ class ExtractBioController extends Controller
         if($sub_updated_bio->pluck('date')->contains( $str_date))
         {
             $all_bio_punches = $sub_updated_bio->sortBy('biotext');
+            $biot = $all_bio_punches;
 
             // $all_bio_punches = $sub_updated_bio->pluck('hour')
             //     ->map(function ($hour, $in_out){
@@ -318,6 +317,7 @@ class ExtractBioController extends Controller
         } else {
 
             $all_bio_punches = $merged->with(['punchtype'])->get()->sortBy('biot');
+            $biot = $all_bio_punches;
         }
 
         // to extract punches for abs report
@@ -357,6 +357,7 @@ class ExtractBioController extends Controller
             'pm_in' => $pm_in,
             'pm_out' => $pm_out,
             'all_bio_punches' => $all_bio_punches,
+            'biot' => $biot,
             'am_render' =>  round((strtotime($am_out) - strtotime($am_in))/3600,2) < 0 ? false :
                             round((strtotime($am_out) - strtotime($am_in))/3600,2),
 
