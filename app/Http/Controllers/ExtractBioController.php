@@ -316,7 +316,7 @@ class ExtractBioController extends Controller
 
         } else {
 
-            $all_bio_punches = $merged->with(['punchtype'])->get()->sortBy('biot');
+            $all_bio_punches = $merged->with(['punchtype'])->get()->sortBy('biotext');
             $biot = $all_bio_punches;
         }
 
