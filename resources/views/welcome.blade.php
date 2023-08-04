@@ -47,10 +47,7 @@
 
                         <div class="flex mx-auto">
                             
-                            <h2 class="dark:text-white font-semibold text-gray-900 text-xl">
-
-                                
-                                    
+                            <h2 class="dark:text-white font-semibold text-gray-900 text-xl">   
                                
 
                                 @if (Route::has('login'))
