@@ -118,12 +118,12 @@
                             {{-- {{ $all_bio_punches }} --}}
                            
                            
-
+                            {{ $mappedUser[0]->user->image_path??'img_path_here' }}
                             @foreach ( $mappedUser as $daily)                                 
 
                                 @if ( $daily)
 
-                                    <tr class="bg-gray-700 border-b border-gray-600">
+                                    <tr class="bg-gray-700 border-b border-gray-600"> 
                                         
                                         <td class="px-4 py-3">
                                             {{ $daily->user->student_id}} 

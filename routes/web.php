@@ -18,7 +18,7 @@ use App\Http\Controllers\ExtractBioController;
 use App\Http\Controllers\BiometricController;
 use App\Http\Controllers\RawbioController;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Str;
 
 /*
     |--------------------------------------------------------------------------
@@ -53,17 +53,37 @@ Route::get('js', function () {
 
 Route::get('hash_pw', function () {
 
-    $users = User::all()->where('role_id',3);
+    // $users = User::all()->whereNotIn('username','abmanayon');
+    $users = User::all()->where('username','mrayala');
+    // $users = User::all();
 
     $hashed_w_id = [];
     $corrected_name = [];
 
+    // ---------->this updates from the column 'image_path'
+
+        // foreach($users as $user){        
+
+        //     $hashed = Hash::make($user->student_id.'usc');
+        //     $hashed_w_id[] = $user->name."'s PW is".$hashed;
+        //     $corrected = str_replace('+', ',', $user->name);
+        //     $corrected_name[] = $corrected;
+
+        //     $user->update(['image_path' => Str::random(8)]);        
+
+        // }
+
+    
+    
+    // ---------->this hashes
     foreach($users as $user){
 
-        $hashed = Hash::make($user->student_id.'usc');
+        $hashed = Hash::make($user->image_path);
         $hashed_w_id[] = $user->name."'s PW is".$hashed;
         $corrected = str_replace('+', ',', $user->name);
         $corrected_name[] = $corrected;
+
+        // $user->update(['password' => $hashed]);
 
         // User::where('id', $user->id)->update(['password' => $hashed]);
         // User::where('id', $user->id)->update(['name' => $corrected]);
@@ -243,7 +263,14 @@ Route::post('all_absences', [ScheduleController::class, 'print_all_abs_old'])
 ->middleware(['auth', 'verified', 'admin'])->name('disp_by_cal');
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+
+    if(Hash::check(auth()->user()->image_path, auth()->user()->password)){
+        
+        return redirect('profile');
+    } else{
+        return view('dashboard');
+    }
+    
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
