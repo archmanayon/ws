@@ -192,7 +192,9 @@ class ExtractBioController extends Controller
 
         } else {
 
-            $all_bio_punches = $merged->with(['punchtype'])->get()->sortBy('biotext');
+            $all_bio_punches = $merged->orderBy('biotext', 'asc')->with(['punchtype'])->get()
+            // ->sortBy('biotext')
+            ;
         }
 
         // to extract punches for abs report
@@ -269,7 +271,8 @@ class ExtractBioController extends Controller
                 SUBSTRING(biotext, 13, 4) AS hour,
                 SUBSTRING(biotext, 17, 1) AS in_out,
                 SUBSTRING(biotext, 1, 17) AS biotext,
-                SUBSTRING(punchtype_id, 1,1) AS punchtype_id
+                SUBSTRING(punchtype_id, 1,1) AS punchtype_id,
+                SUBSTRING(biotext, 1, 16) AS biot
                 '
         );
 
@@ -283,7 +286,8 @@ class ExtractBioController extends Controller
                 SUBSTRING(biotext, 13, 4) AS hour,
                 SUBSTRING(biotext, 17, 1) AS in_out,
                 SUBSTRING(biotext, 1, 17) AS biotext,
-                SUBSTRING(punchtype_id, 1,1) AS punchtype_id
+                SUBSTRING(punchtype_id, 1,1) AS punchtype_id,
+                SUBSTRING(biotext, 1, 16) AS biot
                 '
         );
 
@@ -313,7 +317,7 @@ class ExtractBioController extends Controller
 
         } else {
 
-            $all_bio_punches = $merged->with(['punchtype'])->get()->sortBy('biotext');
+            $all_bio_punches = $merged->with(['punchtype'])->get()->sortBy('biot');
         }
 
         // to extract punches for abs report

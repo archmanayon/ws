@@ -81,7 +81,7 @@
 
                                                 <tr class="bg-gray-700 border-b border-gray-600">
                                                     <td class="px-4 py-3">
-                                                        {{ $punch->biotext }}
+                                                        {{$punch->biot}}{{$loop->index % 2 == 0 ?"I":"O"}}
                                                     </td>
                                                 </tr>
 

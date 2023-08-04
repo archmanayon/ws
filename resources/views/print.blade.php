@@ -132,6 +132,7 @@
 
                                         <td class="px-4 py-3">
                                             {{ $daily->user->name}}
+                                            {{-- {{ 'sa abs' }} --}}
 
                                         <td>
                                             <x-dropdown relative='x' align='top'>
@@ -185,7 +186,8 @@
                                                 {{ $daily->user->student_id}}
                                             </td>
                                             <td class="px-4 py-3">
-                                                {{ $daily->user->name.'|sa und outside' }}
+                                                {{ $daily->user->name}}
+                                                                                               
                                             <td>
                                                 <x-dropdown relative='x' align='top'>
                                                     <x-slot name="trigger">
