@@ -182,7 +182,7 @@ class BiometricController extends Controller
 
                     // ----------------Updated bio ----------------------------------
 
-                    $updated_bio = $searched_user->update_bios->where('date', $d_date);                    
+                    $updated_bio = $searched_user->update_bios->where('active',1)->where('date', $d_date);                    
 
                     return (object) [
                         'punch'        => $merged->with(['punchtype'])->get()->sortBy('biotext'),

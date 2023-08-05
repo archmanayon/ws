@@ -192,7 +192,7 @@ class ExtractBioController extends Controller
 
         } else {
 
-            $all_bio_punches = $merged->orderBy('biotext', 'asc')->with(['punchtype'])->get();;
+            $all_bio_punches = $merged->orderBy('biotext', 'asc')->with(['punchtype'])->get();
         }
         
         // to extract punches for abs report
@@ -417,6 +417,7 @@ class ExtractBioController extends Controller
         // ----------------Updated bio ----------------------------------
 
         $updated_bio = Update_bio::where('time_card',$str_tc)
+        ->where('active',1)
         ->where('date',$str_date)->get();
 
         return view ('rawbio',[
