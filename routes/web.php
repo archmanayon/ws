@@ -18,6 +18,7 @@ use App\Http\Controllers\ExtractBioController;
 use App\Http\Controllers\BiometricController;
 use App\Http\Controllers\RawbioController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\SetupController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 
@@ -129,11 +130,13 @@ Route::get('text_files', [ScheduleController::class, 'text_files'])
 Route::post('text_files', [ScheduleController::class, 'text_files'])
 ->middleware(['auth', 'verified', 'admin'])->name('text_files_post');
 
+
 Route::get('register', [RegisteredUserController::class, 'create'])
-    ->middleware(['auth', 'verified', 'admin'])->name('register');
+    ->middleware(['auth', 'admin'])->name('register');
 
 
-Route::post('register', [RegisteredUserController::class, 'store']);
+Route::post('register', [RegisteredUserController::class, 'store'])
+    ->middleware(['auth', 'admin'])->name('register');
 
 // attendance summary per user
 Route::get('dtr', [RawbioController::class, 'dtr'])
@@ -186,7 +189,7 @@ Route::post('tardi_group', [TardiController::class, 'post_address'])
 ;
 
 
-// 03 tardi displays all tardiness sanction of owner
+// 04 tardi displays all tardiness sanction of owner
 Route::get('tardi', [TardiController::class, 'show_tardi'])
 ->middleware(['auth', 'verified', 'staff'])
 ->name('show_tardi');
@@ -194,6 +197,15 @@ Route::get('tardi', [TardiController::class, 'show_tardi'])
 Route::post('tardi', [TardiController::class, 'show'])
 ->middleware(['auth', 'verified', 'staff'])
 ->name('post_tardi');
+
+// 05 SETTING UP
+Route::get('setup', [SetupController::class, 'show'])
+->middleware(['auth', 'verified', 'admin'])
+->name('setup_show');
+
+Route::post('setup', [SetupController::class, 'store'])
+->middleware(['auth', 'verified', 'admin'])
+->name('setup_store');
 
 
 
