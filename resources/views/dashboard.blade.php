@@ -1,8 +1,8 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">                
-             
-               
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+
+
         </h2>
     </x-slot>
 
@@ -70,11 +70,11 @@
                                         Punch to Biometrics
                                 </a><br>
 
-                                <a href="setup" class="font-semibold text-gray-600
+                                {{-- <a href="setup" class="font-semibold text-gray-600
                                         hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
                                         focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
                                         S-E-T U-P  -  E-V-E-R-Y-T-H-I-N-G
-                                </a><br>
+                                </a><br> --}}
 
                         @endadmin
 
@@ -87,7 +87,7 @@
                                 </a><br>
                         @endws
 
-                        @staff                               
+                        @staff
 
                                 <a href="my_dtr" class="font-semibold text-gray-600
                                         hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
@@ -95,7 +95,7 @@
                                         View My DTR
                                 </a><br>
 
-                                
+
 
                                  <a href="tardi" class="font-semibold text-gray-600
                                         hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
@@ -138,8 +138,8 @@
 
                 <table>
                         <form method="POST" action="dashboard">
-                                @csrf                               
-                                
+                                @csrf
+
                                 <td>
                                 <div class="mt-4" >
                                         <x-input-label for="payroll_start" :value="__('payroll_start')" />
@@ -153,7 +153,7 @@
                                         <x-text-input id="payroll_end" class="block mt-1" type="date" name="payroll_end" :value="request('payroll_end')" required autofocus autocomplete="payroll_end" />
                                         <x-input-error :messages="$errors->get('payroll_end')" class="mt-2" />
                                 </div>
-                                </td>                            
+                                </td>
 
                                 <td>
 
@@ -168,7 +168,7 @@
                         </form>
                 </table>
                 @endadmin
-                
+
 
             </div>
         </div>

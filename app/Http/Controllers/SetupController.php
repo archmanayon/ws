@@ -12,22 +12,20 @@ class SetupController extends Controller
     public function show()
     {
         $setup = Setup::all()??false;
-       
+
         return view('setup',
         [
-
             'setup' => $setup
-
         ]);
     }
 
     public function store(Request $request)
-    {       
+    {
         $type_source    = request('type_source');
         $effective_date = request('effective_date');
 
-        $Date           = Carbon::create($effective_date);  
-        
+        $Date           = Carbon::create($effective_date);
+
         $validate_setup = $request->validate([
             'type_source' => ['required'],
             'effective_date' => ['required', 'date']
@@ -38,7 +36,7 @@ class SetupController extends Controller
             'type' => $validate_setup['type_source'],
             'date' => $validate_setup['effective_date']
         ]);
-        
+
         return redirect()->route('setup_show')
             // ->with([
             //     'user_session' => $user
@@ -49,6 +47,6 @@ class SetupController extends Controller
             //     // 'current_task' => $user->tasks
             // ])
         ;
-        
+
     }
 }
