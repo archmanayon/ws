@@ -70,11 +70,11 @@
                                         Punch to Biometrics
                                 </a><br>
 
-                                {{-- <a href="setup" class="font-semibold text-gray-600
+                                <a href="setup" class="font-semibold text-gray-600
                                         hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
                                         focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
                                         S-E-T U-P  -  E-V-E-R-Y-T-H-I-N-G
-                                </a><br> --}}
+                                </a><br>
 
                         @endadmin
 
@@ -133,42 +133,6 @@
 
 
                 </div>
-
-                @admin
-
-                <table>
-                        <form method="POST" action="dashboard">
-                                @csrf
-
-                                <td>
-                                <div class="mt-4" >
-                                        <x-input-label for="payroll_start" :value="__('payroll_start')" />
-                                        <x-text-input  id="payroll_start" class="block mt-1" type="date" name="payroll_start" :value="request('payroll_start')" required autofocus autocomplete="payroll_start" />
-                                        <x-input-error :messages="$errors->get('payroll_start')" class="mt-2" />
-                                </div>
-                                </td>
-                                <td>
-                                <div class="mt-4">
-                                        <x-input-label for="payroll_end" :value="__('payroll_end')" />
-                                        <x-text-input id="payroll_end" class="block mt-1" type="date" name="payroll_end" :value="request('payroll_end')" required autofocus autocomplete="payroll_end" />
-                                        <x-input-error :messages="$errors->get('payroll_end')" class="mt-2" />
-                                </div>
-                                </td>
-
-                                <td>
-
-                                <div class="mt-4 order-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600
-                                focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
-                                        <button type="submit" name="submit_indi" value="">
-                                        Submit
-                                        </button>
-                                </div>
-                                </td>
-
-                        </form>
-                </table>
-                @endadmin
-
 
             </div>
         </div>
