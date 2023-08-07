@@ -136,7 +136,7 @@ Route::get('register', [RegisteredUserController::class, 'create'])
 
 
 Route::post('register', [RegisteredUserController::class, 'store'])
-    ->middleware(['admin']);
+    ->middleware(['admin'])->name('register_store');
 
 // attendance summary per user
 Route::get('dtr', [RawbioController::class, 'dtr'])
