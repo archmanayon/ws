@@ -102,8 +102,8 @@ class ScheduleController extends Controller{
             'mappedUser'    => $user,
              // 'users'     => $test_string,
             'users'         => $ws,
-            'payroll_start' => $payroll_start,
-            'payroll_end'   => $payroll_end
+            'payroll_start' => $payroll_start ?? false,
+            'payroll_end'   => $payroll_end ?? false
 
         ]);
     }

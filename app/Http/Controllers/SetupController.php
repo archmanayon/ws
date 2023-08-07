@@ -15,7 +15,7 @@ class SetupController extends Controller
 
         return view('setup',
         [
-            'setup' => $setup
+            'setup' => $setup??false
         ]);
     }
 
