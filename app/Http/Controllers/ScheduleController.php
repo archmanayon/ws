@@ -69,7 +69,12 @@ class ScheduleController extends Controller{
     }
 
     public function owner_abs(User $ws)
-    {     
+    {
+
+        // $payroll_start  = Setup::find(2);
+        $payroll_start  = Carbon::create(Setup::find(1)->date);
+        $payroll_end    = Carbon::create(Setup::find(2)->date);
+
         $holiday = array("01-05-23","01-06-23",
                             "02-24-23", "02-25-23",
                             "04-06-23", "04-07-23",
@@ -97,8 +102,8 @@ class ScheduleController extends Controller{
             'mappedUser'    => $user,
              // 'users'     => $test_string,
             'users'         => $ws,
-            'payroll_start' => Carbon::create(Setup::find(1)->date)->format('m/d/Y')?? false,
-            'payroll_end'   => Carbon::create(Setup::find(2)->date)->format('m/d/Y')?? false
+            'payroll_start' => $payroll_start,
+            'payroll_end'   => $payroll_end
 
         ]);
     }
