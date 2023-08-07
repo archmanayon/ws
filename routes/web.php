@@ -64,19 +64,19 @@ Route::get('hash_pw', function () {
 
     // ---------->this updates from the column 'image_path'
 
-        // foreach($users as $user){        
+        // foreach($users as $user){
 
         //     $hashed = Hash::make($user->student_id.'usc');
         //     $hashed_w_id[] = $user->name."'s PW is".$hashed;
         //     $corrected = str_replace('+', ',', $user->name);
         //     $corrected_name[] = $corrected;
 
-        //     $user->update(['image_path' => Str::random(8)]);        
+        //     $user->update(['image_path' => Str::random(8)]);
 
         // }
 
-    
-    
+
+
     // ---------->this hashes
     foreach($users as $user){
 
@@ -131,12 +131,12 @@ Route::post('text_files', [ScheduleController::class, 'text_files'])
 ->middleware(['auth', 'verified', 'admin'])->name('text_files_post');
 
 
-Route::get('register', [RegisteredUserController::class, 'create'])
-    ->middleware(['auth', 'admin'])->name('register');
+// Route::get('register', [RegisteredUserController::class, 'create'])
+//     ->middleware(['auth', 'admin'])->name('register');
 
 
-Route::post('register', [RegisteredUserController::class, 'store'])
-    ->middleware(['auth', 'admin'])->name('register');
+// Route::post('register', [RegisteredUserController::class, 'store'])
+//     ->middleware(['auth', 'admin'])->name('register');
 
 // attendance summary per user
 Route::get('dtr', [RawbioController::class, 'dtr'])
@@ -282,12 +282,12 @@ Route::post('all_absences', [ScheduleController::class, 'print_all_abs_old'])
 Route::get('/dashboard', function () {
 
     if(Hash::check(auth()->user()->image_path, auth()->user()->password)){
-        
+
         return redirect('profile');
     } else{
         return view('dashboard');
     }
-    
+
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
@@ -316,7 +316,7 @@ Route::get('/dashboard', function () {
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');   
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 
