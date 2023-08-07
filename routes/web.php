@@ -131,12 +131,12 @@ Route::post('text_files', [ScheduleController::class, 'text_files'])
 ->middleware(['auth', 'verified', 'admin'])->name('text_files_post');
 
 
-// Route::get('register', [RegisteredUserController::class, 'create'])
-//     ->middleware(['auth', 'admin'])->name('register');
+Route::get('register', [RegisteredUserController::class, 'create'])
+    ->middleware(['admin'])->name('register');
 
 
-// Route::post('register', [RegisteredUserController::class, 'store'])
-//     ->middleware(['auth', 'admin'])->name('register');
+Route::post('register', [RegisteredUserController::class, 'store'])
+    ->middleware(['admin'])->name('register_store');
 
 // attendance summary per user
 Route::get('dtr', [RawbioController::class, 'dtr'])
