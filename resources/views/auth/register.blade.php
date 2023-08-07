@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('register_store') }}">
+    <form method="POST" action="{{ route('register') }}">
         @csrf
 
         <!-- active -->
