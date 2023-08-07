@@ -11,8 +11,7 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     {{ __("You're logged in!") }}<br>
-                    {{ auth()->user()->student_id }}                    
-
+                    {{ auth()->user()->student_id }}
                 </div>
 
                 <div class="p-6 text-gray-900 dark:text-gray-100">
@@ -128,6 +127,38 @@
 
 
                 </div>
+
+                <table>
+                        <form method="POST" action="dashboard">
+                            @csrf                               
+                            
+                            <td>
+                                <div class="mt-4" >
+                                    <x-input-label for="payroll_start" :value="__('payroll_start')" />
+                                    <x-text-input  id="payroll_start" class="block mt-1" type="date" name="payroll_start" :value="request('payroll_start')" required autofocus autocomplete="payroll_start" />
+                                    <x-input-error :messages="$errors->get('payroll_start')" class="mt-2" />
+                                </div>
+                            </td>
+                            <td>
+                                <div class="mt-4">
+                                    <x-input-label for="payroll_end" :value="__('payroll_end')" />
+                                    <x-text-input id="payroll_end" class="block mt-1" type="date" name="payroll_end" :value="request('payroll_end')" required autofocus autocomplete="payroll_end" />
+                                    <x-input-error :messages="$errors->get('payroll_end')" class="mt-2" />
+                                </div>
+                            </td>                            
+    
+                            <td>
+    
+                                <div class="mt-4 order-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600
+                                focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
+                                    <button type="submit" name="submit_indi" value="">
+                                        Submit
+                                    </button>
+                                </div>
+                            </td>
+        
+                        </form>
+                    </table>
 
             </div>
         </div>
