@@ -32,7 +32,7 @@ Route::middleware('guest')->group(function () {
 });
 
     Route::get('register', [RegisteredUserController::class, 'create'])
-        ->middleware('admin')->name('register');
+        ->middleware(['auth', 'verified', 'admin'])->name('register');
 
 
     Route::post('register', [RegisteredUserController::class, 'store']);
