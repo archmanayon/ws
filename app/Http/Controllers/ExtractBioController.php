@@ -426,7 +426,7 @@ class ExtractBioController extends Controller
             'str_tc'        =>  $str_tc ?? false,
             'str_date'      =>  $str_date ?? false,
             'searched_user' =>  $searched_user ?? false,
-            'rawbio'        =>  $merged->with(['punchtype'])->get()->sortBy('biotext'),
+            'rawbio'        =>  $merged->orderBy('biotext', 'asc')->with(['punchtype'])->get(),
             'orig_bio'      =>  $orig_bio->with(['punchtype'])->get()->sortBy('biotext'),
             'official'      =>  $official ?? false,
             'updated_bio'   =>  $updated_bio->sortBy('biotext')?? false,

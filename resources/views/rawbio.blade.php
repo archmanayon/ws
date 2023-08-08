@@ -44,7 +44,7 @@
 
                                 @php $inde_x = 4; @endphp
 
-                                @foreach ($rawbio->sortBy('biotext') as $bio_punch)
+                                @foreach ($rawbio as $bio_punch)
 
                                     <tr>    <td></td>
                                         <td class="px-4 py-3">
