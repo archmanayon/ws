@@ -55,7 +55,7 @@ class RawbioController extends Controller
             'mapped_days' =>  $mappedArray,
             
             // for choices of employees only
-            'users'        => User::all()->where('active', true)->where('role_id', 2)
+            'users'        => User::all()->where('active', true)
 
         ]);
     }
