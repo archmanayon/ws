@@ -73,10 +73,6 @@
                                             'Out with your ID') :
                                             'In with your ID') }} --}}
                                     </x-primary-button>
-<<<<<<< 3ab7f47e6768b4bc0f9c41899a9ffdf075840988
-=======
-                                    <br>{{ $ip??false }}
->>>>>>> in punch controller. make ip request and display in shcp-view
 
                                 </div>
                             </form>

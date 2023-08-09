@@ -14,7 +14,7 @@ use App\Http\Controllers\AuthenticatedSessionController;
 
 class PunchController extends Controller
 {
-    public function show(Request $request)
+    public function show()
     {
         $Date           = Carbon::now('Asia/Kuala_Lumpur');
         $currentDate    = $Date->format('mdy');
@@ -23,10 +23,6 @@ class PunchController extends Controller
         $searched_user  = User::where('student_id', $usc_id)->first();
         $punches        = $usc_id ? $searched_user->punches->where('date', $currentDate) : false;
         $in_out         = $punches?($punches->pluck('in_out')->last() === 'I' ? 'O' : 'I'):false;
-<<<<<<< 3ab7f47e6768b4bc0f9c41899a9ffdf075840988
-=======
-        $ip             = $request->ip();
->>>>>>> in punch controller. make ip request and display in shcp-view
 
         return view('shcp',[
 
@@ -37,12 +33,7 @@ class PunchController extends Controller
             'usc_id'        => $usc_id,
             'punches_today' => $punches,
             'end'           => $usc_id? $searched_user->timecard.$currentDate.$current_time.$in_out:false,
-<<<<<<< 3ab7f47e6768b4bc0f9c41899a9ffdf075840988
             'in_out'        => $in_out
-=======
-            'in_out'        => $in_out,
-            'ip'            => $ip 
->>>>>>> in punch controller. make ip request and display in shcp-view
 
         ]);
 
