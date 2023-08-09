@@ -1,6 +1,7 @@
 @php
     use Illuminate\Support\Str;
-    use \Carbon\Carbon;
+    use Carbon\Carbon;
+    use Carbon\CarbonPeriod;
     use App\Models\User;
     use App\Models\Setup;
     
@@ -32,8 +33,12 @@
                     <table>
                         <form method="POST" action="{{auth()->user()->username}}">
                             @csrf    
-                            
-                            
+
+                            {{-- @php
+                                $Slctd_date = request('start_date')?Carbon::create(request('start_date'))->format('Y-m-d'):false;
+                            @endphp
+                           <br>{{ $Slctd_date < $payroll_start->format('Y-m-d') ? $payroll_start->format('Y-m-d') : $Slctd_date }} --}}
+
                             <td>
                                 <div class="mt-4" >
                                     <x-input-label for="start_date" :value="__('Start Date')" />
