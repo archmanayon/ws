@@ -84,11 +84,14 @@ class ScheduleController extends Controller{
 
         $start_date = request('start_date')?? 0;
         $end_date = request('end_date')?? 0;
+        // $start_date = request('start_date') < $payroll_start->format('Y-m-d') ? $payroll_start->format('Y-m-d') : request('start_date');
+                        
+        // $end_date = request('end_date') > $payroll_end->format('Y-m-d') ? $payroll_end->format('Y-m-d') : request('end_date');
+
         $period = CarbonPeriod::create($start_date, $end_date);
         $dates = $period->toArray();
         $collection = collect($dates);
         $count_dates = $period->count();
-
 
         $user = app()->call(AbsenceCalendarController::class.'@adea_bio',
         [

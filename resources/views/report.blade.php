@@ -34,10 +34,7 @@
                         <form method="POST" action="{{auth()->user()->username}}">
                             @csrf    
 
-                            {{-- @php
-                                $Slctd_date = request('start_date')?Carbon::create(request('start_date'))->format('Y-m-d'):false;
-                            @endphp
-                           <br>{{ $Slctd_date < $payroll_start->format('Y-m-d') ? $payroll_start->format('Y-m-d') : $Slctd_date }} --}}
+                          
 
                             <td>
                                 <div class="mt-4" >
