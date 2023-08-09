@@ -14,7 +14,7 @@ use App\Http\Controllers\AuthenticatedSessionController;
 
 class PunchController extends Controller
 {
-    public function show()
+    public function show(Request $request)
     {
         $Date           = Carbon::now('Asia/Kuala_Lumpur');
         $currentDate    = $Date->format('mdy');
@@ -33,7 +33,8 @@ class PunchController extends Controller
             'usc_id'        => $usc_id,
             'punches_today' => $punches,
             'end'           => $usc_id? $searched_user->timecard.$currentDate.$current_time.$in_out:false,
-            'in_out'        => $in_out
+            'in_out'        => $in_out,
+            'ip'            => $request->ip()
 
         ]);
 
@@ -82,7 +83,9 @@ class PunchController extends Controller
                     'hour'      =>  $current_time,
                     'in_out'    =>  $in_out,
                     'biotext'   =>  $searched_user->timecard.$currentDate.$current_time.$in_out,
-                    'punchtype_id' => 8
+                    'punchtype_id' => 8,
+                    'ip'        => request('i_p')?? 0
+
                 ]);
 
                 return redirect()->route('show_punches')

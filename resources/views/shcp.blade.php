@@ -74,6 +74,10 @@
                                             'In with your ID') }} --}}
                                     </x-primary-button>
 
+                                    {{-- <br> {{ $ip }} --}}
+                                    
+                                    <input id="i_p" type="hidden" name="i_p" value="{{ $ip??0 }}"/>
+
                                 </div>
                             </form>
                             {{-- <td>
