@@ -89,7 +89,6 @@ class ScheduleController extends Controller{
         $collection = collect($dates);
         $count_dates = $period->count();
 
-
         $user = app()->call(AbsenceCalendarController::class.'@adea_bio',
         [
             'collection_of_dates' => $collection,
