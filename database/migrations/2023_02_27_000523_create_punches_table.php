@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('biotext')->unique();
             $table->foreignId('punchtype_id')->nullable();
             $table->boolean('active')->default(true);
+            $table->string('ip')->nullable();
             $table->timestamps();
         });
     }

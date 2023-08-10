@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use Illuminate\Support\Str;
 
 class RegisteredUserController extends Controller
 {
@@ -35,10 +36,14 @@ class RegisteredUserController extends Controller
             'timecard' => ['required', 'string','min:6', 'max:6'],
             'student_id' => ['required', 'string','min:7', 'max:8'],
             'name' => ['required', 'string','min:3', 'max:255'],
-            'username' => ['required', 'string','min:3', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'shift_id' => ['required', 'min:1', 'max:6'],
+            // 'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'role_id' => ['required', 'min:1', 'max:2'],
+            'head_id' => ['required', 'min:1', 'max:2'],
         ]);
+
+        $random_pw = Str::random(8);
 
         // $user = User::create([
 
@@ -46,14 +51,18 @@ class RegisteredUserController extends Controller
         //     'timecard' => $request->timecard,
         //     'student_id' => $request->student_id,
         //     'name' => $request->name,
-        //     'username' => $request->username,
+        //     'username' => Str::beforeLast($request->email, '@'),
         //     'email' => $request->email,
-        //     'password' => Hash::make($request->password)
+        //     'password' => Hash::make($random_pw),
+        //     'image_path' => $random_pw,
+        //     'shift_id' => $request->shift_id,
+        //     'role_id' => $request->role_id,
+        //     'head_id' => $request->head_id,
         // ]);
 
-        // event(new Registered($user));
+        event(new Registered($user));
 
-        // Auth::login($user);
+        Auth::login($user);
 
         return redirect(RouteServiceProvider::HOME);
     }

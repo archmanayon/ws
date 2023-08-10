@@ -1,4 +1,6 @@
+
 <x-guest-layout>
+
     <form method="POST" action="{{ route('register') }}">
         @csrf
 
@@ -27,14 +29,7 @@
             <x-input-label for="name" :value="__('Name')" />
             <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
-        </div>
-
-        <!-- Username -->
-        <div class="mt-4">
-            <x-input-label for="username" :value="__('username')" />
-            <x-text-input id="username" class="block mt-1 w-full" type="text" name="username" :value="old('username')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('username')" class="mt-2" />
-        </div>
+        </div>       
 
         <!-- Email Address -->
         <div class="mt-4">
@@ -43,8 +38,28 @@
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
-        <!-- Password -->
+        <!-- Shift ID -->
         <div class="mt-4">
+            <x-input-label for="shift_id" :value="__('Shift')" />
+            <x-text-input id="shift_id" class="block mt-1 w-full" type="number" name="shift_id" :value="old('shift_id')" required autocomplete="shift_id" />
+            <x-input-error :messages="$errors->get('shift_id')" class="mt-2" />
+        </div>
+
+         <!-- Role ID -->
+         <div class="mt-4">
+            <x-input-label for="role_id" :value="__('Role')" />
+            <x-text-input id="role_id" class="block mt-1 w-full" type="number" name="role_id" :value="old('role_id')" required autocomplete="role_id" />
+            <x-input-error :messages="$errors->get('role_id')" class="mt-2" />
+        </div>
+         <!-- Head ID -->
+         <div class="mt-4">
+            <x-input-label for="head_id" :value="__('Head Id')" />
+            <x-text-input id="head_id" class="block mt-1 w-full" type="number" name="head_id" :value="old('head_id')" required autocomplete="head_id" />
+            <x-input-error :messages="$errors->get('head_id')" class="mt-2" />
+        </div>
+
+        <!-- Password -->
+        {{-- <div class="mt-4">
             <x-input-label for="password" :value="__('Password')" />
 
             <x-text-input id="password" class="block mt-1 w-full"
@@ -53,10 +68,10 @@
                             required autocomplete="new-password" />
 
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
+        </div> --}}
 
         <!-- Confirm Password -->
-        <div class="mt-4">
+        {{-- <div class="mt-4">
             <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
 
             <x-text-input id="password_confirmation" class="block mt-1 w-full"
@@ -64,7 +79,7 @@
                             name="password_confirmation" required autocomplete="new-password" />
 
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
+        </div> --}}
 
         <div class="flex items-center justify-end mt-4">
             <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('login') }}">

@@ -56,7 +56,7 @@ Route::get('js', function () {
 Route::get('hash_pw', function () {
 
     // $users = User::all()->whereNotIn('username','abmanayon');
-    $users = User::all()->where('username','mrayala');
+    $users = User::all()->where('username','chose name');
     // $users = User::all();
 
     $hashed_w_id = [];
