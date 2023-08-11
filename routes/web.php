@@ -154,6 +154,11 @@ Route::post('my_dtr', [RawbioController::class, 'my_dtr'])
 
 
 
+Route::get('my_dtr_pdf', [RawbioController::class, 'my_dtr_pdf'])
+->middleware(['auth', 'verified', 'admin'])->name('my_dtr_pdf');
+
+
+
 
 // tardiness
 
