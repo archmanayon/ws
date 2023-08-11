@@ -54,7 +54,7 @@ class RawbioController extends Controller
         return view('dtr', [
 
             'mapped_days' =>  $mappedArray,
-            
+
             // for choices of employees only
             'users'        => User::all()->where('active', true)
 
@@ -92,10 +92,10 @@ class RawbioController extends Controller
         return view('my_dtr', [
 
             'mapped_days'   =>  $mappedArray,
-            
+
             // for choices of employees only
             'user'          => $searched_user
-            
+
 
         ]);
     }
@@ -130,23 +130,23 @@ class RawbioController extends Controller
 
         $pdf = PDF::loadview('pdf.my_dtr_pdf', [
 
-            'mapped_days'   =>  $mappedArray,            
+            'mapped_days'   =>  $mappedArray,
             'user'          => $searched_user
 
         ]);
         return $pdf->stream();
 
-        // return $pdf->download('my_dtr_pdf.pdf');       
+        // return $pdf->download('my_dtr_pdf.pdf');
 
-        // return view('pdf.my_dtr_pdf', [            
+        // return view('pdf.my_dtr_pdf', [
 
         //     'mapped_days'   =>  $mappedArray,
-            
+
         //     // for choices of employees only
         //     'user'          => $searched_user
 
         // ]);
 
-        
+
     }
 }
