@@ -19,6 +19,7 @@ use App\Models\Update_bio;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
+use PDF;
 
 class RawbioController extends Controller
 {
@@ -127,14 +128,23 @@ class RawbioController extends Controller
             ]
         );
 
-        return view('pdf.my_dtr_pdf', [
+        $pdf = PDF::loadview('pdf.my_dtr_pdf', [
 
-            'mapped_days'   =>  $mappedArray,
-            
-            // for choices of employees only
+            'mapped_days'   =>  $mappedArray,            
             'user'          => $searched_user
-            
 
         ]);
+        return $pdf->download('my_dtr_pdf.pdf');       
+
+        // return view('pdf.my_dtr_pdf', [            
+
+        //     'mapped_days'   =>  $mappedArray,
+            
+        //     // for choices of employees only
+        //     'user'          => $searched_user
+
+        // ]);
+
+        
     }
 }
