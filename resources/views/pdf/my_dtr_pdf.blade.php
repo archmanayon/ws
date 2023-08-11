@@ -3,7 +3,7 @@
     <style>
 
         table {
-
+            margin-top: 10px;
             border-collapse: collapse;
         }
 
@@ -15,12 +15,29 @@
             padding-right: 10px;
         }
 
-        div{
-            margin: 10px;
+        .usc_logo_container{
+            margin-top: 2px;
+            position: relative;
+            background-size: cover;
+            opacity: 0.25; /* Set the opacity to 50% */
         }
+
+        .usc_img{
+            position: absolute;
+            top: 15px; /* Adjust the value to position from the top */
+            left: 2px; /* Center the logo horizontally */
+        }
+
+        div{
+            margin: 0px;
+        }
+
 
     </style>
 
+    <div class="usc_logo_container">
+        <img class="usc_img" src="images/bblogo.png" alt="AiC" width="400" height="90">
+    </div>
     <div class="p-6 text-gray-900 dark:text-gray-100">
         {{ auth()->user()->name }}<br>
     </div>
@@ -35,8 +52,6 @@
             <th class="px-4 py-3">Time
             </th>
             <th class="px-4 py-3">
-            </th>
-            <th class="px-4 py-3">Source
             </th>
 
         </thead>
@@ -63,10 +78,6 @@
 
                             <td class="px-4 py-3">
                                 {{ $punch->in_out }}
-                            </td>
-
-                                <td class="px-4 py-3">
-                                {{ $punch->punchtype->punchtype??false }}
                             </td>
 
                         </tr>
