@@ -147,15 +147,15 @@ Route::post('dtr', [RawbioController::class, 'dtr'])
 
 
 Route::get('my_dtr', [RawbioController::class, 'my_dtr'])
-->middleware(['auth', 'verified'])->name('my_dtr');
+->middleware(['auth', 'verified', 'staff'])->name('my_dtr');
 
 Route::post('my_dtr', [RawbioController::class, 'my_dtr'])
-->middleware(['auth', 'verified'])->name('my_dtr_post');
+->middleware(['auth', 'verified', 'staff'])->name('my_dtr_post');
 
 
 
 Route::get('my_dtr_pdf', [RawbioController::class, 'my_dtr_pdf'])
-->middleware(['auth', 'verified', 'admin'])->name('my_dtr_pdf');
+->middleware(['auth', 'verified', 'staff'])->name('my_dtr_pdf');
 
 
 
@@ -216,7 +216,9 @@ Route::post('setup', [SetupController::class, 'store'])
 
 // tasks
 Route::get('task', [TaskController::class, 'show'])
-->middleware(['auth', 'verified', 'staff'])
+->middleware(['auth', 'verified', 
+// 'staff',
+'admin'])
 ->name('show_task');
 
 Route::post('task', [TaskController::class, 'store'])
