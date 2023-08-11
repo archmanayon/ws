@@ -134,7 +134,9 @@ class RawbioController extends Controller
             'user'          => $searched_user
 
         ]);
-        return $pdf->download('my_dtr_pdf.pdf');       
+        return $pdf->stream();
+
+        // return $pdf->download('my_dtr_pdf.pdf');       
 
         // return view('pdf.my_dtr_pdf', [            
 
