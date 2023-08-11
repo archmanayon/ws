@@ -19,7 +19,7 @@ use App\Models\Update_bio;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
-use PDF;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class RawbioController extends Controller
 {
@@ -128,7 +128,7 @@ class RawbioController extends Controller
             ]
         );
 
-        $pdf = PDF::loadview('pdf.my_dtr_pdf', [
+        $pdf = Pdf::loadview('pdf.my_dtr_pdf', [
 
             'mapped_days'   =>  $mappedArray,
             'user'          => $searched_user
