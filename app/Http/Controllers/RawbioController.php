@@ -137,18 +137,18 @@ class RawbioController extends Controller
 
         ]);  
 
-        return $pdf->download("{$searched_user->username}|{$start_date} to {$end_date}.pdf");
+        // return $pdf->download("{$searched_user->username}|{$start_date} to {$end_date}.pdf");
+        // return $pdf->stream();
 
-        // return $pdf;
+        
+        return view('pdf.my_dtr_pdf', [
 
-        // return view('pdf.my_dtr_pdf', [
+            'mapped_days'   =>  $mappedArray,
 
-        //     'mapped_days'   =>  $mappedArray,
+            // for choices of employees only
+            'user'          => $searched_user
 
-        //     // for choices of employees only
-        //     'user'          => $searched_user
-
-        // ]);
+        ]);
 
 
     }
