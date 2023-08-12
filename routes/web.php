@@ -157,6 +157,9 @@ Route::post('my_dtr', [RawbioController::class, 'my_dtr'])
 Route::get('my_dtr_pdf/{selected_dates}', [RawbioController::class, 'my_dtr_pdf'])
 ->middleware(['auth', 'verified', 'staff'])->name('my_dtr_pdf');
 
+Route::get('to_exel/{selected_dates}', [RawbioController::class, 'my_dtr_exel'])
+->middleware(['auth', 'verified', 'staff'])->name('my_dtr_exel');
+
 
 
 

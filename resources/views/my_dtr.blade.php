@@ -55,6 +55,10 @@
                     <a href="my_dtr_pdf/{{ request('start_date')??0 }}to{{ request('end_date')??0 }}"> {{ 'To PDF' }} </a>                   
                 </div>
 
+                <div class="absolute bg-indigo-50 mt-8 rounded text-green-600 w-16">
+                    <a href="to_exel/{{ request('start_date')??0 }}to{{ request('end_date')??0 }}"> {{ 'To Exel' }} </a>                   
+                </div>
+
                 <div class="p-6 text-gray-900 dark:text-gray-100 border">
 
                     <p class="text-lg text-center font-bold m-5"></p>
