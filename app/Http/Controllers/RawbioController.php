@@ -183,7 +183,10 @@ class RawbioController extends Controller
                 'holiday' => $holiday
             ]
         );
-            dd('this is exel area');               
+            dd('this is exel area');
+
+        return Excel::download(new UsersExport($selected_dates), 'dtr.xlsx');
+
         // return view('pdf.my_dtr_pdf', [
 
         //     'mapped_days'   =>  $mappedArray,
