@@ -52,7 +52,7 @@
 
                 </div>
                 <div class="absolute bg-indigo-50 rounded text-red-600 w-16">
-                    <a href="my_dtr/{{ request('start_date')??false }}to{{ request('end_date')??false }}"> {{ 'To PDF' }} </a>                   
+                    <a href="my_dtr_pdf/{{ request('start_date')??0 }}to{{ request('end_date')??0 }}"> {{ 'To PDF' }} </a>                   
                 </div>
 
                 <div class="p-6 text-gray-900 dark:text-gray-100 border">
