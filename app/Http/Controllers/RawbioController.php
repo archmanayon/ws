@@ -131,9 +131,11 @@ class RawbioController extends Controller
         $pdf = Pdf::loadview('pdf.my_dtr_pdf', [
 
             'mapped_days'   =>  $mappedArray,
-            'user'          => $searched_user
+            'user'          => $searched_user,
+
 
         ]);
+        
         // return $pdf;
 
         return $pdf->download("{$searched_user->username}|{$start_date} to {$end_date}.pdf");
