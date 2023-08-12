@@ -100,8 +100,10 @@ class RawbioController extends Controller
         ]);
     }
 
-    public function my_dtr_pdf()
+    public function my_dtr_pdf($selected_dates)
     {
+        $searched_user = auth()->user()??false;
+
         $holiday = array(
             "01-05-23", "01-06-23",
             "02-24-23", "02-25-23",
@@ -110,10 +112,9 @@ class RawbioController extends Controller
             "04-21-23", "06-12-23", "06-28-23"
         );
 
-        $searched_user = auth()->user()??false;
-
-        $start_date = request('st') ?? 0;
-        $end_date = request('en') ?? 0;
+        $split = explode('to', $selected_dates);
+        $start_date = $split[0] ?? 0;
+        $end_date = $split[1] ?? 0;
         $period = CarbonPeriod::create($start_date, $end_date);
         $dates = $period->toArray();
         $collection_of_dates = collect($dates);
@@ -138,16 +139,16 @@ class RawbioController extends Controller
         
         // return $pdf;
 
-        return $pdf->download("{$searched_user->username}|{$start_date} to {$end_date}.pdf");
+        // return $pdf->download("{$searched_user->username}|{$start_date} to {$end_date}.pdf");
 
-        // return view('pdf.my_dtr_pdf', [
+        return view('pdf.my_dtr_pdf', [
 
-        //     'mapped_days'   =>  $mappedArray,
+            'mapped_days'   =>  $mappedArray,
 
-        //     // for choices of employees only
-        //     'user'          => $searched_user
+            // for choices of employees only
+            'user'          => $searched_user
 
-        // ]);
+        ]);
 
 
     }
