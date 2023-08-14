@@ -78,7 +78,7 @@
 
                 <div class="p-6 text-gray-900 dark:text-gray-100 border">  
 
-                    <p class="text-lg text-center font-bold m-5">Dark Table Design</p>
+                    <p class="text-lg text-center font-bold m-5"></p>
                     
                         <table class="rounded-t-lg m-5 w-5/6 mx-auto bg-gray-800 text-gray-200">
                             <tr class="text-left border-b border-gray-300">

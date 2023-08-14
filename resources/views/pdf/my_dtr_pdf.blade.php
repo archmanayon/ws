@@ -105,9 +105,9 @@
                                     <td class="px-4 py-3">
                                         {{ $punch->in_out }}
                                     </td>
-                                    <td class="px-4 py-3">
+                                    {{-- <td class="px-4 py-3">
                                         {{$l }}
-                                    </td>
+                                    </td> --}}
 
                                 </tr>
 
@@ -142,9 +142,7 @@
                 @foreach ( $mapped_days as $daily)
 
                     @if ($daily && $loop->index > 15 && $loop->index <= 30)
-
-                        @php $l = $loop->index; @endphp
-
+                        
                         @foreach ($daily->orig_raw_bio as $punch)
 
                             @if ($punch)
@@ -164,9 +162,9 @@
                                     <td class="px-4 py-3">
                                         {{ $punch->in_out }}
                                     </td>
-                                    <td class="px-4 py-3">
+                                    {{-- <td class="px-4 py-3">
                                         {{$l }}
-                                    </td>
+                                    </td> --}}
 
                                 </tr>
 
@@ -202,8 +200,6 @@
 
                     @if ($daily && $loop->index > 30 && $loop->index <=45)
 
-                        @php $l = $loop->index; @endphp
-
                         @foreach ($daily->orig_raw_bio as $punch)
 
                             @if ($punch)
@@ -223,9 +219,9 @@
                                     <td class="px-4 py-3">
                                         {{ $punch->in_out }}
                                     </td>
-                                    <td class="px-4 py-3">
+                                    {{-- <td class="px-4 py-3">
                                         {{$l }}
-                                    </td>
+                                    </td> --}}
 
                                 </tr>
 
