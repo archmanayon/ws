@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('rawbios', function (Blueprint $table) {
             $table->id();
-            $table->string('biotext')->unique();
+            $table->string('biotext', 17)->unique();
             $table->foreignId('punchtype_id')->nullable();
             $table->timestamps();
             $table->boolean('active')->nullable()->default(true);
