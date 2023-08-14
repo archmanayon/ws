@@ -156,36 +156,17 @@ class RawbioController extends Controller
     }
 
     public function my_dtr_exel($selected_dates)
-    {
+    {       
         $searched_user = auth()->user()??false;
-
-        $holiday = array(
-            "01-05-23", "01-06-23",
-            "02-24-23", "02-25-23",
-            "04-06-23", "04-07-23",
-            "04-08-23", "04-10-23", "05-01-23",
-            "04-21-23", "06-12-23", "06-28-23"
-        );
-
+        
         $split = explode('to', $selected_dates);
         $start_date = $split[0] ?? 0;
         $end_date = $split[1] ?? 0;
-        $period = CarbonPeriod::create($start_date, $end_date);
-        $dates = $period->toArray();
-        $collection_of_dates = collect($dates);
-        $count_dates = $period->count();
-
-        $mappedArray = app()->call(
-            BiometricController::class . '@text_files_part_2',
-            [
-                'collection_of_dates' => $collection_of_dates,
-                'searched_user' => $searched_user,
-                'holiday' => $holiday
-            ]
-        );
-            dd('this is exel area');
-
-        return Excel::download(new UsersExport($selected_dates), 'dtr.xlsx');
+            
+        // return Excel::download(new RawbioExport(), 'dtr.xlsx');
+        return Excel::download(new RawbioExport($selected_dates), 
+            "dtr|{$searched_user->username}|{$start_date} to {$end_date}.xlsx");
+        
 
         // return view('pdf.my_dtr_pdf', [
 
