@@ -139,8 +139,8 @@ class RawbioController extends Controller
 
         ]);  
 
-        // return $pdf->download("{$searched_user->username}|{$start_date} to {$end_date}.pdf");
-        return $pdf->stream();
+        return $pdf->download("{$searched_user->username}|{$start_date} to {$end_date}.pdf");
+        // return $pdf->stream();
 
         
         // return view('pdf.my_dtr_pdf', [
