@@ -137,12 +137,12 @@ class RawbioController extends Controller
             'user'          => $searched_user,
 
 
-        ]);  
+        ]);
 
-        // return $pdf->download("{$searched_user->username}|{$start_date} to {$end_date}.pdf");
-        return $pdf->stream();
+        return $pdf->download("{$searched_user->username}|{$start_date} to {$end_date}.pdf");
+        // return $pdf->stream();
 
-        
+
         // return view('pdf.my_dtr_pdf', [
 
         //     'mapped_days'   =>  $mappedArray,
@@ -156,17 +156,17 @@ class RawbioController extends Controller
     }
 
     public function my_dtr_exel($selected_dates)
-    {       
+    {
         $searched_user = auth()->user()??false;
-        
+
         $split = explode('to', $selected_dates);
         $start_date = $split[0] ?? 0;
         $end_date = $split[1] ?? 0;
-            
+
         // return Excel::download(new RawbioExport(), 'dtr.xlsx');
-        return Excel::download(new RawbioExport($selected_dates), 
+        return Excel::download(new RawbioExport($selected_dates),
             "dtr|{$searched_user->username}|{$start_date} to {$end_date}.xlsx");
-        
+
 
         // return view('pdf.my_dtr_pdf', [
 
