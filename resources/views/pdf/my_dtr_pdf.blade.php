@@ -12,7 +12,7 @@
             margin-right: 20px; 
             box-sizing: border-box;
             page-break-inside: avoid; /* Avoid breaking container across pages */
-            border: 1px solid #ccc;
+            /* border: 1px solid #ccc; */
         }
         table {
             margin-top: 10px;
@@ -125,23 +125,28 @@
         <!---------------Second column------------------>
         <div class="table-container">    
 
-            <table class="rounded-t-lg m-5 w-5/6 mx-auto bg-gray-800 text-gray-200">
-                <thead class="text-left border-b border-gray-300">
-
-                    <th class="px-4 py-3">Day
-                    </th>
-                    <th class="px-4 py-3">Date
-                    </th>
-                    <th class="px-4 py-3">Time
-                    </th>
-                    <th class="px-4 py-3">
-                    </th>
-
-                </thead>
-
+            <table class="rounded-t-lg m-5 w-5/6 mx-auto bg-gray-800 text-gray-200">  
+                
                 @foreach ( $mapped_days as $daily)
 
                     @if ($daily && $loop->index > 15 && $loop->index <= 30)
+
+                        @if ($daily && $loop->index == 16)
+
+                            <thead class="text-left border-b border-gray-300">
+
+                                <th class="px-4 py-3">Day
+                                </th>
+                                <th class="px-4 py-3">Date
+                                </th>
+                                <th class="px-4 py-3">Time
+                                </th>
+                                <th class="px-4 py-3">
+                                </th>
+            
+                            </thead>
+
+                        @endif
                         
                         @foreach ($daily->orig_raw_bio as $punch)
 
@@ -183,22 +188,27 @@
         <div class="table-container">    
 
             <table class="rounded-t-lg m-5 w-5/6 mx-auto bg-gray-800 text-gray-200">
-                <thead class="text-left border-b border-gray-300">
-
-                    <th class="px-4 py-3">Day
-                    </th>
-                    <th class="px-4 py-3">Date
-                    </th>
-                    <th class="px-4 py-3">Time
-                    </th>
-                    <th class="px-4 py-3">
-                    </th>
-
-                </thead>
 
                 @foreach ( $mapped_days as $daily)
 
                     @if ($daily && $loop->index > 30 && $loop->index <=45)
+
+                        @if ($daily && $loop->index == 31)
+
+                            <thead class="text-left border-b border-gray-300">
+
+                                <th class="px-4 py-3">Day
+                                </th>
+                                <th class="px-4 py-3">Date
+                                </th>
+                                <th class="px-4 py-3">Time
+                                </th>
+                                <th class="px-4 py-3">
+                                </th>
+            
+                            </thead>
+
+                        @endif
 
                         @foreach ($daily->orig_raw_bio as $punch)
 
