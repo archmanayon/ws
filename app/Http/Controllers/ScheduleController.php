@@ -68,7 +68,7 @@ class ScheduleController extends Controller{
         ]);
     }
 
-    public function owner_abs(User $ws)
+    public function owner_abs()
     {
 
         // $payroll_start  = Setup::find(2);
@@ -97,7 +97,7 @@ class ScheduleController extends Controller{
         $user = app()->call(AbsenceCalendarController::class.'@adea_bio',
         [
             'collection_of_dates' => $collection,
-            'searched_user'=> $ws??false,
+            'searched_user'=> auth()->user()??false,
             'holiday' =>$holiday
         ]);
 
@@ -105,7 +105,7 @@ class ScheduleController extends Controller{
 
             'mappedUser'    => $user,
              // 'users'     => $test_string,
-            'users'         => $ws,
+            'users'         => auth()->user(),
             'payroll_start' => $payroll_start,
             'payroll_end'   => $payroll_end
 

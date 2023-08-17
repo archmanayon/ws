@@ -271,11 +271,19 @@ Route::get('print', [ScheduleController::class, 'absences_all'])
 Route::post('print', [ScheduleController::class, 'absences_all'])
 ->middleware(['auth', 'verified', 'admin'])->name('print_post');
 
-Route::get('/report/{ws:username}', [ScheduleController::class, 'owner_abs'])
+// Route::get('/report/{ws:username}', [ScheduleController::class, 'owner_abs'])
+// ->middleware(['auth', 'verified', 'scholars'])
+// ->name('report');
+
+// Route::post('/report/{ws:username}', [ScheduleController::class, 'owner_abs'])
+// ->middleware(['auth', 'verified', 'scholars'])
+// ->name('own_by_cal');
+
+Route::get('report', [ScheduleController::class, 'owner_abs'])
 ->middleware(['auth', 'verified', 'scholars'])
 ->name('report');
 
-Route::post('/report/{ws:username}', [ScheduleController::class, 'owner_abs'])
+Route::post('report', [ScheduleController::class, 'owner_abs'])
 ->middleware(['auth', 'verified', 'scholars'])
 ->name('own_by_cal');
 

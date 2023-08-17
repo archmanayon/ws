@@ -30,7 +30,7 @@
                     @endforeach<br> --}}                    
                             {{-- {{ dd($payroll_start) }} --}}
                     <table>
-                        <form method="POST" action="{{auth()->user()->username}}">
+                        <form method="POST" action="">
                             @csrf    
                             
                             

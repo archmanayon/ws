@@ -22,6 +22,12 @@
                                         View All WS Absences
                                 </a><br>
 
+                                <a href="register" class="font-semibold text-gray-600
+                                        hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
+                                        focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
+                                        Register an Employee
+                                </a><br>
+
                                 <a href="print" class="font-semibold text-gray-600
                                         hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
                                         focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
@@ -80,7 +86,7 @@
 
                         @ws
 
-                                <a href="report/{{ auth()->user()->username }}" class="font-semibold text-gray-600
+                                <a href="report" class="font-semibold text-gray-600
                                         hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
                                         focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
                                         View My Absences
