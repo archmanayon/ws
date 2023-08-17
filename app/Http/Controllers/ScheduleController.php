@@ -248,6 +248,23 @@ class ScheduleController extends Controller{
 
     public function text_files()
     {
+        // $payroll_start  = Setup::find(2);
+        $payroll_start  = Carbon::create(Setup::find(1)->date) ?? 0;
+        $payroll_end    = Carbon::create(Setup::find(2)->date) ?? 0;
+       
+        $holiday = array("01-05-23","01-06-23",
+                            "02-24-23", "02-25-23",
+                            "04-06-23", "04-07-23",
+                            "04-08-23", "04-10-23", "05-01-23",
+                            "04-21-23", "06-12-23", "06-28-23"
+                        );
+       
+        $start_date = request('start_date')?? request('start_date') < $payroll_start->format('Y-m-d') ?
+                $payroll_start->format('Y-m-d') : request('start_date') ?? 0;  
+                        
+        $end_date = request('end_date') ?? request('end_date') > $payroll_end->format('Y-m-d') ?
+                $payroll_end->format('Y-m-d') : request('end_date') ?? 0;  
+
         $holiday = array("01-05-23","01-06-23",
                             "02-24-23", "02-25-23",
                             "04-06-23", "04-07-23",
@@ -281,7 +298,9 @@ class ScheduleController extends Controller{
 
         return view('text_files', [
 
-            'mappedUser' =>  $mappedArray
+            'mappedUser' =>  $mappedArray,
+            'payroll_start' => $payroll_start ?? false,
+            'payroll_end'   => $payroll_end ?? false
 
         ]);
     }

@@ -3,7 +3,37 @@
     use \Carbon\Carbon;
 @endphp
 
-<x-guest-layout>
+<x-guest-layout>        
+
+
+<div class="">
+    <div class="text-center">
+        <div class="py-12">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg" id="myElement">
+                <div>
+                    <h1>Clipboard Content:</h1>
+                    <p id="clipboard-content" class="text-white">Waiting for clipboard content...</p>
+                </div>
+        
+                <script>
+                    function updateClipboardContent() {
+                        navigator.clipboard.readText().then(text => {
+                            document.getElementById('clipboard-content').textContent = text;
+                        });
+                    }
+        
+                    // Update clipboard content initially and then set an interval to update periodically
+                    updateClipboardContent();
+                    setInterval(updateClipboardContent, 3000); // Update every 3 seconds
+                </script>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
 
 
 
