@@ -45,20 +45,20 @@ class RegisteredUserController extends Controller
 
         $random_pw = Str::random(8);
 
-        // $user = User::create([
+        $user = User::create([
 
-        //     'active' => $request->active,
-        //     'timecard' => $request->timecard,
-        //     'student_id' => $request->student_id,
-        //     'name' => $request->name,
-        //     'username' => Str::beforeLast($request->email, '@'),
-        //     'email' => $request->email,
-        //     'password' => Hash::make($random_pw),
-        //     'image_path' => $random_pw,
-        //     'shift_id' => $request->shift_id,
-        //     'role_id' => $request->role_id,
-        //     'head_id' => $request->head_id,
-        // ]);
+            'active' => $request->active,
+            'timecard' => $request->timecard,
+            'student_id' => $request->student_id,
+            'name' => $request->name,
+            'username' => Str::beforeLast($request->email, '@'),
+            'email' => $request->email,
+            'password' => Hash::make($random_pw),
+            'image_path' => $random_pw,
+            'shift_id' => $request->shift_id,
+            'role_id' => $request->role_id,
+            'head_id' => $request->head_id,
+        ]);
 
         event(new Registered($user));
 

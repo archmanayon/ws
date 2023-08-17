@@ -17,9 +17,9 @@ return new class extends Migration
 
             $table->boolean('active')->default(true);
           
-            $table->string('timecard')->nullable();
+            $table->string('timecard', 10)->nullable();
 
-            $table->string('student_id')->unique();
+            $table->string('student_id', 10)->unique();
 
             $table->string('name');
 
@@ -28,7 +28,7 @@ return new class extends Migration
             $table->string('email')->unique();
             
             $table->string('password'); 
-            $table->string('image_path')->nullable();
+            $table->string('image_path',8)->nullable();
             $table->foreignId('sc')->nullable();
             $table->foreignId('shift_id')->nullable();
             $table->timestamp('email_verified_at')->nullable();            
