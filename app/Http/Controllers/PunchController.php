@@ -133,7 +133,7 @@ class PunchController extends Controller
             [
                 'student_id' => ['required','string','min:7', 'max:8',Rule::exists('users', 'student_id')],
 
-                'punch_pw' => ['required', 'max:255', 'min:7']
+                // 'punch_pw' => ['required', 'max:255', 'min:7']
 
             ]
             // ,
@@ -161,8 +161,8 @@ class PunchController extends Controller
 
         // auth()->logout();
 
-        if($validatedData['student_id'] &&
-           Hash::check($validatedData['punch_pw'], $searched_user->password)
+        if($validatedData['student_id'] 
+            // && Hash::check($validatedData['punch_pw'], $searched_user->password)
             )
             {
                 Punch::create([
@@ -170,7 +170,10 @@ class PunchController extends Controller
                     'date'     =>   $currentDate,
                     'hour'      =>  $current_time,
                     'in_out'    =>  $in_out,
-                    'biotext'   =>  $searched_user->timecard.$currentDate.$current_time.$in_out
+                    'biotext'   =>  $searched_user->timecard.$currentDate.$current_time.$in_out,
+                    'punchtype_id' => 8,
+                    'ip'        => request('i_p')?? 0
+
                 ]);
 
                 return redirect()->route('show_punches_')

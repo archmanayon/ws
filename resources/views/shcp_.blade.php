@@ -5,11 +5,16 @@
 
 <x-div-grid>
     <x-slot name="picture">
-        
+
     </x-slot>
-        
+
     <x-slot name="time">
-        <div class="justify-items-center lg:grid lg:grid-cols-3">
+        @if ($punches_today)
+            <div class="justify-items-center lg:grid lg:grid-cols-3">
+        @else
+            <div class="justify-items-center lg:grid">
+        @endif
+
             <!---------------first column------------------>
             <div class="py-6">
                 <div class="lg:px-8 mx-6 sm:px-6 text-center">
@@ -17,23 +22,17 @@
                         <div class="px-1 text-gray-900 dark:text-gray-100">
                             <td>
 
-                                {{-- <div id=""
-                                    class="text-5xl mt-4 order-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600
-                                    focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
-                                    > --}}
-                                    {{-- {{$date_->format('h:i:s A') }}<br> --}}
-                                                
                                     <div id="m_clock"
                                     class="text-5xl mt-2 order-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600
                                         focus:ring-indigo-500 dark:focus:ring-indigo-600 shadow-sm"
                                         >
-                                    clock here
+
                                     </div>
                                     <div id="sec"
                                     class="dark:bg-gray-700 dark:border-gray-700 dark:focus:border-indigo-600 dark:focus:ring-indigo-600 dark:text-gray-300 focus:border-indigo-500 focus:ring-indigo-500 mt-0 order-gray-300 shadow-sm text-xl"
                                         >
-                                    clock here
-                                    </div>                          
+                                    clock
+                                    </div>
 
 
                             </td>
@@ -50,20 +49,7 @@
                                                     :placeholder="$employee->student_id??false"
                                                     required autofocus autocomplete="username" />
                                     <x-input-error :messages="$errors->get('student_id')" class="mt-2" />
-                                </div>
-
-                                <!-- Password -->
-                                <div class="mt-4">
-                                    <x-input-label for="punch_pw" :value="__('Password')" class="text-center"/>
-
-                                    <x-text-input id="punch_pw" class="block mt-1 w-48 mx-auto"
-                                                    type="password"
-                                                    name="punch_pw"
-                                                    required autocomplete="current-punch_pw" />
-
-                                    <x-input-error :messages="$errors->get('punch_pw')" class="mt-2" />
-                                </div>
-
+                                </div> 
 
                                 <div class="text-center">
 
@@ -74,6 +60,10 @@
                                             'Out with your ID') :
                                             'In with your ID') }} --}}
                                     </x-primary-button>
+
+                                    {{-- <br> {{ $ip }} --}}
+                                    
+                                    <input id="i_p" type="hidden" name="i_p" value="{{ $ip??0 }}"/>
 
                                 </div>
                             </form>
@@ -133,14 +123,14 @@
                 <div class="">
                     <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg px-6 ">
                         <div class="px-1 text-gray-900 dark:text-gray-100">
-                            @if ($employee->image_path??false)
-                                <img src="images/{{ $employee->image_path }}.jpg" alt="images/usc.png" width="100" height="100">
-                            @endif   
+                            @if ($employee->username??false)
+                                <img src="images/{{$employee->username}}.jpg" alt="png" width="400" height="400">
+                            @endif
                         </div>
                     </div>
                 </div>
-            </div>            
-            
+            </div>
+
         </div>
         </div>
     </x-slot>
