@@ -102,15 +102,45 @@ class PunchController extends Controller
 
     }
 
+    // public function show_()
+    // {
+    //     $Date           = Carbon::now('Asia/Kuala_Lumpur');
+    //     $currentDate    = $Date->format('mdy');
+    //     $current_time   = $Date->format('Hi');
+    //     $usc_id         = session('usc_id')??false;
+    //     $searched_user  = User::where('student_id', $usc_id)->first();
+    //     $punches        = $usc_id ? $searched_user->punches->where('date', $currentDate) : false;
+    //     $in_out         = $punches?($punches->pluck('in_out')->last() === 'I' ? 'O' : 'I'):false;
+
+    //     return view('shcp_',[
+
+    //         'employee'      => $searched_user ?? false,
+    //         'date_'         => $Date,
+    //         'currentDate'   => $currentDate,
+    //         'current_time'  => $current_time,
+    //         'usc_id'        => $usc_id,
+    //         'punches_today' => $punches,
+    //         'end'           => $usc_id? $searched_user->timecard.$currentDate.$current_time.$in_out:false,
+    //         'in_out'        => $in_out
+
+    //     ]);
+
+    // }
+
     public function show_()
     {
+        $tc = request('tc')??false;
+        $im = request('im')??false;
+
         $Date           = Carbon::now('Asia/Kuala_Lumpur');
         $currentDate    = $Date->format('mdy');
         $current_time   = $Date->format('Hi');
         $usc_id         = session('usc_id')??false;
-        $searched_user  = User::where('student_id', $usc_id)->first();
+        $searched_user  = User::where('timecard', $tc)->first();
         $punches        = $usc_id ? $searched_user->punches->where('date', $currentDate) : false;
         $in_out         = $punches?($punches->pluck('in_out')->last() === 'I' ? 'O' : 'I'):false;
+
+        
 
         return view('shcp_',[
 
