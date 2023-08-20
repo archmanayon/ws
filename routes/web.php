@@ -257,13 +257,19 @@ Route::post('shcp', [PunchController::class, 'store'])
 // ->middleware(['auth', 'verified'])
 ->name('punches');
 
-Route::get('shcp_', [PunchController::class, 'show_'])
-// ->middleware(['auth', 'verified'])
-->name('show_punches_');
+// Route::get('shcp_', [PunchController::class, 'show_'])
+// // ->middleware(['auth', 'verified'])
+// ->name('show_punches_');
 
 Route::post('shcp_', [PunchController::class, 'store_'])
 // ->middleware(['auth', 'verified'])
 ->name('punches_');
+
+
+Route::get('shcp_', [PunchController::class, 'show_'])
+// ->middleware(['auth', 'verified'])
+->name('show_punches_');
+
 
 Route::get('print', [ScheduleController::class, 'absences_all'])
 ->middleware(['auth', 'verified', 'admin'])->name('extract');

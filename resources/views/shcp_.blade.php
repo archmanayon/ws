@@ -42,14 +42,16 @@
 
                                 <!-- USC ID Number -->
                                 <div>
-                                    <x-input-label for="student_id" :value="__('USC ID Number')" class="block dark:text-gray-300 font-medium mt-8 text-center text-gray-700 text-sm" />
+                                    {{-- <x-input-label for="student_id" :value="__('USC ID Number')" class="block dark:text-gray-300 font-medium mt-8 text-center text-gray-700 text-sm" />
                                     <x-text-input id="student_id" class="block mt-1 w-48 mx-auto"
                                                     type="text" name="student_id"
-                                                    :value="old('student_id')"
+                                                    :value="old('student_id')??"
                                                     :placeholder="$employee->student_id??false"
                                                     required autofocus autocomplete="username" />
-                                    <x-input-error :messages="$errors->get('student_id')" class="mt-2" />
+                                    <x-input-error :messages="$errors->get('student_id')" class="mt-2" /> --}}
                                 </div> 
+
+                                {{ $employee->name }}
 
                                 <div class="text-center">
 
