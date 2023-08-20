@@ -33,11 +33,11 @@
             </div>
 
             {{-- 2nd column --}}
-            <div class="bg-white dark:bg-gray-800 m-5 overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-white dark:bg-gray-400  m-5 overflow-hidden shadow-sm sm:rounded-lg">
 
-                <div class="p-6 text-gray-900 dark:text-gray-100">
+                <div class="dark:bg-gray-900 p-6">
 
-                    <table class="bg-gray-800 rounded-t-lg text-sm w-full">
+                    <table class="dark:text-gray-200 dark:bg-gray-800 rounded-t-lg text-sm w-full">
 
                         <thead class="border-b border-gray-300 text-left">
 
@@ -62,7 +62,7 @@
 
                         @foreach ($user->tardis->sortBy('head_sig')->reverse()->sortBy('conforme') as $tardi)
 
-                        <tr>
+                        <tr class="dark:bg-gray-800">
                             {{-- reported tardiness --}}
                             <td class="px-4 py-3 w-48">
                                 {{ $tardi->tardi_description->tardiness }}

@@ -63,8 +63,8 @@
 
                     <p class="text-lg text-center font-bold m-5"></p>
 
-                        <table class="rounded-t-lg m-5 w-5/6 mx-auto bg-gray-800 text-gray-200">
-                            <thead class="text-left border-b border-gray-300">
+                        <table class="rounded-t-lg m-5 w-5/6 mx-auto dark:bg-gray-800">
+                            <thead class="text-left border-b border-gray-600">
                                 <th class="px-4 py-3">Day
                                 </th>
                                 <th class="px-4 py-3">Date
@@ -86,7 +86,7 @@
 
                                             @if ($punch)
 
-                                                <tr class="bg-gray-700 border-b border-gray-600">
+                                                <tr class="dark:bg-gray-800 border-b border-gray-200">
                                                     <td class="px-4 py-3">
                                                        
                                                         {{ $daily->day}}
