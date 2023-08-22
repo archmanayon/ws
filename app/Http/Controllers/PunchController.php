@@ -33,8 +33,8 @@ class PunchController extends Controller
             'usc_id'        => $usc_id,
             'punches_today' => $punches,
             'end'           => $usc_id? $searched_user->timecard.$currentDate.$current_time.$in_out:false,
-            'in_out'        => $in_out
-            // 'ip'            => $request->ip()
+            'in_out'        => $in_out,
+            'ip'            => $request->ip()
 
         ]);
 
@@ -83,8 +83,8 @@ class PunchController extends Controller
                     'hour'      =>  $current_time,
                     'in_out'    =>  $in_out,
                     'biotext'   =>  $searched_user->timecard.$currentDate.$current_time.$in_out,
-                    'punchtype_id' => 8
-                    // 'ip'        => request('i_p')?? 0
+                    'punchtype_id' => 8,
+                    'ip'        => request('i_p')?? 0
 
                 ]);
 
@@ -201,8 +201,8 @@ class PunchController extends Controller
                     'hour'      =>  $current_time,
                     'in_out'    =>  $in_out,
                     'biotext'   =>  $searched_user->timecard.$currentDate.$current_time.$in_out,
-                    'punchtype_id' => 8
-                    // 'ip'        => request('i_p')?? 0
+                    'punchtype_id' => 8,
+                    'ip'        => request('i_p')?? 0
 
                 ]);
 
