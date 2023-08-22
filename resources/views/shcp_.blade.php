@@ -65,7 +65,7 @@
 
                                     {{-- <br> {{ $ip }} --}}
                                     
-                                    <input id="i_p" type="hidden" name="i_p" value="{{ $ip??0 }}"/>
+                                    {{-- <input id="i_p" type="hidden" name="i_p" value="{{ $ip??0 }}"/> --}}
 
                                 </div>
                             </form>
