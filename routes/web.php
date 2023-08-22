@@ -21,6 +21,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\SetupController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
+use Laravel\Socialite\Facades\Socialite;
 
 /*
     |--------------------------------------------------------------------------
@@ -43,6 +44,21 @@ use Illuminate\Support\Str;
         ]);
     }
 */
+
+Route::get('/auth/redirect', function () {
+    return Socialite::driver('google')->redirect();
+});
+ 
+Route::get('/auth/callback', function () {
+    $user = Socialite::driver('google')->user();
+
+    return view('welcome');
+ 
+    // $user->token
+});
+
+
+
 
 Route::get('/', function () {
     return view('welcome');
