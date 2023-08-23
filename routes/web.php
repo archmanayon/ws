@@ -75,6 +75,8 @@ Route::get('/auth/{provider}/callback', function ($provider) {
     
             return redirect(RouteServiceProvider::HOME);        
         
+    } else {
+        dd('email not registered');
     }
 
    
