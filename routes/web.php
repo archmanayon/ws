@@ -45,14 +45,14 @@ use Laravel\Socialite\Facades\Socialite;
     }
 */
 
-Route::get('/auth/redirect', function () {
-    return Socialite::driver('google')->redirect();
+Route::get('/auth/{provider}/redirect', function ($provider) {
+    return Socialite::driver($provider)->redirect();
 });
  
-Route::get('/auth/callback', function () {
-    $user = Socialite::driver('google')->user();
+Route::get('/auth/{provider}/callback', function ($provider) {
+    $user = Socialite::driver($provider)->user();
 
-    return view('welcome');
+    dd($user);
  
     // $user->token
 });
@@ -311,6 +311,15 @@ Route::post('report', [ScheduleController::class, 'owner_abs'])
 
 Route::get('adea', [ScheduleController::class, 'adea_bio_abs'])
 ->middleware(['auth', 'verified', 'admin'])->name('adea_get');
+
+
+Route::get('employee_list', function () {
+    return view ('employee_list',[
+        'mappedUser' =>  User::all()
+    ]);
+})->middleware(['auth', 'verified', 'admin']);
+
+    
 
 Route::post('adea', [ScheduleController::class, 'adea_bio_abs'])
 ->middleware(['auth', 'verified', 'admin'])->name('adea_post');

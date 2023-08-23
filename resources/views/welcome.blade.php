@@ -72,7 +72,7 @@
 
                             <p class="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
 
-                                <x-link-button href="auth/redirect" class="ml-3">
+                                <x-link-button href="auth/google/redirect" class="ml-3">
                                     {{ __('Log in with google') }}
                                 </x-link-button>
                                  
