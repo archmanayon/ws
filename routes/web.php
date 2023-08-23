@@ -22,6 +22,8 @@ use App\Http\Controllers\SetupController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
+use App\Providers\RouteServiceProvider;
+use Illuminate\Validation\Rule;
 
 /*
     |--------------------------------------------------------------------------
@@ -52,12 +54,21 @@ Route::get('/auth/{provider}/redirect', function ($provider) {
 Route::get('/auth/{provider}/callback', function ($provider) {
     $user = Socialite::driver($provider)->user();
 
-    dd($user);
+    // dd($user->email);
+
+    if(User::where('email',$user->email)->exists()){
+        dd(User::where('email',$user->email)->get());
+        
+    }
+
+   
+   
+    
+
+    return redirect(RouteServiceProvider::HOME);
  
     // $user->token
 });
-
-
 
 
 Route::get('/', function () {
@@ -131,13 +142,11 @@ Route::post('rawbio/{rawbio}', [UpdateBioController::class, 'store_rawbio'])
 ->middleware(['auth', 'verified', 'admin'])->name('post_rawbio');
 
 
-
 Route::get('raw_bio_text', [BiometricController::class, 'raw_bio_text'])
 ->middleware(['auth', 'verified', 'admin'])->name('raw_bio_text');
 
 Route::post('raw_bio_text', [BiometricController::class, 'raw_bio_text'])
 ->middleware(['auth', 'verified', 'admin'])->name('raw_bio_text_post');
-
 
 
 Route::get('text_files', [ScheduleController::class, 'text_files'])
@@ -178,8 +187,6 @@ Route::get('to_exel/{selected_dates}', [RawbioController::class, 'my_dtr_exel'])
 
 // Route::get('exel/{selected_dates}', [RawbioController::class, 'my_dtr_exel'])
 // ->middleware(['auth', 'verified', 'staff'])->name('my_dtr_exel');
-
-
 
 
 // tardiness
@@ -233,7 +240,6 @@ Route::get('setup', [SetupController::class, 'show'])
 Route::post('setup', [SetupController::class, 'store'])
 ->middleware(['auth', 'verified', 'admin'])
 ->name('setup_store');
-
 
 
 // tasks
@@ -319,7 +325,13 @@ Route::get('employee_list', function () {
     ]);
 })->middleware(['auth', 'verified', 'admin']);
 
-    
+
+Route::get('dept_employees', function () {
+    return view ('dept_employees',[
+        'mapped_Dept' =>  Head::all()
+    ]);
+})->middleware(['auth', 'verified', 'admin']);
+
 
 Route::post('adea', [ScheduleController::class, 'adea_bio_abs'])
 ->middleware(['auth', 'verified', 'admin'])->name('adea_post');
