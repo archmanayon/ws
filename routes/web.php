@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\ManualShift;
 use App\Models\Punch;
 use App\Models\Schedule;
+
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\UpdateBioController;
@@ -19,11 +19,20 @@ use App\Http\Controllers\BiometricController;
 use App\Http\Controllers\RawbioController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\SetupController;
+use App\Http\Requests\Auth\LoginRequest;
+
+use App\Providers\RouteServiceProvider;
+
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
-use Laravel\Socialite\Facades\Socialite;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Validation\Rule;
+
+
+use Laravel\Socialite\Facades\Socialite;
+
+
 
 /*
     |--------------------------------------------------------------------------
@@ -57,7 +66,14 @@ Route::get('/auth/{provider}/callback', function ($provider) {
     // dd($user->email);
 
     if(User::where('email',$user->email)->exists()){
-        dd(User::where('email',$user->email)->get());
+        
+        // dd(User::where('email',$user->email));
+
+        $user = User::where('email',$user->email)->get()->first();                 
+    
+            Auth::login($user);
+    
+            return redirect(RouteServiceProvider::HOME);        
         
     }
 
@@ -65,7 +81,7 @@ Route::get('/auth/{provider}/callback', function ($provider) {
    
     
 
-    return redirect(RouteServiceProvider::HOME);
+    
  
     // $user->token
 });
