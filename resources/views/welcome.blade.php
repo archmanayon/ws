@@ -55,15 +55,31 @@
                                 @auth
                                     <a href="{{ url('/dashboard') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Dashboard</a>
                                 @else
+                                    
                                     <a href="{{ route('login') }}" class="style-azo-sans-regular font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
                                         <div class="b dark:bg-gray-800/50 dark:ring-1 dark:ring-white/10 flex h-16 items-center justify-center mx-6 px-6 rounded-full rounded-lg">
                                             {{-- <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="w-7 h-7 stroke-red-500">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
                                             </svg> --}}
                                             Log in
-                                        </div>
-                                        
-                                    </a>
+                                        </div>                                        
+                                    </a>                                
+
+                                    <br>
+
+                                    <div class="flex justify-center text-xs">
+
+                                        {{-- <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed"> --}}
+            
+                                            <x-link-button href="auth/google/redirect" class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed active:bg-gray-900 bg-[#4285F4] bg-gray-800 dark:active:bg-gray-300 dark:bg-gray-200 dark:focus:bg-white dark:focus:ring-[#4285F4]/55 dark:focus:ring-offset-gray-800 dark:hover:bg-white dark:text-gray-800 duration-150 ease-in-out focus:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-4 focus:ring-[#4285F4]/50 focus:ring-indigo-500 focus:ring-offset-2 hover:bg-[#4285F4]/90 hover:bg-gray-700 inline-flex items-center ml-3 py-2 py-2.5 text-center text-sm text-white text-xs uppercase">
+                                                {{-- <svg class="w-4 h-4 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 19">
+                                                    <path fill-rule="evenodd" d="M8.842 18.083a8.8 8.8 0 0 1-8.65-8.948 8.841 8.841 0 0 1 8.8-8.652h.153a8.464 8.464 0 0 1 5.7 2.257l-2.193 2.038A5.27 5.27 0 0 0 9.09 3.4a5.882 5.882 0 0 0-.2 11.76h.124a5.091 5.091 0 0 0 5.248-4.057L14.3 11H9V8h8.34c.066.543.095 1.09.088 1.636-.086 5.053-3.463 8.449-8.4 8.449l-.186-.002Z" clip-rule="evenodd"/>
+                                                </svg>
+                                                {{ __('Sign in with Google') }} --}}
+                                                <img class="bg-gray-900 flex justify-center" src="images/ggl.png" alt="AiC" width="200" height="20">
+                                            </x-link-button>
+                                        {{-- </p> --}}
+                                    </div>
                                 @endauth
                             @endif    
                             
@@ -71,22 +87,7 @@
                             
                         </div>                        
 
-                        <div class="flex justify-center text-xs">
-
-
-                            {{-- <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed"> --}}
-
-                                <x-link-button href="auth/google/redirect" class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed active:bg-gray-900 bg-[#4285F4] bg-gray-800 dark:active:bg-gray-300 dark:bg-gray-200 dark:focus:bg-white dark:focus:ring-[#4285F4]/55 dark:focus:ring-offset-gray-800 dark:hover:bg-white dark:text-gray-800 duration-150 ease-in-out focus:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-4 focus:ring-[#4285F4]/50 focus:ring-indigo-500 focus:ring-offset-2 hover:bg-[#4285F4]/90 hover:bg-gray-700 inline-flex items-center ml-3 py-2 py-2.5 text-center text-sm text-white text-xs uppercase">
-                                    {{-- <svg class="w-4 h-4 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 19">
-                                        <path fill-rule="evenodd" d="M8.842 18.083a8.8 8.8 0 0 1-8.65-8.948 8.841 8.841 0 0 1 8.8-8.652h.153a8.464 8.464 0 0 1 5.7 2.257l-2.193 2.038A5.27 5.27 0 0 0 9.09 3.4a5.882 5.882 0 0 0-.2 11.76h.124a5.091 5.091 0 0 0 5.248-4.057L14.3 11H9V8h8.34c.066.543.095 1.09.088 1.636-.086 5.053-3.463 8.449-8.4 8.449l-.186-.002Z" clip-rule="evenodd"/>
-                                    </svg>
-                                    {{ __('Sign in with Google') }} --}}
-                                    <img class="bg-gray-900 flex justify-center" src="images/ggl.png" alt="AiC" width="200" height="20">
-                                </x-link-button>
-
-                                 
-                            {{-- </p> --}}
-                        </div>
+                        
 
                         {{-- <a href="https://laravel.com/docs" class="scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500">
                             <div>
