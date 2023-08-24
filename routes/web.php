@@ -58,7 +58,9 @@ use Laravel\Socialite\Facades\Socialite;
 
 Route::get('/auth/{provider}/redirect', function ($provider) {
     return Socialite::driver($provider)->redirect();
-});
+})
+->middleware(['guest'])
+;
  
 Route::get('/auth/{provider}/callback', function ($provider) {
     $user = Socialite::driver($provider)->user();
@@ -77,17 +79,12 @@ Route::get('/auth/{provider}/callback', function ($provider) {
         
     } else {
         dd('email not registered');
-    }
-
-   
-   
-    
-
-    
+    }    
  
     // $user->token
-});
-
+})
+->middleware(['guest'])
+;
 
 Route::get('/', function () {
     return view('welcome');
