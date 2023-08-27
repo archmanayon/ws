@@ -38,9 +38,10 @@
                             </td>
 
                             <td>
-
-                                <div class="mt-4 order-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600
-                                focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
+                                <x-input-label class='py-2' for="submit_indi" :value="__('')" />    
+                                <div class="mt-6 order-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600
+                                p-2 bg-gray-400 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
+                                    
                                     <button type="submit" name="submit_indi" value="">
                                         Submit
                                     </button>
