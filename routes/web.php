@@ -359,15 +359,19 @@ Route::post('all_absences', [ScheduleController::class, 'print_all_abs_old'])
 ->middleware(['auth', 'verified', 'admin'])->name('disp_by_cal');
 
 Route::get('/dashboard', function () {
-
-    if(Hash::check(auth()->user()->image_path, auth()->user()->password)){
-
-        return redirect('profile');
-    } else{
-        return view('dashboard');
-    }
-
+    return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+// Route::get('/dashboard', function () {
+
+    //     if(Hash::check(auth()->user()->image_path, auth()->user()->password)){
+
+    //         return redirect('profile');
+    //     } else{
+    //         return view('dashboard');
+    //     }
+
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 
 // Route::get('/report/{ws:username}', function (User $ws) {
