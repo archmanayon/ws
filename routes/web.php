@@ -61,26 +61,26 @@ Route::get('/auth/{provider}/redirect', function ($provider) {
 })
 ->middleware(['guest'])
 ;
- 
+
 Route::get('/auth/{provider}/callback', function ($provider) {
     $user = Socialite::driver($provider)->user();
 
     // dd($user->email);
 
     if(User::where('email',$user->email)->exists()){
-        
+
         // dd(User::where('email',$user->email));
 
-        $user = User::where('email',$user->email)->get()->first();                 
-    
+        $user = User::where('email',$user->email)->get()->first();
+
             Auth::login($user);
-    
-            return redirect(RouteServiceProvider::HOME);        
-        
+
+            return redirect(RouteServiceProvider::HOME);
+
     } else {
         dd('email not registered');
-    }    
- 
+    }
+
     // $user->token
 })
 ->middleware(['guest'])
@@ -177,7 +177,7 @@ Route::get('register', [RegisteredUserController::class, 'create'])
 
 Route::post('register', [RegisteredUserController::class, 'store'])
     ->middleware(['admin']);
-    
+
 // attendance summary per user
 Route::get('dtr', [RawbioController::class, 'dtr'])
 ->middleware(['auth', 'verified', 'admin'])->name('dtr');
@@ -259,7 +259,7 @@ Route::post('setup', [SetupController::class, 'store'])
 
 // tasks
 Route::get('task', [TaskController::class, 'show'])
-->middleware(['auth', 'verified', 
+->middleware(['auth', 'verified',
 // 'staff',
 'admin'])
 ->name('show_task');
