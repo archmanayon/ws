@@ -17,6 +17,7 @@ use App\Http\Controllers\BiometricController;
 
 use App\Models\Shift;
 use App\Models\Update_bio;
+use App\Models\Setup;
 
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -65,6 +66,9 @@ class RawbioController extends Controller
 
     public function my_dtr()
     {
+        $payroll_start  = Carbon::create(Setup::find(1)->date) ?? 0;
+        $payroll_end    = Carbon::create(Setup::find(2)->date) ?? 0;
+
         $holiday = array(
             "01-05-23", "01-06-23",
             "02-24-23", "02-25-23",
@@ -96,7 +100,9 @@ class RawbioController extends Controller
             'mapped_days'   =>  $mappedArray,
 
             // for choices of employees only
-            'user'          => $searched_user
+            'user'          => $searched_user,
+            'payroll_start' => $payroll_start,
+            'payroll_end'   => $payroll_end
 
 
         ]);

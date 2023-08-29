@@ -24,15 +24,18 @@
 
                             <td>
                                 <div class="mt-4" >
-                                    <x-input-label for="start_date" :value="__('Start Date')" />
-                                    <x-text-input  id="start_date" class="block mt-1" type="date" name="start_date" :value="request('start_date')" required autofocus autocomplete="start_date" />
+                                    <x-input-label class="ml-4" for="start_date" :value="__('Start Date')" />
+                                    <input class="block mt-1 border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
+                                    type="date" id="start_date" name="start_date" value="{{$payroll_start->format('Y-m-d')??false}}" required autofocus autocomplete="">
+                                    
                                     <x-input-error :messages="$errors->get('start_date')" class="mt-2" />
                                 </div>
                             </td>
                             <td>
                                 <div class="mt-4">
-                                    <x-input-label for="end_date" :value="__('End Date')" />
-                                    <x-text-input id="end_date" class="block mt-1" type="date" name="end_date" :value="request('end_date')" required autofocus autocomplete="end_date" />
+                                    <x-input-label class="ml-4" for="end_date" :value="__('End Date')" />                                    
+                                    <input class="block mt-1 border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
+                                    type="date" id="end_date" name="end_date" value="{{$payroll_end->format('Y-m-d')??false}}" required autofocus autocomplete="">
                                     <x-input-error :messages="$errors->get('end_date')" class="mt-2" />
                                 </div>
                             </td>
