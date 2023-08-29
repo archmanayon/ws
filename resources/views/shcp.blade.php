@@ -21,7 +21,6 @@
                     <div class ="bg-gray-800 text-white dark:bg-gray-800 mt-6 overflow-hidden px-6 py-4 shadow-md sm:rounded-lg w-full">
                         <div class="px-1 ">
                             <td>
-
                                     <div id="m_clock"
                                     class="text-5xl mt-2 order-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white focus:border-indigo-500 dark:focus:border-indigo-600
                                         focus:ring-indigo-500 dark:focus:ring-indigo-600 shadow-sm"
