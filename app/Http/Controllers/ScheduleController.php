@@ -85,10 +85,10 @@ class ScheduleController extends Controller{
                         );
        
         $start_date = request('start_date') < $payroll_start->format('Y-m-d') ?
-                $payroll_start->format('Y-m-d') : request('start_date');  
+                $payroll_start->format('Y-m-d') : request('start_date')??0;  
                         
         $end_date = request('end_date') > $payroll_end->format('Y-m-d') ?
-                $payroll_end->format('Y-m-d') : request('end_date');  
+                $payroll_end->format('Y-m-d') : request('end_date')??$payroll_end->format('Y-m-d');  
         
         $period = CarbonPeriod::create($start_date, $end_date);
         $dates = $period->toArray();
@@ -108,8 +108,8 @@ class ScheduleController extends Controller{
             'mappedUser'    => $user,
              // 'users'     => $test_string,
             'users'         => auth()->user(),
-            'payroll_start' => $start_date??false,
-            'payroll_end'   => $end_date??false
+            'payroll_start' => $start_date??0,
+            'payroll_end'   => $end_date??0
 
         ]);
     }
