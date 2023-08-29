@@ -5,7 +5,7 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="dark:bg-gray-800 shrink-0 flex items-center">
-                        <img src="images/bblogo2.png" alt="AiC" width="500" height="20">
+                        <img src="images/bblogo.png" alt="AiC" width="500" height="20">
                     </a>
                 </div>
 
