@@ -79,8 +79,12 @@ class RawbioController extends Controller
 
         $searched_user = auth()->user()??false;
 
-        $start_date = request('start_date') ?? 0;
-        $end_date = request('end_date') ?? 0;
+         $start_date = request('start_date')?? request('start_date') < $payroll_start->format('Y-m-d') ?
+                $payroll_start->format('Y-m-d') : request('start_date') ?? 0;  
+                        
+        $end_date = request('end_date') ?? request('end_date') > $payroll_end->format('Y-m-d') ?
+                $payroll_end->format('Y-m-d') : request('end_date') ?? 0;  
+                
         $period = CarbonPeriod::create($start_date, $end_date);
         $dates = $period->toArray();
         $collection_of_dates = collect($dates);
