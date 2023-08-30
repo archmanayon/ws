@@ -16,9 +16,9 @@
         @endif
 
             <!---------------first column------------------>
-            <div class="py-6">
+            <div class="bg-[#1F2937]py-6">
                 <div class="lg:px-8 mx-6 sm:px-6 text-center">
-                    <div class ="bg-gray-800 text-white dark:bg-gray-800 mt-6 overflow-hidden px-6 py-4 shadow-md sm:rounded-lg w-full">
+                    <div class ="bg-[#1F2937] text-white dark:bg-gray-800 mt-6 overflow-hidden px-6 py-4 shadow-md sm:rounded-lg w-full">
                         <div class="px-1 ">
                             <td>
                                     <div id="m_clock"
