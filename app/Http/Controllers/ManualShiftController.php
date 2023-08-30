@@ -44,14 +44,10 @@ class ManualShiftController extends Controller
         $official_pm_in = $searched_user->shift->$pm_in??false;
         $official_pm_out = $searched_user->shift->$pm_out??false;
 
-         
-                
-        $manual_shift_dates = $searched_user->manual_shifts
+        $manual_shift_dates = collect($searched_user->manual_shifts)
         
-        ->map(function ($manual) {  
+        ->map(function ($manual) {              
             
-            $inside = [];
-
             $start_shift = $manual->date?? 0; 
 
             $end_shift = $manual->end_shift?? 0;                         
@@ -61,15 +57,14 @@ class ManualShiftController extends Controller
             $array_of_dates = $period->toArray();        
 
             $collection = collect($array_of_dates); 
-                
-            $collection->map(function ($each_day) {
-                
-                return (object)[
-                    Carbon::parse($each_day)->format('Y-m-d')
-                ];
+             
+            return $collection->map(function ($each_day) {
 
-            })->toArray();  
-        })->toArray();  
+                    Carbon::parse($each_day)->format('Y-m-d');
+
+            })->toArray();
+
+        })->toArray();
 
         dd($manual_shift_dates);
         
