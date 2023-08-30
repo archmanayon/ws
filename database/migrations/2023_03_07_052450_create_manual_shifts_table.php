@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('manual_shifts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
-            $table->date('date');
+            $table->date('date')->nullable();
             $table->foreignId('schedule_id')->nullable();
             $table->foreignId('shift_id')->nullable();
-            $table->timestamps(); 
+            $table->timestamps();
         });
     }
 

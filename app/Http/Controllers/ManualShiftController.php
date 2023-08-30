@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Shift;
 use App\Models\Biometric;
 use \Carbon\Carbon;
+use Carbon\CarbonPeriod;
 
 use Illuminate\Http\Request;
 
@@ -41,17 +42,53 @@ class ManualShiftController extends Controller
         $official_am_in = $searched_user->shift->$am_in??false;
         $official_am_out = $searched_user->shift->$am_out??false;          
         $official_pm_in = $searched_user->shift->$pm_in??false;
-        $official_pm_out = $searched_user->shift->$pm_out??false;        
+        $official_pm_out = $searched_user->shift->$pm_out??false;
+
+         
+                
+        $manual_shift_dates = $searched_user->manual_shifts
+        
+        ->map(function ($manual) {  
+            
+            $inside = [];
+
+            $start_shift = $manual->date?? 0; 
+
+            $end_shift = $manual->end_shift?? 0;                         
+
+            $period = CarbonPeriod::create($start_shift, $end_shift);
+            
+            $array_of_dates = $period->toArray();        
+
+            $collection = collect($array_of_dates); 
+                
+            $collection->map(function ($each_day) {
+                
+                return (object)[
+                    Carbon::parse($each_day)->format('Y-m-d')
+                ];
+
+            })->toArray();  
+        })->toArray();  
+
+        dd($manual_shift_dates);
+        
+        
+        
+
+          
+        
+
 
         if( $searched_user->manual_shifts->pluck('date')->contains( $date->format('Y-m-d')))
         
         {                             
             $shift_id =  $searched_user->manual_shifts->where('date',$date->format('Y-m-d'))
                             ->pluck('shift_id')->implode(', ');                                                          
-            $official_am_in     = $searched_user->shift->find($shift_id)->Manual_am_in??false;
-            $official_am_out    = $searched_user->shift->find($shift_id)->Manual_am_out??false;
-            $official_pm_in     = $searched_user->shift->find($shift_id)->Manual_pm_in??false;
-            $official_pm_out    = $searched_user->shift->find($shift_id)->Manual_pm_out??false;
+            $official_am_in     = $searched_user->shift->find($shift_id)->am_in??false;
+            $official_am_out    = $searched_user->shift->find($shift_id)->am_out??false;
+            $official_pm_in     = $searched_user->shift->find($shift_id)->pm_in??false;
+            $official_pm_out    = $searched_user->shift->find($shift_id)->pm_out??false;
         } 
 
         return (object) [
