@@ -57,51 +57,45 @@ class ManualShiftController extends Controller
             $array_of_dates = $period->toArray();
 
             foreach($array_of_dates as $each){
-                $manual_shift_dates[] = Carbon::parse($each)->format('Y-m-d');
+                $manual_shift_dates[] = [
+                    'shift_date' =>Carbon::parse($each)->format('Y-m-d'),
+                    'shift_id' => $shift->shift_id
+                ];
             }
         }
 
-        if (in_array($date->format('Y-m-d'), $manual_shift_dates)){
-            echo $date->format('Y-m-d').'| naa na'.'<br>';
-        } else{
-            echo $date->format('Y-m-d') . '| wala pa ni' . '<br>';
+        $flattenedDates = array_column($manual_shift_dates, 'shift_date');
+
+        if (in_array($date->format('Y-m-d'), $flattenedDates)){
+
+            $shift_id_no = collect($manual_shift_dates)->where('shift_date', $date->format('Y-m-d'))->pluck('shift_id')->toArray();
+
+            // echo $date->format('Y-m-d').'|'.implode('',$shift_id_no).'<br>';
+
+            $find_shift = Shift::find(implode('', $shift_id_no)) ?? false;
+
+            $official_am_in     = $find_shift->$am_in ?? false;
+            $official_am_out    = $find_shift->$am_out ?? false;
+            $official_pm_in     = $find_shift->$pm_in ?? false;
+            $official_pm_out    = $find_shift->$pm_out ?? false;
+
         }
+        // else{
+        //     echo $date->format('Y-m-d') .'|'.'<br>';
+        // }
 
-        // dd($manual_shift_dates);
+        // if( $searched_user->manual_shifts->pluck('date')->contains( $date->format('Y-m-d')))
 
-        // collect($searched_user->manual_shifts)
-
-        // ->map(function ($manual) {
-
-        //     $start_shift = $manual->date?? 0;
-
-        //     $end_shift = $manual->end_shift?? 0;
-
-        //     $period = CarbonPeriod::create($start_shift, $end_shift);
-
-        //     $array_of_dates = $period->toArray();
-
-        //     collect($array_of_dates)
-
-        //     ->map(function($parseable){
-
-        //         $manual_shift_dates[] =  Carbon::parse($parseable);
-
-        //     });
-
-        // });
+        // {
+        //     $shift_id =  $searched_user->manual_shifts->where('date',$date->format('Y-m-d'))
+        //                     ->pluck('shift_id')->implode(', ');
 
 
-        if( $searched_user->manual_shifts->pluck('date')->contains( $date->format('Y-m-d')))
-
-        {
-            $shift_id =  $searched_user->manual_shifts->where('date',$date->format('Y-m-d'))
-                            ->pluck('shift_id')->implode(', ');
-            $official_am_in     = $searched_user->shift->find($shift_id)->am_in??false;
-            $official_am_out    = $searched_user->shift->find($shift_id)->am_out??false;
-            $official_pm_in     = $searched_user->shift->find($shift_id)->pm_in??false;
-            $official_pm_out    = $searched_user->shift->find($shift_id)->pm_out??false;
-        }
+        //     $official_am_in     = $searched_user->shift->find($shift_id)->am_in??false;
+        //     $official_am_out    = $searched_user->shift->find($shift_id)->am_out??false;
+        //     $official_pm_in     = $searched_user->shift->find($shift_id)->pm_in??false;
+        //     $official_pm_out    = $searched_user->shift->find($shift_id)->pm_out??false;
+        // }
 
         return (object) [
             'am_in'     => $official_am_in ?? false,
