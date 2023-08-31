@@ -153,9 +153,9 @@
                                                     
                                                     @foreach ($daily->all_bio_punches as $bio)
                                                         
-                                                        <div class="text-gray-900 inline-block flex-shrink-0"> {{ $bio->hour }}</div>
-                                                        <div class="text-gray-900 inline-block pl-3 flex-shrink-0"> {{ $bio->in_out }}</div>
-                                                        <div class="text-gray-900 inline-block pl-3 flex-shrink-0"> 
+                                                        <div class="text-gray-900 dark:text-gray-400 inline-block flex-shrink-0"> {{ $bio->hour }}</div>
+                                                        <div class="text-gray-900 dark:text-gray-400 inline-block pl-3 flex-shrink-0"> {{ $bio->in_out }}</div>
+                                                        <div class="text-gray-900 dark:text-gray-400 inline-block pl-3 flex-shrink-0"> 
                                                             <a href="rawbio/{{ $daily->user->timecard.$daily->bio_daily_array}}"> {{ 'update' }} </a>
                                                         </div> <br>
                                                        
@@ -207,9 +207,9 @@
                                                         
                                                         @foreach ($daily->all_bio_punches as $bio)
                                                     
-                                                            <div class="text-gray-900 inline-block flex-shrink-0"> {{ $bio->hour }}</div>
-                                                            <div class="text-gray-900 inline-block pl-3 flex-shrink-0"> {{ $bio->in_out }}</div>
-                                                            <div class="text-gray-900 inline-block pl-3 flex-shrink-0"> 
+                                                            <div class="text-gray-900 dark:text-gray-400 inline-block flex-shrink-0"> {{ $bio->hour }}</div>
+                                                            <div class="text-gray-900 dark:text-gray-400 inline-block pl-3 flex-shrink-0"> {{ $bio->in_out }}</div>
+                                                            <div class="text-gray-900 dark:text-gray-400 inline-block pl-3 flex-shrink-0"> 
                                                                 <a href="rawbio/{{ $daily->user->timecard.$daily->bio_daily_array}}"> {{ 'update' }} </a>
                                                             </div> <br>
                                                         @endforeach      
@@ -259,9 +259,9 @@
                                                         
                                                         @foreach ($daily->all_bio_punches as $bio)
                                                     
-                                                            <div class="text-gray-900 inline-block flex-shrink-0"> {{ $bio->hour }}</div>
-                                                            <div class="text-gray-900 inline-block pl-3 flex-shrink-0"> {{ $bio->in_out }}</div>
-                                                            <div class="text-gray-900 inline-block pl-3 flex-shrink-0"> 
+                                                            <div class="text-gray-900 dark:text-gray-400 inline-block flex-shrink-0"> {{ $bio->hour }}</div>
+                                                            <div class="text-gray-900 dark:text-gray-400 inline-block pl-3 flex-shrink-0"> {{ $bio->in_out }}</div>
+                                                            <div class="text-gray-900 dark:text-gray-400 inline-block pl-3 flex-shrink-0"> 
                                                                 <a href="rawbio/{{ $daily->user->timecard.$daily->bio_daily_array}}"> {{ 'update' }} </a>
                                                             </div> <br>
                                                         @endforeach      
@@ -311,9 +311,9 @@
                                                         
                                                         @foreach ($daily->all_bio_punches as $bio)
                                                     
-                                                            <div class="text-gray-900 inline-block flex-shrink-0"> {{ $bio->hour }}</div>
-                                                            <div class="text-gray-900 inline-block pl-3 flex-shrink-0"> {{ $bio->in_out }}</div>
-                                                            <div class="text-gray-900 inline-block pl-3 flex-shrink-0"> 
+                                                            <div class="text-gray-900 dark:text-gray-400 inline-block flex-shrink-0"> {{ $bio->hour }}</div>
+                                                            <div class="text-gray-900 dark:text-gray-400 inline-block pl-3 flex-shrink-0"> {{ $bio->in_out }}</div>
+                                                            <div class="text-gray-900 dark:text-gray-400 inline-block pl-3 flex-shrink-0"> 
                                                                 <a href="rawbio/{{ $daily->user->timecard.$daily->bio_daily_array}}"> {{ 'update' }} </a>
                                                             </div> <br>
                                                         @endforeach      
