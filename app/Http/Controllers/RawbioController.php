@@ -80,7 +80,10 @@ class RawbioController extends Controller
         $searched_user = auth()->user()??false;
        
 
-        $start_date = request('start_date') < $payroll_start ? $payroll_start : request('start_date')??0;                  
+        $start_date = request('start_date')?
+        (request('start_date') < $payroll_start ? $payroll_start : request('start_date')??0):
+        0
+        ;
 
                         
         $end_date = request('end_date') > $payroll_end->format('Y-m-d') ?
