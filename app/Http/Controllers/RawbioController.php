@@ -66,7 +66,7 @@ class RawbioController extends Controller
 
     public function my_dtr()
     {
-        $payroll_start  = Carbon::create(Setup::find(1)->date) ?? 0;
+        $payroll_start  = '2023-07-16';
         $payroll_end    = Carbon::create(Setup::find(2)->date) ?? 0;
 
         $holiday = array(
@@ -78,9 +78,10 @@ class RawbioController extends Controller
         );
 
         $searched_user = auth()->user()??false;
+       
 
-        $start_date = request('start_date') < $payroll_start->format('Y-m-d') ?
-                $payroll_start->format('Y-m-d') : request('start_date')??0;  
+        $start_date = request('start_date') < $payroll_start ? $payroll_start : request('start_date')??0;                  
+
                         
         $end_date = request('end_date') > $payroll_end->format('Y-m-d') ?
                 $payroll_end->format('Y-m-d') : request('end_date')??$payroll_end->format('Y-m-d');  
