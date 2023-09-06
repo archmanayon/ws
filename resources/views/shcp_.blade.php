@@ -18,7 +18,7 @@
             <!---------------first column------------------>
             <div class="py-6">
                 <div class="lg:px-8 mx-6 sm:px-6 text-center">
-                    <div class "bg-white dark:bg-gray-800 mt-6 overflow-hidden px-6 py-4 shadow-md sm:rounded-lg w-full">
+                    <div class = "bg-white dark:bg-gray-800 mt-6 overflow-hidden px-6 py-4 shadow-md sm:rounded-lg w-full">
                         <div class="px-1 text-gray-900 dark:text-gray-100">
                             <td>
 
