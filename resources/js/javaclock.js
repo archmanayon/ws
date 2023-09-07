@@ -41,7 +41,7 @@ setTimeout(function() {
 }, 10000);
 
 
-const intervalInMilliseconds = 20 * 60 * 1000;
+const intervalInMilliseconds = 10 * 60 * 1000;
 
 function win_reload(){
     
