@@ -41,6 +41,18 @@ setTimeout(function() {
 }, 10000);
 
 
+const intervalInMilliseconds = 20 * 60 * 1000;
+
+function win_reload(){
+    
+    location.reload();
+}
+
+setInterval(win_reload, intervalInMilliseconds);
+
+
+
+
 
 
 
