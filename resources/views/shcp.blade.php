@@ -11,12 +11,26 @@
     <x-slot name="time">
         @if ($punches_today)
             <div class="justify-items-center lg:grid lg:grid-cols-3">
+
+                <!-------------3rd------->
+            <div class="py-6">
+                <div class="">
+                    <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg px-6 ">
+                        <div class="px-1 text-gray-900 dark:text-white">
+                            @if ($employee->username??false)
+                                <img src="images/{{$employee->username}}.jpg" alt="png" width="400" height="400">
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </div>
         @else
             <div class="justify-items-center lg:grid">
         @endif
-            <div class="mt-4 text-red-400 text-xl"> {{ $punch_error??false }} </div>
+            
             <!---------------first column------------------>
             <div class=" py-6">
+                <div class="mt-4 text-red-400 text-xl"> {{ $punch_error??false }} </div>
                 <div class="lg:px-8 mx-6 sm:px-6 text-center">
                     <div class ="bg-[#1F2937] text-white dark:bg-gray-800 mt-6 overflow-hidden px-6 py-4 shadow-md sm:rounded-lg w-full">
                         <div class="px-1 ">
@@ -130,18 +144,7 @@
                 </div>
             </div>
 
-            <!-------------3rd------->
-            <div class="py-6">
-                <div class="">
-                    <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg px-6 ">
-                        <div class="px-1 text-gray-900 dark:text-white">
-                            @if ($employee->username??false)
-                                <img src="images/{{$employee->username}}.jpg" alt="png" width="400" height="400">
-                            @endif
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
 
         </div>
         </div>
