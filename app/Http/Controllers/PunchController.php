@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Models\User;
 use App\Models\Punch;
+use App\Models\Ipaddress;
+
 use Carbon\Carbon;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
@@ -31,10 +33,12 @@ class PunchController extends Controller
             'currentDate'   => $currentDate,
             'current_time'  => $current_time,
             'usc_id'        => $usc_id,
+            'punch_error'   => session('punch_error')??false,
             'punches_today' => $punches,
             'end'           => $usc_id? $searched_user->timecard.$currentDate.$current_time.$in_out:false,
             'in_out'        => $in_out,
-            'ip'            => $request->ip()
+            'ip'            => $request->ip(),
+
 
         ]);
 
@@ -46,21 +50,23 @@ class PunchController extends Controller
             [
                 'student_id' => ['required','string','min:7', 'max:8',Rule::exists('users', 'student_id')],
 
-                'punch_pw' => ['required', 'max:255', 'min:7']
+                'punch_pw' => ['required'],
+
+                'i_p' => [Rule::exists('ipaddresses', 'ip')],
 
             ]
-            // ,
-                // [
-                //     'student_id.required'   => 'The field is required.',
-                //     'student_id.string'     => 'Must be a string.',
-                //     'student_id.min'        => 'The field may be lesser than :min characters.',
-                //     'student_id.max'        => 'The field may be greater than :max characters.'
-                // ]
-                // ,
-                // [
-                //     'punch_pw.required'   => 'The field is required.',
-                //     'punch_pw.string'     => 'Must be a string.'
-            // ]
+            ,
+            [
+                'student_id.required'   => 'The field is required.',
+                'student_id.string'     => 'Must be a string.',
+                'student_id.min'        => 'The field may be lesser than :min characters.',
+                'student_id.max'        => 'The field may be greater than :max characters.'
+            ]
+            ,
+            [
+                'punch_pw.required'   => 'The field is required.',
+                
+            ]
 
         );
 
@@ -73,9 +79,13 @@ class PunchController extends Controller
         $in_out         = $punches->pluck('in_out')->last() === 'I' ? 'O' : 'I';
 
         // auth()->logout();
+        
 
-        if($validatedData['student_id'] &&
+        if($validatedData['student_id'] && 
+            Ipaddress::where('ip' , $validatedData['i_p'])->first()->active == 1
+            &&
             Hash::check($validatedData['punch_pw'], $searched_user->password))
+
             {
                 Punch::create([
                     'user_id'   =>  $searched_user->id,
@@ -84,13 +94,16 @@ class PunchController extends Controller
                     'in_out'    =>  $in_out,
                     'biotext'   =>  $searched_user->timecard.$currentDate.$current_time.$in_out,
                     'punchtype_id' => 8,
-                    'ip'        => request('i_p')?? 0
+                    'ip'        => $validatedData['i_p']?? 0
 
                 ]);
 
                 return redirect()->route('show_punches')
             ->with('usc_id', $validatedData['student_id']);
 
+        } else{
+            return redirect()->route('show_punches')
+            ->with('punch_error', "either not at USC, or wrong PW");
         }
 
         throw ValidationException::withMessages([

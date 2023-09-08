@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\ManualShift;
 use App\Models\Punch;
 use App\Models\Schedule;
+use App\Models\Ipaddress;
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ScheduleController;
@@ -19,7 +20,10 @@ use App\Http\Controllers\BiometricController;
 use App\Http\Controllers\RawbioController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\SetupController;
+use App\Http\Controllers\IpaddressController;
+
 use App\Http\Requests\Auth\LoginRequest;
+
 
 use App\Providers\RouteServiceProvider;
 
@@ -172,11 +176,21 @@ Route::post('text_files', [ScheduleController::class, 'text_files'])
 
 
 Route::get('register', [RegisteredUserController::class, 'create'])
-    ->middleware(['admin'])->name('register');
+    ->middleware(['admin']);
 
 
 Route::post('register', [RegisteredUserController::class, 'store'])
+    ->middleware(['admin'])->name('register');
+
+
+Route::get('ip_reg', [IpaddressController::class, 'create'])
     ->middleware(['admin']);
+
+
+Route::post('ip_reg', [IpaddressController::class, 'store'])
+    ->middleware(['admin'])->name('ip_reg');
+
+
 
 // attendance summary per user
 Route::get('dtr', [RawbioController::class, 'dtr'])

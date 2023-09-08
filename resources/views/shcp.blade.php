@@ -14,7 +14,7 @@
         @else
             <div class="justify-items-center lg:grid">
         @endif
-
+            <div class="mt-4 text-red-400 text-xl"> {{ $punch_error??false }} </div>
             <!---------------first column------------------>
             <div class=" py-6">
                 <div class="lg:px-8 mx-6 sm:px-6 text-center">
