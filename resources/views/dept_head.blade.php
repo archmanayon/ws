@@ -18,9 +18,9 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:grid lg:px-8 ">
 
             {{-- 1st column --}}
-            <div class="bg-white m-5 dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="m-5 dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
 
-                <div class="p-6 text-gray-900 dark:text-gray-100">
+                <div class="p-6 dark:text-gray-100">
                     {{ 'Task Done' }}<br>
                     {{ $user->name??false }} <br>
                     {{ $user->head->department??false }}
@@ -29,9 +29,9 @@
             </div>
 
             {{-- 2nd column --}}
-            <div class="bg-white m-5 dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="m-5 dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
 
-                <div class="p-6 text-gray-900 dark:text-gray-100">
+                <div class="p-6 text-gray-100 dark:text-gray-100">
 
                     <table class="bg-gray-800 rounded-t-lg text-sm">
                         <thead class="border-b border-gray-300 text-left">
@@ -106,10 +106,10 @@
 
                                         @else
 
-                                            <select name="stat_option" id="task_stat" class="bg-gray-800 border-transparent mt-2 px-0 py-1 rounded text-1xl text-gray-200 w-auto">
-                                                <option value="0">Pending</option>
-                                                <option value="1">Endorse</option>
-                                                <option value="2">Disapprove</option>
+                                            <select name="stat_option" id="task_stat" class="bg-gray-800 border-transparent mt-2 px-0 py-1 rounded text-1xl text-red-400 w-auto">
+                                                <option class="text-gray-400" value="0">Pending</option>
+                                                <option class="text-gray-400" value="1">Endorse</option>
+                                                <option class="text-gray-400" value="2">Disapprove</option>
                                             </select>
 
                                     @endif
@@ -133,9 +133,18 @@
                                         </button>
                                     @else --}}
 
-                                        <button type="submit" name="task_id" value="{{ $current_task->id }}" class="">
+                                        {{-- <button type="submit" name="task_id" value="{{ $current_task->id }}" class="border-r border-t rounded-r-md ">
                                             Submit
-                                        </button>
+                                        </button> --}}
+                                        
+                                        <x-primary-button class="m-auto-3"
+                                        name="task_id" value="{{ $current_task->id }}">
+                                            {{ __('Save') }}
+                                            {{-- Punch
+                                            {{ __( $in_out ? ($in_out == 'I'? 'In with your ID' :
+                                                'Out with your ID') :
+                                                'In with your ID') }} --}}
+                                        </x-primary-button>
 
                                     @endif
 

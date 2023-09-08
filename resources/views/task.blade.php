@@ -73,9 +73,10 @@
 
                             <td class="px-4">
 
-                                {{ $current_task->status == 1 ? "Endorsed" :
-                                    ($current_task->status == 2 ? "Disapproved" : "Pending")
-                                }}
+                                {!! $current_task->status == 1 ? "<span class='text-green-400'>Endorsed</span>" :
+                                    ($current_task->status == 2 ? "<span class='text-red-400'>Disapproved</span>":
+                                    "<span class='text-red-400'>Pending</span>")
+                                !!}
 
                             </td>
 

@@ -31,7 +31,7 @@
             {{-- 2nd column --}}
             <div class="bg-white m-5 dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
 
-                <div class="p-6 text-gray-900 dark:text-gray-100">
+                <div class="p-6 text-gray-200 dark:text-gray-100">
 
                     <table class="bg-gray-800 rounded-t-lg text-sm w-full">
                         <thead class="border-b border-gray-300 text-left">
@@ -99,16 +99,17 @@
 
                                     @if ($current_task->status)
 
-                                        {{ $current_task->status == 1 ? "Endorsed" :
-                                            ($current_task->status == 2 ? "Disapproved" : "Pending")
-                                        }}
-
+                                        {!! $current_task->status == 1 ? "<span class='text-green-400'>Endorsed</span>" :
+                                            ($current_task->status == 2 ? "<span class='text-red-400'>Disapproved</span>":
+                                            "<span class='text-red-400'>Pending</span>")
+                                        !!}
+                                        
                                         @else
 
-                                            <select name="stat_option" id="task_stat" class="bg-gray-800 border-transparent mt-2 px-0 py-1 rounded text-1xl text-gray-200 w-auto">
-                                                <option value="0">Pending</option>
-                                                <option value="1">Endorse</option>
-                                                <option value="2">Disapprove</option>
+                                            <select name="stat_option" id="task_stat" class="bg-gray-800 border-transparent mt-2 px-0 py-1 rounded text-1xl text-red-400 w-auto">
+                                                <option class="text-gray-400" value="0">Pending</option>
+                                                <option class="text-gray-400" value="1">Endorse</option>
+                                                <option class="text-gray-400" value="2">Disapprove</option>
                                             </select>
 
                                     @endif
@@ -130,11 +131,16 @@
                                         {{-- <button type="submit" name="task_id" value="{{ $current_task->id }}" class="">
                                             Edit
                                         </button>
-                                    @else --}}
+                                    @else --}}                                        
 
-                                        <button type="submit" name="task_id" value="{{ $current_task->id }}" class="">
-                                            Submit
-                                        </button>
+                                        <x-primary-button class="m-auto-3"
+                                        name="task_id" value="{{ $current_task->id }}">
+                                            {{ __('Save') }}
+                                            {{-- Punch
+                                            {{ __( $in_out ? ($in_out == 'I'? 'In with your ID' :
+                                                'Out with your ID') :
+                                                'In with your ID') }} --}}
+                                        </x-primary-button>
 
                                     @endif
 
