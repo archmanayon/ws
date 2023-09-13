@@ -136,7 +136,7 @@
                                         {{-- <button type="submit" name="task_id" value="{{ $current_task->id }}" class="border-r border-t rounded-r-md ">
                                             Submit
                                         </button> --}}
-                                        
+
                                         <x-primary-button class="m-auto-3"
                                         name="task_id" value="{{ $current_task->id }}">
                                             {{ __('Save') }}
