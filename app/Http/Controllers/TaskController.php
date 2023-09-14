@@ -152,16 +152,16 @@ class TaskController extends Controller
                     $bio_text_code = $tasks->user->timecard. $Date->format('mdy').$official_time.$inout;
                 }       
 
-                // Update_bio::create([
-                //     'name'      => $tasks->user->name,
-                //     'time_card' => $tasks->user->timecard,
-                //     'date'      => $Date->format('mdy'),
-                //     'hour'      => $official_time,
-                //     'in_out'    => $inout,
-                //     'biotext'   => $bio_text_code,
-                //     'punchtype_id'   => 9,
-                //     'reason'    => 'Work From Home Task'
-                // ]);
+                Update_bio::create([
+                    'name'      => $tasks->user->name,
+                    'time_card' => $tasks->user->timecard,
+                    'date'      => $Date->format('mdy'),
+                    'hour'      => $official_time,
+                    'in_out'    => $inout,
+                    'biotext'   => $bio_text_code,
+                    'punchtype_id'   => 9,
+                    'reason'    => 'Work From Home Task'
+                ]);
                 
             }            
             

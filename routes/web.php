@@ -273,13 +273,14 @@ Route::post('setup', [SetupController::class, 'store'])
 
 // tasks
 Route::get('task', [TaskController::class, 'show'])
-->middleware(['auth', 'verified',
-// 'staff',
-'admin'])
+->middleware(['auth', 'verified','campus',
+'staff'
+// 'admin'
+])
 ->name('show_task');
 
 Route::post('task', [TaskController::class, 'store'])
-->middleware(['auth', 'verified', 'staff'])
+->middleware(['auth', 'verified', 'campus','staff'])
 ->name('store_task');
 
 // dept head

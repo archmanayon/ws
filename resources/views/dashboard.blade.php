@@ -63,12 +63,7 @@
                                         focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
                                         Biometric report (text files)
                                 </a><br>
-
-                                <a href="task" class="font-semibold text-gray-600
-                                        hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
-                                        focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
-                                        Submit Daily Task Report
-                                </a><br>
+                                
 
                                 <a href="dtr" class="font-semibold text-gray-600
                                         hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
@@ -102,6 +97,12 @@
                         @endws
 
                         @staff
+
+                                <a href="task" class="text-2xl font-semibold text-gray-600
+                                        hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
+                                        focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
+                                        Submit Daily Task Report
+                                </a><br>
 
                                 <a href="my_dtr" class="font-semibold text-gray-600
                                         hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
