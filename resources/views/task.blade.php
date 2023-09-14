@@ -12,8 +12,22 @@
         </h2>
     </x-slot>
 
+  
+
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:grid lg:px-8 ">
+
+            <div>
+                @if($errors->any())
+                    <div class="alert alert-danger alert alert-danger text-2xl text-white">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif       
+            </div>
 
             {{-- 1st column --}}
             <div class="bg-white m-5 dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg w-full">
@@ -21,7 +35,9 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     {{ 'Task Done' }}<br>
                     {{ $user->name??false }} <br>
-                    {{ $user->head->user->id??false }}
+
+                           
+
                     <form method="post" action="{{ route('store_task') }}">
                         @csrf
                         <textarea class=" rounded-t-lg m-5 w-5/6 mx-auto bg-gray-800 text-gray-200"

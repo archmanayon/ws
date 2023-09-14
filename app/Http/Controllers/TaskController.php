@@ -14,7 +14,9 @@ use Carbon\Carbon;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\AuthenticatedSessionController;
+
 
 class TaskController extends Controller
 {
@@ -42,7 +44,42 @@ class TaskController extends Controller
         $currentDate    = $Date->format('mdy');
         $current_time   = $Date->format('Hi');
 
-        // $in_out         = $tasks->pluck('biotext')->last() === 'I' ? 'O' : 'I';
+        $ampm  = '_am_';
+        $io = 'in';
+        $day_inout = $Date->format('l').$ampm.$io;
+        
+        $official_time = $user->shift->$day_inout;        
+
+        $biotext   =  $user->timecard.$currentDate.$official_time.'I';        
+
+        // Additional data to be validated (not from the input form)
+            $additionalData = [
+                'biotext' => $biotext
+            ];
+
+            // Define validation rules for additional data
+            $additionalValidationRules = [
+                'biotext' => 'unique:tasks,biotext'
+                
+            ];
+
+            // Define custom error messages for additional data
+            $customErrorMessages = [
+                
+                'biotext.unique'     => 'You have already submitted task for the Day'
+                
+            ];
+
+            // Create a new Validator instance and validate the additional data
+            $validator = Validator::make($additionalData, $additionalValidationRules,$customErrorMessages);
+
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator->errors());
+            }
+        // ____________________
+
+            
+            // dd($additionalData['biotext']);
 
         $tasks = Task::create([
             'user_id'   =>  $user->id,
@@ -50,7 +87,7 @@ class TaskController extends Controller
             'status'    =>  null,
             // 'remarks'   =>  ,
             'head_id'      =>  $user->head->id,
-            'biotext'   =>  $user->timecard.$currentDate.$current_time
+            'biotext'   => $additionalData['biotext']
         ]);
 
         return redirect()->route('show_task')
@@ -69,19 +106,10 @@ class TaskController extends Controller
     public function endorse()
     {
         $user           = auth()->user()??false;
-
         $head_remarks   = request('head_remarks');
         $stat_option    = request('stat_option');
         $tasks          = Task::find(request('task_id'));
-
         $Date           = Carbon::create($tasks->created_at)->setTimeZone('Asia/Kuala_Lumpur');
-
-
-        // $currentDate    = $Date->format('mdy');
-        // $current_time   = $Date->format('Hi');
-        // $in_out         = $tasks->pluck('biotext')->last() === 'I' ? 'O' : 'I';
-        // dd($Date->format('l'));
-        // dd($tasks->user->shift->description);
 
         $tasks->update([
 
@@ -89,33 +117,56 @@ class TaskController extends Controller
             'remarks'   =>  $head_remarks
         ]);
 
-        for ($i = 0; $i < 4; $i++) {
-            // Your code to be executed 4 times goes here
-            // You can use the $i variable to keep track of the current iteration
-            $in_out = $i % 2 == 0 ? "I" : "O";
+        $print_array = [];
 
-            if($i < 2 ){
+        if($stat_option == 1){
 
-                $am_pm  = '_am_'.$i % 2 == 0 ? "in" : "out";
+            // dd($tasks->user->shift->Friday_am_in);
 
-            } else {
+            // $bio_text_code;
 
-                $am_pm  = '_pm_' . $i % 2 == 0 ? "in" : "out";
+            for ($i = 0; $i < 4; $i++) {
+                // Your code to be executed 4 times goes here
+                // You can use the $i variable to keep track of the current iteration
 
-            };
+                $inout = $i % 2 == 0 ?'I':'O';
 
-            // Update_bio::create([
-            //     'name'      => $tasks->user->name,
-            //     'time_card' => $tasks->user->timecard,
-            //     'date'      => $Date->format('mdy'),
-            //     'hour'      => $Date->format('Hi'),
-            //     'in_out'    => $in_out,
-            //     'biotext'   => $tasks->user->timecard. $Date->format('mdy') . $Date->format('Hi') . $in_out,
-            //     'reason'    => 'Work From Home Task'
-            // ]);
+                if($i <= 1 ){
 
+                    // $ampm  = "_am_".$i % 2 == 0 ? "in":"out";
+                    $ampm  = '_am_';
+                    $io = $i % 2 == 0 ?'in':'out';
+                    $day_inout = $Date->format('l').$ampm.$io;
+                    $official_time = $tasks->user->shift->$day_inout;
+                    $print_array[] = $tasks->user->timecard. $Date->format('mdy').$official_time.$inout;
+                    $bio_text_code = $tasks->user->timecard. $Date->format('mdy').$official_time.$inout;
 
+                } else {
+
+                    // $ampm  = "_pm_" . $i % 2 == 0 ? "in" : "out";                
+                    $ampm  = "_pm_";
+                    $io = $i % 2 == 0?'in':'out';
+                    $day_inout = $Date->format('l').$ampm.$io;
+                    $official_time = $tasks->user->shift->$day_inout;
+                    $print_array[] = $tasks->user->timecard. $Date->format('mdy').$official_time.$inout;
+                    $bio_text_code = $tasks->user->timecard. $Date->format('mdy').$official_time.$inout;
+                }       
+
+                // Update_bio::create([
+                //     'name'      => $tasks->user->name,
+                //     'time_card' => $tasks->user->timecard,
+                //     'date'      => $Date->format('mdy'),
+                //     'hour'      => $official_time,
+                //     'in_out'    => $inout,
+                //     'biotext'   => $bio_text_code,
+                //     'punchtype_id'   => 9,
+                //     'reason'    => 'Work From Home Task'
+                // ]);
+                
+            }            
+            
         }
+        // dd($print_array);
 
         return redirect()->route('show_dept_head')
             // ->with([
