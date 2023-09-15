@@ -82,14 +82,15 @@ class RawbioController extends Controller
 
         $start_date = request('start_date')?
         (request('start_date') < $bio_start ? $bio_start : request('start_date')):
-        $bio_start;
-        
-                        
-        $end_date = request('end_date') > $bio_end?
-                $bio_end : request('end_date'); 
+        Carbon::create(Setup::find(1)->date)->format('Y-m-d');;
         
 
-        $period = CarbonPeriod::create($start_date, $end_date);
+        $end_date = request('end_date')?
+        (request('end_date') > $bio_end ? $bio_end : request('end_date')):
+        Carbon::create(Setup::find(2)->date)->format('Y-m-d');;
+                
+
+        $period = CarbonPeriod::create($start_date??false, $end_date??false);
         
 
         $dates = $period->toArray();
