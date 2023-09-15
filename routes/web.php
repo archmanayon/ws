@@ -338,11 +338,11 @@ Route::post('print', [ScheduleController::class, 'absences_all'])
 // ->name('own_by_cal');
 
 Route::get('report', [ScheduleController::class, 'owner_abs'])
-->middleware(['auth', 'verified', 'scholars'])
+->middleware(['auth', 'verified',  'head'])
 ->name('report');
 
 Route::post('report', [ScheduleController::class, 'owner_abs'])
-->middleware(['auth', 'verified', 'scholars'])
+->middleware(['auth', 'verified', 'scholars',  'head'])
 ->name('own_by_cal');
 
 Route::get('adea', [ScheduleController::class, 'adea_bio_abs'])

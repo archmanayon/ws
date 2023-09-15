@@ -81,7 +81,7 @@ class ScheduleController extends Controller{
                             "04-06-23", "04-07-23",
                             "04-08-23", "04-10-23", "05-01-23",
                             "04-21-23", "06-12-23", "06-28-23",
-                            "08-21-23", "08-28-23"
+                            "08-21-23", "08-28-23", "09-09-23"
                         );
        
         $start_date = request('start_date') < $payroll_start->format('Y-m-d') ?
