@@ -32,7 +32,7 @@
             {{-- 1st column --}}
             <div class="bg-white m-5 dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg w-full">
 
-                <div class="p-6 text-gray-900 dark:text-gray-100">
+                <div class="dark:text-gray-100 p-6 text-gray-400">
                     {{ 'Task Done' }}<br>
                     {{ $user->name??false }} <br>
 
@@ -61,7 +61,7 @@
             {{-- 2nd column --}}
             <div class="bg-white m-5 dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg w-full">
 
-                <div class="p-6 text-gray-900 dark:text-gray-100">
+                <div class="dark:text-gray-100 p-6 text-gray-200">
 
                     <table class="bg-gray-800 rounded-t-lg text-sm w-full">
                         <thead class="border-b border-gray-300 text-left">
