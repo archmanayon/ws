@@ -32,7 +32,7 @@
             {{-- 1st column --}}
             <div class="bg-white m-5 dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg w-full">
 
-                <div class="dark:text-gray-100 p-6 text-gray-400">
+                <div class="dark:text-gray-100 p-6">
                     {{ 'Task Done' }}<br>
                     {{ $user->name??false }} <br>
 
@@ -40,7 +40,7 @@
 
                     <form method="post" action="{{ route('store_task') }}">
                         @csrf
-                        <textarea class=" rounded-t-lg m-5 w-5/6 mx-auto bg-gray-800 text-gray-200"
+                        <textarea class=" rounded-t-lg m-5 w-5/6 mx-auto dark:bg-gray-800 dark:text-gray-100"
                            id="" name="task_text" placeholder="Descriptive Task"></textarea>
                         <br>
 
@@ -59,11 +59,11 @@
             </div>
 
             {{-- 2nd column --}}
-            <div class="bg-white m-5 dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg w-full">
+            <div class="m-5 dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg w-full">
 
-                <div class="dark:text-gray-100 p-6 text-gray-200">
+                <div class="dark:text-gray-100 p-6 dark:text-gray-100">
 
-                    <table class="bg-gray-800 rounded-t-lg text-sm w-full">
+                    <table class="rounded-t-lg text-sm w-full">
                         <thead class="border-b border-gray-300 text-left">
 
                             <th class="px-4 py-3">{{ 'Date' }}</th>
