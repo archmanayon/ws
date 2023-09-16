@@ -29,11 +29,11 @@
             </div>
 
             {{-- 2nd column --}}
-            <div class="bg-white m-5 dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="m-5 dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
 
-                <div class="p-6 text-gray-200 dark:text-gray-100">
+                <div class="dark:text-gray-100 p-6 dark:text-gray-100">
 
-                    <table class="bg-gray-800 rounded-t-lg text-sm w-full">
+                    <table class="rounded-t-lg text-sm w-full">
                         <thead class="border-b border-gray-300 text-left">
 
                             <th class="px-4 py-3">{{ 'Staff' }}</th>
@@ -81,12 +81,12 @@
 
                                     @elseif ($current_task->remarks)
 
-                                        <textarea class="bg-gray-800 border-gray-700 h-9 mt-2 rounded text-gray-200 text-sm"
+                                        <textarea class="border-gray-700 h-9 mt-2 rounded text-sm"
                                             id="" name="head_remarks" placeholder="{{ $current_task->remarks?? 'type...' }}"></textarea>
 
                                     @else
 
-                                        <textarea class="bg-gray-800 border-gray-700 h-9 mt-2 rounded text-gray-200 text-sm"
+                                        <textarea class="border-gray-700 h-9 mt-2 rounded text-sm"
                                         id="" name="head_remarks" placeholder="type...">{{ $current_task->remarks?? false }}</textarea>
 
                                     @endif
@@ -106,10 +106,10 @@
                                         
                                         @else
 
-                                            <select name="stat_option" id="task_stat" class="bg-gray-800 border-transparent mt-2 px-0 py-1 rounded text-1xl text-red-400 w-auto">
-                                                <option class="text-gray-400" value="0">Pending</option>
-                                                <option class="text-gray-400" value="1">Endorse</option>
-                                                <option class="text-gray-400" value="2">Disapprove</option>
+                                            <select name="stat_option" id="task_stat" class="border-transparent mt-2 px-0 py-1 rounded text-1xl text-red-400 w-auto">
+                                                <option class="text-gray-600" value="0">Pending</option>
+                                                <option class="text-gray-600" value="1">Endorse</option>
+                                                <option class="text-gray-600" value="2">Disapprove</option>
                                             </select>
 
                                     @endif

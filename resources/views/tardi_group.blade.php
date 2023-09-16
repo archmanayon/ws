@@ -34,11 +34,11 @@
             </div>
 
             {{-- 2nd column --}}
-            <div class="bg-white dark:bg-gray-800 m-5 overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="dark:bg-gray-800 m-5 overflow-hidden shadow-sm sm:rounded-lg">
 
-                <div class="p-6 text-gray-400 dark:text-gray-100">
+                <div class="p-6 dark:text-gray-100">
 
-                    <table class="bg-gray-800 rounded-t-lg text-left text-sm w-full">
+                    <table class="rounded-t-lg text-left text-sm w-full">
 
                         <thead class="border-b">
 
