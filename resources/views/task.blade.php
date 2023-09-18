@@ -67,6 +67,7 @@
                         <thead class="border-b border-gray-300 text-left">
 
                             <th class="px-4 py-3">{{ 'Date' }}</th>
+                            <th class="px-4 py-3">{{ 'Time Submitted' }}</th>
 
                             <th class="px-4 w-auto">{{ 'Tasks' }}</th>
 
@@ -84,6 +85,10 @@
 
                             <td class="px-4">
                                 {{ $current_task->created_at->format('m/d/y') }}
+                            </td>
+
+                            <td class="px-4">
+                                {{ $current_task->created_at->format('h:i a') }}
                             </td>
 
                             <td class="px-4 sm:max-w-sm ">
