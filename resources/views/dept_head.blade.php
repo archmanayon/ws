@@ -51,107 +51,112 @@
 
                             <th class="px-4 py-3 w-auto">{{ 'Endorsed by' }}</th>
                         </thead>
+                        
+                        @foreach ( $user->heads as $each_dept_handled)
 
-                        @foreach ( $user->heads[0]->tasks->sortBy('status')->where('status', 0) as $current_task)
-                        <tr class="border-b">
+                            @foreach ( $each_dept_handled->tasks->sortBy('status')->where('status', 0) as $current_task)
 
-                            <form method="post" action="{{ route('endorse_task') }}">
-                            @csrf
+                            <tr class="border-b">
 
-                                {{-- employee's --}}
-                                <td class="px-4">
-                                    {{ $current_task->user->name}}
-                                </td>
+                                <form method="post" action="{{ route('endorse_task') }}">
+                                @csrf
 
-                                {{-- date --}}
-                                <td class="px-4">
-                                    {{ $current_task->created_at}}
-                                </td>
+                                    {{-- employee's --}}
+                                    <td class="px-4">
+                                        {{ $current_task->user->name}}
+                                    </td>
 
-                                {{-- task --}}
-                                <td class="px-4 sm:max-w-sm ">
-                                    {{ $current_task->task_done }}
-                                </td>
+                                    {{-- date --}}
+                                    <td class="px-4">
+                                        {{ $current_task->created_at}}
+                                    </td>
 
-                                {{-- remarks --}}
-                                <td class="w-auto">
+                                    {{-- task --}}
+                                    <td class="px-4 sm:max-w-sm ">
+                                        {{ $current_task->task_done }}
+                                    </td>
 
-                                    @if ($current_task->status)
+                                    {{-- remarks --}}
+                                    <td class="w-auto">
 
-                                        {{ $current_task->remarks }}
+                                        @if ($current_task->status)
 
-                                    @elseif ($current_task->remarks)
+                                            {{ $current_task->remarks }}
 
-                                        <textarea class="border-gray-200 h-9 mt-2 rounded text-sm"
-                                            id="" name="head_remarks" placeholder="{{ $current_task->remarks?? 'type...' }}"></textarea>
+                                        @elseif ($current_task->remarks)
 
-                                    @else
-
-                                        <textarea class="border-gray-700 h-9 mt-2 rounded text-sm dark:text-gray-900 "
-                                        id="" name="head_remarks" placeholder="type...">{{ $current_task->remarks?? false }}</textarea>
-
-                                    @endif
-
-                                </td>
-
-                                {{-- status --}}
-                                <td class="px-4 w-auto">
-
-
-                                    @if ($current_task->status)
-
-                                        {{ $current_task->status == 1 ? "Endorsed" :
-                                            ($current_task->status == 2 ? "Disapproved" : "Pending")
-                                        }}
+                                            <textarea class="border-gray-200 h-9 mt-2 rounded text-sm"
+                                                id="" name="head_remarks" placeholder="{{ $current_task->remarks?? 'type...' }}"></textarea>
 
                                         @else
 
-                                            <select name="stat_option" id="task_stat" class="bborder-gray-200 mt-2 px-0 py-1 rounded text-1xl text-red-400 w-auto">
-                                                <option class="border-gray-200 text-gray-400" value="0">Pending</option>
-                                                <option class="border-gray-200 text-gray-400" value="1">Endorse</option>
-                                                <option class="border-gray-200 text-gray-400" value="2">Disapprove</option>
-                                            </select>
+                                            <textarea class="border-gray-700 h-9 mt-2 rounded text-sm dark:text-gray-900 "
+                                            id="" name="head_remarks" placeholder="type...">{{ $current_task->remarks?? false }}</textarea>
 
-                                    @endif
+                                        @endif
 
-                                </td>
+                                    </td>
 
-                                {{-- <td class="px-4 py-3">
-                                    {{ $current_task->user->head->user->name }}
-                                </td> --}}
+                                    {{-- status --}}
+                                    <td class="px-4 w-auto">
 
-                                {{-- <td class="px-4 py-3">
-                                    {{ $current_task->head }}
-                                </td> --}}
 
-                                <td class="">
+                                        @if ($current_task->status)
 
-                                    @if (!$current_task->status)
+                                            {{ $current_task->status == 1 ? "Endorsed" :
+                                                ($current_task->status == 2 ? "Disapproved" : "Pending")
+                                            }}
 
-                                        {{-- <button type="submit" name="task_id" value="{{ $current_task->id }}" class="">
-                                            Edit
-                                        </button>
-                                    @else --}}
+                                            @else
 
-                                        {{-- <button type="submit" name="task_id" value="{{ $current_task->id }}" class="border-r border-t rounded-r-md ">
-                                            Submit
-                                        </button> --}}
+                                                <select name="stat_option" id="task_stat" class="bborder-gray-200 mt-2 px-0 py-1 rounded text-1xl text-red-400 w-auto">
+                                                    <option class="border-gray-200 text-gray-400" value="0">Pending</option>
+                                                    <option class="border-gray-200 text-gray-400" value="1">Endorse</option>
+                                                    <option class="border-gray-200 text-gray-400" value="2">Disapprove</option>
+                                                </select>
 
-                                        <x-primary-button class="m-auto-3"
-                                        name="task_id" value="{{ $current_task->id }}">
-                                            {{ __('Save') }}
-                                            {{-- Punch
-                                            {{ __( $in_out ? ($in_out == 'I'? 'In with your ID' :
-                                                'Out with your ID') :
-                                                'In with your ID') }} --}}
-                                        </x-primary-button>
+                                        @endif
 
-                                    @endif
+                                    </td>
 
-                                </td>
+                                    {{-- <td class="px-4 py-3">
+                                        {{ $current_task->user->head->user->name }}
+                                    </td> --}}
 
-                            </form>
-                        </tr>
+                                    {{-- <td class="px-4 py-3">
+                                        {{ $current_task->head }}
+                                    </td> --}}
+
+                                    <td class="">
+
+                                        @if (!$current_task->status)
+
+                                            {{-- <button type="submit" name="task_id" value="{{ $current_task->id }}" class="">
+                                                Edit
+                                            </button>
+                                        @else --}}
+
+                                            {{-- <button type="submit" name="task_id" value="{{ $current_task->id }}" class="border-r border-t rounded-r-md ">
+                                                Submit
+                                            </button> --}}
+
+                                            <x-primary-button class="m-auto-3"
+                                            name="task_id" value="{{ $current_task->id }}">
+                                                {{ __('Save') }}
+                                                {{-- Punch
+                                                {{ __( $in_out ? ($in_out == 'I'? 'In with your ID' :
+                                                    'Out with your ID') :
+                                                    'In with your ID') }} --}}
+                                            </x-primary-button>
+
+                                        @endif
+
+                                    </td>
+
+                                </form>
+                            </tr>
+                            @endforeach
+
                         @endforeach
 
                     </table>

@@ -47,7 +47,7 @@
                             <th class="px-4 py-3 w-auto">{{ 'Status' }}</th>
 
                             {{-- <th class="px-4 py-3">{{ 'Head' }}</th> --}}
-                        </thead>                       
+                        </thead> 
 
                         @foreach ( Task::all()->sortBy('status') as $current_task)
                         <tr class="border-b">

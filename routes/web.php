@@ -199,25 +199,6 @@ Route::get('dtr', [RawbioController::class, 'dtr'])
 Route::post('dtr', [RawbioController::class, 'dtr'])
 ->middleware(['auth', 'verified', 'admin'])->name('dtr_post');
 
-
-Route::get('my_dtr', [RawbioController::class, 'my_dtr'])
-->middleware(['auth', 'verified', 'staff'])->name('my_dtr');
-
-Route::post('my_dtr', [RawbioController::class, 'my_dtr'])
-->middleware(['auth', 'verified', 'staff'])->name('my_dtr_post');
-
-
-
-Route::get('my_dtr_pdf/{selected_dates}', [RawbioController::class, 'my_dtr_pdf'])
-->middleware(['auth', 'verified', 'staff'])->name('my_dtr_pdf');
-
-Route::get('to_exel/{selected_dates}', [RawbioController::class, 'my_dtr_exel'])
-->middleware(['auth', 'verified', 'staff'])->name('my_dtr_exel');
-
-// Route::get('exel/{selected_dates}', [RawbioController::class, 'my_dtr_exel'])
-// ->middleware(['auth', 'verified', 'staff'])->name('my_dtr_exel');
-
-
 // tardiness
 
 // 01 tardi variance the staff will conforme based on what head remarks
@@ -289,13 +270,17 @@ Route::get('dept_head', [HeadController::class, 'show'])
 ->middleware(['auth', 'verified', 'head'])
 ->name('show_dept_head');
 
+Route::post('dept_head', [TaskController::class, 'endorse'])
+->middleware(['auth', 'verified', 'head'])
+->name('endorse_task');
+
 // all employee tasks
 Route::get('all_employee_tasks', [TaskController::class, 'show_all_tasks'])
 ->middleware(['auth', 'verified', 'admin'])
 ->name('show_all_employee_tasks');
 
 Route::get('history_tasks', [HeadController::class, 'show_all_tasks'])
-->middleware(['auth', 'verified', 'admin'])
+->middleware(['auth', 'verified', 'head'])
 ->name('show_history_tasks');
 
 Route::post('history_tasks', [TaskController::class, 'endorse'])
@@ -346,6 +331,23 @@ Route::get('report', [ScheduleController::class, 'owner_abs'])
 Route::post('report', [ScheduleController::class, 'owner_abs'])
 ->middleware(['auth', 'verified', 'scholars',  'head'])
 ->name('own_by_cal');
+
+Route::get('my_dtr', [RawbioController::class, 'my_dtr'])
+->middleware(['auth', 'verified', 'staff'])->name('my_dtr');
+
+Route::post('my_dtr', [RawbioController::class, 'my_dtr'])
+->middleware(['auth', 'verified', 'staff'])->name('my_dtr_post');
+
+
+Route::get('my_dtr_pdf/{selected_dates}', [RawbioController::class, 'my_dtr_pdf'])
+->middleware(['auth', 'verified', 'staff'])->name('my_dtr_pdf');
+
+Route::get('to_exel/{selected_dates}', [RawbioController::class, 'my_dtr_exel'])
+->middleware(['auth', 'verified', 'staff'])->name('my_dtr_exel');
+
+// Route::get('exel/{selected_dates}', [RawbioController::class, 'my_dtr_exel'])
+// ->middleware(['auth', 'verified', 'staff'])->name('my_dtr_exel');
+
 
 Route::get('adea', [ScheduleController::class, 'adea_bio_abs'])
 ->middleware(['auth', 'verified', 'admin'])->name('adea_get');

@@ -37,6 +37,7 @@
                                     <x-input-error :messages="$errors->get('start_date')" class="mt-2" />
                                 </div>
                             </td>
+                            
                             <td>
                                 <div class="mt-4">
                                     <x-input-label for="end_date" :value="__('End Date')" />                                    

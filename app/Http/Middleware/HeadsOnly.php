@@ -15,14 +15,16 @@ class HeadsOnly
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(auth()->user()->username != 'abmanayon'){
-            if(auth()->user()->role_id != 4){           
+        if(auth()->user()->username == 'abmanayon' ||
+            auth()->user()->role_id == 4 ||
+            auth()->user()->role_id == 5){
 
-                    return redirect('dashboard');
-
-            } 
+                return $next($request);
+        }else{
+            
+            return redirect('dashboard');
         }
     
-        return $next($request);
+        
     }
 }

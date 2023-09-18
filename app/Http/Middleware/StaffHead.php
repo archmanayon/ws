@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class StaffsOnly
+class StaffHead
 {
     /**
      * Handle an incoming request.
@@ -14,15 +14,15 @@ class StaffsOnly
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
     public function handle(Request $request, Closure $next): Response
-    {        
-        if(auth()->user()->username == 'abmanayon' || 
-            auth()->user()->role_id == 5||
-            auth()->user()->role_id == 2){
+    {       
 
-                return $next($request);
-        } else{
-            return redirect('dashboard');
+        if(auth()->user()->username != 'abmanayon'){
+            if(auth()->user()->role_id != 5){           
+
+                    return redirect('dashboard');
+
+            } 
         }
-        
+        return $next($request);        
     }
 }

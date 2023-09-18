@@ -56,6 +56,7 @@ class Kernel extends HttpKernel
         'auth'      => \App\Http\Middleware\Authenticate::class,
         'admin'     => \App\Http\Middleware\AdminsOnly::class,
         'head'      => \App\Http\Middleware\HeadsOnly::class,
+        'staffhead' => \App\Http\Middleware\StaffHead::class,
         'staff'     => \App\Http\Middleware\StaffsOnly::class,
         'scholars'  => \App\Http\Middleware\ScholarsOnly::class,
         'campus'    => \App\Http\Middleware\campus::class,
