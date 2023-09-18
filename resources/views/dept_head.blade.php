@@ -23,7 +23,7 @@
                 <div class="p-6 dark:text-gray-100">
                     {{ 'Task Done' }}<br>
                     {{ $user->name??false }} <br>
-                    {{ $user->head->department??false }}
+                    {{-- {{ $user->head->department??false }} --}}
                 </div>
 
             </div>
