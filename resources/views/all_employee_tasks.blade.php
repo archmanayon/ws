@@ -46,7 +46,8 @@
 
                             <th class="px-4 py-3 w-auto">{{ 'Department' }}</th>
 
-                            {{-- <th class="px-4 py-3">{{ 'Head' }}</th> --}}
+                            <th class="px-4 py-3">{{ 'Head' }}</th>
+                            <th class="px-4 py-3">{{ 'Head Email' }}</th>
                         </thead> 
 
                         @foreach ( Task::all()->sortBy('status') as $current_task)
@@ -81,6 +82,19 @@
 
 
                                     {{$current_task->user->head->department}}
+
+                                </td>
+
+                                <td class="px-4 w-auto">
+
+
+                                    {{$current_task->user->head->user->name}}
+
+                                </td>
+                                <td class="px-4 w-auto">
+
+
+                                    {{$current_task->user->head->user->email}}
 
                                 </td>
 
