@@ -44,7 +44,7 @@
                             <th class="px-4 w-auto">{{ 'Tasks' }}</th>
 
                             <th class="px-3 py-3  w-auto">
-                                {{ 'Remarks' }}
+                                {{ 'Head Remarks' }}
                             </th>
 
                             <th class="px-4 py-3 w-auto">{{ 'Status' }}</th>
@@ -68,7 +68,7 @@
 
                                     {{-- date --}}
                                     <td class="px-4">
-                                        {{ $current_task->created_at}}
+                                        {{ $current_task->created_at->format('m/d/y')}}
                                     </td>
 
                                     {{-- task --}}
@@ -85,13 +85,13 @@
 
                                         @elseif ($current_task->remarks)
 
-                                            <textarea class="border-gray-200 h-9 mt-2 rounded text-sm"
+                                            <textarea class="h-9 mt-2 rounded text-sm"
                                                 id="" name="head_remarks" placeholder="{{ $current_task->remarks?? 'type...' }}"></textarea>
 
                                         @else
 
-                                            <textarea class="border-gray-700 h-9 mt-2 rounded text-sm dark:text-gray-900 "
-                                            id="" name="head_remarks" placeholder="type...">{{ $current_task->remarks?? false }}</textarea>
+                                            <textarea class="h-9 mt-2 rounded text-sm dark:text-gray-900 "
+                                            id="" name="head_remarks" placeholder="remarks...">{{ $current_task->remarks?? false }}</textarea>
 
                                         @endif
 
@@ -109,10 +109,10 @@
 
                                             @else
 
-                                                <select name="stat_option" id="task_stat" class="bborder-gray-200 mt-2 px-0 py-1 rounded text-1xl text-red-400 w-auto">
-                                                    <option class="border-gray-200 text-gray-400" value="0">Pending</option>
-                                                    <option class="border-gray-200 text-gray-400" value="1">Endorse</option>
-                                                    <option class="border-gray-200 text-gray-400" value="2">Disapprove</option>
+                                                <select name="stat_option" id="task_stat" class="mt-2 px-0 py-1 rounded text-xs text-red-400 w-auto">
+                                                    <option class="text-xs text-gray-400" value="0">Pending</option>
+                                                    <option class="text-xs text-gray-400" value="1">Endorse</option>
+                                                    <option class="text-xs text-gray-400" value="2">Disapprove</option>
                                                 </select>
 
                                         @endif
@@ -140,7 +140,7 @@
                                                 Submit
                                             </button> --}}
 
-                                            <x-primary-button class="m-auto-3"
+                                            <x-primary-button class="m-auto-3 text-xs"
                                             name="task_id" value="{{ $current_task->id }}">
                                                 {{ __('Save') }}
                                                 {{-- Punch

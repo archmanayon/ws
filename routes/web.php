@@ -92,7 +92,7 @@ Route::get('/auth/{provider}/callback', function ($provider) {
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('welcome_home');;
 
 Route::get('js', function () {
     return view ('js',[
