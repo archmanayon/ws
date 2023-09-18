@@ -289,12 +289,13 @@ Route::get('dept_head', [HeadController::class, 'show'])
 ->middleware(['auth', 'verified', 'head'])
 ->name('show_dept_head');
 
-Route::post('dept_head', [TaskController::class, 'endorse'])
-->middleware(['auth', 'verified', 'head'])
-->name('endorse_task');
+// all employee tasks
+Route::get('all_employee_tasks', [TaskController::class, 'show_all_tasks'])
+->middleware(['auth', 'verified', 'admin'])
+->name('show_all_employee_tasks');
 
 Route::get('history_tasks', [HeadController::class, 'show_all_tasks'])
-->middleware(['auth', 'verified', 'head'])
+->middleware(['auth', 'verified', 'admin'])
 ->name('show_history_tasks');
 
 Route::post('history_tasks', [TaskController::class, 'endorse'])
@@ -339,7 +340,7 @@ Route::post('print', [ScheduleController::class, 'absences_all'])
 // ->name('own_by_cal');
 
 Route::get('report', [ScheduleController::class, 'owner_abs'])
-->middleware(['auth', 'verified',  'head'])
+->middleware(['auth', 'verified', 'scholars'])
 ->name('report');
 
 Route::post('report', [ScheduleController::class, 'owner_abs'])
