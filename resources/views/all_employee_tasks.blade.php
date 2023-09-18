@@ -40,11 +40,11 @@
 
                             <th class="px-4 w-auto">{{ 'Tasks' }}</th>
 
-                            <th class="px-3 py-3  w-auto">
+                            {{-- <th class="px-3 py-3  w-auto">
                                 {{ 'Remarks' }}
-                            </th>
+                            </th> --}}
 
-                            <th class="px-4 py-3 w-auto">{{ 'Status' }}</th>
+                            <th class="px-4 py-3 w-auto">{{ 'Department' }}</th>
 
                             {{-- <th class="px-4 py-3">{{ 'Head' }}</th> --}}
                         </thead> 
@@ -70,17 +70,17 @@
                                 </td>
 
                                 {{-- remarks --}}
-                                <td class="w-auto">
+                                {{-- <td class="w-auto">
 
                                     {{ $current_task->remarks }}
 
-                                </td>
+                                </td> --}}
 
                                 {{-- status --}}
                                 <td class="px-4 w-auto">
 
 
-                                    {{$current_task->status}}
+                                    {{$current_task->user->head->department}}
 
                                 </td>
 
