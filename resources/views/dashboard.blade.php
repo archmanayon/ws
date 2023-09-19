@@ -66,7 +66,7 @@
                                                 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
                                                 Biometric report (text files)
                                         </a><br>
-                                        
+
 
                                         <a href="dtr" class="font-semibold text-gray-600
                                                 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
@@ -90,9 +90,9 @@
                                                 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
                                                 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
                                                 ALL Employee Tasks
-                                        </a><br>  
-                                        
-                                        
+                                        </a><br>
+
+
 
                                 @endadmin
 
@@ -105,8 +105,8 @@
                                         </a><br>
                                 @endws
 
-                                @staff                 
-                                
+                                @staff
+
                                         <a href="task" class="text-2xl font-semibold text-gray-600
                                                 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
                                                 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
@@ -134,23 +134,29 @@
                                                 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
                                                 Endorse Tasks
                                         </a><br>
-                                        
+
 
                                         <a href="tardi_group" class="font-semibold text-gray-600
                                                 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
                                                 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
                                                 View Staff Tardiness Report
-                                        </a><br>                                
+                                        </a><br>
 
                                 @endhead
 
                                 @staffhead
+                                        <a href="task" class="text-2xl font-semibold text-gray-600
+                                                hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
+                                                focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
+                                                Submit Daily Task Report
+                                        </a><br>
+
                                         <a href="report" class="font-semibold text-gray-600
                                                 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
                                                 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
                                                 View My Absences
                                         </a><br>
-                                        
+
                                         <a href="my_dtr" class="font-semibold text-gray-600
                                                         hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
                                                         focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
@@ -165,7 +171,7 @@
 
                                 @endstaffhead
 
-                                
+
 
 
                         {{-- @admin
@@ -180,23 +186,23 @@
 
                         <div class="p-6 text-gray-900 dark:text-gray-100">
 
-                                {{-- {{ 'Head Role' }}<br> <br> --}}    
-                                
+                                {{-- {{ 'Head Role' }}<br> <br> --}}
+
                                 @admin
                                         <a href="dept_head" class="font-semibold text-gray-600
                                         hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
                                         focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
                                         Endorse Tasks
                                         </a><br>
-                                        
+
 
                                         <a href="tardi_group" class="font-semibold text-gray-600
                                                 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
                                                 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
                                                 View Staff Tardiness Report
-                                        </a><br>    
+                                        </a><br>
                                 @endadmin
-                                
+
                                 @staffhead
 
                                         <a href="dept_head" class="font-semibold text-gray-600
@@ -204,7 +210,7 @@
                                                 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
                                                 Endorse Tasks
                                         </a><br>
-                                        
+
 
                                         <a href="tardi_group" class="font-semibold text-gray-600
                                                 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
@@ -214,7 +220,7 @@
 
                                 @endstaffhead
                         </div>
-                        
+
                 </div>
             </div>
         </div>

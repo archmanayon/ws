@@ -15,17 +15,14 @@ class campus
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(auth()->user()->role_id != 2){
 
+        if(auth()->user()->campus_id == 1){
+
+            return $next($request);
+
+        } else {
             return redirect('dashboard');
-
         }
 
-        if(auth()->user()->campus_id != 1){    
-               
-            return redirect('dashboard');
-
-        } 
-        return $next($request);
     }
 }
