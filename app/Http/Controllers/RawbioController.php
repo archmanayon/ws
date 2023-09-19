@@ -29,11 +29,7 @@ class RawbioController extends Controller
     public function dtr()
     {
         $holiday = array(
-            "01-05-23", "01-06-23",
-            "02-24-23", "02-25-23",
-            "04-06-23", "04-07-23",
-            "04-08-23", "04-10-23", "05-01-23",
-            "04-21-23", "06-12-23", "06-28-23"
+            "08-21-23", "08-28-23", "09-09-23"
         );
 
         $searched_user = User::find(request('find_user'))??false;
@@ -70,28 +66,24 @@ class RawbioController extends Controller
         $bio_end    = Carbon::create(Setup::find(4)->date)->format('Y-m-d');
 
         $holiday = array(
-            "01-05-23", "01-06-23",
-            "02-24-23", "02-25-23",
-            "04-06-23", "04-07-23",
-            "04-08-23", "04-10-23", "05-01-23",
-            "04-21-23", "06-12-23", "06-28-23"
+            "08-21-23", "08-28-23", "09-09-23"
         );
 
         $searched_user = auth()->user()??false;
-       
+
 
         $start_date = request('start_date')?
         (request('start_date') < $bio_start ? $bio_start : request('start_date')):
         Carbon::create(Setup::find(1)->date)->format('Y-m-d');;
-        
+
 
         $end_date = request('end_date')?
         (request('end_date') > $bio_end ? $bio_end : request('end_date')):
         Carbon::create(Setup::find(2)->date)->format('Y-m-d');;
-                
+
 
         $period = CarbonPeriod::create($start_date??false, $end_date??false);
-        
+
 
         $dates = $period->toArray();
         $collection_of_dates = collect($dates);
@@ -124,11 +116,7 @@ class RawbioController extends Controller
         $searched_user = auth()->user()??false;
 
         $holiday = array(
-            "01-05-23", "01-06-23",
-            "02-24-23", "02-25-23",
-            "04-06-23", "04-07-23",
-            "04-08-23", "04-10-23", "05-01-23",
-            "04-21-23", "06-12-23", "06-28-23"
+            "08-21-23", "08-28-23", "09-09-23"
         );
 
         $split = explode('to', $selected_dates);

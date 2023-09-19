@@ -94,7 +94,7 @@ class BiometricController extends Controller
 
                 $day = $date->format('l');
 
-                //---NOT to choose between 'official shift' and 'manual shift'[], this is just to provide for paramereter 
+                //---NOT to choose between 'official shift' and 'manual shift'[], this is just to provide for paramereter
                 $official = app()->call(ManualShiftController::class.'@official_',
             [
                 'searched_user'     =>  $searched_user,
@@ -125,11 +125,7 @@ class BiometricController extends Controller
     public function raw_bio_text()
     {
         $holiday = array(
-            "01-05-23", "01-06-23",
-            "02-24-23", "02-25-23",
-            "04-06-23", "04-07-23",
-            "04-08-23", "04-10-23", "05-01-23",
-            "04-21-23", "06-12-23", "06-28-23"
+            "08-21-23", "08-28-23", "09-09-23"
         );
 
         $start_date = request('start_date') ?? 0;
@@ -166,7 +162,7 @@ class BiometricController extends Controller
                     );
 
                     // querry fron shcp bio
-                    $shcp_punch =  Punch::where('user_id', $searched_user->id)->where('date', $d_date)??false;                    
+                    $shcp_punch =  Punch::where('user_id', $searched_user->id)->where('date', $d_date)??false;
 
                     $sub_shcp_punch = $shcp_punch->selectRaw(
                         '
@@ -178,11 +174,11 @@ class BiometricController extends Controller
                         '
                     );
 
-                    $merged = $sub_orig_bio->union($sub_shcp_punch);                    
+                    $merged = $sub_orig_bio->union($sub_shcp_punch);
 
                     // ----------------Updated bio ----------------------------------
 
-                    $updated_bio = $searched_user->update_bios->where('active',1)->where('date', $d_date);                    
+                    $updated_bio = $searched_user->update_bios->where('active',1)->where('date', $d_date);
 
                     return (object) [
                         'punch'        => $merged->with(['punchtype'])->get()->sortBy('biotext'),
