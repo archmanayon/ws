@@ -21,7 +21,7 @@
             <div class="bg-white m-5 dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
 
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ 'All Employee Daily Tasks ' }}<br>                   
+                    {{ 'All Employee Daily Tasks ' }}<br>
                 </div>
 
             </div>
@@ -29,7 +29,7 @@
             {{-- 2nd column --}}
             <div class="m-5 dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
 
-                <div class="dark:text-gray-100 p-6 dark:text-gray-100">
+                <div class="dark:text-gray-100 p-6">
 
                     <table class="rounded-t-lg text-sm w-full">
                         <thead class="border-b border-gray-300 text-left">
@@ -38,7 +38,13 @@
 
                             <th class="px-4 py-3">{{ 'Date' }}</th>
 
+                            <th class="px-4 py-3">{{ 'Time Submitted' }}</th>
+
                             <th class="px-4 w-auto">{{ 'Tasks' }}</th>
+
+                            <th class="px-4 w-auto">{{ 'Status' }}</th>
+
+                            <th class="px-4 w-auto">{{ 'Remarks' }}</th>
 
                             {{-- <th class="px-3 py-3  w-auto">
                                 {{ 'Remarks' }}
@@ -48,12 +54,12 @@
 
                             <th class="px-4 py-3">{{ 'Head' }}</th>
                             <th class="px-4 py-3">{{ 'Head Email' }}</th>
-                        </thead> 
+                        </thead>
 
                         @foreach ( Task::all()->sortBy('status') as $current_task)
                         <tr class="border-b">
 
-                           
+
 
                                 {{-- employee's --}}
                                 <td class="px-4">
@@ -65,10 +71,26 @@
                                     {{ $current_task->created_at->format('m/d/y') }}
                                 </td>
 
+                                 {{-- time submitted --}}
+                                    <td class="px-4">
+                                        {{ $current_task->created_at->setTimeZone('Asia/Kuala_Lumpur')->format('h:i a') }}
+                                    </td>
+
                                 {{-- task --}}
                                 <td class="px-4 sm:max-w-sm ">
                                     {{ $current_task->task_done }}
                                 </td>
+
+                                  {{-- stat --}}
+                                <td class="px-4 sm:max-w-sm ">
+                                    {{ $current_task->status }}
+                                </td>
+
+                                   {{-- remarks --}}
+                                <td class="px-4 sm:max-w-sm ">
+                                    {{ $current_task->remarks }}
+                                </td>
+
 
                                 {{-- remarks --}}
                                 {{-- <td class="w-auto">
@@ -104,9 +126,9 @@
 
                                 {{-- <td class="px-4 py-3">
                                     {{ $current_task->head }}
-                                </td> --}}                              
+                                </td> --}}
 
-                           
+
                         </tr>
                         @endforeach
 
