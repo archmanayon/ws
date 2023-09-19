@@ -12,7 +12,7 @@
         </h2>
     </x-slot>
 
-  
+
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:grid lg:px-8 ">
@@ -26,7 +26,7 @@
                             @endforeach
                         </ul>
                     </div>
-                @endif       
+                @endif
             </div>
 
             {{-- 1st column --}}
@@ -36,7 +36,7 @@
                     {{ 'Task Done' }}<br>
                     {{ $user->name??false }} <br>
 
-                           
+
 
                     <form method="post" action="{{ route('store_task') }}">
                         @csrf
@@ -61,12 +61,13 @@
             {{-- 2nd column --}}
             <div class="m-5 dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg w-full">
 
-                <div class="dark:text-gray-100 p-6 dark:text-gray-100">
+                <div class="dark:text-gray-100 p-6">
 
                     <table class="rounded-t-lg text-sm w-full">
                         <thead class="border-b border-gray-300 text-left">
 
                             <th class="px-4 py-3">{{ 'Date' }}</th>
+                            
                             <th class="px-4 py-3">{{ 'Time Submitted' }}</th>
 
                             <th class="px-4 w-auto">{{ 'Tasks' }}</th>
@@ -88,7 +89,7 @@
                             </td>
 
                             <td class="px-4">
-                                {{ $current_task->created_at->format('h:i a') }}
+                                {{ $current_task->created_at->setTimeZone('Asia/Kuala_Lumpur')->format('h:i a') }}
                             </td>
 
                             <td class="px-4 sm:max-w-sm ">

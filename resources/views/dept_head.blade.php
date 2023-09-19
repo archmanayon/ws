@@ -41,6 +41,8 @@
 
                             <th class="px-4 py-3">{{ 'Date' }}</th>
 
+                            <th class="px-4 py-3">{{ 'Time Submitted' }}</th>
+
                             <th class="px-4 w-auto">{{ 'Tasks' }}</th>
 
                             <th class="px-3 py-3  w-auto">
@@ -51,7 +53,7 @@
 
                             <th class="px-4 py-3 w-auto">{{ 'Endorsed by' }}</th>
                         </thead>
-                        
+
                         @foreach ( $user->heads as $each_dept_handled)
 
                             @foreach ( $each_dept_handled->tasks->sortBy('status')->where('status', 0) as $current_task)
@@ -69,6 +71,11 @@
                                     {{-- date --}}
                                     <td class="px-4">
                                         {{ $current_task->created_at->format('m/d/y')}}
+                                    </td>
+
+                                    {{-- time submitted --}}
+                                    <td class="px-4">
+                                        {{ $current_task->created_at->setTimeZone('Asia/Kuala_Lumpur')->format('h:i a') }}
                                     </td>
 
                                     {{-- task --}}
