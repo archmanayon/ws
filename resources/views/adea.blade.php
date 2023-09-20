@@ -29,7 +29,7 @@
                     <table>
                         <form method="POST" action="{{ route('adea_post') }}">
                             @csrf
-                            
+
                             <td>
                                 <div class="mt-4" >
                                     <x-input-label for="start_date" :value="__('Start Date')" />
