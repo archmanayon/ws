@@ -206,7 +206,7 @@ class ScheduleController extends Controller{
         $collection_of_dates = collect($dates);
         $count_dates = $period->count();
 
-        $mappedArray = collect(User::all()->where('active', true)->where('role_id', 2))
+        $mappedArray = collect(User::all()->where('active', true)->where('role_id', 2)->sortBy('name'))
             ->map(function ($user) use ($collection_of_dates, $holiday){
 
                 $user = app()->call(AbsenceCalendarController::class.'@adea_bio',
