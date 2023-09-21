@@ -33,14 +33,14 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'active' => ['required', 'boolean', 'max:1'],
-            'timecard' => ['required', 'string','min:6', 'max:6'],
+            // 'timecard' => ['required', 'string','min:6', 'max:6'],
             'student_id' => ['required', 'string','min:6', 'max:8'],
             'name' => ['required', 'string','min:3', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
             'shift_id' => ['required', 'min:1', 'max:6'],
             // 'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'role_id' => ['required', 'min:1', 'max:2'],
-            'head_id' => ['required', 'min:1', 'max:2'],
+            // 'head_id' => ['required', 'min:1', 'max:2'],
         ]);
 
         $random_pw = Str::random(8);

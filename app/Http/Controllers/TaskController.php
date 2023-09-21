@@ -186,7 +186,7 @@ class TaskController extends Controller
        
         return view('all_employee_tasks',
         [
-            'user'          => auth()->user()??false
+            'tasks'          => Task::all()->sortBy('status')??false
             // 'tasks'         => session('task_session')??false,
             // 'currentDate'   => session('currentDate')??false,
             // 'current_time'  => session('current_time')??false,

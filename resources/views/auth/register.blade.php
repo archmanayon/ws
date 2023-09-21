@@ -13,7 +13,7 @@
         <!-- Time Card -->
         <div class="mt-4">
             <x-input-label for="timecard" :value="__('Time Card')" />
-            <x-text-input id="timecard" class="block mt-1 w-full" type="text" name="timecard" :value="old('timecard')" required autofocus autocomplete="timecard" />
+            <x-text-input id="timecard" class="block mt-1 w-full" type="text" name="timecard" :value="old('timecard')" autofocus autocomplete="timecard" />
             <x-input-error :messages="$errors->get('timecard')" class="mt-2" />
         </div>
 
@@ -54,7 +54,7 @@
          <!-- Head ID -->
          <div class="mt-4">
             <x-input-label for="head_id" :value="__('Head Id')" />
-            <x-text-input id="head_id" class="block mt-1 w-full" type="number" name="head_id" :value="old('head_id')" required autocomplete="head_id" />
+            <x-text-input id="head_id" class="block mt-1 w-full" type="number" name="head_id" :value="old('head_id')" autocomplete="head_id" />
             <x-input-error :messages="$errors->get('head_id')" class="mt-2" />
         </div>
 

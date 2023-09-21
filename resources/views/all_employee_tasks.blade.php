@@ -56,7 +56,7 @@
                             <th class="px-4 py-3">{{ 'Head Email' }}</th>
                         </thead>
 
-                        @foreach ( Task::all()->sortBy('status') as $current_task)
+                        @foreach ( $tasks as $current_task)
                         <tr class="border-b">
 
 

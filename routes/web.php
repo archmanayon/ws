@@ -279,6 +279,11 @@ Route::get('all_employee_tasks', [TaskController::class, 'show_all_tasks'])
 ->middleware(['auth', 'verified', 'admin'])
 ->name('show_all_employee_tasks');
 
+// Department List
+Route::get('dept_list', [HeadController::class, 'show_dept_list'])
+->middleware(['auth', 'verified', 'admin'])
+->name('dept_list');
+
 Route::get('history_tasks', [HeadController::class, 'show_all_tasks'])
 ->middleware(['auth', 'verified', 'head'])
 ->name('show_history_tasks');
