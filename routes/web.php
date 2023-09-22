@@ -321,6 +321,12 @@ Route::get('print', [ScheduleController::class, 'absences_all'])
 Route::post('print', [ScheduleController::class, 'absences_all'])
 ->middleware(['auth', 'verified', 'admin'])->name('print_post');
 
+Route::get('tardi_process', [TardiController::class, 'show_all'])
+->middleware(['auth', 'verified', 'admin'])->name('show_all_emp_tardi');
+
+Route::post('tardi_process', [TardiController::class, 'process'])
+->middleware(['auth', 'verified', 'admin'])->name('save_all_emp_tardi');
+
 // Route::get('/report/{ws:username}', [ScheduleController::class, 'owner_abs'])
 // ->middleware(['auth', 'verified', 'scholars'])
 // ->name('report');

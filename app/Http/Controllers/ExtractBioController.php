@@ -219,7 +219,7 @@ class ExtractBioController extends Controller
         return (object) [
 
             // these data are for dtr display
-            'processed_punch' => $all_bio_punches,
+            // 'processed_punch' => $all_bio_punches,
             'orig_raw_bio'  => $merged->with(['punchtype'])->get()->sortBy('biotext'),
                 // 'orig_raw_bio'  => $sub_orig_bio->with(['punchtype'])->get()->sortBy('biotext'),
             'date'          => $date->format('m/d/y'),
@@ -343,7 +343,7 @@ class ExtractBioController extends Controller
         return (object) [
 
             // these data are for dtr display
-            'processed_punch' => $all_bio_punches,
+            // 'processed_punch' => $all_bio_punches,
             // 'orig_raw_bio'  => $merged->with(['punchtype'])->get()->sortBy('biotext'),
             'orig_raw_bio'  => $merged->where('punchtype_id', '1')->orderBy('biotext', 'asc')->with(['punchtype'])->get(),
                 // 'orig_raw_bio'  => $sub_orig_bio->with(['punchtype'])->get()->sortBy('biotext'),

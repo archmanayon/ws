@@ -50,6 +50,8 @@ class User extends Authenticatable
 
     // protected $with = ['manual_shifts', 'shift', 'update_bios'];
 
+    protected $with = ['manual_shifts','shift', 'update_bios', 'punches', 'tasks', 'shift', 'heads', 'role'];
+
     public function tardis()
     {
         return $this->hasMany(Tardi::class);

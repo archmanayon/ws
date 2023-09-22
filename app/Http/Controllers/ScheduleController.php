@@ -167,12 +167,13 @@ class ScheduleController extends Controller{
         $count_dates = $period->count();
 
         $mappedArray = collect(User::all()->where('active', true)->where('role_id', 1)->sortBy('name'))
+        // User::with(['manual_shifts','shift', 'update_bios'])->get()
             ->map(function ($user) use ($collection_of_dates, $holiday){
 
                 $user = app()->call(AbsenceCalendarController::class.'@adea_bio',
                 [
                     'collection_of_dates' => $collection_of_dates,
-                    'searched_user'=> User::find($user->id),
+                    'searched_user'=> $user,
                     'holiday' =>$holiday
                 ]);
 
@@ -207,12 +208,12 @@ class ScheduleController extends Controller{
         $count_dates = $period->count();
 
         $mappedArray = collect(User::all()->where('active', true)->where('role_id', 2)->sortBy('name'))
-            ->map(function ($user) use ($collection_of_dates, $holiday){
+            ->map(function ($user) use ($collection_of_dates, $holiday){               
 
                 $user = app()->call(AbsenceCalendarController::class.'@adea_bio',
                 [
                     'collection_of_dates' => $collection_of_dates,
-                    'searched_user'=> User::find($user->id),
+                    'searched_user'=> $user,
                     'holiday' =>$holiday
                 ]);
 
