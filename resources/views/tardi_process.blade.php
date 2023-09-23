@@ -90,6 +90,15 @@
                                             <td class="px-4 py-3">
                                                 {{ $daily->user->student_id}}
                                             </td>
+
+                                            <td class="px-4 py-3">
+                                                {{ $term->id}}
+                                            </td>
+
+                                            <td class="px-4 py-3">
+                                                {{ $term->id}}
+                                            </td>
+
                                             <td class="px-4 py-3">
                                                 {{ $daily->user->name}}
                                             <td>
