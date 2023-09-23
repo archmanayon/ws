@@ -344,7 +344,7 @@ Route::post('report', [ScheduleController::class, 'owner_abs'])
 ->name('own_by_cal');
 
 Route::get('my_dtr', [RawbioController::class, 'my_dtr'])
-->middleware(['auth', 'verified', 'staff'])->name('my_dtr');
+->middleware(['auth', 'verified'])->name('my_dtr');
 
 Route::post('my_dtr', [RawbioController::class, 'my_dtr'])
 ->middleware(['auth', 'verified', 'staff'])->name('my_dtr_post');
