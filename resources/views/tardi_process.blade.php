@@ -100,17 +100,34 @@
                                                 {{ $daily->month}}
                                             </td>
 
-                                            <td> {{ 'total' }}</td>
+                                            <td> {{ $daily->type }}</td>
 
                                             <td>
                                                 {{ 'oral warning sample description' }}
                                             </td>
                                             
                                             <td class="px-4 py-3">
-                                                {{ $daily->user->head_id}}
+                                                {{ $daily->user->head->user->name}}
                                             </td>
+
                                             <td class="px-4 py-3">
-                                                {{ $daily->required_h}}
+                                                {{ $loop->count . ' | '. $loop->index}}
+                                            </td>
+
+                                            <td class="px-4 py-3">
+                                                {{ 'conforme date'}}
+                                            </td>
+
+                                            <td class="px-4 py-3">
+                                                {{ 'head signature'}}
+                                            </td>
+
+                                            <td class="px-4 py-3">
+                                                {{ 'date of signature'}}
+                                            </td>
+
+                                            <td class="px-4 py-3">
+                                                {{ 'remarks by head'}}
                                             </td>
 
                                             {{-- und outside abs --}}

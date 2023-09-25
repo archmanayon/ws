@@ -251,7 +251,12 @@ class ScheduleController extends Controller{
         $collection_of_dates = collect($dates);
         $count_dates = $period->count();
 
-        $mappedArray = collect(User::all()->where('active',true)->where('role_id', 2)->orWhere('role_id', 5))
+        $users = User::where(function ($query) {
+            $query->where('role_id', '=', 2)
+                  ->orWhere('role_id', '=', 5);
+        })->get();
+
+        $mappedArray = collect( $users->where('active',true))
         ->map(
             function ($user) use ($collection_of_dates, $holiday) {
 
@@ -259,7 +264,7 @@ class ScheduleController extends Controller{
                     BiometricController::class . '@text_files_part_2',
                     [
                         'collection_of_dates' => $collection_of_dates,
-                        'searched_user' => User::find($user->id),
+                        'searched_user' => $user,
                         'holiday' => $holiday
                     ]
                 );
