@@ -67,28 +67,33 @@
 
                         <table class="rounded-t-lg m-5 w-5/6 mx-auto bg-gray-800 text-gray-200">
                             <tr class="text-left border-b border-gray-300">
-                                <th class="px-4 py-3">Student ID</th>
+                                <th class="px-4 py-3">Stud ID</th>
                                 <th class="px-4 py-3">Term</th>
                                 <th class="px-4 py-3">Month</th>
                                 <th class="px-4 py-3">Total</th>
-                                <th class="px-4 py-3">Description</th>
+                                <th class="px-4 py-3">Desc</th>
                                 <th class="px-4 py-3">Head ID</th>
-                                <th class="px-4 py-3">Conforme</th>
-                                <th class="px-4 py-3">Conforme Date</th>
-                                <th class="px-4 py-3">Head Signature</th>
-                                <th class="px-4 py-3">Signature Date</th>
+                                <th class="px-4 py-3">cnFrme</th>
+                                <th class="px-4 py-3">cnFrme Date</th>
+                                <th class="px-4 py-3">Head Sig</th>
+                                <th class="px-4 py-3">Sig Date</th>
                                 <th class="px-4 py-3">Remarks</th>
                             </tr>
 
                             @foreach ( $mappedUser as $each_user)
 
-                                @foreach ( $each_user as $daily)
+                            @php
+                                $count = 1;
+                            @endphp
 
-                                    @if ( $daily)
 
-                                        <tr class="bg-gray-700 border-b border-gray-600">
+                                @foreach ( $each_user as $daily) 
+                                
+                                    @if ( $daily && $daily->type == 'LTE')
+
+                                        <tr class="bg-gray-700 border-b border-gray-600">                                            
                                             <td class="px-4 py-3">
-                                                {{ $daily->user->name}}
+                                                {{$daily->user->name}}
                                             </td>
 
                                             <td class="px-4 py-3">
@@ -97,48 +102,58 @@
                                             
 
                                             <td class="px-4 py-3">
-                                                {{ $daily->month}}
+                                                {{ $daily->month.' | '. $daily->date}}
                                             </td>
 
-                                            <td> {{ $daily->type }}</td>
+                                            <td class="px-4 py-3">
+                                                 {{ $daily->type }}
+                                            </td>
 
-                                            <td>
-                                                {{ 'oral warning sample description' }}
+                                            <td class="px-4 py-3">
+                                                {{ 'oral' }}
                                             </td>
                                             
                                             <td class="px-4 py-3">
-                                                {{ $daily->user->head->user->name}}
+                                                {{ $daily->user->head_id}}
                                             </td>
 
                                             <td class="px-4 py-3">
-                                                {{ $loop->count . ' | '. $loop->index}}
+                                                {{ $count. ' | '. $loop->index}}
                                             </td>
 
                                             <td class="px-4 py-3">
-                                                {{ 'conforme date'}}
+                                                {{ 'C date'}}
                                             </td>
 
                                             <td class="px-4 py-3">
-                                                {{ 'head signature'}}
+                                                {{ 'H sige'}}
                                             </td>
 
                                             <td class="px-4 py-3">
-                                                {{ 'date of signature'}}
+                                                {{ 'dte s'}}
                                             </td>
 
                                             <td class="px-4 py-3">
-                                                {{ 'remarks by head'}}
+                                                {{ 'R by H'}}
                                             </td>
+
+                                            <td class="px-4 py-3">
+                                                {{ $daily->user->head_id}}
+                                            </td>      
+                                            
+                                            @php
+                                                $count++;
+                                            @endphp
 
                                             {{-- und outside abs --}}
-                                            @if ($daily->ws_double)
+                                            {{-- @if ($daily->ws_double)
                                                 </tr>
                                                 <tr class="bg-gray-700 border-b border-gray-600">
                                                     <td class="px-4 py-3">
                                                         {{ $daily->user->student_id}}
                                                     </td>
                                                     <td class="px-4 py-3">
-                                                        {{ $daily->user->name }}
+                                                        {{ $daily->date }}
                                                     <td>
                                                         <x-dropdown relative='x' align='top'>
                                                             <x-slot name="trigger">
@@ -179,62 +194,73 @@
                                                         {{ $daily->ws_double }}
                                                     </td>
 
-                                            @endif
+                                            @endif --}}
 
                                         {{-- late with abs --}}
                                             @if ($daily->required_h_late > 0)
                                                 </tr>
                                                 <tr class="bg-gray-700 border-b border-gray-600">
+
+
                                                     <td class="px-4 py-3">
-                                                        {{ $daily->user->student_id}}
+                                                        {{ $daily->user->name}}
                                                     </td>
+        
                                                     <td class="px-4 py-3">
-                                                        {{ $daily->user->name }}
+                                                       
                                                     </td>
+                                                    
+        
+                                                    <td class="px-4 py-3">
+                                                      
+                                                    </td>
+        
+                                                    <td>{{ $daily->type_late }}</td>
+        
                                                     <td>
-                                                        <x-dropdown relative='x' align='top'>
-                                                            <x-slot name="trigger">
-                                                                <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-100 focus:outline-none transition ease-in-out duration-150">
-                                                                    <div>{{ $daily->date }}</div>
-
-                                                                    <div class="ml-1">
-                                                                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                                                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                                                        </svg>
-                                                                    </div>
-                                                                </button>
-                                                            </x-slot>
-
-                                                            <x-slot name="content">
-
-                                                                @foreach ($daily->all_bio_punches as $bio)
-
-                                                                    <div class="inline-block flex-shrink-0"> {{ $bio->hour }}</div>
-                                                                    <div class="inline-block pl-3 flex-shrink-0"> {{ $bio->in_out }}</div>
-                                                                    <div class="inline-block pl-3 flex-shrink-0">
-                                                                        <a href="rawbio/{{ $daily->user->timecard.$daily->bio_daily_array}}"> {{ 'update' }} </a>
-                                                                    </div> <br>
-                                                                @endforeach
-                                                                <div class="inline-block pl-8 flex-shrink-0">
-                                                                    <a href="rawbio/{{ $daily->user->timecard.$daily->bio_daily_array}}">
-                                                                        {{ $daily->all_bio_punches[0] ?? false ? '': 'no punch'}}
-                                                                    </a>
-                                                                </div>
-
-                                                            </x-slot>
-                                                        </x-dropdown>
+                                                        {{ 'oral' }}
                                                     </td>
+                                                    
                                                     <td class="px-4 py-3">
-                                                        {{ $daily->type_late }}
+                                                        {{ $daily->user->head->user->name}}
                                                     </td>
+        
+                                                    <td class="px-4 py-3">
+                                                        {{ $count. ' | '. $loop->index}}
+                                                    </td>
+        
+                                                    <td class="px-4 py-3">
+                                                        {{ 'C date'}}
+                                                    </td>
+        
+                                                    <td class="px-4 py-3">
+                                                        {{ 'H sige'}}
+                                                    </td>
+        
+                                                    <td class="px-4 py-3">
+                                                        {{ 'dte s'}}
+                                                    </td>
+        
+                                                    <td class="px-4 py-3">
+                                                        {{ 'R by H'}}
+                                                    </td>
+        
+                                                    <td class="px-4 py-3">
+                                                        {{ $daily->user->head_id}}
+                                                    </td>                                                    
+                                                    
                                                     <td class="px-4 py-3">
                                                         {{ $daily->required_h_late }}
                                                     </td>
 
+                                                    @php
+                                                        $count++;
+                                                    @endphp
+
                                             @endif
 
                                             {{-- und with abs --}}
-                                            @if ($daily->required_h_und > 0)
+                                            {{-- @if ($daily->required_h_und > 0)
                                                 </tr>
                                                 <tr class="bg-gray-700 border-b border-gray-600">
                                                     <td class="px-4 py-3">
@@ -283,10 +309,12 @@
                                                         {{ $daily->required_h_und }}
                                                     </td>
 
-                                            @endif
+                                            @endif --}}
 
                                         </tr>
                                     @endif
+
+                                   
 
                                 @endforeach
 

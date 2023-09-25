@@ -194,7 +194,12 @@ class TardiController extends Controller
         $collection_of_dates = collect($dates);
         $count_dates = $period->count();
 
-        $mappedArray = collect(User::all()->where('active', true)->where('role_id', 2)->sortBy('name'))
+        $users = User::where(function ($query) {
+            $query->where('role_id', '=', 2)
+                  ->orWhere('role_id', '=', 5);
+        })->get();
+
+        $mappedArray = collect($users->where('active',true)->sortBy('name'))
             ->map(function ($user) use ($collection_of_dates, $holiday){               
 
                 $user = app()->call(AbsenceCalendarController::class.'@adea_bio',
@@ -232,7 +237,12 @@ class TardiController extends Controller
         $collection_of_dates = collect($dates);
         $count_dates = $period->count();
 
-        $mappedArray = collect(User::all()->where('active', true)->where('role_id', 2)->sortBy('name'))
+        $users = User::where(function ($query) {
+            $query->where('role_id', '=', 2)
+                  ->orWhere('role_id', '=', 5);
+        })->get();
+
+        $mappedArray = collect($users->where('active',true)->sortBy('name'))
             ->map(function ($user) use ($collection_of_dates, $holiday){               
 
                 $user = app()->call(AbsenceCalendarController::class.'@adea_bio',

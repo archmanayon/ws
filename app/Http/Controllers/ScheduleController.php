@@ -256,7 +256,7 @@ class ScheduleController extends Controller{
                   ->orWhere('role_id', '=', 5);
         })->get();
 
-        $mappedArray = collect( $users->where('active',true))
+        $mappedArray = collect( $users->where('active',true)->sortBy('name'))
         ->map(
             function ($user) use ($collection_of_dates, $holiday) {
 

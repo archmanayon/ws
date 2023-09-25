@@ -170,7 +170,7 @@
                                             </x-dropdown>
                                         </td>
                                         <td class="px-4 py-3">
-                                            {{ $daily->type}}
+                                            {{ $daily->type.' | '. $loop->index}}
                                         </td>
                                         <td class="px-4 py-3">
                                             {{ $daily->required_h}}
