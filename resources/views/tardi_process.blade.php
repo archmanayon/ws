@@ -28,7 +28,7 @@
                     {{-- {{ dd($term->school_year) }} --}}
 
                     <table>
-                        <form method="POST" action="{{ route('adea_post') }}">
+                        <form method="POST" action="{{ route('show_all_emp_tardi') }}">
                             @csrf
 
                             <td>
@@ -88,54 +88,26 @@
 
                                         <tr class="bg-gray-700 border-b border-gray-600">
                                             <td class="px-4 py-3">
-                                                {{ $daily->user->student_id}}
-                                            </td>
-
-                                            <td class="px-4 py-3">
-                                                {{ $term->id}}
-                                            </td>
-
-                                            <td class="px-4 py-3">
-                                                {{ $term->id}}
-                                            </td>
-
-                                            <td class="px-4 py-3">
                                                 {{ $daily->user->name}}
-                                            <td>
-                                                <x-dropdown relative='x' align='top'>
-                                                    <x-slot name="trigger">
-                                                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-100 focus:outline-none transition ease-in-out duration-150">
-                                                            <div>{{ $daily->date }}</div>
-
-                                                            <div class="ml-1">
-                                                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                                                </svg>
-                                                            </div>
-                                                        </button>
-                                                    </x-slot>
-
-                                                    <x-slot name="content">
-
-                                                        @foreach ($daily->all_bio_punches as $bio)
-
-                                                            <div class="inline-block flex-shrink-0"> {{ $bio->hour }}</div>
-                                                            <div class="inline-block pl-3 flex-shrink-0"> {{ $bio->in_out }}</div>
-                                                            <div class="inline-block pl-3 flex-shrink-0">
-                                                                <a href="rawbio/{{ $daily->user->timecard.$daily->bio_daily_array}}"> {{ 'update' }} </a>
-                                                            </div> <br>
-                                                        @endforeach
-                                                        <div class="inline-block pl-8 flex-shrink-0">
-                                                            <a href="rawbio/{{ $daily->user->timecard.$daily->bio_daily_array}}">
-                                                                {{ $daily->all_bio_punches[0] ?? false ? '': 'no punch'}}
-                                                            </a>
-                                                        </div>
-
-                                                    </x-slot>
-                                                </x-dropdown>
                                             </td>
+
                                             <td class="px-4 py-3">
-                                                {{ $daily->type}}
+                                                {{ $term->school_year}}
+                                            </td>
+                                            
+
+                                            <td class="px-4 py-3">
+                                                {{ $daily->month}}
+                                            </td>
+
+                                            <td> {{ 'total' }}</td>
+
+                                            <td>
+                                                {{ 'oral warning sample description' }}
+                                            </td>
+                                            
+                                            <td class="px-4 py-3">
+                                                {{ $daily->user->head_id}}
                                             </td>
                                             <td class="px-4 py-3">
                                                 {{ $daily->required_h}}

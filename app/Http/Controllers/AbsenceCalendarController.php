@@ -174,6 +174,7 @@ class AbsenceCalendarController extends Controller
                     // 'name'=> $searched_user->name,
                     // 'timecard'=> $searched_user->timecard,
                     'date'=> $d_date,                    
+                    'month'=> $date->format('F'), 
                     'type'=> $type,
                     'required_h'=> $required_h,
 

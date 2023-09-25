@@ -19,10 +19,11 @@
                         <div class="p-6 text-gray-900 dark:text-gray-100">
                                 {{-- {{ 'Employee' }}<br> <br> --}}
                                 @admin
-                                        <a href="all_absences" class="font-semibold text-gray-600
+                                        
+                                        <a href="tardi_process" class="font-semibold text-gray-600
                                                 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
                                                 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
-                                                View All WS Absences
+                                                Tardiness Processing
                                         </a><br>
 
                                         <a href="register" class="font-semibold text-gray-600

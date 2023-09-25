@@ -251,7 +251,7 @@ class ScheduleController extends Controller{
         $collection_of_dates = collect($dates);
         $count_dates = $period->count();
 
-        $mappedArray = collect(User::all()->where('active',true)->where('role_id', 2))
+        $mappedArray = collect(User::all()->where('active',true)->where('role_id', 2)->orWhere('role_id', 5))
         ->map(
             function ($user) use ($collection_of_dates, $holiday) {
 

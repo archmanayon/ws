@@ -217,5 +217,43 @@ class TardiController extends Controller
         ]);
     }
 
+    public function process()
+    {
+        // $user_all = User::with(['shift', 'manual_shifts', 'update_bios'])->get();
+
+        $holiday = array(
+            "08-21-23", "08-28-23", "09-09-23"
+        );
+
+        $start_date = request('start_date')?? 0;
+        $end_date = request('end_date')?? 0;
+        $period = CarbonPeriod::create($start_date, $end_date);
+        $dates = $period->toArray();
+        $collection_of_dates = collect($dates);
+        $count_dates = $period->count();
+
+        $mappedArray = collect(User::all()->where('active', true)->where('role_id', 2)->sortBy('name'))
+            ->map(function ($user) use ($collection_of_dates, $holiday){               
+
+                $user = app()->call(AbsenceCalendarController::class.'@adea_bio',
+                [
+                    'collection_of_dates' => $collection_of_dates,
+                    'searched_user'=> $user,
+                    'holiday' =>$holiday
+                ]);
+
+                return $user;
+
+            }
+        );
+
+        return view ('tardi_process',[
+
+            'mappedUser' =>  $mappedArray,
+            'term' => Term::all()->where('active',1)->first(),            
+
+        ]);
+    }
+
 
 }
