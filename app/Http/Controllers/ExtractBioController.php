@@ -274,7 +274,7 @@ class ExtractBioController extends Controller
         );
 
         // querry fron shcp bio
-        $shcp_punch =  Punch::where('user_id', $searched_user->id)->where('date', $str_date);
+        $shcp_punch =  Punch::with('users')->where('user_id', $searched_user->id)->where('date', $str_date); 
         //  $shcp_punc =  Punch::select('biotext')->where('user_id', $searched_user->id)->where('date', $str_date);
 
         $sub_shcp_punch = $shcp_punch->selectRaw(
@@ -314,7 +314,7 @@ class ExtractBioController extends Controller
 
         } else {
 
-            $all_bio_punches = $merged->orderBy('biotext', 'asc')->with(['punchtype'])->get();
+            $all_bio_punches = $merged->orderBy('biotext', 'asc')->get();
             
         }
         

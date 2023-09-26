@@ -251,7 +251,7 @@ class ScheduleController extends Controller{
         $collection_of_dates = collect($dates);
         $count_dates = $period->count();
 
-        $users = User::where(function ($query) {
+        $users = User::without(['tasks', 'heads', 'role'])->where(function ($query) {
             $query->where('role_id', '=', 2)
                   ->orWhere('role_id', '=', 5);
         })->get();

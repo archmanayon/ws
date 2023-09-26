@@ -135,8 +135,14 @@ class BiometricController extends Controller
         $collection_of_dates = collect($dates);
         $count_dates = $period->count();
 
-        $mappedUsers = collect(User::where('active', true)->where('role_id', 2)->get())
-        ->map(function ($searched_user) use ($collection_of_dates) {
+        $users = User::without(['tasks', 'heads', 'role'])->where(function ($query) {
+            $query->where('role_id', '=', 2)
+                  ->orWhere('role_id', '=', 5);
+        })->get();
+
+        $mappedArray = collect( $users->where('active',true)->sortBy('name'))
+        ->map(
+            function ($searched_user) use ($collection_of_dates) {
 
             $mapped_dates = $collection_of_dates
                 ->map(function ($date) use ($searched_user) {
