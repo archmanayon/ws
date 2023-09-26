@@ -340,12 +340,16 @@ class ExtractBioController extends Controller
         $pm_out = $official->pm_in && $allowance_for_pm <= 2 && $bio_pm_out > $official->pm_in
                   ? $bio_pm_out : false;
 
+        $orig_raw_bio =  $merged->where(function ($query) {
+            $query->where('punchtype_id', '=', 1)->orWhere('punchtype_id', '=', 8);
+        })->orderBy('biotext', 'asc')->with(['punchtype'])->get();
+
         return (object) [
 
             // these data are for dtr display
             // 'processed_punch' => $all_bio_punches,
             // 'orig_raw_bio'  => $merged->with(['punchtype'])->get()->sortBy('biotext'),
-            'orig_raw_bio'  => $merged->where('punchtype_id', '1')->orderBy('biotext', 'asc')->with(['punchtype'])->get(),
+            'orig_raw_bio'  => $orig_raw_bio,
                 // 'orig_raw_bio'  => $sub_orig_bio->with(['punchtype'])->get()->sortBy('biotext'),
             'date'          => $date->format('m/d/y'),
             'day'           => $date->format('l'),

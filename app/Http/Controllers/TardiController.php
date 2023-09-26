@@ -243,7 +243,7 @@ class TardiController extends Controller
         })->get();
 
         $mappedArray = collect($users->where('active',true)->sortBy('name'))
-            ->map(function ($user) use ($collection_of_dates, $holiday){               
+            ->map(function ($user) use ($collection_of_dates, $holiday){                             
 
                 $user = app()->call(AbsenceCalendarController::class.'@adea_bio',
                 [

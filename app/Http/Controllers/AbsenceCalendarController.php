@@ -18,9 +18,10 @@ class AbsenceCalendarController extends Controller
     // use this ___________________
     public function adea_bio($collection_of_dates,$searched_user, $holiday) 
     {          
+        $late_count = 0;
                        
         $mappedArray = $collection_of_dates
-        ->map(function ($date) use ($searched_user, $holiday){            
+        ->map(function ($date) use ($searched_user, $holiday, &$late_count){            
         
             $date = Carbon::parse($date);
 
@@ -34,6 +35,8 @@ class AbsenceCalendarController extends Controller
                                       
             $ten_min_allowance = 0.17;
             // $ten_min_allowance = 0;
+
+           
 
                 //---to choose between 'official shift' and 'manual shift'
             $official = app()->call(ManualShiftController::class.'@official_',
@@ -129,6 +132,9 @@ class AbsenceCalendarController extends Controller
                         $type_under = 'UND';
                         $required_h_late = $late ;
                         $required_h_und = $under;
+
+                        $am_late? $late_count++ : '';
+                        $pm_late? $late_count++ : '';
                 }
             }
             // __________________________________________________________
@@ -139,17 +145,24 @@ class AbsenceCalendarController extends Controller
                 $tardiness = 'lte_und';
                 $type = 'LTE';
                 $required_h = $late;
+
+                $am_late? $late_count++ : '';
+                $pm_late? $late_count++ : '';
                 
             }
             elseif ($late > 0)
             {
                 $type = 'LTE';
                 $required_h = $late;
+
+                $am_late? $late_count++ : '';
+                $pm_late? $late_count++ : '';
             }    
             elseif ($under > 0)
             {
                 $type = 'UND';
                 $required_h = $under;
+                
             }
             else {
                 $type = 'no_tardi';
@@ -188,31 +201,34 @@ class AbsenceCalendarController extends Controller
                     'all_bio_punches' =>  $punch->all_bio_punches,
                     'punch' => $punch,
                     'official' => $official,
-                    'late' => $late
+                    'late' => $late,
+                    'late_count' => $late_count
+
                 ];
-            }
+            }            
+
             // ________________________________________________________
 
-            // return (object) [
-            //     'user' => $searched_user,
-            //     // 'student_id'=> $searched_user->student_id,
-            //     // 'name'=> $searched_user->name,
-            //     // 'timecard'=> $searched_user->timecard,
-            //     'date'=> $d_date,                    
-            //     'type'=> $type,
-            //     'required_h'=> $required_h,
+                // return (object) [
+                //     'user' => $searched_user,
+                //     // 'student_id'=> $searched_user->student_id,
+                //     // 'name'=> $searched_user->name,
+                //     // 'timecard'=> $searched_user->timecard,
+                //     'date'=> $d_date,                    
+                //     'type'=> $type,
+                //     'required_h'=> $required_h,
 
-            //     'type_late' => $tardiness == 'abs_lte_und' ? $type_late : false,
-            //     'required_h_late' => $tardiness == 'abs_lte_und' ? $required_h_late : false,
-            //     'type_under' => $tardiness == 'abs_lte_und' ? $type_under : false,                    
-            //     'required_h_und' => $tardiness == 'abs_lte_und' ? $required_h_und : false,
+                //     'type_late' => $tardiness == 'abs_lte_und' ? $type_late : false,
+                //     'required_h_late' => $tardiness == 'abs_lte_und' ? $required_h_late : false,
+                //     'type_under' => $tardiness == 'abs_lte_und' ? $type_under : false,                    
+                //     'required_h_und' => $tardiness == 'abs_lte_und' ? $required_h_und : false,
 
-            //     'ws_double'=> $tardiness == 'lte_und' ? $under : false,
-            //     'bio_daily_array' => $date->format('mdy'),
-            //     'all_bio_punches' =>  $punch->all_bio_punches,
-            //     'punch' => $punch,
-            //     'official' => $official,
-            //     'late' => $late
+                //     'ws_double'=> $tardiness == 'lte_und' ? $under : false,
+                //     'bio_daily_array' => $date->format('mdy'),
+                //     'all_bio_punches' =>  $punch->all_bio_punches,
+                //     'punch' => $punch,
+                //     'official' => $official,
+                //     'late' => $late
             // ];
 
             
