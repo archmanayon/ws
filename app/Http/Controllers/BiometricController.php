@@ -116,7 +116,7 @@ class BiometricController extends Controller
 
                 return $punches;
 
-        })->toArray();
+            })->toArray();
 
         return  $mappedArray;
 
