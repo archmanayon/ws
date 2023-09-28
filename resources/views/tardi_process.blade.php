@@ -101,16 +101,16 @@
 
                                         <tr class="bg-gray-700 border-b border-gray-600">                                            
                                             <td class="px-4 py-3">
-                                                {{$daily->user->name}}
+                                                {{$daily->user->id}}
                                             </td>
 
                                             <td class="px-4 py-3">
-                                                {{ $term->school_year}}
+                                                {{ $term->id}}
                                             </td>
                                             
 
                                             <td class="px-4 py-3">
-                                                {{ $daily->month}}                                                
+                                                {{ $daily->month->format('n')}}                                                
                                                 
                                             </td>
 
@@ -119,7 +119,31 @@
                                             </td>
 
                                             <td class="px-4 py-3">
-                                                {{ 'oral' }}
+                                                
+                                                {{$daily->late_count >=10 && $daily->late_count < 17 ? 1: (
+                                                    $daily->late_count >=17 && $daily->late_count < 24 ?
+                                                    2:(
+                                                        $daily->late_count >=24 && $daily->late_count < 31 ?
+                                                        3:(
+                                                            $daily->late_count >=31 && $daily->late_count < 38 ?
+                                                            4:(
+                                                                $daily->late_count >=38 && $daily->late_count < 45 ?
+                                                                5:(
+                                                                    $daily->late_count >=45 && $daily->late_count < 52 ?
+                                                                    6:(
+                                                                        $daily->late_count >=52 && $daily->late_count < 60 ?
+                                                                        7:(
+                                                                            $daily->late_count >=60 && $daily->late_count > 10 ?
+                                                                            8:$daily->late_count                                                                 
+                                                                        )                                                                 
+                                                                    )
+                                                                    
+                                                                )                                                                    
+                                                            )
+                                                        )
+                                                    )
+                                                )}}
+                                               
                                             </td>
                                             
                                             <td class="px-4 py-3">

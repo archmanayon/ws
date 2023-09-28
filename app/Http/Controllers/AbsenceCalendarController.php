@@ -16,12 +16,31 @@ use Illuminate\Http\Request;
 class AbsenceCalendarController extends Controller
 {
     // use this ___________________
-    public function adea_bio($collection_of_dates,$searched_user, $holiday) 
+    public function adea_bio($collection_of_dates,$searched_user, $holiday, $merged) 
     {          
         $late_count = 0;
                        
         $mappedArray = $collection_of_dates
-        ->map(function ($date) use ($searched_user, $holiday, &$late_count){            
+
+        ->filter(function ($each_day) use ($holiday) {
+            // Define your condition here            
+
+            $date = Carbon::parse($each_day);
+
+            $d_date = $date->format('m-d-y');
+
+            $day = $date->format('l');   
+            
+            $am_in = $day."_am_in";
+            
+            $pm_in = $day."_pm_in";           
+
+            return !in_array($d_date, $holiday) && $day !=='Sunday' ||
+            isset($searched_user->shift->$am_in) && isset($searched_user->shift->$pm_in);
+
+        })
+
+        ->map(function ($date) use ($searched_user, $holiday, &$late_count, $merged){            
         
             $date = Carbon::parse($date);
 
@@ -34,9 +53,7 @@ class AbsenceCalendarController extends Controller
             $pm_in = $day."_pm_in";
                                       
             $ten_min_allowance = 0.17;
-            // $ten_min_allowance = 0;
-
-           
+            // $ten_min_allowance = 0;           
 
                 //---to choose between 'official shift' and 'manual shift'
             $official = app()->call(ManualShiftController::class.'@official_',
@@ -51,7 +68,9 @@ class AbsenceCalendarController extends Controller
             [
                 'searched_user'     => $searched_user,
                 'date'              => $date,
-                'official'          => $official
+                'official'          => $official,
+                'merged'    => $merged
+
             ]);            
 
                 //---to prepare 'object' number hours tardiness
@@ -170,8 +189,7 @@ class AbsenceCalendarController extends Controller
             }
             // ________________________________________________________
 
-            if(in_array($d_date, $holiday) || $day =='Sunday' || 
-                !isset($searched_user->shift->$am_in) ||
+            if(!isset($searched_user->shift->$am_in) ||
                 $required_h == 0 || 
                 !isset($searched_user->shift->$pm_in))
                 {}  
@@ -187,7 +205,7 @@ class AbsenceCalendarController extends Controller
                     // 'name'=> $searched_user->name,
                     // 'timecard'=> $searched_user->timecard,
                     'date'=> $d_date,                    
-                    'month'=> $date->format('F'), 
+                    'month'=> $date, 
                     'type'=> $type,
                     'required_h'=> $required_h,
 
