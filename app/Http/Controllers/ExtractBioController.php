@@ -327,14 +327,14 @@ class ExtractBioController extends Controller
 
         return (object) [
 
-            // these data are for dtr display
+            // ---------------these data are for dtr display---------------------
             // 'processed_punch' => $all_bio_punches,
             // 'orig_raw_bio'  => $merged->with(['punchtype'])->get()->sortBy('biotext'),
-            // 'orig_raw_bio'  => $orig_raw_bio,
+            'orig_raw_bio'  => $fltr_merged,
                 // 'orig_raw_bio'  => $sub_orig_bio->with(['punchtype'])->get()->sortBy('biotext'),
             'date'          => $date->format('m/d/y'),
             'day'           => $date->format('l'),
-            'query1'         => $fltr_merged,
+            // 'query1'         => $fltr_merged,
 
             // these date for absences report
             'am_in' => $am_in,

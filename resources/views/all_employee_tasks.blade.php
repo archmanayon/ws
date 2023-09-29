@@ -59,8 +59,6 @@
                         @foreach ( $tasks as $current_task)
                         <tr class="border-b">
 
-
-
                                 {{-- employee's --}}
                                 <td class="px-4">
                                     {{ $current_task->user->name}}
