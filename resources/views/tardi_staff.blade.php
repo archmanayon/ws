@@ -109,7 +109,7 @@
                                         id="" name="h_remarks" placeholder="{{ 'remarks...' }}"></textarea>
                             </tr><br>
                             <tr>
-                                <input type="hidden" name="head_email" value="{{ $tardis->head->user->email }}">
+                                <input type="hidden" name="head_email" value="{{ $tardis->head->user_id }}">
 
                                 <button class="border border-gray-400 font-sans rounded-md text-base w-20" type="submit" name="post_address" value="{{ $tardis->id??false }}">Submit</button>
 

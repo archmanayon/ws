@@ -173,7 +173,7 @@ class TardiController extends Controller
 
         $sige = Tardi::find(request('post_address'))->update([
 
-            'head_sig'  =>  $user->heads[0]->id,
+            'head_sig'  =>  request('head_email'),
             'sig_date'  =>  $Date,
             'remarks'   =>  request('h_remarks'),
 
