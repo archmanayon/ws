@@ -96,7 +96,7 @@ class TardiController extends Controller
         return view('tardi_group',
             [
                 'user'          => auth()->user() ?? false,
-                'group'         => auth()->user()->heads[0]->tardis
+                'group'         => auth()->user()->heads
                 // 'tasks'         => session('task_session')??false,
                 // 'currentDate'   => session('currentDate')??false,
                 // 'current_time'  => session('current_time')??false,

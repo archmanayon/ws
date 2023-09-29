@@ -62,7 +62,7 @@
 
 
                         </thead>
-
+                        {{ dd($group) }}
                         @foreach($group->sortBy('head_sig')->sortBy('conforme') as $tardi)
 
                             @php                                
@@ -73,33 +73,33 @@
 
                                 {{-- user --}}
                                 <td class="px-4 py-3 w-48">
-                                    {{ $tardi->user->name }}
+                                    {{ $tardi->user->name??false }}
                                 </td>
 
                                 {{-- reported tardiness --}}
                                 <td class="px-4 py-3 w-48">
-                                    {{ $tardi->tardi_description->tardiness }}
+                                    {{ $tardi->tardi_description->tardiness??false }}
                                 </td>
 
                                 {{-- school year --}}
                                 <td class="px-4 py-3 w-32">
-                                    {{ $tardi->term->school_year }}
+                                    {{ $tardi->term->school_year??false }}
                                 </td>
 
                                 {{-- month --}}
                                 <td class="px-4 py-3 w-32">
                                     
-                                    {{ Carbon::create()->month($tardi->month)->format('F')}}
+                                    {{ Carbon::create()->month($tardi->month)->format('F')??false}}
                                 </td>
 
                                 {{-- total --}}
                                 <td class="px-4 py-3 w-8">
-                                    {{ $tardi->total}}
+                                    {{ $tardi->total??false}}
                                 </td>
 
                                 {{-- action --}}
                                 <td class="px-4 py-3 w-40">
-                                    {{ $tardi->tardi_description->action }}
+                                    {{ $tardi->tardi_description->action??false }}
                                 </td>
                                 {{-- date --}}
                                 <td class="px-4 py-3 w-4">

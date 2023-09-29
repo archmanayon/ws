@@ -73,18 +73,18 @@ class ScheduleController extends Controller{
     {
 
         // $payroll_start  = Setup::find(2);
-        $payroll_start  = Carbon::create(Setup::find(1)->date) ?? 0;
-        $payroll_end    = Carbon::create(Setup::find(2)->date) ?? 0;
+        $payroll_start  = Carbon::create(Setup::find(1)->date)->format('Y-m-d')??false;
+        $payroll_end    = Carbon::create(Setup::find(2)->date)->format('Y-m-d')??false;
 
         $holiday = array(
             "08-21-23", "08-28-23", "09-09-23"
         );
 
-        $start_date = request('start_date') < $payroll_start->format('Y-m-d') ?
-                $payroll_start->format('Y-m-d') : request('start_date');
+        $start_date = request('start_date')?
+        (request('start_date') < $payroll_start ? $payroll_start : request('start_date')):$payroll_start;
 
-        $end_date = request('end_date') > $payroll_end->format('Y-m-d') ?
-                $payroll_end->format('Y-m-d') : request('end_date')??$payroll_end->format('Y-m-d');
+        $end_date = request('end_date')?
+        (request('end_date') > $payroll_end ? $payroll_end : request('end_date')):$payroll_end;
 
         $period = CarbonPeriod::create($start_date, $end_date);
         $dates = $period->toArray();

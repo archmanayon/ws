@@ -28,11 +28,13 @@ class RawbioController extends Controller
 {
     public function dtr()
     {
-        $holiday = array(
-            "08-21-23", "08-28-23", "09-09-23"
-        );
+        $users  = User::all()->where('active', true)->sortBy('name');        
 
-        $searched_user = User::find(request('find_user'))??false;
+        $searched_user = $users->where('id', request('find_user'))->first()??false;
+
+        // $searched_user = User::find(request('find_user'))??false;
+
+        $holiday = array("08-21-23", "08-28-23", "09-09-23");
 
         $start_date = request('start_date') ?? 0;
         $end_date = request('end_date') ?? 0;
@@ -55,8 +57,7 @@ class RawbioController extends Controller
             'mapped_days' =>  $mappedArray,
 
             // for choices of employees only
-            'users'        => User::all()->where('active', true)
-
+            'users'        => $users
         ]);
     }
 
@@ -70,20 +71,16 @@ class RawbioController extends Controller
         );
 
         $searched_user = auth()->user()??false;
-
-
+        
         $start_date = request('start_date')?
         (request('start_date') < $bio_start ? $bio_start : request('start_date')):
-        Carbon::create(Setup::find(1)->date)->format('Y-m-d');;
-
+        Carbon::create(Setup::find(1)->date)->format('Y-m-d');
 
         $end_date = request('end_date')?
         (request('end_date') > $bio_end ? $bio_end : request('end_date')):
-        Carbon::create(Setup::find(2)->date)->format('Y-m-d');;
-
+        Carbon::create(Setup::find(2)->date)->format('Y-m-d');
 
         $period = CarbonPeriod::create($start_date??false, $end_date??false);
-
 
         $dates = $period->toArray();
         $collection_of_dates = collect($dates);
