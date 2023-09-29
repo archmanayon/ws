@@ -89,6 +89,7 @@
                             </td>
                             {{-- date --}}
                             <td class="px-4 py-3 w-4">
+                                {{-- if approved by head with date --}}
                                 @if ($tardi->sig_date != '0000-00-00 00:00:00')
                                     {{  Carbon::parse($tardi->sig_date)->format('m/d/y')}}
                                 @endif

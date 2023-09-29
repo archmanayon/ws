@@ -62,89 +62,92 @@
 
 
                         </thead>
-                        {{ dd($group) }}
-                        @foreach($group->sortBy('head_sig')->sortBy('conforme') as $tardi)
+                        
+                        @foreach($group as $dept)                            
+                            
+                            @foreach ( $dept->tardis as $tardi) 
 
-                            @php                                
-                                $names = explode(',', $tardi->user->name);
-                            @endphp                            
+                                {{-- -------------------this php line is for messaging only --}}
+                                @php                                
+                                    $names = explode(',', $tardi->user->name);
+                                @endphp  
+                                                           
+                                <tr>
 
-                            <tr>
+                                    {{-- user --}}
+                                    <td class="px-4 py-3 w-48">
+                                        {{ $tardi->user->name??false ."|". $tardi->total}}
+                                    </td>
 
-                                {{-- user --}}
-                                <td class="px-4 py-3 w-48">
-                                    {{ $tardi->user->name??false }}
-                                </td>
+                                    {{-- reported tardiness --}}
+                                    <td class="px-4 py-3 w-48">
+                                        {{ $tardi->tardi_description->tardiness??false }}
+                                    </td>
 
-                                {{-- reported tardiness --}}
-                                <td class="px-4 py-3 w-48">
-                                    {{ $tardi->tardi_description->tardiness??false }}
-                                </td>
+                                    {{-- school year --}}
+                                    <td class="px-4 py-3 w-32">
+                                        {{ $tardi->term->school_year??false }}
+                                    </td>
 
-                                {{-- school year --}}
-                                <td class="px-4 py-3 w-32">
-                                    {{ $tardi->term->school_year??false }}
-                                </td>
+                                    {{-- month --}}
+                                    <td class="px-4 py-3 w-32">
+                                        
+                                        {{ Carbon::create()->month($tardi->month)->format('F')??false}}
+                                    </td>
 
-                                {{-- month --}}
-                                <td class="px-4 py-3 w-32">
-                                    
-                                    {{ Carbon::create()->month($tardi->month)->format('F')??false}}
-                                </td>
+                                    {{-- total --}}
+                                    <td class="px-4 py-3 w-8">
+                                        {{ $tardi->total??false}}
+                                    </td>
 
-                                {{-- total --}}
-                                <td class="px-4 py-3 w-8">
-                                    {{ $tardi->total??false}}
-                                </td>
+                                    {{-- action --}}
+                                    <td class="px-4 py-3 w-40">
+                                        {{ $tardi->tardi_description->action??false }}
+                                    </td>
+                                    {{-- date --}}
+                                    <td class="px-4 py-3 w-4">
+                                        @if ($tardi->sig_date != '0000-00-00 00:00:00')
+                                            {{  Carbon::parse($tardi->sig_date)->format('m/d/y')}}
+                                        @endif                                   
+                                        
+                                    </td>
 
-                                {{-- action --}}
-                                <td class="px-4 py-3 w-40">
-                                    {{ $tardi->tardi_description->action??false }}
-                                </td>
-                                {{-- date --}}
-                                <td class="px-4 py-3 w-4">
-                                    @if ($tardi->sig_date != '0000-00-00 00:00:00')
-                                        {{  Carbon::parse($tardi->sig_date)->format('m/d/y')}}
-                                    @endif                                   
-                                    
-                                </td>
+                                    {{-- remarks --}}
+                                    <td class="px-4 py-3 w-72">
+                                        {{ $tardi->remarks }}
+                                    </td>
+                                    {{--head status --}}
 
-                                {{-- remarks --}}
-                                <td class="px-4 py-3 w-72">
-                                    {{ $tardi->remarks }}
-                                </td>
-                                {{--head status --}}
+                                    <td class=" py-3 {{ !$tardi->head_sig?'text-red-400':
+                                                            (!$tardi->conforme?'text-red-300':'') }}">
 
-                                <td class=" py-3 {{ !$tardi->head_sig?'text-red-400':
-                                                        (!$tardi->conforme?'text-red-300':'') }}">
+                                        <form method="POST" action="{{route('staff_variance')}}" >
+                                            @csrf
+                                            {{-- only shows once head already made remarks --}}
+                                            @if (!$tardi->conforme)
 
-                                    <form method="POST" action="{{route('staff_variance')}}" >
-                                        @csrf
-                                        {{-- only shows once head already made remarks --}}
-                                        @if (!$tardi->conforme)
+                                                @if ($tardi->head_sig??false)
 
-                                            @if ($tardi->head_sig??false)
+                                                    {{'Pls remind'}} <br> {{ trim($names[1]) }}
 
-                                                {{'Pls remind'}} <br> {{ trim($names[0]) }}
+                                                @else
+
+                                                    <button type="submit" name="pre_address" value="{{$tardi->id}}">Pls click to Address</button>
+
+                                                @endif
 
                                             @else
 
-                                                <button type="submit" name="pre_address" value="{{$tardi->id}}">Pls click to Address</button>
+                                                {{ 'Addressed' }}
 
                                             @endif
 
-                                        @else
+                                        </form>
 
-                                            {{ 'Addressed' }}
+                                    </td>
 
-                                        @endif
-
-                                    </form>
-
-                                </td>
-
-                            </tr>
-
+                                </tr>
+                            @endforeach
 
                         @endforeach
                     </table>

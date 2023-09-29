@@ -9,6 +9,8 @@ class Head extends Model
 {
     use HasFactory;
 
+    protected $with = ['tardis'];
+
     public function users()
     {
         return $this->hasMany(User::class);

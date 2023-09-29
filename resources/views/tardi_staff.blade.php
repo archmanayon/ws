@@ -100,23 +100,24 @@
 
                     @if (!$tardis->conforme)
 
-                            <form method="POST" action="{{route('post_tardi_group')}}" >
-                             @csrf
+                        <form method="POST" action="{{route('post_tardi_group')}}" >
+                            @csrf
 
-                               <tr class="px-4 py-3">
+                            <tr class="px-4 py-3">
 
-                                    <textarea class="bg-gray-800 border-gray-700 h-20 rounded text-gray-200 text-sm w-3/4"
-                                            id="" name="h_remarks" placeholder="{{ 'remarks...' }}"></textarea>
-                                </tr><br>
-                                <tr>
+                                <textarea class="bg-gray-800 border-gray-700 h-20 rounded text-gray-200 text-sm w-3/4"
+                                        id="" name="h_remarks" placeholder="{{ 'remarks...' }}"></textarea>
+                            </tr><br>
+                            <tr>
+                                <input type="hidden" name="head_email" value="{{ $tardis->head->user->email }}">
 
-                                    <button class="border border-gray-400 font-sans rounded-md text-base w-20" type="submit" name="post_address" value="{{ $tardis->id??false }}">Submit</button>
+                                <button class="border border-gray-400 font-sans rounded-md text-base w-20" type="submit" name="post_address" value="{{ $tardis->id??false }}">Submit</button>
 
-                               </tr>
+                            </tr>
 
-                            </form>
+                        </form>
 
-                            @endif
+                    @endif
 
                 </div>
 
