@@ -251,8 +251,7 @@ class ExtractBioController extends Controller
         $str_tc     = $searched_user->timecard;
         $str_date   = $date->format('mdy');
 
-        $sub_updated_bio = $searched_user->update_bios->where('date', $str_date);
-        
+        $sub_updated_bio = $searched_user->update_bios->where('date', $str_date);        
 
         // how to merge two table different columns
 
@@ -266,10 +265,9 @@ class ExtractBioController extends Controller
 
         // $data = $query1->union($query2)->get();
 
-        // ----------------orig bio----------------------------------
-       
+        // ----------------orig bio----------------------------------       
 
-        // querry fron shcp bio
+        // ----------------querry fron shcp bio----------------
         
         $fltr_merged = $merged->where('date', '=', $str_date)->values();
         

@@ -32,7 +32,7 @@ class AbsenceCalendarController extends Controller
         ');
 
          // querry fron shcp bio
-         if($searched_user ){
+         if($searched_user->punches??false ){
             
             $sub_shcp_punch =  $searched_user->punches()->select('date', 'hour', 'in_out', 'biotext', 'punchtype_id'); 
 
