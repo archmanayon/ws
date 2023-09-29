@@ -140,36 +140,36 @@ class ExtractBioController extends Controller
         // $data = $query1->union($query2)->get();
 
         // ----------------orig bio---------------------------------- already in front
-        // $orig_bio = Rawbio::where(DB::raw('SUBSTRING(biotext, 1, 6)'), '=',  $searched_user->timecard)
-        //                 ->where(DB::raw('SUBSTRING(biotext, 7, 6)'), '=', $str_date);
+            // $orig_bio = Rawbio::where(DB::raw('SUBSTRING(biotext, 1, 6)'), '=',  $searched_user->timecard)
+            //                 ->where(DB::raw('SUBSTRING(biotext, 7, 6)'), '=', $str_date);
 
-        // $sub_orig_bio = $orig_bio->selectRaw(
-        //         '
-        //         SUBSTRING(biotext, 7, 6) AS date,
-        //         SUBSTRING(biotext, 13, 4) AS hour,
-        //         SUBSTRING(biotext, 17, 1) AS in_out,
-        //         SUBSTRING(biotext, 1, 17) AS biotext,
-        //         SUBSTRING(punchtype_id, 1,1) AS punchtype_id
-        //         '
+            // $sub_orig_bio = $orig_bio->selectRaw(
+            //         '
+            //         SUBSTRING(biotext, 7, 6) AS date,
+            //         SUBSTRING(biotext, 13, 4) AS hour,
+            //         SUBSTRING(biotext, 17, 1) AS in_out,
+            //         SUBSTRING(biotext, 1, 17) AS biotext,
+            //         SUBSTRING(punchtype_id, 1,1) AS punchtype_id
+            //         '
         // );
 
         // querry fron shcp bio
-        // $shcp_punch =  Punch::where('user_id', $searched_user->id)->where('date', $str_date); 
-        // $shcp_punch =  $searched_user->punches->where('date', $str_date); 
-        // $sub_shcp_punch =  $searched_user->punches()
-        // ->select('date', 'hour', 'in_out', 'biotext', 'punchtype_id')
+            // $shcp_punch =  Punch::where('user_id', $searched_user->id)->where('date', $str_date); 
+            // $shcp_punch =  $searched_user->punches->where('date', $str_date); 
+            // $sub_shcp_punch =  $searched_user->punches()
+            // ->select('date', 'hour', 'in_out', 'biotext', 'punchtype_id')
         // ->where('date', $str_date); 
         
         //  $shcp_punc =  Punch::select('biotext')->where('user_id', $searched_user->id)->where('date', $str_date);
 
         // $sub_shcp_punch = $shcp_punch->select(
-        //     '
-        //         SUBSTRING(biotext, 7, 6) AS date,
-        //         SUBSTRING(biotext, 13, 4) AS hour,
-        //         SUBSTRING(biotext, 17, 1) AS in_out,
-        //         SUBSTRING(biotext, 1, 17) AS biotext,
-        //         SUBSTRING(punchtype_id, 1,1) AS punchtype_id
-        //         '
+            //     '
+            //         SUBSTRING(biotext, 7, 6) AS date,
+            //         SUBSTRING(biotext, 13, 4) AS hour,
+            //         SUBSTRING(biotext, 17, 1) AS in_out,
+            //         SUBSTRING(biotext, 1, 17) AS biotext,
+            //         SUBSTRING(punchtype_id, 1,1) AS punchtype_id
+            //         '
         // );        
 
         $fltr_merged = $merged->where('date', '=', $str_date)->values();
@@ -246,12 +246,13 @@ class ExtractBioController extends Controller
         ];
     }
 
-    public function extract_bio_textfiles($searched_user, $date, $official)
+    public function extract_bio_textfiles($searched_user, $date, $official, $merged)
     {
         $str_tc     = $searched_user->timecard;
         $str_date   = $date->format('mdy');
 
         $sub_updated_bio = $searched_user->update_bios->where('date', $str_date);
+        
 
         // how to merge two table different columns
 
@@ -266,34 +267,11 @@ class ExtractBioController extends Controller
         // $data = $query1->union($query2)->get();
 
         // ----------------orig bio----------------------------------
-        $orig_bio = Rawbio::where(DB::raw('SUBSTRING(biotext, 1, 6)'), '=',  $searched_user->timecard)
-                        ->where(DB::raw('SUBSTRING(biotext, 7, 6)'), '=', $str_date);
-
-        $sub_orig_bio = $orig_bio->selectRaw(
-                '
-                SUBSTRING(biotext, 7, 6) AS date,
-                SUBSTRING(biotext, 13, 4) AS hour,
-                SUBSTRING(biotext, 17, 1) AS in_out,
-                SUBSTRING(biotext, 1, 17) AS biotext,
-                SUBSTRING(punchtype_id, 1,1) AS punchtype_id
-                '
-        );
+       
 
         // querry fron shcp bio
-        $shcp_punch =  Punch::with('users')->where('user_id', $searched_user->id)->where('date', $str_date); 
-        //  $shcp_punc =  Punch::select('biotext')->where('user_id', $searched_user->id)->where('date', $str_date);
-
-        $sub_shcp_punch = $shcp_punch->selectRaw(
-            '
-                SUBSTRING(biotext, 7, 6) AS date,
-                SUBSTRING(biotext, 13, 4) AS hour,
-                SUBSTRING(biotext, 17, 1) AS in_out,
-                SUBSTRING(biotext, 1, 17) AS biotext,
-                SUBSTRING(punchtype_id, 1,1) AS punchtype_id
-                '
-        );
-
-        $merged = $sub_orig_bio->union($sub_shcp_punch);
+        
+        $fltr_merged = $merged->where('date', '=', $str_date)->values();
         
         if($sub_updated_bio->pluck('date')->contains( $str_date))
         {
@@ -301,29 +279,28 @@ class ExtractBioController extends Controller
             
 
             // $all_bio_punches = $sub_updated_bio->pluck('hour')
-            //     ->map(function ($hour, $in_out){
-            //         return (object) 
-            //             [
-            //                 'hour' => $hour,
-            //                 'in_out' => $in_out,
-            //             ];
-            //         });
+                //     ->map(function ($hour, $in_out){
+                //         return (object) 
+                //             [
+                //                 'hour' => $hour,
+                //                 'in_out' => $in_out,
+                //             ];
+                //         });
 
-            // $all_bio_punches = $sub_updated_bio->pluck('hour')
-            //     ->map(function ($hour, $in_out){
-            //         return (object) 
-            //             [
-            //                 'hour' => $hour,
-            //                 'in_out' => $in_out,
-            //             ];
+                // $all_bio_punches = $sub_updated_bio->pluck('hour')
+                //     ->map(function ($hour, $in_out){
+                //         return (object) 
+                //             [
+                //                 'hour' => $hour,
+                //                 'in_out' => $in_out,
+                //             ];
             //         });
 
         } else {
 
-            $all_bio_punches = $merged->orderBy('biotext', 'asc')->get();
+            $all_bio_punches = $fltr_merged;
             
-        }
-        
+        }        
 
         // to extract punches for abs report
         $bio_am_in = $all_bio_punches[0]->hour??false;
@@ -346,20 +323,20 @@ class ExtractBioController extends Controller
         $pm_out = $official->pm_in && $allowance_for_pm <= 2 && $bio_pm_out > $official->pm_in
                   ? $bio_pm_out : false;
 
-        $orig_raw_bio =  $merged->where(function ($query) {
-            $query->where('punchtype_id', '=', 1)->orWhere('punchtype_id', '=', 8);
-        })->orderBy('biotext', 'asc')->with(['punchtype'])->get();
+        // $orig_raw_bio =  $merged->where(function ($query) {
+        //     $query->where('punchtype_id', '=', 1)->orWhere('punchtype_id', '=', 8);
+        // })->orderBy('biotext', 'asc')->with(['punchtype'])->get();
 
         return (object) [
 
             // these data are for dtr display
             // 'processed_punch' => $all_bio_punches,
             // 'orig_raw_bio'  => $merged->with(['punchtype'])->get()->sortBy('biotext'),
-            'orig_raw_bio'  => $orig_raw_bio,
+            // 'orig_raw_bio'  => $orig_raw_bio,
                 // 'orig_raw_bio'  => $sub_orig_bio->with(['punchtype'])->get()->sortBy('biotext'),
             'date'          => $date->format('m/d/y'),
             'day'           => $date->format('l'),
-            'query1'         => $merged->get(),
+            'query1'         => $fltr_merged,
 
             // these date for absences report
             'am_in' => $am_in,

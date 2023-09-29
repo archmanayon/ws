@@ -30,7 +30,11 @@ class ScheduleController extends Controller{
     // individual search______________________________
     public function absences_all()
     {
-        $searched_user = User::find(request('find_user'));
+        $users  = User::all()->where('active', true)->sortBy('name');        
+
+        $searched_user = $users->where('id', request('find_user'))->first()??false;
+
+        // $searched_user = User::find(request('find_user'))??false;
 
         $holiday = array("08-21-23", "08-28-23", "09-09-23"
                         );
@@ -42,39 +46,19 @@ class ScheduleController extends Controller{
         $collection = collect($dates);
         $count_dates = $period->count();
 
-        // ----------------orig bio----------------------------------
-        $orig_bio = Rawbio::where(DB::raw('SUBSTRING(biotext, 1, 6)'), '=',  $searched_user->timecard);
-        $sub_orig_bio = $orig_bio->selectRaw(
-            '
-                SUBSTRING(biotext, 7, 6) AS date,
-                SUBSTRING(biotext, 13, 4) AS hour,
-                SUBSTRING(biotext, 17, 1) AS in_out,
-                SUBSTRING(biotext, 1, 17) AS biotext,
-                SUBSTRING(punchtype_id, 1,1) AS punchtype_id
-            '
-        );
-
-         // querry fron shcp bio
-         $sub_shcp_punch =  $searched_user->punches()
-        ->select('date', 'hour', 'in_out', 'biotext', 'punchtype_id'); 
- 
-        $merged = $sub_orig_bio->union($sub_shcp_punch)->get()->sortBy('biotext');  
-
         $mappedDates = app()->call(AbsenceCalendarController::class.'@adea_bio',
         [
             'collection_of_dates' => $collection,
-            'searched_user'=> $searched_user??false,
-            'holiday' =>$holiday,
-            'merged'    => $merged
+            'searched_user'=> $searched_user,
+            'holiday' =>$holiday
         ]);
 
         return view ('print',[
 
             // used for searching user dropdown
-            'users'         => User::all()->where('active', true)->sortBy('name'),
-
+            'users'         => $users,
             'mappedUser'    => $mappedDates,
-            'update_bio'    => Update_bio::find(2),
+            // 'update_bio'    => Update_bio::find(2),
             // 'updated_bio_2' => Update_bio::where('time_card', $searched_user->timecard)->where('date', '040523')->exists(),
             // 'updated_bio_2' => $searched_user->update_bios->where('date', '042423')->pluck('date')->contains('042423'),
             // 'updated_bio_2' => $searched_user->update_bios->contains('date', '042423'),
@@ -228,26 +212,23 @@ class ScheduleController extends Controller{
         $collection_of_dates = collect($dates);
         $count_dates = $period->count();
 
-        $users = User::without(['tasks', 'heads', 'role'])->where(function ($query) {
-            $query->where('role_id', '=', 2)
-                  ->orWhere('role_id', '=', 5);
+        $users = User::where(function ($query) {
+            $query->where('role_id', '=', 2)->orWhere('role_id', '=', 5);
         })->get();
 
-        $mappedArray = collect( $users->where('active',true)->sortBy('name'))
-        ->map(
-            function ($user) use ($collection_of_dates, $holiday){               
+        $mappedArray = collect($users->where('active',true)->sortBy('name'))
+            ->map(function ($searched_user) use ($collection_of_dates, $holiday){     
 
-                $user = app()->call(AbsenceCalendarController::class.'@adea_bio',
-                [
-                    'collection_of_dates' => $collection_of_dates,
-                    'searched_user'=> $user,
-                    'holiday' =>$holiday
-                ]);
+            $user = app()->call(AbsenceCalendarController::class.'@adea_bio',
+            [
+                'collection_of_dates' => $collection_of_dates,
+                'searched_user'=> $searched_user,
+                'holiday' =>$holiday
+            ]);
 
-                return $user;
+            return $user;
 
-            }
-        );
+        });
 
         return view ('adea',[
 
@@ -262,8 +243,9 @@ class ScheduleController extends Controller{
         $payroll_start  = Carbon::create(Setup::find(1)->date) ?? 0;
         $payroll_end    = Carbon::create(Setup::find(2)->date) ?? 0;
 
-         $holiday = array("08-21-23", "08-28-23", "09-09-23"
-                        );
+        $holiday = array(
+            "08-21-23", "08-28-23", "09-09-23"
+        );
 
         // $start_date = request('start_date')?? request('start_date') < $payroll_start->format('Y-m-d') ?
         //         $payroll_start->format('Y-m-d') : request('start_date') ?? 0;
@@ -271,34 +253,32 @@ class ScheduleController extends Controller{
         // $end_date = request('end_date') ?? request('end_date') > $payroll_end->format('Y-m-d') ?
         //         $payroll_end->format('Y-m-d') : request('end_date') ?? 0;
 
-        $start_date = request('start_date') ?? 0;
-        $end_date = request('end_date') ?? 0;
+        $start_date = request('start_date')?? 0;
+        $end_date = request('end_date')?? 0;
         $period = CarbonPeriod::create($start_date, $end_date);
         $dates = $period->toArray();
         $collection_of_dates = collect($dates);
         $count_dates = $period->count();
 
-        $users = User::without(['tasks', 'heads', 'role'])->where(function ($query) {
+        $users = User::where(function ($query) {
             $query->where('role_id', '=', 2)
                   ->orWhere('role_id', '=', 5);
         })->get();
 
-        $mappedArray = collect( $users->where('active',true)->sortBy('name'))
-        ->map(
-            function ($user) use ($collection_of_dates, $holiday) {
 
-                $user = app()->call(
-                    BiometricController::class . '@text_files_part_2',
-                    [
-                        'collection_of_dates' => $collection_of_dates,
-                        'searched_user' => $user,
-                        'holiday' => $holiday
-                    ]
-                );
+        $mappedArray = collect($users->where('active',true)->sortBy('name'))
+            ->map(function ($searched_user) use ($collection_of_dates, $holiday){     
 
-                return $user;
-            }
-        );
+            $user = app()->call(BiometricController::class.'@text_files_part_2',
+            [
+                'collection_of_dates' => $collection_of_dates,
+                'searched_user'=> $searched_user,
+                'holiday' =>$holiday
+            ]);
+
+            return $user;
+
+        }); 
 
         return view('text_files', [
 

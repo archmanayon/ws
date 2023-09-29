@@ -9,6 +9,7 @@ use App\Models\Shift;
 use App\Models\Punch;
 use App\Models\Schedule;
 use App\Models\Biometric;
+use App\Models\Rawbio;
 use Carbon\Carbon;
 
 use Illuminate\Http\Request;
@@ -16,12 +17,33 @@ use Illuminate\Http\Request;
 class AbsenceCalendarController extends Controller
 {
     // use this ___________________
-    public function adea_bio($collection_of_dates,$searched_user, $holiday, $merged) 
+    public function adea_bio($collection_of_dates, $searched_user, $holiday) 
     {          
         $late_count = 0;
-                       
-        $mappedArray = $collection_of_dates
 
+        // ----------------orig bio----------------------------------
+        $orig_bio = Rawbio::where(DB::raw('SUBSTRING(biotext, 1, 6)'), '=',  $searched_user->timecard??false);
+        $sub_orig_bio = $orig_bio->selectRaw('
+            SUBSTRING(biotext, 7, 6) AS date,
+            SUBSTRING(biotext, 13, 4) AS hour,
+            SUBSTRING(biotext, 17, 1) AS in_out,
+            SUBSTRING(biotext, 1, 17) AS biotext,
+            SUBSTRING(punchtype_id, 1,1) AS punchtype_id
+        ');
+
+         // querry fron shcp bio
+         if($searched_user ){
+            
+            $sub_shcp_punch =  $searched_user->punches()->select('date', 'hour', 'in_out', 'biotext', 'punchtype_id'); 
+
+            $merged = $sub_orig_bio->union($sub_shcp_punch)->get()->sortBy('biotext');  
+
+         } else{
+
+            $merged = $sub_orig_bio->get()->sortBy('biotext');  
+         }         
+
+        $mappedArray = $collection_of_dates
         ->filter(function ($each_day) use ($holiday) {
             // Define your condition here            
 

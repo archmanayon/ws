@@ -4,8 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Term;
+use App\Models\Punch;
+use App\Models\Schedule;
+use App\Models\Rawbio;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use App\Models\Tardi;
@@ -200,19 +205,18 @@ class TardiController extends Controller
         })->get();
 
         $mappedArray = collect($users->where('active',true)->sortBy('name'))
-            ->map(function ($user) use ($collection_of_dates, $holiday){               
+            ->map(function ($searched_user) use ($collection_of_dates, $holiday){     
 
-                $user = app()->call(AbsenceCalendarController::class.'@adea_bio',
-                [
-                    'collection_of_dates' => $collection_of_dates,
-                    'searched_user'=> $user,
-                    'holiday' =>$holiday
-                ]);
+            $user = app()->call(AbsenceCalendarController::class.'@adea_bio',
+            [
+                'collection_of_dates' => $collection_of_dates,
+                'searched_user'=> $searched_user,
+                'holiday' =>$holiday
+            ]);
 
-                return $user;
+            return $user;
 
-            }
-        );
+        });
 
         return view ('tardi_process',[
             'term' => Term::all()->where('active',1)->first(),
@@ -243,14 +247,14 @@ class TardiController extends Controller
         })->get();
 
         $mappedArray = collect($users->where('active',true)->sortBy('name'))
-            ->map(function ($user) use ($collection_of_dates, $holiday){                             
+            ->map(function ($searched_user) use ($collection_of_dates, $holiday){      
 
-                $user = app()->call(AbsenceCalendarController::class.'@adea_bio',
-                [
-                    'collection_of_dates' => $collection_of_dates,
-                    'searched_user'=> $user,
-                    'holiday' =>$holiday
-                ]);
+            $user = app()->call(AbsenceCalendarController::class.'@adea_bio',
+            [
+                'collection_of_dates' => $collection_of_dates,
+                'searched_user'=> $searched_user,
+                'holiday' =>$holiday
+            ]);
 
                 return $user;
 
