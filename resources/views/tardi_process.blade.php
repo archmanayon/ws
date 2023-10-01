@@ -73,11 +73,11 @@
                                 <th class="px-4 py-3">Total</th>
                                 <th class="px-4 py-3">Desc</th>
                                 <th class="px-4 py-3">Head ID</th>
-                                <th class="px-4 py-3">cnFrme</th>
+                                {{-- <th class="px-4 py-3">cnFrme</th>
                                 <th class="px-4 py-3">cnFrme Date</th>
                                 <th class="px-4 py-3">Head Sig</th>
                                 <th class="px-4 py-3">Sig Date</th>
-                                <th class="px-4 py-3">Remarks</th>
+                                <th class="px-4 py-3">Remarks</th> --}}
                             </tr>
 
                             @foreach ( $mappedUser as $key => $each_user)
@@ -86,18 +86,19 @@
                                 $count = 1;
                             @endphp
 
-                                @foreach (array_filter($each_user, function ($daily) {
-
-                                    return is_object($daily) && 
+                                @foreach (                                
+                                    array_filter($each_user, function ($daily) {
+                                        return is_object($daily) && 
                                             property_exists($daily, 'type') &&
-                                            $daily->type === 'LTE';
-
-                                }) as $daily) 
+                                            $daily->type === 'LTE' && 
+                                            $daily->late_count >= 10;
+                                    })
+                                as $daily) 
                                                                 
-                                    @if ( $loop->last 
-                                        // && $daily->type == 'LTE'
-                                        // || $daily->type == 'UND'
-                                    )
+                                    {{-- @if ( $loop->last 
+                                        && $daily->type == 'LTE'
+                                        || $daily->type == 'UND'
+                                    ) --}}
 
                                         <tr class="bg-gray-700 border-b border-gray-600">                                            
                                             <td class="px-4 py-3">
@@ -150,29 +151,29 @@
                                                 {{ $daily->user->head_id}}
                                             </td>
 
-                                            <td class="px-4 py-3">
-                                                {{ $count. ' | '. $loop->index}}
-                                            </td>
+                                                {{-- <td class="px-4 py-3">
+                                                    {{ $count. ' | '. $loop->index}}
+                                                </td>
 
-                                            <td class="px-4 py-3">
-                                                {{ 'C date'}}
-                                            </td>
+                                                <td class="px-4 py-3">
+                                                    {{ 'C date'}}
+                                                </td>
 
-                                            <td class="px-4 py-3">
-                                                {{ 'H sige'}}
-                                            </td>
+                                                <td class="px-4 py-3">
+                                                    {{ 'H sige'}}
+                                                </td>
 
-                                            <td class="px-4 py-3">
-                                                {{ 'dte s'}}
-                                            </td>
+                                                <td class="px-4 py-3">
+                                                    {{ 'dte s'}}
+                                                </td>
 
-                                            <td class="px-4 py-3">
-                                                {{ 'R by H'}}
-                                            </td>
+                                                <td class="px-4 py-3">
+                                                    {{ 'R by H'}}
+                                                </td>
 
-                                            <td class="px-4 py-3">
-                                                {{ $daily->required_h}}
-                                            </td>   
+                                                <td class="px-4 py-3">
+                                                    {{ $daily->required_h}}
+                                                </td>    --}}
                                             
                                             @php
                                                 $count++;
@@ -338,7 +339,7 @@
                                                         {{ $daily->required_h_und }}
                                                     </td>
 
-                                            @endif
+                                            {{-- @endif --}}
 
                                         </tr>
                                     @endif

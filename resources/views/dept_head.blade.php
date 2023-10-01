@@ -122,6 +122,8 @@
                                                     <option class="text-xs text-gray-400" value="2">Disapprove</option>
                                                 </select>
 
+                                                <input type="hidden" name="actual_approved_head" value="{{ $tardis->head->user_id }}">
+
                                         @endif
 
                                     </td>

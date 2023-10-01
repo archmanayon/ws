@@ -113,6 +113,7 @@ class TaskController extends Controller
 
         $tasks->update([
 
+            'head_id'    => $stat_option,
             'status'    =>  $stat_option,
             'remarks'   =>  $head_remarks
         ]);
