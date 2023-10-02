@@ -89,16 +89,22 @@
                                 @foreach (                                
                                     array_filter($each_user, function ($daily) {
                                         return is_object($daily) && 
-                                            property_exists($daily, 'type') &&
-                                            $daily->type === 'LTE' && 
-                                            $daily->late_count >= 10;
+                                            // property_exists($daily, 'type') &&
+                                            $daily->user->name == 'ONDE, MARK FRANCIS' &&
+                                            $daily->type == 'LTE' ||
+
+                                            is_object($daily) && 
+                                            // property_exists($daily, 'type_late') &&
+                                            $daily->user->name == 'ONDE, MARK FRANCIS' &&
+                                            $daily->type_late == 'LTE';
+                                            // && $daily->late_count >= 10;
                                     })
                                 as $daily) 
                                                                 
-                                    {{-- @if ( $loop->last 
-                                        && $daily->type == 'LTE'
-                                        || $daily->type == 'UND'
-                                    ) --}}
+                                    @if ( $daily->type == 'LTE' && $loop->last
+                                        || $daily->type_late == 'LTE' && $loop->last
+                                        || $daily->required_h_late > 0 && $loop->last
+                                    )
 
                                         <tr class="bg-gray-700 border-b border-gray-600">                                            
                                             <td class="px-4 py-3">
@@ -111,13 +117,17 @@
                                             
 
                                             <td class="px-4 py-3">
-                                                {{ $daily->month->format('n')}}                                                
+                                                {{ $daily->month->format('n') .' | '. $daily->month->format('mdy')}}  
                                                 
                                             </td>
 
                                             <td class="px-4 py-3">
-                                                 {{ $daily->late_count }}
+                                                 {{ $count .'|'. $loop->count}}
                                             </td>
+
+                                            {{-- <td class="px-4 py-3">
+                                                {{ $daily->late_count }}
+                                           </td> --}}
 
                                             <td class="px-4 py-3">
                                                 
@@ -230,8 +240,8 @@
 
                                             @endif --}}
 
-                                        {{-- late with abs --}}
-                                            @if ($daily->required_h_late > 0)
+                                            {{-- late with abs --}}
+                                            {{-- @if ($daily->required_h_late > 0)
                                                 </tr>
                                                 <tr class="bg-gray-700 border-b border-gray-600">
 
@@ -287,10 +297,10 @@
                                                         $count++;
                                                     @endphp
 
-                                            @endif
+                                            @endif --}}
 
                                             {{-- und with abs --}}
-                                            @if ($daily->required_h_und > 0)
+                                            {{-- @if ($daily->required_h_und > 0)
                                                 </tr>
                                                 <tr class="bg-gray-700 border-b border-gray-600">
                                                     <td class="px-4 py-3">
@@ -339,7 +349,7 @@
                                                         {{ $daily->required_h_und }}
                                                     </td>
 
-                                            {{-- @endif --}}
+                                            @endif --}}
 
                                         </tr>
                                     @endif

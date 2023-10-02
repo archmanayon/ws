@@ -105,11 +105,11 @@ class AbsenceCalendarController extends Controller
 
             $am_late    = $tardi->am_late;
             $pm_late    = $tardi->pm_late;            
-            $late       = ($am_late??false) + ($pm_late??false)- $ten_min_allowance;
+            $late       = ($am_late?? 0 ) + ($pm_late?? 0 )- $ten_min_allowance;
 
             $am_und     = $tardi->am_und;
             $pm_und     = $tardi->pm_und;
-            $under      = ($am_und??false) + ($pm_und ?? false);
+            $under      = ($am_und??0) + ($pm_und ?? 0);
             
             $tardiness = null;
             $whole_day = null;
@@ -174,8 +174,8 @@ class AbsenceCalendarController extends Controller
                         $required_h_late = $late ;
                         $required_h_und = $under;
 
-                        $am_late? $late_count++ : '';
-                        $pm_late? $late_count++ : '';
+                        $am_late? $late_count++ : false;
+                        $pm_late? $late_count++ : false;
                 }
             }
             // __________________________________________________________
@@ -187,8 +187,8 @@ class AbsenceCalendarController extends Controller
                 $type = 'LTE';
                 $required_h = $late;
 
-                $am_late? $late_count++ : '';
-                $pm_late? $late_count++ : '';
+                $am_late? $late_count++ : false;
+                $pm_late? $late_count++ : false;
                 
             }
             elseif ($late > 0)
@@ -196,8 +196,8 @@ class AbsenceCalendarController extends Controller
                 $type = 'LTE';
                 $required_h = $late;
 
-                $am_late? $late_count++ : '';
-                $pm_late? $late_count++ : '';
+                $am_late? $late_count++ : false;
+                $pm_late? $late_count++ : false;
             }    
             elseif ($under > 0)
             {
@@ -211,12 +211,10 @@ class AbsenceCalendarController extends Controller
             }
             // ________________________________________________________
 
-            if(!isset($searched_user->shift->$am_in) ||
-                $required_h == 0 || 
-                !isset($searched_user->shift->$pm_in))
+            if($required_h == 0)
                 {}  
             
-            elseif ($type == 'no_tardi')
+            elseif ($type == 'no_tardi' || $type == null)
                 {}
 
             else {
