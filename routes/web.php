@@ -36,7 +36,14 @@ use Illuminate\Validation\Rule;
 
 use Laravel\Socialite\Facades\Socialite;
 
-
+/*
+    |-----------------notes on date format-------------------------------------    
+    | ->format('l') = day
+    | ->format('n') = numerc month only '8'
+    | ->format('m') = numerc month with zero '08'
+    | ->format('F') = full Month name only
+    | ->format('mdy') = sikit monthdayyear
+*/
 
 /*
     |--------------------------------------------------------------------------

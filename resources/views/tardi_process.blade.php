@@ -14,23 +14,18 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+           
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
 
                     <a href="{{ auth()->user()->username }}">
                         {{ auth()->user()->name }}
                     </a>
-                    {{-- <br>
 
-                    @foreach ($bio as $bio)
-                        {{$bio->hour}} <br>
-                    @endforeach<br> --}}
-                    {{-- {{ dd($term->school_year) }} --}}
+                    <form method="POST" action="{{ route('show_all_emp_tardi') }}">
+                    @csrf
 
-                    <table>
-                        <form method="POST" action="{{ route('show_all_emp_tardi') }}">
-                            @csrf
-
+                        <table>                            
                             <td>
                                 <div class="mt-4" >
                                     <x-input-label for="start_date" :value="__('Start Date')" />
@@ -45,19 +40,17 @@
                                     <x-input-error :messages="$errors->get('end_date')" class="mt-2" />
                                 </div>
                             </td>
-
                             <td>
-
                                 <div class="mt-4 order-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600
                                 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
                                     <button type="submit" name="submit_indi" value="">
                                         Submit
                                     </button>
                                 </div>
-                            </td>
+                            </td>                            
+                        </table>
 
-                        </form>
-                    </table>
+                    </form>
 
                 </div>
 
@@ -66,305 +59,158 @@
                     <p class="text-lg text-center font-bold m-5">Dark Table Design</p>
 
                         <table class="rounded-t-lg m-5 w-5/6 mx-auto bg-gray-800 text-gray-200">
-                            <tr class="text-left border-b border-gray-300">
-                                <th class="px-4 py-3">Stud ID</th>
-                                <th class="px-4 py-3">Term</th>
-                                <th class="px-4 py-3">Month</th>
-                                <th class="px-4 py-3">Total</th>
-                                <th class="px-4 py-3">Desc</th>
-                                <th class="px-4 py-3">Head ID</th>
-                                {{-- <th class="px-4 py-3">cnFrme</th>
-                                <th class="px-4 py-3">cnFrme Date</th>
-                                <th class="px-4 py-3">Head Sig</th>
-                                <th class="px-4 py-3">Sig Date</th>
-                                <th class="px-4 py-3">Remarks</th> --}}
-                            </tr>
 
-                            @foreach ( $mappedUser as $key => $each_user)
+                            <form method="POST" action="{{ route('show_all_emp_tardi') }}">
+                            @csrf
 
-                            @php
-                                $count = 1;
-                            @endphp
+                                <tr class="text-left border-b border-gray-300">
 
-                                @foreach (                                
-                                    array_filter($each_user, function ($daily) {
-                                        return is_object($daily) && 
-                                            // property_exists($daily, 'type') &&
-                                            $daily->user->name == 'ONDE, MARK FRANCIS' &&
-                                            $daily->type == 'LTE' ||
+                                    <th class="px-4 py-3">Stud ID</th>
+                                    <th class="px-4 py-3">Term</th>
+                                    <th class="px-4 py-3">Month</th>
+                                    <th class="px-4 py-3">Total</th>
+                                    <th class="px-4 py-3">Desc</th>
+                                    <th class="px-4 py-3">Head ID</th>
+                                    <th class="px-4 py-3">Encoded tardis</th>
 
-                                            is_object($daily) && 
-                                            // property_exists($daily, 'type_late') &&
-                                            $daily->user->name == 'ONDE, MARK FRANCIS' &&
-                                            $daily->type_late == 'LTE';
-                                            // && $daily->late_count >= 10;
-                                    })
-                                as $daily) 
-                                                                
-                                    @if ( $daily->type == 'LTE' && $loop->last
-                                        || $daily->type_late == 'LTE' && $loop->last
-                                        || $daily->required_h_late > 0 && $loop->last
-                                    )
+                                </tr>
 
-                                        <tr class="bg-gray-700 border-b border-gray-600">                                            
-                                            <td class="px-4 py-3">
-                                                {{$daily->user->name}}
-                                            </td>
+                                @foreach ( $mappedUser as $key => $each_user)
 
-                                            <td class="px-4 py-3">
-                                                {{ $term->id}}
-                                            </td>
-                                            
+                                    @php
 
-                                            <td class="px-4 py-3">
-                                                {{ $daily->month->format('n') .' | '. $daily->month->format('mdy')}}  
-                                                
-                                            </td>
+                                        $count = 1;
 
-                                            <td class="px-4 py-3">
-                                                 {{ $count .'|'. $loop->count}}
-                                            </td>
+                                    @endphp
 
-                                            {{-- <td class="px-4 py-3">
-                                                {{ $daily->late_count }}
-                                           </td> --}}
+                                    @foreach (
+                                        
+                                        array_filter($each_user, function ($daily) {
+                                            return is_object($daily) && 
+                                                // property_exists($daily, 'type') &&
+                                                // $daily->user->name == 'ONDE, MARK FRANCIS' &&
+                                                $daily->type == 'LTE' ||
 
-                                            <td class="px-4 py-3">
-                                                
-                                                {{$daily->late_count >=10 && $daily->late_count < 17 ? 1: (
-                                                    $daily->late_count >=17 && $daily->late_count < 24 ?
-                                                    2:(
-                                                        $daily->late_count >=24 && $daily->late_count < 31 ?
-                                                        3:(
-                                                            $daily->late_count >=31 && $daily->late_count < 38 ?
-                                                            4:(
-                                                                $daily->late_count >=38 && $daily->late_count < 45 ?
-                                                                5:(
-                                                                    $daily->late_count >=45 && $daily->late_count < 52 ?
-                                                                    6:(
-                                                                        $daily->late_count >=52 && $daily->late_count < 60 ?
-                                                                        7:(
-                                                                            $daily->late_count >=60 && $daily->late_count > 10 ?
-                                                                            8:$daily->late_count                                                                 
-                                                                        )                                                                 
-                                                                    )
+                                                is_object($daily) &&   
+                                                // property_exists($daily, 'type_late') &&                                         
+                                                // $daily->user->name == 'ONDE, MARK FRANCIS' &&
+                                                $daily->type_late == 'LTE';
+                                                // && $daily->late_count >= 10;
+                                        })
+
+                                    as $daily) 
                                                                     
-                                                                )                                                                    
-                                                            )
-                                                        )
-                                                    )
-                                                )}}
-                                               
-                                            </td>
-                                            
-                                            <td class="px-4 py-3">
-                                                {{ $daily->user->head_id}}
-                                            </td>
+                                        {{-- @if ( $daily->type == 'LTE' 
+                                            || $daily->type_late == 'LTE' 
+                                            || $daily->required_h_late > 0 
+                                        ) --}}
+
+                                        @if( $loop->last &&  $loop->count >= 10)
+
+                                            <tr class="bg-gray-700 border-b border-gray-600">
+                                                                                        
+                                                <td class="px-4 py-3">
+                                                    {{$daily->user->name}}
+                                                    <input type="hidden" name="lte_user_id" value="{{ $daily->user->id }}">
+
+                                                </td>
+
+                                                <td class="px-4 py-3">
+                                                    {{ $term->school_year}}
+                                                    <input type="hidden" name="lte_term_id" value="{{ $term->id }}">
+                                                </td>
+                                                
+
+                                                <td class="px-4 py-3">
+                                                    {{ $daily->month->format('F') }}  
+                                                    <input type="hidden" name="lte_month_id" value="{{$daily->month->format('n')}} ">
+                                                    {{-- $daily->month->format('mdy') .' |'.end($daily) --}}
+                                                    
+                                                    
+                                                </td>
+
+                                                <td class="px-4 py-3">
+                                                    {{ 
+                                                        // $count .'|'. 
+                                                        $loop->count
+                                                        
+                                                    }}
+                                                    <input type="hidden" name="lte_count" value="{{ $loop->count }}">
+                                                </td>
 
                                                 {{-- <td class="px-4 py-3">
-                                                    {{ $count. ' | '. $loop->index}}
-                                                </td>
+                                                    {{ $daily->late_count }}
+                                                </td> --}}
 
                                                 <td class="px-4 py-3">
-                                                    {{ 'C date'}}
-                                                </td>
-
-                                                <td class="px-4 py-3">
-                                                    {{ 'H sige'}}
-                                                </td>
-
-                                                <td class="px-4 py-3">
-                                                    {{ 'dte s'}}
-                                                </td>
-
-                                                <td class="px-4 py-3">
-                                                    {{ 'R by H'}}
-                                                </td>
-
-                                                <td class="px-4 py-3">
-                                                    {{ $daily->required_h}}
-                                                </td>    --}}
-                                            
-                                            @php
-                                                $count++;
-                                            @endphp
-
-                                            {{-- und outside abs --}}
-                                            {{-- @if ($daily->ws_double)
-                                                </tr>
-                                                <tr class="bg-gray-700 border-b border-gray-600">
-                                                    <td class="px-4 py-3">
-                                                        {{ $daily->user->student_id}}
-                                                    </td>
-                                                    <td class="px-4 py-3">
-                                                        {{ $daily->date }}
-                                                    <td>
-                                                        <x-dropdown relative='x' align='top'>
-                                                            <x-slot name="trigger">
-                                                                <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-100 focus:outline-none transition ease-in-out duration-150">
-                                                                    <div>{{ $daily->date }}</div>
-
-                                                                    <div class="ml-1">
-                                                                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                                                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                                                        </svg>
-                                                                    </div>
-                                                                </button>
-                                                            </x-slot>
-
-                                                            <x-slot name="content">
-
-                                                                @foreach ($daily->all_bio_punches as $bio)
-
-                                                                    <div class="inline-block flex-shrink-0"> {{ $bio->hour }}</div>
-                                                                    <div class="inline-block pl-3 flex-shrink-0"> {{ $bio->in_out }}</div>
-                                                                    <div class="inline-block pl-3 flex-shrink-0">
-                                                                        <a href="rawbio/{{ $daily->user->timecard.$daily->bio_daily_array}}"> {{ 'update' }} </a>
-                                                                    </div> <br>
-                                                                @endforeach
-                                                                <div class="inline-block pl-8 flex-shrink-0">
-                                                                    <a href="rawbio/{{ $daily->user->timecard.$daily->bio_daily_array}}">
-                                                                        {{ $daily->all_bio_punches[0] ?? false ? '': 'no punch'}}
-                                                                    </a>
-                                                                </div>
-
-                                                            </x-slot>
-                                                        </x-dropdown>
-                                                    </td>
-                                                    <td class="px-4 py-3">
-                                                        {{ 'UND' }}
-                                                    </td>
-                                                    <td class="px-4 py-3">
-                                                        {{ $daily->ws_double }}
-                                                    </td>
-
-                                            @endif --}}
-
-                                            {{-- late with abs --}}
-                                            {{-- @if ($daily->required_h_late > 0)
-                                                </tr>
-                                                <tr class="bg-gray-700 border-b border-gray-600">
-
-
-                                                    <td class="px-4 py-3">
-                                                        {{ $daily->user->name}}
-                                                    </td>
-        
-                                                    <td class="px-4 py-3">
-                                                       
-                                                    </td>
-                                                    
-        
-                                                    <td class="px-4 py-3">
-                                                      
-                                                    </td>
-        
-                                                    <td>{{ $daily->type_late }}</td>
-        
-                                                    <td>
-                                                        {{ 'oral' }}
-                                                    </td>
-                                                    
-                                                    <td class="px-4 py-3">
-                                                        {{ $daily->user->head->user->name}}
-                                                    </td>
-        
-                                                    <td class="px-4 py-3">
-                                                        {{ $count. ' | '. $loop->index}}
-                                                    </td>
-        
-                                                    <td class="px-4 py-3">
-                                                        {{ 'C date'}}
-                                                    </td>
-        
-                                                    <td class="px-4 py-3">
-                                                        {{ 'H sige'}}
-                                                    </td>
-        
-                                                    <td class="px-4 py-3">
-                                                        {{ 'dte s'}}
-                                                    </td>
-        
-                                                    <td class="px-4 py-3">
-                                                        {{ 'R by H'}}
-                                                    </td>
-        
-                                                    <td class="px-4 py-3">
-                                                        {{ $daily->required_h}}
-                                                    </td> 
 
                                                     @php
-                                                        $count++;
+                                                        $sanction_s = null;
+                                                        
+                                                        $loop->count >=10 && $loop->count < 17 ? $sanction_s = 1: (
+                                                            $loop->count >=17 && $loop->count < 24 ?
+                                                            $sanction_s =2:(
+                                                                $loop->count >=24 && $loop->count < 31 ?
+                                                                $sanction_s =3:(
+                                                                    $loop->count >=31 && $loop->count < 38 ?
+                                                                    $sanction_s =4:(
+                                                                        $loop->count >=38 && $loop->count < 45 ?
+                                                                        $sanction_s =5:(
+                                                                            $loop->count >=45 && $loop->count < 52 ?
+                                                                            $sanction_s =6:(
+                                                                                $loop->count >=52 && $loop->count < 60 ?
+                                                                                $sanction_s =7:(
+                                                                                    $loop->count >=60 && $loop->count > 10 ?
+                                                                                    $sanction_s =8:'not late'                                                                 
+                                                                                )
+                                                                            )    
+                                                                        )                                                                    
+                                                                    )
+                                                                )
+                                                            )
+                                                        )
+
                                                     @endphp
+                                                    
+                                                    {{ $tardi_desc->where('id', $sanction_s)->first()->tardiness }}
+                                                    <input type="hidden" name="lte_sanction" value="{{ $sanction_s }}">
+                                                
+                                                </td>
+                                                
+                                                <td class="px-4 py-3">
+                                                    {{ $daily->user->head_id}}
+                                                </td>
 
-                                            @endif --}}
+                                                <td class="px-4 py-3">
+                                                    {{ $each_user->tardis->total??false}}
+                                                </td>
+                                                
+                                                @php
+                                                    $count++;
+                                                @endphp
 
-                                            {{-- und with abs --}}
-                                            {{-- @if ($daily->required_h_und > 0)
-                                                </tr>
-                                                <tr class="bg-gray-700 border-b border-gray-600">
-                                                    <td class="px-4 py-3">
-                                                        {{ $daily->user->student_id}}
-                                                    </td>
-                                                    <td class="px-4 py-3">
-                                                        {{ $daily->user->name }}
-                                                    </td>
-                                                    <td>
-                                                        <x-dropdown relative='x' align='top'>
-                                                            <x-slot name="trigger">
-                                                                <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-100 focus:outline-none transition ease-in-out duration-150">
-                                                                    <div>{{ $daily->date }}</div>
+                                            </tr>
 
-                                                                    <div class="ml-1">
-                                                                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                                                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                                                        </svg>
-                                                                    </div>
-                                                                </button>
-                                                            </x-slot>
+                                        @endif                                   
 
-                                                            <x-slot name="content">
-
-                                                                @foreach ($daily->all_bio_punches as $bio)
-
-                                                                    <div class="inline-block flex-shrink-0"> {{ $bio->hour }}</div>
-                                                                    <div class="inline-block pl-3 flex-shrink-0"> {{ $bio->in_out }}</div>
-                                                                    <div class="inline-block pl-3 flex-shrink-0">
-                                                                        <a href="rawbio/{{ $daily->user->timecard.$daily->bio_daily_array}}"> {{ 'update' }} </a>
-                                                                    </div> <br>
-                                                                @endforeach
-                                                                <div class="inline-block pl-8 flex-shrink-0">
-                                                                    <a href="rawbio/{{ $daily->user->timecard.$daily->bio_daily_array}}">
-                                                                        {{ $daily->all_bio_punches[0] ?? false ? '': 'no punch'}}
-                                                                    </a>
-                                                                </div>
-
-                                                            </x-slot>
-                                                        </x-dropdown>
-                                                    </td>
-                                                    <td class="px-4 py-3">
-                                                        {{ $daily->type_under }}
-                                                    </td>
-                                                    <td class="px-4 py-3">
-                                                        {{ $daily->required_h_und }}
-                                                    </td>
-
-                                            @endif --}}
-
-                                        </tr>
-                                    @endif
-
-                                   
+                                    @endforeach
 
                                 @endforeach
-
-                            @endforeach
-
-                        </table>
-
+                            </form>
+                        </table> 
+                        
                 </div>
 
+                    <div class="mt-4 order-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600
+                    focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
+                        <button type="submit" name="submit_indi" value="">
+                            Save all tariness record for this month
+                        </button>
+                    </div>
+                </form>
+
             </div>
+            
         </div>
     </div>
 </x-app-layout>

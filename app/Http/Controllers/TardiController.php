@@ -7,6 +7,7 @@ use App\Models\Term;
 use App\Models\Punch;
 use App\Models\Schedule;
 use App\Models\Rawbio;
+use App\Models\Tardi_description;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -264,8 +265,8 @@ class TardiController extends Controller
         return view ('tardi_process',[
 
             'mappedUser' =>  $mappedArray,
-            'term' => Term::all()->where('active',1)->first(),            
-
+            'term' => Term::all()->where('active',1)->first(),
+            'tardi_desc' => Tardi_description::all(),   
         ]);
     }
 
