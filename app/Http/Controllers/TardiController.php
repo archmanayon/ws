@@ -236,7 +236,7 @@ class TardiController extends Controller
         );
 
  
-        if( $request ){
+        if( request('save_tardi') ){
 
             $data = $request->input('data');
 
