@@ -221,19 +221,44 @@ class TardiController extends Controller
 
         return view ('tardi_process',[
             'term' => Term::all()->where('active',1)->first(),
-
+            'tardi_desc' => Tardi_description::all(),
             'mappedUser' =>  $mappedArray
 
         ]);
     }
 
-    public function process()
+    public function process(Request $request)
     {
         // $user_all = User::with(['shift', 'manual_shifts', 'update_bios'])->get();
 
         $holiday = array(
             "08-21-23", "08-28-23", "09-09-23"
         );
+
+ 
+        if( $request ){
+
+            $data = $request->input('data');
+
+            $validatedData = $request->validate([
+                'data.*.user_id'    => 'required',
+                'data.*.term_id'    => 'required',
+                'data.*.month'      => 'required',
+                'data.*.total'      => 'required',
+                'data.*.tardi_description_id' => 'required',
+                'data.*.head_id'    => 'required'
+                
+            ]);    
+
+            Tardi::insert($validatedData);
+
+            $start_date = request('start_date')?? 0;
+            $end_date = request('end_date')?? 0;
+            $period = CarbonPeriod::create($start_date, $end_date);
+            $dates = $period->toArray();
+            $collection_of_dates = collect($dates);
+            $count_dates = $period->count();
+        }
 
         $start_date = request('start_date')?? 0;
         $end_date = request('end_date')?? 0;

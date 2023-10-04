@@ -56,9 +56,7 @@ class UpdateBioController extends Controller
         return view ('update_bio',[
 
             'old_bio'       =>  $all_bio_punches,
-
             'updated_bio'   =>  $updated_bio?? false,
-
             'pref_bio'      =>  $updated_bio[0]??false ? $updated_bio : $all_bio_punches,
             'str_tc'        =>  $str_tc,
             'str_date'      =>  $str_date,

@@ -93,14 +93,12 @@
                                         name="new_bio[]" required autofocus autocomplete="{{ ($pref_bio[0]->hour??false )}}" />
                                     <x-input-error :messages="$errors->get('new_bio.0')" class="mt-2" />
 
-
                                 </td>
 
                                 <td>
                                     {{ $updated_bio[0]->hour??false }}<br>
 
                                 </td>
-
 
                             </tr>
 
