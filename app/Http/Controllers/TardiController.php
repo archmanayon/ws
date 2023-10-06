@@ -241,7 +241,7 @@ class TardiController extends Controller
  
         if( request('save_tardi') ){ 
 
-            $data = $request->input('lte');  
+            $data = $request->input('lte');            
 
             // $validatedData = $request->validate([
             //     'lte.*.usertardidesc'    => 'unique:tardis,usertardidesc'
@@ -252,55 +252,54 @@ class TardiController extends Controller
 
             $insertData = [];
 
-            foreach ($data as $item) {
-
+            foreach ($data as $key => $value) {
                 // // Additional data to be validated (not from the input form)
-                // $additionalData = [
-                //     'lte.*.user_id'               => $item['user_id'],
-                //     'lte.*.term_id'               => $item['term_id'],
-                //     'lte.*.month'                 => $item['month'],
-                //     'lte.*.total'                 => $item['total'],
-                //     'lte.*.tardi_description_id'  => $item['tardi_description_id'],
-                //     'lte.*.head_id'               => $item['head_id'],
-                //     'lte.*.usertardidesc'         => $item['usertardidesc'],                                    
-                // ];
+                    $additionalData = [
+                        'user_id'               => $value['user_id'],
+                        'term_id'               => $value['term_id'],
+                        'month'                 => $value['month'],
+                        'total'                 => $value['total'],
+                        'tardi_description_id'  => $value['tardi_description_id'],
+                        'head_id'               => $value['head_id'],
+                        'usertardidesc'         => $value['usertardidesc'],                                    
+                    ]; 
 
-                // // Define validation rules for additional data
-                // $additionalValidationRules = [
+                    // // Define validation rules for additional data
+                    $additionalValidationRules = [
 
-                //     'lte.*.usertardidesc'         =>'required|unique:tardis,usertardidesc'
-                    
-                // ];
+                        'usertardidesc'         =>'required|unique:tardis,usertardidesc'
+                        
+                    ];
 
-                // // Define custom error messages for additional data
-                // $customErrorMessages = [
+                    // // Define custom error messages for additional data
+                    $customErrorMessages = [
 
-                //     'lte.*.usertardidesc.unique'     => 'Tardiness Already Saved'
-                    
-                // ];
+                        'usertardidesc.unique'     => 'Tardiness Already Saved'
+                        
+                    ];                
 
                 // // Create a new Validator instance and validate the additional data
-                // $validator = Validator::make($additionalData, $additionalValidationRules,$customErrorMessages);
+                $validator = Validator::make($additionalData, $additionalValidationRules,$customErrorMessages);               
 
-                // if ($validator->fails()) {
-                //     return redirect()->back()->withErrors($validator)->withInput();
-                // }
+                if ($validator->fails()) {
+                    return redirect()->back()->withErrors($validator);
+                }               
 
                 $insertData[] = [
-                    'user_id'               => $item['user_id'],
-                    'term_id'               => $item['term_id'],
-                    'month'                 => $item['month'],
-                    'total'                 => $item['total'],
-                    'tardi_description_id'  => $item['tardi_description_id'],
-                    'head_id'               => $item['head_id'],
-                    'usertardidesc'         => $item['usertardidesc'],
+                    'user_id'               => $additionalData['user_id'],
+                    'term_id'               => $additionalData['term_id'],
+                    'month'                 => $additionalData['month'],
+                    'total'                 => $additionalData['total'],
+                    'tardi_description_id'  => $additionalData['tardi_description_id'],
+                    'head_id'               => $additionalData['head_id'],
+                    'usertardidesc'         => $additionalData['usertardidesc'],
                     // Add more columns as needed
                 ];
-            }
-
-            dd( $insertData);
+            }           
             
-            // Tardi::insert($insertData);
+            Tardi::insert($insertData);
+
+            return redirect()->back()->withErrors($validator);
         }
 
         $start_date = request('start_date')?? 0;
