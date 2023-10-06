@@ -9,6 +9,9 @@ use App\Models\Schedule;
 use App\Models\Rawbio;
 use App\Models\Tardi_description;
 
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -238,15 +241,10 @@ class TardiController extends Controller
  
         if( request('save_tardi') ){ 
 
-            $data = $request->input('lte');     dd($data);      
+            $data = $request->input('lte');  
 
             // $validatedData = $request->validate([
-            //     'data.*.user_id'    => 'required',
-            //     'data.*.term_id'    => 'required',
-            //     'data.*.month'      => 'required',
-            //     'data.*.total'      => 'required',
-            //     'data.*.tardi_description_id' => 'required',
-            //     'data.*.head_id'    => 'required'
+            //     'lte.*.usertardidesc'    => 'unique:tardis,usertardidesc'
                 
             // ]);  
 
@@ -256,6 +254,38 @@ class TardiController extends Controller
 
             foreach ($data as $item) {
 
+                // // Additional data to be validated (not from the input form)
+                // $additionalData = [
+                //     'lte.*.user_id'               => $item['user_id'],
+                //     'lte.*.term_id'               => $item['term_id'],
+                //     'lte.*.month'                 => $item['month'],
+                //     'lte.*.total'                 => $item['total'],
+                //     'lte.*.tardi_description_id'  => $item['tardi_description_id'],
+                //     'lte.*.head_id'               => $item['head_id'],
+                //     'lte.*.usertardidesc'         => $item['usertardidesc'],                                    
+                // ];
+
+                // // Define validation rules for additional data
+                // $additionalValidationRules = [
+
+                //     'lte.*.usertardidesc'         =>'required|unique:tardis,usertardidesc'
+                    
+                // ];
+
+                // // Define custom error messages for additional data
+                // $customErrorMessages = [
+
+                //     'lte.*.usertardidesc.unique'     => 'Tardiness Already Saved'
+                    
+                // ];
+
+                // // Create a new Validator instance and validate the additional data
+                // $validator = Validator::make($additionalData, $additionalValidationRules,$customErrorMessages);
+
+                // if ($validator->fails()) {
+                //     return redirect()->back()->withErrors($validator)->withInput();
+                // }
+
                 $insertData[] = [
                     'user_id'               => $item['user_id'],
                     'term_id'               => $item['term_id'],
@@ -263,10 +293,13 @@ class TardiController extends Controller
                     'total'                 => $item['total'],
                     'tardi_description_id'  => $item['tardi_description_id'],
                     'head_id'               => $item['head_id'],
+                    'usertardidesc'         => $item['usertardidesc'],
                     // Add more columns as needed
                 ];
-            }           
+            }
 
+            dd( $insertData);
+            
             // Tardi::insert($insertData);
         }
 

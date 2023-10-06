@@ -171,7 +171,7 @@ Route::post('rawbio/{rawbio}', [UpdateBioController::class, 'store_rawbio'])
 Route::get('raw_bio_text', [BiometricController::class, 'raw_bio_text'])
 ->middleware(['auth', 'verified', 'admin'])->name('raw_bio_text');
 
-Route::post('raw_bio_text', [BiometricController::class, 'raw_bio_text'])
+Route::post('raw_bio_text', [BiometricController::class, ''])
 ->middleware(['auth', 'verified', 'admin'])->name('raw_bio_text_post');
 
 

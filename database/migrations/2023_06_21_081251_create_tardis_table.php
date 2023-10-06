@@ -20,12 +20,14 @@ return new class extends Migration
             $table->integer('total');
             $table->foreignId('tardi_description_id');
             $table->foreignId('head_id')->nullable();
+            $table->string('usertardidesc')->unique();
             $table->string('conforme')->nullable();
             $table->timestamp('con_date')->nullable();
             $table->string('head_sig')->nullable();
             $table->timestamp('sig_date')->nullable();
             $table->text('remarks')->nullable();
             $table->timestamps();
+            
 
         });
     }

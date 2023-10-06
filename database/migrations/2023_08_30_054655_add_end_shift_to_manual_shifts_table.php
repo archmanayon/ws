@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('manual_shifts', function (Blueprint $table) {
-            $table->$table->dropColumn('end_shift');
+            $table->dropColumn('end_shift');
         });
     }
 };

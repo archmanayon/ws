@@ -119,21 +119,21 @@
                                         <tr class="bg-gray-700 border-b border-gray-600">
                                                                                     
                                             <td class="px-4 py-3">
-                                                {{$daily->user->name . '|' . $index. '|' .$loop->index}}
+                                                {{$daily->user->name}}
                                                 <input type="hidden" name="lte[{{ $daily->user->id.$loop->count }}][user_id]"
-                                                value="{{ $daily->user->name }}">
+                                                value="{{ $daily->user->id }}">
                                             </td>
 
                                             <td class="px-4 py-3">
                                                 {{ $term->school_year }}
-                                                <input type="hidden" name="lte[{{ $loop->count }}][term_id]"
+                                                <input type="hidden" name="lte[{{$daily->user->id.$loop->count }}][term_id]"
                                                 value="{{ $term->id }}">
                                             </td>
                                             
 
                                             <td class="px-4 py-3">
                                                 {{ $daily->month->format('F') }}  
-                                                <input type="hidden" name="lte[{{ $loop->count }}][month]"
+                                                <input type="hidden" name="lte[{{$daily->user->id.$loop->count }}][month]"
                                                 value="{{$daily->month->format('n')}} ">
                                                 {{-- $daily->month->format('mdy') .' |'.end($daily) --}}
                                                 
@@ -141,12 +141,8 @@
                                             </td>
 
                                             <td class="px-4 py-3">
-                                                {{ 
-                                                    // $count .'|'. 
-                                                    $loop->count
-                                                    
-                                                }}
-                                                <input type="hidden" name="lte[{{ $loop->count }}][total]"
+                                                {{ $loop->count}}
+                                                <input type="hidden" name="lte[{{ $daily->user->id.$loop->count }}][total]"
                                                 value="{{ $loop->count }}">
                                             </td>
 
@@ -157,7 +153,7 @@
                                             <td class="px-4 py-3">
 
                                                 @php
-                                                    $sanction_s = null;
+                                                $sanction_s = null;
                                                     
                                                     $loop->count >=10 && $loop->count < 17 ? $sanction_s = 1: (
                                                         $loop->count >=17 && $loop->count < 24 ?
@@ -173,31 +169,37 @@
                                                                             $loop->count >=52 && $loop->count < 60 ?
                                                                             $sanction_s =7:(
                                                                                 $loop->count >=60 && $loop->count > 10 ?
-                                                                                $sanction_s =8:'not late'                                                                 
+                                                                                $sanction_s =8: null                                                                 
                                                                             )
                                                                         )    
                                                                     )                                                                    
                                                                 )
                                                             )
                                                         )
-                                                    )
-
+                                                    )                                               
+                                               
                                                 @endphp
                                                 
                                                 {{ $tardi_desc->where('id', $sanction_s)->first()->tardiness??false }}
-                                                <input type="hidden" name="lte[{{ $loop->count }}][tardi_description_id]"
-                                                value="{{ $sanction_s }}">
+                                                <input type="hidden" name="lte[{{ $daily->user->id.$loop->count }}][tardi_description_id]"
+                                                value="{{ $sanction_s??false }}">
                                             
                                             </td>
                                             
                                             <td class="px-4 py-3">
-                                                {{ $daily->user->head_id??false}}
-                                                <input type="hidden" name="lte[{{ $loop->count }}][head_id]"
-                                                value="{{ $sanction_s }}">
+
+                                                {{ $daily->user->head->user->name??false}}
+                                                <input type="hidden" name="lte[{{ $daily->user->id.$loop->count }}][head_id]"
+                                                value="{{ $daily->user->head_id }}">
+
+                                                <input type="hidden" name="lte[{{ $daily->user->id.$loop->count }}][usertardidesc]"
+                                                value="{{ $daily->user->username.'_'.
+                                                    $tardi_desc->where('id', $sanction_s)->first()->id??false }}">
+
                                             </td>
 
                                             <td class="px-4 py-3">
-                                                {{ $each_user->tardis->total??false}}
+                                                {{ $daily->user->tardis->first()->total??false }}
                                             </td>
                                             
                                             @php
