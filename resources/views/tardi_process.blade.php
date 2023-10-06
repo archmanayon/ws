@@ -62,35 +62,35 @@
 
                 <div class="p-6 text-gray-900 dark:text-gray-100 border">
 
-                    <p class="text-lg text-center font-bold m-5">Dark Table Design</p>
+                    <p class="text-lg text-center font-bold m-5">tardiness processing</p>
 
-                        <table class="rounded-t-lg m-5 w-5/6 mx-auto bg-gray-800 text-gray-200">
+                    <form method="POST" action="{{ route('save_all_emp_tardi') }}">
+                    @csrf
 
-                            <form method="POST" action="{{ route('save_all_emp_tardi') }}">
-                            @csrf
+                        <table class="rounded-t-lg m-5 w-5/6 mx-auto bg-gray-800 text-gray-200">                            
 
-                                <tr class="text-left border-b border-gray-300">
+                            <tr class="text-left border-b border-gray-300">
 
-                                    <th class="px-4 py-3">Stud ID</th>
-                                    <th class="px-4 py-3">Term</th>
-                                    <th class="px-4 py-3">Month</th>
-                                    <th class="px-4 py-3">Total</th>
-                                    <th class="px-4 py-3">Desc</th>
-                                    <th class="px-4 py-3">Head ID</th>
-                                    <th class="px-4 py-3">Encoded tardis</th>
+                                <th class="px-4 py-3">Stud ID</th>
+                                <th class="px-4 py-3">Term</th>
+                                <th class="px-4 py-3">Month</th>
+                                <th class="px-4 py-3">Total</th>
+                                <th class="px-4 py-3">Desc</th>
+                                <th class="px-4 py-3">Head ID</th>
+                                <th class="px-4 py-3">Encoded tardis</th>
 
-                                </tr>
+                            </tr>
 
-                                @foreach ( $mappedUser as $key => $each_user)
+                            @foreach ( $mappedUser as $key => $each_user)
 
-                                    @php
+                                @php
 
-                                        $count = 1;
+                                    $count = 1;
 
-                                    @endphp
+                                @endphp
 
-                                    @foreach (
-                                        
+                                @foreach (
+                                    
                                         array_filter($each_user, function ($daily) {
                                             return is_object($daily) && 
                                                 // property_exists($daily, 'type') &&
@@ -105,124 +105,125 @@
                                         })
 
                                     as $index => $daily) 
-                                                                    
-                                        {{-- @if ( $daily->type == 'LTE' 
-                                            || $daily->type_late == 'LTE' 
-                                            || $daily->required_h_late > 0 
-                                        ) --}}
+                                                                
+                                    {{-- @if ( $daily->type == 'LTE' 
+                                        || $daily->type_late == 'LTE' 
+                                        || $daily->required_h_late > 0 
+                                    ) --}}
 
-                                        @if( 
-                                        $loop->last &&  
-                                        $loop->count >= 10)
+                                    @if( 
+                                    $loop->last && $loop->count >= 10)
+                                    {{-- // &&  
+                                    // $loop->count >= 10) --}}
 
-                                            <tr class="bg-gray-700 border-b border-gray-600">
-                                                                                        
-                                                <td class="px-4 py-3">
-                                                    {{$daily->user->name . '|' . $index. '|' .$loop->index}}
-                                                    <input type="hidden" name="lte[{{ $loop->count }}][user_id]"
-                                                    value="{{ $daily->user->id }}">
-                                                </td>
+                                        <tr class="bg-gray-700 border-b border-gray-600">
+                                                                                    
+                                            <td class="px-4 py-3">
+                                                {{$daily->user->name . '|' . $index. '|' .$loop->index}}
+                                                <input type="hidden" name="lte[{{ $daily->user->id.$loop->count }}][user_id]"
+                                                value="{{ $daily->user->name }}">
+                                            </td>
 
-                                                <td class="px-4 py-3">
-                                                    {{ $term->school_year }}
-                                                    <input type="hidden" name="lte[{{ $loop->count }}][term_id]"
-                                                    value="{{ $term->id }}">
-                                                </td>
+                                            <td class="px-4 py-3">
+                                                {{ $term->school_year }}
+                                                <input type="hidden" name="lte[{{ $loop->count }}][term_id]"
+                                                value="{{ $term->id }}">
+                                            </td>
+                                            
+
+                                            <td class="px-4 py-3">
+                                                {{ $daily->month->format('F') }}  
+                                                <input type="hidden" name="lte[{{ $loop->count }}][month]"
+                                                value="{{$daily->month->format('n')}} ">
+                                                {{-- $daily->month->format('mdy') .' |'.end($daily) --}}
                                                 
+                                                
+                                            </td>
 
-                                                <td class="px-4 py-3">
-                                                    {{ $daily->month->format('F') }}  
-                                                    <input type="hidden" name="lte[{{ $loop->count }}][month]"
-                                                    value="{{$daily->month->format('n')}} ">
-                                                    {{-- $daily->month->format('mdy') .' |'.end($daily) --}}
+                                            <td class="px-4 py-3">
+                                                {{ 
+                                                    // $count .'|'. 
+                                                    $loop->count
                                                     
+                                                }}
+                                                <input type="hidden" name="lte[{{ $loop->count }}][total]"
+                                                value="{{ $loop->count }}">
+                                            </td>
+
+                                            {{-- <td class="px-4 py-3">
+                                                {{ $daily->late_count }}
+                                            </td> --}}
+
+                                            <td class="px-4 py-3">
+
+                                                @php
+                                                    $sanction_s = null;
                                                     
-                                                </td>
-
-                                                <td class="px-4 py-3">
-                                                    {{ 
-                                                        // $count .'|'. 
-                                                        $loop->count
-                                                        
-                                                    }}
-                                                    <input type="hidden" name="lte[{{ $loop->count }}][total]"
-                                                    value="{{ $loop->count }}">
-                                                </td>
-
-                                                {{-- <td class="px-4 py-3">
-                                                    {{ $daily->late_count }}
-                                                </td> --}}
-
-                                                <td class="px-4 py-3">
-
-                                                    @php
-                                                        $sanction_s = null;
-                                                        
-                                                        $loop->count >=10 && $loop->count < 17 ? $sanction_s = 1: (
-                                                            $loop->count >=17 && $loop->count < 24 ?
-                                                            $sanction_s =2:(
-                                                                $loop->count >=24 && $loop->count < 31 ?
-                                                                $sanction_s =3:(
-                                                                    $loop->count >=31 && $loop->count < 38 ?
-                                                                    $sanction_s =4:(
-                                                                        $loop->count >=38 && $loop->count < 45 ?
-                                                                        $sanction_s =5:(
-                                                                            $loop->count >=45 && $loop->count < 52 ?
-                                                                            $sanction_s =6:(
-                                                                                $loop->count >=52 && $loop->count < 60 ?
-                                                                                $sanction_s =7:(
-                                                                                    $loop->count >=60 && $loop->count > 10 ?
-                                                                                    $sanction_s =8:'not late'                                                                 
-                                                                                )
-                                                                            )    
-                                                                        )                                                                    
-                                                                    )
+                                                    $loop->count >=10 && $loop->count < 17 ? $sanction_s = 1: (
+                                                        $loop->count >=17 && $loop->count < 24 ?
+                                                        $sanction_s =2:(
+                                                            $loop->count >=24 && $loop->count < 31 ?
+                                                            $sanction_s =3:(
+                                                                $loop->count >=31 && $loop->count < 38 ?
+                                                                $sanction_s =4:(
+                                                                    $loop->count >=38 && $loop->count < 45 ?
+                                                                    $sanction_s =5:(
+                                                                        $loop->count >=45 && $loop->count < 52 ?
+                                                                        $sanction_s =6:(
+                                                                            $loop->count >=52 && $loop->count < 60 ?
+                                                                            $sanction_s =7:(
+                                                                                $loop->count >=60 && $loop->count > 10 ?
+                                                                                $sanction_s =8:'not late'                                                                 
+                                                                            )
+                                                                        )    
+                                                                    )                                                                    
                                                                 )
                                                             )
                                                         )
+                                                    )
 
-                                                    @endphp
-                                                    
-                                                    {{ $tardi_desc->where('id', $sanction_s)->first()->tardiness }}
-                                                    <input type="hidden" name="lte[{{ $loop->count }}][tardi_description_id]"
-                                                    value="{{ $sanction_s }}">
-                                                
-                                                </td>
-                                                
-                                                <td class="px-4 py-3">
-                                                    {{ $daily->user->head_id}}
-                                                    <input type="hidden" name="lte[{{ $loop->count }}][head_id]"
-                                                    value="{{ $sanction_s }}">
-                                                </td>
-
-                                                <td class="px-4 py-3">
-                                                    {{ $each_user->tardis->total??false}}
-                                                </td>
-                                                
-                                                @php
-                                                    $count++;
                                                 @endphp
+                                                
+                                                {{ $tardi_desc->where('id', $sanction_s)->first()->tardiness??false }}
+                                                <input type="hidden" name="lte[{{ $loop->count }}][tardi_description_id]"
+                                                value="{{ $sanction_s }}">
+                                            
+                                            </td>
+                                            
+                                            <td class="px-4 py-3">
+                                                {{ $daily->user->head_id??false}}
+                                                <input type="hidden" name="lte[{{ $loop->count }}][head_id]"
+                                                value="{{ $sanction_s }}">
+                                            </td>
 
-                                            </tr>
+                                            <td class="px-4 py-3">
+                                                {{ $each_user->tardis->total??false}}
+                                            </td>
+                                            
+                                            @php
+                                                $count++;
+                                            @endphp
 
-                                        @endif                                   
+                                        </tr>
 
-                                    @endforeach
+                                    @endif                                   
 
                                 @endforeach
-                            </form>
+
+                            @endforeach
+
                         </table> 
-                        
+
+                        <div class="mt-4 order-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600
+                            focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
+                            <button type="submit" name="save_tardi" value="save_tardi">
+                                Save all tariness record for this month
+                            </button>
+                        </div>
+
+                    </form>
+
                 </div>
-
-                    <div class="mt-4 order-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600
-                    focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
-                        <button type="submit" name="save_tardi" value="">
-                            Save all tariness record for this month
-                        </button>
-                    </div>
-                </form>
-
             </div>
             
         </div>

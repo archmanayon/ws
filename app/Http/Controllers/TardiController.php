@@ -236,28 +236,38 @@ class TardiController extends Controller
         );
 
  
-        if( request('save_tardi') ){
+        if( request('save_tardi') ){ 
 
-            $data = $request->input('data');
+            $data = $request->input('lte');     dd($data);      
 
-            $validatedData = $request->validate([
-                'data.*.user_id'    => 'required',
-                'data.*.term_id'    => 'required',
-                'data.*.month'      => 'required',
-                'data.*.total'      => 'required',
-                'data.*.tardi_description_id' => 'required',
-                'data.*.head_id'    => 'required'
+            // $validatedData = $request->validate([
+            //     'data.*.user_id'    => 'required',
+            //     'data.*.term_id'    => 'required',
+            //     'data.*.month'      => 'required',
+            //     'data.*.total'      => 'required',
+            //     'data.*.tardi_description_id' => 'required',
+            //     'data.*.head_id'    => 'required'
                 
-            ]);    
+            // ]);  
 
-            Tardi::insert($validatedData);
+            // Extract the values from the input array and prepare them for bulk insertion
 
-            $start_date = request('start_date')?? 0;
-            $end_date = request('end_date')?? 0;
-            $period = CarbonPeriod::create($start_date, $end_date);
-            $dates = $period->toArray();
-            $collection_of_dates = collect($dates);
-            $count_dates = $period->count();
+            $insertData = [];
+
+            foreach ($data as $item) {
+
+                $insertData[] = [
+                    'user_id'               => $item['user_id'],
+                    'term_id'               => $item['term_id'],
+                    'month'                 => $item['month'],
+                    'total'                 => $item['total'],
+                    'tardi_description_id'  => $item['tardi_description_id'],
+                    'head_id'               => $item['head_id'],
+                    // Add more columns as needed
+                ];
+            }           
+
+            // Tardi::insert($insertData);
         }
 
         $start_date = request('start_date')?? 0;
