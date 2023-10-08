@@ -202,8 +202,8 @@
                                                 <input type="hidden" name="lte[{{ $daily->user->id.'_'.$loop->count }}][head_id]"
                                                 value="{{ $daily->user->head_id }}">
 
-                                                {{-- <input type="hidden" name="lte[{{ $daily->user->id.'_'.$loop->count }}][usertardidesc]"
-                                                value="{{ $daily->user->username.'_'.$tardi_desc->where('id', $sanction_s)->first()->id }}">                                                --}}
+                                                <input type="hidden" name="lte[{{ $daily->user->id.'_'.$loop->count }}][usertardidesc]"
+                                                value="{{ $daily->user->username.'_'.$tardi_desc->where('id', $sanction_s)->first()->id??false }}">                                               
 
                                             </td>
 
