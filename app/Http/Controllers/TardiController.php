@@ -224,7 +224,7 @@ class TardiController extends Controller
 
         return view ('tardi_process',[
             'term' => Term::all()->where('active',1)->first(),
-            'tardi_desc' => Tardi_description::all(),
+            'tardi_desc' => Tardi_description::all()??false,
             'mappedUser' =>  $mappedArray
 
         ]);
