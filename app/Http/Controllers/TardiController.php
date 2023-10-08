@@ -7,7 +7,7 @@ use App\Models\Term;
 use App\Models\Punch;
 use App\Models\Schedule;
 use App\Models\Rawbio;
-use App\Models\Tardi_description;
+use App\Models\tardi_description;
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
@@ -224,7 +224,7 @@ class TardiController extends Controller
 
         return view ('tardi_process',[
             'term' => Term::all()->where('active',1)->first(),
-            'tardi_desc' => Tardi_description::all()??false,
+            'tardi_desc' => tardi_description::all()??false,
             'mappedUser' =>  $mappedArray
 
         ]);
@@ -333,7 +333,7 @@ class TardiController extends Controller
 
             'mappedUser' =>  $mappedArray,
             'term' => Term::all()->where('active',1)->first(),
-            'tardi_desc' => Tardi_description::all(),   
+            'tardi_desc' => tardi_description::all(),   
         ]);
     }
 
