@@ -17,7 +17,7 @@
         <div class="lg:grid lg:px-8 m-5 mx-6 sm:px-6">
 
             {{-- 1st column --}}
-            <div class="bg-white m-5 dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg w-3/4">
+            <div class="m-5 dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg w-3/4">
 
                 <div class="py-6 pl-10 text-gray-900 dark:text-gray-100 text-lg">
                     <div class="border-b pb-3 w-96">
@@ -44,11 +44,11 @@
             </div>
 
             {{-- 2nd column --}}
-            <div class="bg-white m-5 dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg w-3/4">
+            <div class="m-5 dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg w-3/4">
 
                 <div class="p-6 text-gray-900 dark:text-gray-100">
 
-                    <table class="bg-gray-800 rounded-t-lg text-sm w-3/4">
+                    <table class="dark:bg-gray-800 rounded-t-lg text-sm w-3/4">
 
                         {{-- total --}}
                         <tr>
@@ -104,7 +104,7 @@
 
             {{-- 3rd --}}
             @if (!$tardis->conforme) 
-                <div class="bg-white dark:bg-gray-800 m-5 overflow-hidden pl-8 shadow-sm sm:rounded-lg w-48">
+                <div class="dark:bg-gray-800 m-5 overflow-hidden pl-8 shadow-sm sm:rounded-lg w-48">
 
                     <div class="p-3 text-gray-900 dark:text-gray-100">
 
@@ -112,7 +112,7 @@
                             @csrf
                                 <tr>
                                     <td class="px-4 py-3">
-                                        <button class="text-orange-300" type="submit" name="tardis_id" value="{{ $tardis->id??false }}">Conforme</button>
+                                        <button class="text-orange-500" type="submit" name="tardis_id" value="{{ $tardis->id??false }}">Conforme</button>
                                     </td>
                                 </tr>
                             </form>
@@ -123,7 +123,7 @@
             @endif 
 
             {{-- 4th --}}
-            <div class="bg-white dark:bg-gray-800 m-5 overflow-hidden shadow-sm sm:rounded-lg w-20">
+            <div class="dark:bg-gray-800 m-5 overflow-hidden shadow-sm sm:rounded-lg w-20">
 
                 <div class="p-3 text-gray-900 dark:text-gray-100">
 

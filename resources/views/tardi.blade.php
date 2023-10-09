@@ -22,7 +22,7 @@
         <div class="lg:grid lg:px-8 m-5 mx-6 sm:px-6">
 
             {{-- 1st column --}}
-            <div class="bg-white m-5 dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="m-5 dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
 
                 <div class="p-6 text-gray-900 dark:text-gray-100">
 
@@ -33,7 +33,7 @@
             </div>
 
             {{-- 2nd column --}}
-            <div class="bg-white dark:bg-gray-400  m-5 overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="dark:bg-gray-400  m-5 overflow-hidden shadow-sm sm:rounded-lg">
 
                 <div class="dark:bg-gray-900 p-6">
 
@@ -49,9 +49,9 @@
 
                             <th class="px-4 py-3">{{ 'Total' }}</th>
 
-                            <th class="px-4 py-3">{{ "Action" }}</th>
+                            {{-- <th class="px-4 py-3">{{ "Action" }}</th> --}}
 
-                            <th class="px-4 py-3">{{ "Date" }}</th>
+                            {{-- <th class="px-4 py-3">{{ "Date" }}</th> --}}
 
                             <th class="px-4 py-3 w-auto">{{ "Head's Remarks" }}</th>
 
@@ -84,19 +84,19 @@
                             </td>
 
                             {{-- action --}}
-                            <td class="px-4 py-3 w-48">
+                            {{-- <td class="px-4 py-3 w-48">
                                 {{ $tardi->tardi_description->action }}
-                            </td>
+                            </td> --}}
                             {{-- date --}}
-                            <td class="px-4 py-3 w-4">
+                            {{-- <td class="px-4 py-3 w-4"> --}}
                                 {{-- if approved by head with date --}}
-                                @if ($tardi->sig_date != '0000-00-00 00:00:00')
+                                {{-- @if ($tardi->sig_date != '0000-00-00 00:00:00')
                                     {{  Carbon::parse($tardi->sig_date)->format('m/d/y')}}
                                 @endif
-                            </td>
+                            </td> --}}
 
                             {{-- remarks --}}
-                            <td class="px-4 py-3 w-72 {{ !$tardi->conforme?'text-green-600':'' }} ">
+                            <td class="px-4 py-3 w-72 {{ !$tardi->conforme?'text-green-400':'' }} ">
                                 {{ $tardi->remarks }}
                             </td>
 
@@ -107,7 +107,7 @@
                                 @if (!$tardi->conforme)
 
                                     @if ($tardi->head_sig)
-                                        <button class="text-orange-300" type="submit" name="conforme" value="{{$tardi->id}}">Conforme</button>
+                                        <button class="text-red-500" type="submit" name="conforme" value="{{$tardi->id}}"> click to Conforme</button>
                                     @else
                                         <div class="text-red-300">
                                             {{ 'Pls. talk with your head' }}
@@ -132,7 +132,7 @@
             </div>
 
             {{-- 3rd column --}}
-            <div class="bg-white dark:bg-gray-800 m-5 overflow-hidden shadow-sm sm:rounded-lg w-20">
+            <div class="dark:bg-gray-800 m-5 overflow-hidden shadow-sm sm:rounded-lg w-20">
 
                 <div class="p-3 text-gray-900 dark:text-gray-100">
 

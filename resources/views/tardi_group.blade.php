@@ -52,9 +52,9 @@
 
                             <th class="px-4 py-3">{{ 'Total' }}</th>
 
-                            <th class="px-4 py-3">{{ "Action Taken" }}</th>
+                            {{-- <th class="px-4 py-3">{{ "Action Taken" }}</th> --}}
 
-                            <th class="px-4 py-3">{{ "Date" }}</th>
+                            {{-- <th class="px-4 py-3">{{ "Date" }}</th> --}}
 
                             <th class="px-4 py-3">{{ "Head's Remarks" }}</th>
 
@@ -101,16 +101,16 @@
                                     </td>
 
                                     {{-- action --}}
-                                    <td class="px-4 py-3 w-40">
+                                    {{-- <td class="px-4 py-3 w-40">
                                         {{ $tardi->tardi_description->action??false }}
-                                    </td>
+                                    </td> --}}
                                     {{-- date --}}
-                                    <td class="px-4 py-3 w-4">
+                                    {{-- <td class="px-4 py-3 w-4">
                                         @if ($tardi->sig_date != '0000-00-00 00:00:00')
                                             {{  Carbon::parse($tardi->sig_date)->format('m/d/y')}}
                                         @endif                                   
                                         
-                                    </td>
+                                    </td> --}}
 
                                     {{-- remarks --}}
                                     <td class="px-4 py-3 w-72">
@@ -118,7 +118,7 @@
                                     </td>
                                     {{--head status --}}
 
-                                    <td class=" py-3 {{ !$tardi->head_sig?'text-red-400':
+                                    <td class=" py-3 {{ !$tardi->head_sig?'text-red-600':
                                                             (!$tardi->conforme?'text-red-300':'') }}">
 
                                         <form method="POST" action="{{route('staff_variance')}}" >
@@ -128,18 +128,18 @@
 
                                                 @if ($tardi->head_sig??false)
 
-                                                    {{'Pls remind'}} <br> {{ trim($names[1]) }}
+                                                   <span class="scale 50 text-xs"> {{ "...pending conforme"}} </span>
+
+                                                    {{-- {{'Pls remind'}} <br> {{ trim($names[1]) }} --}}
 
                                                 @else
 
-                                                    <button type="submit" name="pre_address" value="{{$tardi->id}}">Pls click to Address</button>
+                                                    <button type="submit" name="pre_address" value="{{$tardi->id}}">Click to Address</button>
 
                                                 @endif
 
                                             @else
-
-                                                {{ 'Addressed' }}
-
+                                                <span class="scale 50 text-xs text-green-400"> {{'Addressed'}} </span>
                                             @endif
 
                                         </form>

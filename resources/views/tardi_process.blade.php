@@ -208,7 +208,7 @@
                                             </td>
 
                                             <td class="px-4 py-3">
-                                                {{ $daily->user->tardis->first()->total??false }}
+                                                {{ $daily->user->tardis->first()->usertardidesc??false }}
                                             </td>
                                             
                                             @php

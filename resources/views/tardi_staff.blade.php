@@ -17,7 +17,7 @@
         <div class="lg:grid lg:px-8 m-5 mx-6 sm:px-6">
 
             {{-- 1st column --}}
-            <div class="bg-white m-5 dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg w-3/4">
+            <div class="m-5 dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg w-3/4">
 
                 <div class="py-6 pl-10 text-lg text-gray-900 dark:text-gray-100">
 
@@ -47,11 +47,11 @@
             </div>
 
             {{-- 2nd column --}}
-            <div class="bg-white m-5 dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg w-3/4">
+            <div class="m-5 dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg w-3/4">
 
                 <div class="p-6 text-gray-900 dark:text-gray-100">
 
-                    <table class="bg-gray-800 rounded-t-lg text-sm w-3/4">
+                    <table class="dark:bg-gray-800 rounded-t-lg text-sm w-3/4">
 
                         {{-- total --}}
                         <tr>
@@ -94,7 +94,7 @@
             </div>
 
             {{-- 3rd --}}
-            <div class="bg-white dark:bg-gray-800 m-5 overflow-hidden shadow-sm sm:rounded-lg w-3/4">
+            <div class="dark:bg-gray-800 m-5 overflow-hidden shadow-sm sm:rounded-lg w-3/4">
 
                 <div class="p-3 text-gray-900 dark:text-gray-100">
 
@@ -105,8 +105,8 @@
 
                             <tr class="px-4 py-3">
 
-                                <textarea class="bg-gray-800 border-gray-700 h-20 rounded text-gray-200 text-sm w-3/4"
-                                        id="" name="h_remarks" placeholder="{{ 'remarks...' }}"></textarea>
+                                <textarea class="dark:bg-gray-800 border-gray-700 h-20 rounded text-gray-200 text-sm w-3/4"
+                                        id="" name="h_remarks" placeholder="{{ 'dept. head remarks...' }}"></textarea>
                             </tr><br>
                             <tr>
                                 <input type="hidden" name="head_email" value="{{ $tardis->head->user_id }}">
@@ -125,7 +125,7 @@
 
             {{-- 4th --}}
 
-                <a href="tardi_group" class="bg-white dark:bg-gray-800 dark:hover:text-white dark:text-gray-400 focus:outline focus:outline-2 focus:outline-red-500 focus:rounded-sm font-semibold h-8 hover:text-gray-900 m-5 overflow-hidden shadow-sm sm:rounded-lg text-center text-gray-600 text-xl w-20">
+                <a href="tardi_group" class="dark:bg-gray-800 dark:hover:text-white dark:text-gray-400 focus:outline focus:outline-2 focus:outline-red-500 focus:rounded-sm font-semibold h-8 hover:text-gray-900 m-5 overflow-hidden shadow-sm sm:rounded-lg text-center text-gray-600 text-xl w-20">
                    {{ 'Back' }}
                 </a>
 
