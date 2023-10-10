@@ -11,7 +11,7 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     {{ __("You're logged in!") }}<br>
-                    {{ auth()->user()->student_id }}
+                    <span class="text-xs">{{ auth()->user()->student_id }} </span>
                 </div>
 
                 <div class="justify-items-center lg:grid lg:grid-cols-2">
@@ -104,13 +104,13 @@
                                 @ws
                                         <a href="report" class="font-semibold text-gray-600
                                                 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
-                                                focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
+                                                focus:outline focus:outline-2 m-5 focus:rounded-sm focus:outline-red-500">
                                                 View My Absences
                                         </a><br>
 
                                         <a href="my_dtr" class="font-semibold text-gray-600
                                                 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white
-                                                focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
+                                                focus:outline focus:outline-2 m-5  focus:rounded-sm focus:outline-red-500">
                                                 View My DTR
                                         </a><br>
 
@@ -182,7 +182,7 @@
                                                                 <tr>
 
                                                                         <th class="px-6">
-                                                                                <span class="text-orange-500 text-sm"> Total No. Lates: </span>
+                                                                                <span class="text-orange-500 text-sm"> Lates</span>
                                                                                 {{$loop->count}}
                                                                         </th>
         

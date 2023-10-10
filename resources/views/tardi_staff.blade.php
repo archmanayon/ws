@@ -25,12 +25,12 @@
                         <h2>
                             {{ 'Personnel Tardiness Variance Record' }}
                         </h2>
-                        <h3 >
+                        <h3 class ="text-xs">
                             {{ 'Academic Year: ' }}{{ $tardis->term->school_year }}
                         </h3>
         
-                        <h4>
-                            {{ 'From the month of ' }}{{ Carbon::create()->month($tardis->month)->format('F')}}
+                        <h4 class ="text-xs">
+                            {{ 'Month:' }}{{ Carbon::create()->month($tardis->month)->format('F')}}
                         </h4>
                     </div>
 
@@ -38,7 +38,7 @@
 
                         {{ $tardis->user->name??false }} <br>
 
-                        {{ $tardis->user->head->department??false }}
+                        <span class ="text-xs">{{ $tardis->user->head->department??false }} </span>
 
                     </div>
 

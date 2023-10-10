@@ -27,7 +27,7 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
 
                     {{ $user->name??false }} <br>
-                    {{ $user->head->department??false }}
+                    <span class ="text-xs"> {{ $user->head->department??false }} </span>
                 </div>
 
             </div>
