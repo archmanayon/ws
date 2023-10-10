@@ -114,18 +114,18 @@
                                                 // && $daily->late_count >= 10;
                                         })
 
-                                    as $index => $daily) 
-                                                                
-                                    {{-- @if ( $daily->type == 'LTE' 
-                                        || $daily->type_late == 'LTE' 
-                                        || $daily->required_h_late > 0 
+                                    as $index => $daily)
+                                    
+                                    {{-- @if ( $daily->type == 'LTE'
+                                        || $daily->type_late == 'LTE'
+                                        || $daily->required_h_late > 0
                                     ) --}}
 
                                     @if( 
                                     $loop->last && $loop->count >= 10)
                                     {{-- // &&  
                                     // $loop->count >= 10) --}}
-
+                                    
                                         <tr class="bg-gray-700 border-b border-gray-600">
                                                                                     
                                             <td class="px-4 py-3">

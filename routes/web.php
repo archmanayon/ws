@@ -396,9 +396,13 @@ Route::get('all_absences', [ScheduleController::class, 'print_all_abs_old'])
 Route::post('all_absences', [ScheduleController::class, 'print_all_abs_old'])
 ->middleware(['auth', 'verified', 'admin'])->name('disp_by_cal');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('dashboard', [ScheduleController::class, 'tardi_in_dash'])
+->middleware(['auth', 'verified'])
+->name('dashboard');
 
 // Route::get('/dashboard', function () {
 

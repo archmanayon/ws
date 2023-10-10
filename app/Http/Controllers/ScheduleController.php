@@ -10,6 +10,9 @@ use App\Models\ManualShift;
 use App\Models\Punch;
 use App\Models\Schedule;
 use App\Models\Rawbio;
+use App\Models\Term;
+use App\Models\Tardi;
+use App\Models\tardi_description;
 
 use App\Http\Controllers\AbsenceCalendarController;
 use App\Http\Controllers\BiometricController;
@@ -91,7 +94,6 @@ class ScheduleController extends Controller{
         $collection = collect($dates);
         $count_dates = $period->count();
 
-
         $user = app()->call(AbsenceCalendarController::class.'@adea_bio',
         [
             'collection_of_dates' => $collection,
@@ -102,6 +104,43 @@ class ScheduleController extends Controller{
         return view ('report',[
 
             'mappedUser'    => $user,
+             // 'users'     => $test_string,
+            'users'         => auth()->user(),
+            'payroll_start' => $start_date??0,
+            'payroll_end'   => $end_date??0
+
+        ]);
+    }
+
+
+    public function tardi_in_dash()
+    {
+
+        $holiday = array(
+            "08-21-23", "08-28-23", "09-09-23"
+        );
+
+        $start_date = Carbon::create(Setup::find(3)->date)->format('Y-m-d')??false;
+
+        $end_date = Carbon::create(Setup::find(2)->date)->format('Y-m-d')??false;
+
+        $period = CarbonPeriod::create($start_date, $end_date);
+        $dates = $period->toArray();
+        $collection = collect($dates);
+        $count_dates = $period->count();
+
+        $user = app()->call(AbsenceCalendarController::class.'@adea_bio',
+        [
+            'collection_of_dates' => $collection,
+            'searched_user'=> auth()->user()??false,
+            'holiday' =>$holiday
+        ]);
+
+        return view ('dashboard',[
+
+            'mappedUser'    => $user,
+            'term' => Term::all()->where('active',1)->first(),
+            'tardi_desc' => tardi_description::all()??false,
              // 'users'     => $test_string,
             'users'         => auth()->user(),
             'payroll_start' => $start_date??0,

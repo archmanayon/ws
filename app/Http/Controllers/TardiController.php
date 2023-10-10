@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Term;
+use App\Models\Tardi;
 use App\Models\Punch;
 use App\Models\Schedule;
 use App\Models\Rawbio;
@@ -17,7 +18,7 @@ use Illuminate\Support\Facades\DB;
 
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
-use App\Models\Tardi;
+
 
 class TardiController extends Controller
 {
