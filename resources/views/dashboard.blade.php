@@ -122,95 +122,158 @@
                                                 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
                                                 Submit Daily Task Report
                                         </a><br>                                       --}}
+
+                                        <x-dropdown relative='x' align='top'>
                                        
-                                        <table class="dark:bg-gray-800 dark:text-gray-200 m-0 max-w-xl mt-8 rounded-t-lg text-left text-xs">
+                                                <table class="dark:bg-gray-800 dark:text-gray-200 m-0 max-w-xl mt-8 rounded-t-lg text-left text-xs">
 
-                                                @php
-        
-                                                $count = 1;
-        
-                                                @endphp
-        
-                                                @foreach (
-                                                
-                                                        array_filter($mappedUser, function ($daily) {
-                                                        return is_object($daily) && 
-                                                                // property_exists($daily, 'type') &&
-                                                                // $daily->user->name == 'ONDE, MARK FRANCIS' &&
-                                                                $daily->type == 'LTE' ||
-        
-                                                                is_object($daily) &&   
-                                                                // property_exists($daily, 'type_late') &&                                         
-                                                                // $daily->user->name == 'ONDE, MARK FRANCIS' &&
-                                                                $daily->type_late == 'LTE';
-                                                                // && $daily->late_count >= 10;
-                                                        })
-        
-                                                as $index => $daily)
-        
-                                                        @if( 
-                                                        $loop->last && $loop->count >= 10)
-                                                                                
-                                                                @php
-                                                                $sanction_s = null;
-                                                                
-                                                                $loop->count >=10 && $loop->count < 17 ? $sanction_s = 1: (
-                                                                        $loop->count >=17 && $loop->count < 24 ?
-                                                                        $sanction_s =2:(
-                                                                        $loop->count >=24 && $loop->count < 31 ?
-                                                                        $sanction_s =3:(
-                                                                                $loop->count >=31 && $loop->count < 38 ?
-                                                                                $sanction_s =4:(
-                                                                                $loop->count >=38 && $loop->count < 45 ?
-                                                                                $sanction_s =5:(
-                                                                                        $loop->count >=45 && $loop->count < 52 ?
-                                                                                        $sanction_s =6:(
-                                                                                        $loop->count >=52 && $loop->count < 60 ?
-                                                                                        $sanction_s =7:(
-                                                                                                $loop->count >=60 && $loop->count > 10 ?
-                                                                                                $sanction_s =8: null                                                                 
+                                                        @php
+                
+                                                        $count = 1;
+                
+                                                        @endphp                                               
+                
+                                                        @foreach (
+                                                        
+                                                                array_filter($mappedUser, function ($daily) {
+                                                                return is_object($daily) && 
+                                                                        // property_exists($daily, 'type') &&
+                                                                        // $daily->user->name == 'ONDE, MARK FRANCIS' &&
+                                                                        $daily->type == 'LTE' ||
+                
+                                                                        is_object($daily) &&   
+                                                                        // property_exists($daily, 'type_late') &&                                         
+                                                                        // $daily->user->name == 'ONDE, MARK FRANCIS' &&
+                                                                        $daily->type_late == 'LTE';
+                                                                        // && $daily->late_count >= 10;
+                                                                }) as $index => $daily)
+                                                        
+                                                                @if( 
+                                                                $loop->last && $loop->count >= 10)
+                                                                                        
+                                                                        @php
+                                                                        $sanction_s = null;
+                                                                        
+                                                                        $loop->count >=10 && $loop->count < 17 ? $sanction_s = 1: (
+                                                                                $loop->count >=17 && $loop->count < 24 ?
+                                                                                $sanction_s =2:(
+                                                                                $loop->count >=24 && $loop->count < 31 ?
+                                                                                $sanction_s =3:(
+                                                                                        $loop->count >=31 && $loop->count < 38 ?
+                                                                                        $sanction_s =4:(
+                                                                                        $loop->count >=38 && $loop->count < 45 ?
+                                                                                        $sanction_s =5:(
+                                                                                                $loop->count >=45 && $loop->count < 52 ?
+                                                                                                $sanction_s =6:(
+                                                                                                $loop->count >=52 && $loop->count < 60 ?
+                                                                                                $sanction_s =7:(
+                                                                                                        $loop->count >=60 && $loop->count > 10 ?
+                                                                                                        $sanction_s =8: null                                                                 
+                                                                                                )
+                                                                                                )    
+                                                                                        )                                                                    
                                                                                         )
-                                                                                        )    
-                                                                                )                                                                    
                                                                                 )
-                                                                        )
-                                                                        )
-                                                                )                                               
-                                                                
-                                                                @endphp
-                                                                
-                                                                <tr>
+                                                                                )
+                                                                        )                                               
+                                                                        
+                                                                        @endphp
+                                                                        
+                                                                        <tr class="px-2">                                                                                
 
-                                                                        <th class="px-6">
-                                                                                <span class="text-orange-500 text-sm"> Lates</span>
-                                                                                {{$loop->count}}
-                                                                        </th>
-        
-                                                                        <th class="px-6">
-                                                                                <span class="text-orange-500 text-sm"> Tardiness: </span> <br>
-                                                                                {{$tardi_desc->where('id', $sanction_s)->first()->tardiness??false}}
-                                                                        </th>
+                                                                                <x-slot name="trigger">
+                                                                                        <button class="w-auto inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-100 focus:outline-none transition ease-in-out duration-150">
+                                                                                                <div>
+                                                                                                        <td class="px-6">
+                                                                                                                <span class="text-orange-500 text-sm"> Lates</span>
+                                                                                                                {{$loop->count}}
+                                                                                                        </td>
+                                                                                                </div>
+                                                                
+                                                                                                <div class="ml-1">
+                                                                                                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                                                                                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                                                                                        </svg>
+                                                                                                </div>
+                                                                                        </button>
+                                                                                
+                
+                                                                                        <td class="px-6">
+                                                                                                <span class="text-orange-500 text-sm"> Tardiness: </span>
+                                                                                                {{$tardi_desc->where('id', $sanction_s)->first()->tardiness??false}}
+                                                                                        </td>
 
-                                                                        <th class="px-6 text-xl w-72">
-                                                                                <a href="tardi" class=" font-semibold text-gray-600
-                                                                                        hover:text-gray-900 text-green-600 dark:text-green-500 dark:hover:text-white
-                                                                                        focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
-                                                                                        View Personal Tardiness Variance
-                                                                                </a>
-                                                                        </th>                                                                
-                                                                </tr>                                                         
-                                                                                                                        
-                                                                @php
-                                                                        $count++;
-                                                                @endphp
-        
+                                                                                        <td class="px-6 text-xl w-72">
+                                                                                                <div>
+                                                                                                        <a href="tardi" class=" font-semibold text-gray-600
+                                                                                                                hover:text-gray-900 text-green-600 dark:text-green-500 dark:hover:text-white
+                                                                                                                focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
+                                                                                                                View Personal Tardiness Variance
+                                                                                                        </a>
+                                                                                                </div>
+                                                                                        </td>
+                                                                                </x-slot>                                                               
+                                                                        </tr>                                                                     
+                                                                                                                                
+                                                                        @php
+                                                                                $count++;
+                                                                        @endphp
+                
+                                                                        </tr>
+                
+                                                                @endif                                                        
+                
+                                                        @endforeach  
+
+                                                </table>
+
+                                                <x-slot name="content" class="text-gray-900"> 
+                                                            
+                                                        <table class="text-xs">
+                                                                <tr>                                                                
+                                                                                <th class="px-2 py-3"> Date </th>
+                                                                                <th class="px-2 py-3 text-red-400"> Pnch </th>
+                                                                                <th class="px-2 py-3 text-green-400"> Ofcl </th>      
+                                                                                <th class="px-2 py-3 text-red-400"> Pnch </th>
+                                                                                <th class="px-2 py-3 text-green-400"> Ofcl </th>                                                                        
                                                                 </tr>
         
-                                                        @endif
+                                                                @foreach ( array_filter($mappedUser, function ($daily) {
+                                                                        return is_object($daily) && 
+                                                                                // property_exists($daily, 'type') &&
+                                                                                // $daily->user->name == 'ONDE, MARK FRANCIS' &&
+                                                                                $daily->type == 'LTE' ||
         
-                                                @endforeach
-                    
-                                        </table>
+                                                                                is_object($daily) &&   
+                                                                                // property_exists($daily, 'type_late') &&                                         
+                                                                                // $daily->user->name == 'ONDE, MARK FRANCIS' &&
+                                                                                $daily->type_late == 'LTE';
+                                                                                // && $daily->late_count >= 10;
+                                                                        }) as $index => $daily) 
+        
+                                                                        <tr>
+                                                                                <td class="px-4 py-3">
+                                                                                        {{$daily->date}}
+                                                                                </td>
+                                                                                <td class="px-4 py-3 text-red-400">
+                                                                                        {{$daily->punch->am_in}}
+                                                                                </td>
+                                                                                <td class="px-4 py-3 text-green-600">
+                                                                                        {{$daily->official->am_in }}
+                                                                                </td>
+                                                                                <td class="px-4 py-3 text-red-400">
+                                                                                        {{$daily->punch->pm_in}}
+                                                                                </td>
+                                                                                <td class="px-4 py-3 text-green-600">
+                                                                                        {{$daily->official->pm_in }}
+                                                                                </td>
+                                                                        </tr>                                        
+        
+                                                                @endforeach
+                                                        </table>                                                                              
+    
+                                                </x-slot> 
+                                        </x-dropdown>
 
                                 @endstaff
 
