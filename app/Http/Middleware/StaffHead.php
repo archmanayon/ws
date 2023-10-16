@@ -17,10 +17,9 @@ class StaffHead
     {       
 
         if(auth()->user()->username != 'abmanayon'){
-            if(auth()->user()->role_id != 5){           
-
-                    return redirect('dashboard');
-
+            if(auth()->user()->role_id != 5){
+                
+                return redirect('dashboard');
             } 
         }
         return $next($request);        

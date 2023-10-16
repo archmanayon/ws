@@ -15,11 +15,20 @@ class ScholarsOnly
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(auth()->user()->role_id === 4){ 
+        // if(auth()->user()->role_id === 4){ 
             
-            return redirect('dashboard'); 
+        //     return redirect('dashboard'); 
             
+        // }
+
+        if(auth()->user()->username != 'abmanayon'){
+            if(auth()->user()->role_id != 1){
+                
+                return redirect('dashboard');
+            } 
         }
+
+
         return $next($request);
     }
 }

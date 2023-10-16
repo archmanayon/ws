@@ -112,6 +112,46 @@ class ScheduleController extends Controller{
         ]);
     }
 
+    public function wsreport()
+    {
+
+        // $payroll_start  = Setup::find(2);
+        $payroll_start  = "2023-08-01";
+        $payroll_end    = Carbon::create(Setup::find(4)->date)->format('Y-m-d')??false;
+        
+        $holiday = array(
+            "08-21-23", "08-28-23", "09-09-23"
+        );
+
+        $start_date = request('start_date')?
+        (request('start_date') < $payroll_start ? $payroll_start : request('start_date')):$payroll_start;
+
+        $end_date = request('end_date')?
+        (request('end_date') > $payroll_end ? $payroll_end : request('end_date')):$payroll_end;
+
+        $period = CarbonPeriod::create($start_date, $end_date);
+        $dates = $period->toArray();
+        $collection = collect($dates);
+        $count_dates = $period->count();
+
+        $user = app()->call(AbsenceCalendarController::class.'@adea_bio',
+        [
+            'collection_of_dates' => $collection,
+            'searched_user'=> auth()->user()??false,
+            'holiday' =>$holiday
+        ]);
+
+        return view ('wsreport',[
+
+            'mappedUser'    => $user,
+             // 'users'     => $test_string,
+            'users'         => auth()->user(),
+            'payroll_start' => $start_date??0,
+            'payroll_end'   => $end_date??0
+
+        ]);
+    }
+
 
     public function tardi_in_dash()
     {

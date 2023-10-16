@@ -344,12 +344,20 @@ Route::post('tardi_process', [TardiController::class, 'process'])
 // ->name('own_by_cal');
 
 Route::get('report', [ScheduleController::class, 'owner_abs'])
-->middleware(['auth', 'verified'])
+->middleware(['auth', 'verified', 'staff'])
 ->name('report');
 
 Route::post('report', [ScheduleController::class, 'owner_abs'])
-->middleware(['auth', 'verified'])
+->middleware(['auth', 'verified', 'staff'])
 ->name('own_by_cal');
+
+Route::get('wsreport', [ScheduleController::class, 'wsreport'])
+->middleware(['auth', 'verified', 'scholars'])
+->name('wsreport');
+
+Route::post('wsreport', [ScheduleController::class, 'wsreport'])
+->middleware(['auth', 'verified', 'scholars'])
+->name('wsreport_post');
 
 Route::get('my_dtr', [RawbioController::class, 'my_dtr'])
 ->middleware(['auth', 'verified'])->name('my_dtr');

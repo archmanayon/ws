@@ -58,7 +58,7 @@ class AppServiceProvider extends ServiceProvider
         
         Blade::if('ws', function () {
           
-            return  auth()->user()->role_id == 2 ||
+            return  
                     auth()->user()->role_id == 1?
                     request()->user()->cannot('ws'):
                     request()->user()->can('ws');
