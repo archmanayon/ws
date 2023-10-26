@@ -87,6 +87,7 @@
                                 <th class="px-4 py-3">Total</th>
                                 <th class="px-4 py-3">Desc</th>
                                 <th class="px-4 py-3">Head ID</th>
+                                <th class="px-4 py-3">Head Email</th>
                                 <th class="px-4 py-3">Encoded tardis</th>
 
                             </tr>
@@ -207,6 +208,10 @@
 
                                             </td>
 
+                                            <td class="px-4 py-3">
+                                                {{ $daily->user->head->user->email??false}}
+                                            </td>
+                                            
                                             <td class="px-4 py-3">
                                                 {{ $daily->user->tardis->first()->usertardidesc??false }}
                                             </td>

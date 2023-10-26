@@ -11,7 +11,7 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     {{ __("You're logged in!") }}<br>
-                    <span class="text-xs">{{ auth()->user()->student_id }} </span>
+                    <span class="text-xs">{{ auth()->user()->name }} </span>
                 </div>
 
                 <div class="justify-items-center lg:grid lg:grid-cols-2">
