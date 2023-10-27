@@ -8,6 +8,7 @@ use App\Models\Tardi;
 use App\Models\Punch;
 use App\Models\Schedule;
 use App\Models\Rawbio;
+use App\Models\Setup;
 use App\Models\tardi_description;
 
 use Illuminate\Support\Facades\Validator;
@@ -115,13 +116,39 @@ class TardiController extends Controller
 
     public function staff_variance()
     {
-
         $tardis = Tardi::find(request('pre_address'))??false;
+        
+        $holiday = array(
+            "08-21-23", "08-28-23", "09-09-23"
+        );
+        $start_date = Carbon::create(Setup::find(3)->date)->format('Y-m-d')??false;
+        $end_date = Carbon::create(Setup::find(2)->date)->format('Y-m-d')??false;
 
+        $period = CarbonPeriod::create($start_date, $end_date);
+        $dates = $period->toArray();
+        $collection = collect($dates);
+        $count_dates = $period->count();
+
+        $user = app()->call(AbsenceCalendarController::class.'@adea_bio',
+        [
+            'collection_of_dates' => $collection,
+            'searched_user'=> $tardis->user??false,
+            'holiday' =>$holiday
+        ]);
+
+       
         if($tardis){
 
             return view('tardi_staff',
             [
+
+                'mappedUser'    => $user,
+                'term' => Term::all()->where('active',1)->first(),
+                'tardi_desc' => tardi_description::all()??false,
+                // 'users'     => $test_string,
+                'users'         => auth()->user(),
+                'payroll_start' => $start_date??0,
+                'payroll_end'   => $end_date??0,
 
                 'tardis' => $tardis
                  // 'tasks'         => session('task_session')??false,
