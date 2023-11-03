@@ -119,7 +119,7 @@ class TardiController extends Controller
         $tardis = Tardi::find(request('pre_address'))??false;
         
         $holiday = array(
-            "08-21-23", "08-28-23", "09-09-23"
+             "08-21-23", "08-28-23", "09-09-23", "10-30-23", "10-31-23", "11-01-23", "11-02-23"
         );
         $start_date = Carbon::create(Setup::find(3)->date)->format('Y-m-d')??false;
         $end_date = Carbon::create(Setup::find(2)->date)->format('Y-m-d')??false;
@@ -221,7 +221,7 @@ class TardiController extends Controller
     public function show_all()
     {
         $holiday = array(
-            "08-21-23", "08-28-23", "09-09-23"
+             "08-21-23", "08-28-23", "09-09-23", "10-30-23", "10-31-23", "11-01-23", "11-02-23"
         );
 
         $start_date = request('start_date')?? 0;
@@ -263,7 +263,7 @@ class TardiController extends Controller
         // $user_all = User::with(['shift', 'manual_shifts', 'update_bios'])->get();
 
         $holiday = array(
-            "08-21-23", "08-28-23", "09-09-23"
+             "08-21-23", "08-28-23", "09-09-23", "10-30-23", "10-31-23", "11-01-23", "11-02-23"
         );
 
  
