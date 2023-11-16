@@ -26,6 +26,8 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class RawbioController extends Controller
 {
+    private  $holiday = array( "08-21-23", "08-28-23", "09-09-23", "10-30-23", "10-31-23", "11-01-23", "11-02-23");
+
     public function dtr()
     {
         $users  = User::all()->where('active', true)->sortBy('name');        
@@ -34,7 +36,7 @@ class RawbioController extends Controller
 
         // $searched_user = User::find(request('find_user'))??false;
 
-        $holiday = array( "08-21-23", "08-28-23", "09-09-23", "10-30-23", "10-31-23", "11-01-23", "11-02-23");
+         $holiday = $this->holiday;
 
         $start_date = request('start_date') ?? 0;
         $end_date = request('end_date') ?? 0;
@@ -66,9 +68,7 @@ class RawbioController extends Controller
         $bio_start  = Carbon::create(Setup::find(3)->date)->format('Y-m-d');
         $bio_end    = Carbon::create(Setup::find(4)->date)->format('Y-m-d');
 
-        $holiday = array(
-             "08-21-23", "08-28-23", "09-09-23", "10-30-23", "10-31-23", "11-01-23", "11-02-23"
-        );
+         $holiday = $this->holiday;
 
         $searched_user = auth()->user()??false;
         
@@ -112,9 +112,7 @@ class RawbioController extends Controller
     {
         $searched_user = auth()->user()??false;
 
-        $holiday = array(
-             "08-21-23", "08-28-23", "09-09-23", "10-30-23", "10-31-23", "11-01-23", "11-02-23"
-        );
+         $holiday = $this->holiday;
 
         $split = explode('to', $selected_dates);
         $start_date = $split[0] ?? 0;

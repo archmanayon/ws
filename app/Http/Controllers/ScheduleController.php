@@ -28,7 +28,9 @@ use Carbon\CarbonPeriod;
 use Illuminate\Support\Str;
 
 
-class ScheduleController extends Controller{
+class ScheduleController extends Controller{    
+
+    private  $holiday = array( "08-21-23", "08-28-23", "09-09-23", "10-30-23", "10-31-23", "11-01-23", "11-02-23");
 
     // individual search______________________________
     public function absences_all()
@@ -39,8 +41,10 @@ class ScheduleController extends Controller{
 
         // $searched_user = User::find(request('find_user'))??false;
 
-        $holiday = array( "08-21-23", "08-28-23", "09-09-23", "10-30-23", "10-31-23", "11-01-23", "11-02-23"
-                        );
+        // $holiday = array( "08-21-23", "08-28-23", "09-09-23", "10-30-23", "10-31-23", "11-01-23", "11-02-23"
+        //                 );
+
+        $holiday = $this->holiday;        
 
         $start_date = request('start_date')?? 0;
         $end_date = request('end_date')?? 0;
@@ -79,9 +83,7 @@ class ScheduleController extends Controller{
         $payroll_start  = Carbon::create(Setup::find(1)->date)->format('Y-m-d')??false;
         $payroll_end    = Carbon::create(Setup::find(2)->date)->format('Y-m-d')??false;
 
-        $holiday = array(
-             "08-21-23", "08-28-23", "09-09-23", "10-30-23", "10-31-23", "11-01-23", "11-02-23"
-        );
+        $holiday = $this->holiday;
 
         $start_date = request('start_date')?
         (request('start_date') < $payroll_start ? $payroll_start : request('start_date')):$payroll_start;
@@ -119,9 +121,7 @@ class ScheduleController extends Controller{
         $payroll_start  = "2023-08-01";
         $payroll_end    = Carbon::create(Setup::find(4)->date)->format('Y-m-d')??false;
         
-        $holiday = array(
-             "08-21-23", "08-28-23", "09-09-23", "10-30-23", "10-31-23", "11-01-23", "11-02-23"
-        );
+        $holiday = $this->holiday;
 
         $start_date = request('start_date')?
         (request('start_date') < $payroll_start ? $payroll_start : request('start_date')):$payroll_start;
@@ -156,9 +156,7 @@ class ScheduleController extends Controller{
     public function tardi_in_dash()
     {
 
-        $holiday = array(
-             "08-21-23", "08-28-23", "09-09-23", "10-30-23", "10-31-23", "11-01-23", "11-02-23"
-        );
+        $holiday = $this->holiday;
 
         $start_date = Carbon::create(Setup::find(3)->date)->format('Y-m-d')??false;
 
@@ -196,9 +194,7 @@ class ScheduleController extends Controller{
         $payroll_start  = Carbon::create(Setup::find(1)->date)??false;
         $payroll_end    = Carbon::create(Setup::find(2)->date) ?? false;
 
-        $holiday = array(
-             "08-21-23", "08-28-23", "09-09-23", "10-30-23", "10-31-23", "11-01-23", "11-02-23"
-        );
+        $holiday = $this->holiday;
 
         // $start_date = request('start_date')?? 0;
         $start_date = request('start_date') < $payroll_start->format('Y-m-d') ?
@@ -239,9 +235,7 @@ class ScheduleController extends Controller{
     {
         // $user_all = User::with(['shift', 'manual_shifts', 'update_bios'])->get();
 
-        $holiday = array(
-             "08-21-23", "08-28-23", "09-09-23", "10-30-23", "10-31-23", "11-01-23", "11-02-23"
-        );
+        $holiday = $this->holiday;
 
         $start_date = request('start_date')?? 0;
         $end_date = request('end_date')?? 0;
@@ -280,9 +274,7 @@ class ScheduleController extends Controller{
     {
         // $user_all = User::with(['shift', 'manual_shifts', 'update_bios'])->get();
 
-        $holiday = array(
-             "08-21-23", "08-28-23", "09-09-23", "10-30-23", "10-31-23", "11-01-23", "11-02-23"
-        );
+        $holiday = $this->holiday;
 
         $start_date = request('start_date')?? 0;
         $end_date = request('end_date')?? 0;
@@ -322,9 +314,7 @@ class ScheduleController extends Controller{
         $payroll_start  = Carbon::create(Setup::find(1)->date) ?? 0;
         $payroll_end    = Carbon::create(Setup::find(2)->date) ?? 0;
 
-        $holiday = array(
-             "08-21-23", "08-28-23", "09-09-23", "10-30-23", "10-31-23", "11-01-23", "11-02-23"
-        );
+        $holiday = $this->holiday;
 
         // $start_date = request('start_date')?? request('start_date') < $payroll_start->format('Y-m-d') ?
         //         $payroll_start->format('Y-m-d') : request('start_date') ?? 0;
