@@ -20,7 +20,7 @@ use Illuminate\Http\Request;
 class BiometricController extends Controller
 {
 
-    private  $holiday = array( "08-21-23", "08-28-23", "09-09-23", "10-30-23", "10-31-23", "11-01-23", "11-02-23");
+    private  $holiday = array( "08-21-23", "08-28-23", "09-09-23", "10-30-23", "10-31-23", "11-01-23", "11-02-23", "11-27-23");
 
     public function text_files($collection_of_dates, $searched_user, $holiday)
     {
