@@ -3,10 +3,11 @@
 # ------------------------------------------------------
 FROM php:8.3.24-cli AS build
 
-# Install required system dependencies
+# Install system dependencies + PHP extensions
 RUN apt-get update && apt-get install -y \
-    unzip git curl libpq-dev libzip-dev zip \
-    && docker-php-ext-install pdo pdo_pgsql zip bcmath
+    unzip git curl libpq-dev libzip-dev zip libpng-dev libjpeg-dev libfreetype6-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install pdo pdo_pgsql zip bcmath gd mbstring exif
 
 # Install Composer (specific version: 2.8.10)
 RUN curl -sS https://getcomposer.org/download/2.8.10/composer.phar -o /usr/bin/composer \
@@ -15,11 +16,17 @@ RUN curl -sS https://getcomposer.org/download/2.8.10/composer.phar -o /usr/bin/c
 # Set working directory
 WORKDIR /app
 
-# Copy composer files and install dependencies
-COPY composer.json composer.lock ./
+# Copy composer files first
+COPY composer.json ./
+COPY composer.lock* ./
+
+# Allow unlimited memory for Composer
+ENV COMPOSER_MEMORY_LIMIT=-1
+
+# Install Laravel dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-# Copy rest of the Laravel project
+# Copy the rest of the Laravel project
 COPY . .
 
 # Cache Laravel config, routes, and views
@@ -30,10 +37,11 @@ RUN php artisan config:cache && php artisan route:cache && php artisan view:cach
 # ------------------------------------------------------
 FROM php:8.3.24-cli
 
-# Install required system dependencies again in final image
+# Install system dependencies + PHP extensions
 RUN apt-get update && apt-get install -y \
-    unzip git curl libpq-dev libzip-dev zip \
-    && docker-php-ext-install pdo pdo_pgsql zip bcmath
+    unzip git curl libpq-dev libzip-dev zip libpng-dev libjpeg-dev libfreetype6-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install pdo pdo_pgsql zip bcmath gd mbstring exif
 
 # Copy Composer from build stage
 COPY --from=build /usr/bin/composer /usr/bin/composer
@@ -46,4 +54,4 @@ COPY --from=build /app /app
 EXPOSE 10000
 
 # Run Laravel
-CMD php artisan serve --host 0.0.0.0 --port $PORT
+CMD ["php", "artisan", "serve", "--host", "0.0.0.0", "--port", "$PORT"]
