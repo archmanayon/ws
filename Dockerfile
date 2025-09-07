@@ -5,7 +5,7 @@ FROM php:8.3.24-cli AS build
 
 # Install system dependencies + PHP extensions Laravel needs
 RUN apt-get update && apt-get install -y \
-    unzip git curl libpq-dev libzip-dev zip libpng-dev libjpeg-dev libfreetype6-dev \
+    unzip git curl libpq-dev libzip-dev zip libpng-dev libjpeg62-turbo-dev libfreetype6-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install pdo pdo_pgsql zip bcmath gd mbstring exif
 
